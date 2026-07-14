@@ -23,6 +23,7 @@ import { enhanceInputMask } from './inputmask.ts'
 import { enhanceInputOTP } from './inputotp.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
+import { enhanceResizable } from './resizable.ts'
 import { enhanceSidebar } from './sidebar.ts'
 import { enhanceSlider } from './slider.ts'
 import { enhanceTable } from './table.ts'
@@ -71,6 +72,7 @@ export const behaviors: Behavior[] = [
   enhanceDateRangePicker,
   enhanceInputOTP,
   enhanceInPageNavigation,
+  enhanceResizable,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -101,6 +103,7 @@ export {
   enhanceNavigationMenu,
   enhanceNumberField,
   enhancePopover,
+  enhanceResizable,
   enhanceSidebar,
   enhanceSlider,
   enhanceTable,
