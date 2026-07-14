@@ -10,5 +10,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["build.ts"]
+  "include": ["*.ts"]
 }
