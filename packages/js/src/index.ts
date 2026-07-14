@@ -18,7 +18,9 @@ import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
+import { enhanceInPageNavigation } from './inpagenav.ts'
 import { enhanceInputMask } from './inputmask.ts'
+import { enhanceInputOTP } from './inputotp.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceSidebar } from './sidebar.ts'
@@ -67,6 +69,8 @@ export const behaviors: Behavior[] = [
   enhanceCalendar,
   enhanceDatePicker,
   enhanceDateRangePicker,
+  enhanceInputOTP,
+  enhanceInPageNavigation,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -90,7 +94,9 @@ export {
   enhanceDropdownMenu,
   enhanceHoverCard,
   enhanceIndeterminate,
+  enhanceInPageNavigation,
   enhanceInputMask,
+  enhanceInputOTP,
   enhanceMenubar,
   enhanceNavigationMenu,
   enhanceNumberField,
