@@ -15,11 +15,13 @@ import { enhanceCommandPalette } from './commandpalette.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
+import { enhanceInputMask } from './inputmask.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceSidebar } from './sidebar.ts'
 import { enhanceSlider } from './slider.ts'
 import { enhanceTable } from './table.ts'
+import { enhanceToolbar } from './toolbar.ts'
 import {
   enhanceContextMenu,
   enhanceDropdownMenu,
@@ -57,6 +59,8 @@ export const behaviors: Behavior[] = [
   enhanceSlider,
   enhanceSidebar,
   enhanceTable,
+  enhanceInputMask,
+  enhanceToolbar,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -77,6 +81,7 @@ export {
   enhanceDropdownMenu,
   enhanceHoverCard,
   enhanceIndeterminate,
+  enhanceInputMask,
   enhanceMenubar,
   enhanceNavigationMenu,
   enhanceNumberField,
@@ -86,6 +91,7 @@ export {
   enhanceTable,
   enhanceTabs,
   enhanceToggle,
+  enhanceToolbar,
   enhanceTooltip,
 }
 

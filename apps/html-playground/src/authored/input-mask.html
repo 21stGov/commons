@@ -1,0 +1,21 @@
+<!--
+  Authored canonical Input Mask markup (no React). @21stgov/commons-js formats
+  the value against data-mask as you type — `#` takes a digit, other characters
+  are inserted automatically.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="im-h">
+    <h3 id="im-h" class="text-sm font-semibold">Fixed-format fields</h3>
+    <div class="flex flex-col gap-3" style="max-width:20rem">
+      <label class="flex flex-col gap-1 text-sm font-medium">Phone
+        <input class="cui-input" data-slot="input-mask" data-mask="(###) ###-####" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(555) 123-4567" />
+      </label>
+      <label class="flex flex-col gap-1 text-sm font-medium">Social Security number
+        <input class="cui-input" data-slot="input-mask" data-mask="###-##-####" inputmode="numeric" autocomplete="off" placeholder="123-45-6789" />
+      </label>
+      <label class="flex flex-col gap-1 text-sm font-medium">ZIP+4
+        <input class="cui-input" data-slot="input-mask" data-mask="#####-####" inputmode="numeric" autocomplete="postal-code" placeholder="97201-1234" />
+      </label>
+    </div>
+  </section>
+</div>
