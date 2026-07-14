@@ -166,6 +166,9 @@
     width: 100%;
     height: 100%;
   }
+  .h-9 {
+    height: var(--cui-spacing-9);
+  }
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
@@ -554,6 +557,9 @@
   }
   .text-link {
     color: var(--cui-link-default);
+  }
+  .text-muted {
+    color: var(--cui-bg-subtle);
   }
   .text-muted-foreground {
     color: var(--cui-text-muted);

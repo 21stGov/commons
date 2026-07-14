@@ -85,6 +85,15 @@ async function loadDemo(entry: string): Promise<DemoModule> {
 type Signatures = Record<string, VariantSignature[]>
 
 /**
+ * `peer` / `group` marker classes carry no styles of their own, but the CSS
+ * targets them (`.peer:checked ~ …`, `.group[data-state=open] …`) to style
+ * *other* elements. They must survive the rewrite or cross-element state
+ * styling — the checkbox check, the accordion chevron — never fires.
+ */
+const isMarkerToken = (cls: string): boolean =>
+  cls === 'peer' || cls === 'group' || /^(peer|group)\//.test(cls)
+
+/**
  * The `.cui-*` classes for one `data-slot` element:
  *  - the base slot class,
  *  - a modifier for each `data-*` that names a real variant/size (Badge etc.),
@@ -111,6 +120,11 @@ function cuiClassesFor(
 
   const base = `cui-${slot}`
   if (manifest.has(base)) add(base)
+
+  // 0. keep peer/group markers so cross-element state selectors keep matching.
+  for (const c of (el.getAttribute('class') ?? '').split(/\s+/)) {
+    if (isMarkerToken(c)) add(c)
+  }
 
   // 1. data-* attributes (data-variant, data-size, …).
   for (const [name, rawVal] of Object.entries(el.attributes)) {
