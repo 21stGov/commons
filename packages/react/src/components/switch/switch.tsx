@@ -15,17 +15,17 @@ import { cn } from '@/lib/cn'
 // @types/node. Bundlers statically replace `process.env.NODE_ENV`.
 declare const process: { env: { NODE_ENV?: string | undefined } } | undefined
 
-export const switchVariants = cva(['text-sm text-foreground'])
-
-// The row is the pointer target: min-h-11 (2.75rem = 44px) with the control
-// and label top-aligned so a wrapped label still reads correctly. Symmetric
-// block padding vertically centers a single-line row inside the 44px minimum.
+// The row IS the switch layout, so it lives in the cva base (not an inline
+// string): the framework-agnostic `.cui-switch` class must carry `display:flex`
+// + the 44px row itself, or the control-box and label stack vertically.
+// min-h-11 (2.75rem = 44px), control + label top-aligned so a wrapped label
+// still reads. Symmetric block padding vertically centers a single-line row.
 // 1.375em = one leading-snug line of the row's own text size.
-const rowClasses = [
-  'flex min-h-11 items-start gap-105',
+export const switchVariants = cva([
+  'flex min-h-11 items-start gap-105 text-sm text-foreground',
   'py-[calc((2.75rem-1.375em)/2)]',
   'has-[[data-disabled]]:cursor-not-allowed has-[[data-disabled]]:text-disabled-foreground',
-].join(' ')
+])
 
 // First-line box: exactly one line of the adjacent label text, with the
 // track centered inside, so the switch aligns with the first line whether the
@@ -149,7 +149,7 @@ export const Switch = React.forwardRef<HTMLElement, SwitchProps>(function Switch
   const invalid = props['aria-invalid'] ?? field['aria-invalid']
 
   return (
-    <div data-slot="switch" className={cn(switchVariants(), rowClasses, className)}>
+    <div data-slot="switch" className={cn(switchVariants(), className)}>
       <span data-slot="switch-control-box" className={controlBoxClasses}>
         {/* AmbientDirection makes the switch follow the DOM `dir` (global or a
             local `dir="rtl"`) so its thumb reads direction from Base UI's

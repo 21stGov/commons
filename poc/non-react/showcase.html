@@ -4811,6 +4811,8 @@ a:visited {
   }
   .cui-icon {
     display: inline-block;
+    width: 1em;
+    height: 1em;
     flex-shrink: 0;
   }
   .cui-icon--em {
@@ -5947,7 +5949,7 @@ a:visited {
   .cui-kbd-group-separator {
     color: var(--cui-text-muted);
   }
-  .cui-language-selector {
+  .cui-language-selector-item {
     display: inline-flex;
     min-height: calc(var(--spacing) * 11);
     align-items: center;
@@ -6001,7 +6003,7 @@ a:visited {
       transition-property: none;
     }
   }
-  .cui-language-selector--active {
+  .cui-language-selector-item--active {
     --tw-font-weight: var(--cui-font-weight-semibold);
     font-weight: var(--cui-font-weight-semibold);
     color: var(--cui-text-default);
@@ -6069,38 +6071,17 @@ a:visited {
       transition-property: none;
     }
   }
-  .cui-language-selector-item {
+  .cui-language-selector {
+    display: flex;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--cui-spacing-1);
     border-radius: var(--cui-radius-sm);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    border-color: var(--cui-border-default);
     color: var(--cui-text-default);
-    text-decoration-line: underline;
-    text-underline-offset: 2px;
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    &:hover {
-      @media (hover: hover) {
-        color: var(--cui-link-hover);
-      }
-    }
-    &:focus-visible {
-      outline-style: var(--tw-outline-style);
-      outline-width: 2px;
-    }
-    &:focus-visible {
-      outline-offset: 2px;
-    }
-    &:focus-visible {
-      outline-color: var(--cui-focus-ring);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      transition-property: none;
-    }
-  }
-  .cui-language-selector-item svg {
-    pointer-events: none;
-    width: 1em;
-    height: 1em;
-    flex-shrink: 0;
   }
   .cui-language-selector-label {
     display: inline-flex;
@@ -6111,52 +6092,6 @@ a:visited {
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
     color: var(--cui-text-default);
-  }
-  .cui-language-selector-item {
-    display: inline-flex;
-    min-height: calc(var(--spacing) * 11);
-    align-items: center;
-    justify-content: center;
-    gap: var(--cui-spacing-1);
-    padding-inline: var(--cui-spacing-2);
-    font-size: var(--cui-font-size-sm);
-    line-height: var(--tw-leading, var(--cui-font-line-height-4));
-    text-decoration-line: underline;
-    text-underline-offset: 2px;
-    transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    &:focus-visible {
-      outline-style: var(--tw-outline-style);
-      outline-width: 2px;
-    }
-    &:focus-visible {
-      outline-offset: 2px;
-    }
-    &:focus-visible {
-      outline-color: var(--cui-focus-ring);
-    }
-    &:disabled {
-      cursor: not-allowed;
-    }
-    &:disabled {
-      color: var(--cui-disabled-text);
-    }
-    &:disabled {
-      text-decoration-line: none;
-    }
-    &[aria-disabled="true"] {
-      cursor: not-allowed;
-    }
-    &[aria-disabled="true"] {
-      color: var(--cui-disabled-text);
-    }
-    &[aria-disabled="true"] {
-      text-decoration-line: none;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      transition-property: none;
-    }
   }
   .cui-language-selector-globe {
     display: flex;
@@ -9973,9 +9908,20 @@ a:visited {
     padding-bottom: var(--cui-spacing-0);
   }
   .cui-switch {
+    display: flex;
+    min-height: calc(var(--spacing) * 11);
+    align-items: flex-start;
+    gap: var(--cui-spacing-105);
+    padding-block: calc((2.75rem - 1.375em) / 2);
     font-size: var(--cui-font-size-sm);
     line-height: var(--tw-leading, var(--cui-font-line-height-4));
     color: var(--cui-text-default);
+    &:has(*:is([data-disabled])) {
+      cursor: not-allowed;
+    }
+    &:has(*:is([data-disabled])) {
+      color: var(--cui-disabled-text);
+    }
   }
   .cui-switch-control-box {
     display: flex;

@@ -274,6 +274,36 @@
   padding: 0;
 }
 
+/* ---- In-page navigation (collapsible on narrow) ---------------------------
+   React's collapsible In-Page Nav is responsive: on ≥48rem the list is always
+   shown and the disclosure toggle is hidden (md:hidden / md:h-auto), and below
+   that it collapses behind the toggle. Those instance-specific `md:` utilities
+   are stripped in the rewrite (they're not part of any cva), so restore the
+   wide-viewport behavior here, scoped to the in-page-nav's collapsible. Below
+   48rem, @21stgov/commons-js drives the disclosure normally. */
+@media (min-width: 48rem) {
+  [data-slot='in-page-navigation'] [data-slot='collapsible-trigger'] {
+    display: none;
+  }
+  [data-slot='in-page-navigation'] [data-slot='collapsible-panel'] {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
+/* ---- Language selector ----------------------------------------------------
+   The toggle and dropdown variants share data-slot="language-selector" but need
+   opposite container axes (toggle = row of globe + links, dropdown = stacked
+   label + select). The generator merges both variants' inline layout utilities
+   into one `.cui-language-selector`, and the dropdown's flex-col wins — leaving
+   the toggle's globe stacked above its links. Scope the row axis back to the
+   toggle by its data-variant (which React also keys the layout on). */
+.cui-language-selector[data-variant='toggle'] {
+  flex-direction: row;
+  align-items: stretch;
+}
+
 /* ---- Hover card -----------------------------------------------------------
    The authored hover card lives inside a <p>, so the trigger/positioner/content
    are spans (a block <div> would auto-close the paragraph). React's content is a

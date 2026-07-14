@@ -173,7 +173,11 @@ export const iconVariants = cva(
   // row (e.g. beside a wrapping label). `block` avoids the inline-SVG baseline
   // gap. For an arbitrary size, pass a `size-[…]` utility via `className`;
   // tailwind-merge lets it win over the variant.
-  ['inline-block shrink-0'],
+  // `size-[1em]` (the `em` default) lives in the BASE, not only the size
+  // variant: the framework-agnostic `.cui-icon` class must carry the default
+  // size on its own (the generated demos render default-size icons as bare
+  // `.cui-icon` with no `--em` modifier). Explicit size modifiers still win.
+  ['inline-block shrink-0 size-[1em]'],
   {
     variants: {
       // rem sizes use the project's USWDS spacing scale, NOT stock Tailwind:

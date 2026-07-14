@@ -52,7 +52,7 @@ export interface Language {
 // visible focus ring. The active language is marked non-color-only: heavier
 // weight PLUS aria-current, so it stays distinguishable in forced-colors mode
 // where the text color is overridden.
-export const languageSelectorVariants = cva(
+export const languageSelectorItemVariants = cva(
   [
     'inline-flex min-h-11 items-center justify-center gap-1 px-2 text-sm',
     'underline underline-offset-2',
@@ -79,7 +79,7 @@ type ToggleVariant = 'auto' | 'toggle' | 'dropdown'
 export interface LanguageSelectorProps
   extends
     Omit<React.HTMLAttributes<HTMLElement>, 'onChange'>,
-    VariantProps<typeof languageSelectorVariants> {
+    VariantProps<typeof languageSelectorItemVariants> {
   /**
    * The languages the site is offered in, each named by its endonym. Order is
    * preserved. Two or fewer render as an inline toggle by default; three or
@@ -278,7 +278,7 @@ export const LanguageSelector = React.forwardRef<HTMLElement, LanguageSelectorPr
 
     const items = languages.map((lang) => {
       const active = value !== undefined && lang.code === value
-      const itemClass = languageSelectorVariants({ active })
+      const itemClass = languageSelectorItemVariants({ active })
       // dir="auto" lets a right-to-left endonym (العربية) render correctly on
       // an LTR page and vice-versa, without forcing a direction on the label.
       const text = (

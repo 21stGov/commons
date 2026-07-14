@@ -2,7 +2,7 @@
 
 export {
   LanguageSelector,
-  languageSelectorVariants,
+  languageSelectorItemVariants,
   type Language,
   type LanguageSelectorProps,
 } from "@/components/language-selector/language-selector";

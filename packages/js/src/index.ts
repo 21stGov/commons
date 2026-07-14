@@ -20,7 +20,7 @@ import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceCheckboxAll, enhanceIndeterminate } from './form.ts'
 import { enhanceInPageNavigation } from './inpagenav.ts'
-import { enhanceInputMask } from './inputmask.ts'
+import { enhanceInputMask, enhanceInputMaskReveal } from './inputmask.ts'
 import { enhanceInputOTP } from './inputotp.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
@@ -68,6 +68,7 @@ export const behaviors: Behavior[] = [
   enhanceSidebar,
   enhanceTable,
   enhanceInputMask,
+  enhanceInputMaskReveal,
   enhanceToolbar,
   enhanceCalendar,
   enhanceDatePicker,
@@ -103,6 +104,7 @@ export {
   enhanceIndeterminate,
   enhanceInPageNavigation,
   enhanceInputMask,
+  enhanceInputMaskReveal,
   enhanceInputOTP,
   enhanceMenubar,
   enhanceNavigationMenu,

@@ -30,7 +30,17 @@ function setOpen(trigger: HTMLElement, panel: HTMLElement | null, open: boolean,
 
 function panelOf(trigger: HTMLElement): HTMLElement | null {
   const id = trigger.getAttribute('aria-controls')
-  return id ? document.getElementById(id) : null
+  if (id) {
+    const byId = document.getElementById(id)
+    if (byId) return byId
+  }
+  // Fall back to the nearest panel in the same disclosure container: Base UI's
+  // Collapsible/Accordion markup (e.g. the collapsible In-Page Nav) links the
+  // trigger and panel by data-slot + CSS, not aria-controls.
+  const root = trigger.closest(
+    '[data-slot="collapsible"], [data-slot="accordion-item"]',
+  )
+  return root?.querySelector<HTMLElement>('[data-slot$="-panel"]') ?? null
 }
 
 /** Move roving focus between a group of trigger buttons (WAI-ARIA accordion keys). */
