@@ -61,22 +61,12 @@ export function formatInit(data: InitData): string {
   return `Wrote ${data.path}`;
 }
 
-/**
- * The five global-CSS import lines a Commons project needs, in the exact
- * order they must appear (matches apps/playground/src/index.css: fonts,
- * tokens, core, the tailwindcss engine, then the tokens tailwind.css
- * bridge). Single source of truth for `commons init` and the MCP server.
- */
-export const CSS_IMPORT_LINES: readonly string[] = [
-  '@import "@21stgov/commons-fonts/index.css";',
-  '@import "@21stgov/commons-tokens/index.css";',
-  '@import "@21stgov/commons-core/index.css";',
-  '@import "tailwindcss";',
-  '@import "@21stgov/commons-tokens/tailwind.css";',
-];
+// The CSS import lines and tsconfig alias live in the Workers-safe registry
+// lib (matches apps/playground/src/index.css) so `commons init`, the local MCP
+// server, and the hosted MCP server all read one source of truth.
+import { CSS_IMPORT_LINES, TSCONFIG_ALIAS } from "../registry/lib.js";
 
-/** The tsconfig.json path alias Commons component imports rely on. */
-export const TSCONFIG_ALIAS = '"@/*": ["./src/*"]';
+export { CSS_IMPORT_LINES, TSCONFIG_ALIAS };
 
 /** Human-mode next steps for stderr (guidance, not data). */
 export function initNextSteps(): string {

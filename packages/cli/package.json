@@ -11,6 +11,12 @@
   "bin": {
     "commons": "./dist/index.js"
   },
+  "exports": {
+    "./registry": {
+      "types": "./dist/registry/lib.d.ts",
+      "import": "./dist/registry/lib.js"
+    }
+  },
   "files": [
     "dist"
   ],

@@ -4,7 +4,12 @@ import { resolve } from "node:path";
 import { loadCommonsConfig, resolveRegistry } from "../config.js";
 import { EXIT, failure, failureFromError, success, type CliResult } from "../output.js";
 import { fetchRegistryIndex } from "../registry/client.js";
+import { matchesEntry } from "../registry/lib.js";
 import type { RegistryIndexEntry } from "../registry/schema.js";
+
+// The matcher lives in the Workers-safe registry lib so `commons search` and
+// the hosted MCP search tool share one implementation.
+export { matchesEntry };
 
 export interface SearchOptions {
   cwd: string;
@@ -15,18 +20,6 @@ export interface SearchData {
   registry: string;
   term: string;
   results: RegistryIndexEntry[];
-}
-
-/** Does the entry match the term across name/title/description/useWhen? */
-export function matchesEntry(entry: RegistryIndexEntry, term: string): boolean {
-  const needle = term.toLowerCase();
-  const haystacks = [
-    entry.name,
-    entry.title ?? "",
-    entry.description ?? "",
-    ...(entry.useWhen ?? []),
-  ];
-  return haystacks.some((text) => text.toLowerCase().includes(needle));
 }
 
 /**

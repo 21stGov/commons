@@ -1,0 +1,24 @@
+{
+  // Hosted Commons MCP server — remote, read-only registry tools over the live
+  // Commons registry (commonsui.com/r). Any MCP client (Claude, Cursor, …) can
+  // connect with zero local install:
+  //   Streamable HTTP → https://mcp.commonsui.com/mcp
+  //   legacy SSE       → https://mcp.commonsui.com/sse
+  //
+  // Built and deployed by .github/workflows/deploy-mcp.yml (or `pnpm deploy`).
+  "name": "commons-mcp",
+  "account_id": "cf4b4714e2d4e9e84c788b01da4cb25b",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-13",
+  // McpAgent (agents SDK) runs on a Durable Object and uses Node built-ins.
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  // Apex custom domain; commonsui.com is a zone in this account so Cloudflare
+  // provisions the DNS record + edge cert on first deploy.
+  "routes": [{ "pattern": "mcp.commonsui.com", "custom_domain": true }],
+  // The MCP session lives in a SQLite-backed Durable Object.
+  "durable_objects": {
+    "bindings": [{ "name": "MCP_OBJECT", "class_name": "CommonsMcp" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CommonsMcp"] }]
+}

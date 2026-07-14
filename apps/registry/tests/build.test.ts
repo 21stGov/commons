@@ -11,7 +11,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { registryIndexSchema, registryItemSchema } from "@21stgov/commons/src/registry/schema.ts";
+import { registryIndexSchema, registryItemSchema } from "@21stgov/commons/registry";
 import {
   assertAgentContract,
   assertNoCaseCollisions,

@@ -23,7 +23,7 @@ import {
   REGISTRY_ITEM_SCHEMA,
   registryIndexSchema,
   registryItemSchema,
-} from "@21stgov/commons/src/registry/schema.ts";
+} from "@21stgov/commons/registry";
 
 /** `$schema` URL for the v1 registry catalog (`index.json`). */
 export const CATALOG_SCHEMA = "https://commonsui.com/schema/catalog.v1.json";

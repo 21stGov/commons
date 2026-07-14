@@ -115,14 +115,48 @@ variable exactly like every other CLI command. If your project points at a
 [self-hosted registry](/docs/cli#self-hosted-registries), the agent searches
 and plans against that registry — same code path, same answers.
 
+## Hosted server (no install)
+
+There is also a **hosted, read-only** MCP server so any agent can discover and
+plan Commons installs with **zero setup** — no CLI, no project on disk:
+
+| Transport | URL |
+| --- | --- |
+| Streamable HTTP | `https://mcp.commonsui.com/mcp` |
+| SSE (legacy) | `https://mcp.commonsui.com/sse` |
+
+Add it to a client that supports remote MCP servers — for example:
+
+```sh
+claude mcp add --transport http commons https://mcp.commonsui.com/mcp
+```
+
+or, in a client's JSON config:
+
+```json
+{
+  "mcpServers": {
+    "commons": { "url": "https://mcp.commonsui.com/mcp" }
+  }
+}
+```
+
+It exposes the same four tools, resolved against the public registry
+(`commonsui.com/r`). The difference from the local server: with no project on
+disk it can't read your `commons.json` or detect file conflicts, so
+`plan_install` reports the registry file paths and hands you the exact
+`npx @21stgov/commons add …` command to run locally.
+
+**Use the local server** (above) to plan against *your* project and install;
+**use the hosted server** to let any agent explore Commons without installing
+anything.
+
 ## Notes
 
-- **Local by design.** The server runs on your machine over stdio and sends
-  nothing anywhere. No telemetry, no analytics, no model calls inside the
-  tools.
+- **The local server is local by design.** It runs on your machine over stdio
+  and sends nothing anywhere. No telemetry, no analytics, no model calls inside
+  the tools. The hosted server is read-only and fetches only the public
+  registry.
 - **Read-only by design.** There is no tool that writes files. If a model
   claims it installed a component through MCP, it did not — check for the
   CLI command it should have given you instead.
-- A hosted read-only endpoint (`mcp.commonsui.com`) is planned so agents can
-  discover Commons without cloning or installing anything; the local server
-  in the CLI is the supported path today.

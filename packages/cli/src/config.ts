@@ -5,8 +5,10 @@ import { join } from "node:path";
 import process from "node:process";
 import { z } from "zod";
 
-/** Default public Commons registry. */
-export const DEFAULT_REGISTRY = "https://commonsui.com/r";
+import { DEFAULT_REGISTRY } from "./registry/lib.js";
+
+// Re-exported from the Workers-safe registry lib (single source of truth).
+export { DEFAULT_REGISTRY };
 
 /** `$schema` URL for commons.json. */
 export const COMMONS_CONFIG_SCHEMA = "https://commonsui.com/schema/commons.json";
