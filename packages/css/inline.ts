@@ -34,6 +34,12 @@ function staticClasses(expr: ts.Expression, resolve: (name: string) => string[])
   if (ts.isParenthesizedExpression(expr)) {
     return staticClasses(expr.expression, resolve)
   }
+  if (ts.isConditionalExpression(expr)) {
+    // `flag ? on : off` — take the else branch, i.e. the default/off state, so a
+    // component's resting look (alert-body gap-105, …) isn't lost. The opt-in
+    // state is a variant the runtime/authored markup handles.
+    return staticClasses(expr.whenFalse, resolve)
+  }
   if (ts.isCallExpression(expr)) {
     // `[…].join(' ')` — resolve the array being joined.
     if (
