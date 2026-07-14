@@ -1,0 +1,20 @@
+<!--
+  Authored canonical Calendar markup (no React). The React side wraps
+  react-day-picker; this is a from-scratch vanilla month grid. @21stgov/commons-js
+  fills the day grid, navigates months (buttons / PageUp-Down), moves the focused
+  day with the arrow keys, and selects on click / Enter.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="cal-h">
+    <h3 id="cal-h" class="text-sm font-semibold">Select a date</h3>
+    <div class="cui-calendar" data-slot="calendar" data-year="2026" data-month="6" data-today="2026-07-14" data-selected="2026-07-14" role="group" aria-label="Calendar">
+      <div class="cui-calendar-header">
+        <button type="button" class="cui-calendar-nav" data-slot="calendar-prev" aria-label="Previous month"><svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m10 3.5-4.5 4.5 4.5 4.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <span class="cui-calendar-caption" data-slot="calendar-caption" aria-live="polite">July 2026</span>
+        <button type="button" class="cui-calendar-nav" data-slot="calendar-next" aria-label="Next month"><svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      </div>
+      <div class="cui-calendar-weekdays" aria-hidden="true"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+      <div class="cui-calendar-days" data-slot="calendar-days" role="grid" aria-label="July 2026"></div>
+    </div>
+  </section>
+</div>

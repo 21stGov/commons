@@ -8,6 +8,7 @@
  * is only enhanced once.
  */
 
+import { enhanceCalendar } from './calendar.ts'
 import { enhanceCarousel } from './carousel.ts'
 import { enhanceCharacterCount } from './charactercount.ts'
 import { enhanceComboBox } from './combobox.ts'
@@ -61,6 +62,7 @@ export const behaviors: Behavior[] = [
   enhanceTable,
   enhanceInputMask,
   enhanceToolbar,
+  enhanceCalendar,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -70,6 +72,7 @@ export function enhance(root: ParentNode = document): void {
 
 export {
   enhanceAccordion,
+  enhanceCalendar,
   enhanceCarousel,
   enhanceCharacterCount,
   enhanceCollapsible,

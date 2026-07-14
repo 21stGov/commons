@@ -16,6 +16,8 @@
 @import '@21stgov/commons-core/index.css';
 @import '@21stgov/commons-css/commons.css';
 @import './generated/scaffold.css';
+/* CSS for authored components with no generated .cui-* rules yet (Calendar). */
+@import './authored/authored.css';
 
 /* ---- Playground chrome (hand-written plain CSS, tokens only) -------------- */
 
