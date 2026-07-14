@@ -14,6 +14,18 @@
       "port": 5199
     },
     {
+      "name": "html-playground",
+      "runtimeExecutable": "/Users/seth/.nvm/versions/node/v24.18.0/bin/node",
+      "runtimeArgs": [
+        "apps/html-playground/node_modules/vite/bin/vite.js",
+        "apps/html-playground",
+        "--port",
+        "5198",
+        "--strictPort"
+      ],
+      "port": 5198
+    },
+    {
       "name": "docs",
       "runtimeExecutable": "/Users/seth/.nvm/versions/node/v24.18.0/bin/node",
       "runtimeArgs": [

@@ -22,7 +22,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import esbuild from 'esbuild'
 
-import { extractInlineSlots } from './inline.ts'
+import { extractInlineSlots, extractSlotAliases } from './inline.ts'
 
 const require = createRequire(import.meta.url)
 /** Absolute path to @21stgov/commons-tokens dist (the @theme bridge lives here). */
@@ -187,12 +187,31 @@ export interface Swatch {
   label: string
 }
 
-/** One component export -> its `.cui-*` raw rules plus its gallery swatches. */
-export function emitVariant(cap: CapturedVariant): { rules: RawRule[]; swatches: Swatch[] } {
+/**
+ * A variant modifier's fingerprint: the `.cui-*--x` class it produces, the cva
+ * group it belongs to, and the raw utility classes that identify it. Used to
+ * recover a rendered element's variant when the component exposes it only via
+ * classes (not a `data-*` attribute) — e.g. Button.
+ */
+export interface VariantSignature {
+  /** The modifier class, no leading dot, e.g. `cui-button--primary`. */
+  modifier: string
+  /** The cva group, e.g. `variant` or `size` (so one match wins per group). */
+  group: string
+  /** The raw cva utility classes for this value. */
+  classes: string[]
+}
+
+/** One component export -> its `.cui-*` raw rules, gallery swatches, and signatures. */
+export function emitVariant(cap: CapturedVariant): {
+  rules: RawRule[]
+  swatches: Swatch[]
+  signatures: VariantSignature[]
+} {
   const name = classBase(cap.exportName)
   const sel = `.cui-${name}`
   const baseClasses = [...cap.base]
-  const modifiers: Array<{ sel: string; classes: string[]; label: string }> = []
+  const modifiers: Array<{ sel: string; classes: string[]; label: string; group: string }> = []
 
   for (const [group, values] of Object.entries(cap.variants)) {
     const isBoolean = Object.keys(values).every((k) => k === 'true' || k === 'false')
@@ -200,7 +219,7 @@ export function emitVariant(cap: CapturedVariant): { rules: RawRule[]; swatches:
     for (const [key, classes] of Object.entries(values)) {
       if (isBoolean) {
         if (key === 'true') {
-          modifiers.push({ sel: `${sel}--${camelToKebab(group)}`, classes, label: camelToKebab(group) })
+          modifiers.push({ sel: `${sel}--${camelToKebab(group)}`, classes, label: camelToKebab(group), group })
         } else if (String(def) === 'false') {
           baseClasses.push(...classes) // default off-state folds into the base rule
         } else {
@@ -208,10 +227,11 @@ export function emitVariant(cap: CapturedVariant): { rules: RawRule[]; swatches:
             sel: `${sel}--${camelToKebab(group)}-false`,
             classes,
             label: `${camelToKebab(group)}-false`,
+            group,
           })
         }
       } else {
-        modifiers.push({ sel: `${sel}--${camelToKebab(key)}`, classes, label: camelToKebab(key) })
+        modifiers.push({ sel: `${sel}--${camelToKebab(key)}`, classes, label: camelToKebab(key), group })
       }
     }
   }
@@ -223,7 +243,26 @@ export function emitVariant(cap: CapturedVariant): { rules: RawRule[]; swatches:
   for (const m of modifiers) {
     swatches.push({ classes: `cui-${name} ${m.sel.slice(1)}`, label: m.label })
   }
-  return { rules, swatches }
+  const signatures: VariantSignature[] = modifiers
+    .filter((m) => m.classes.length > 0)
+    .map((m) => ({ modifier: m.sel.slice(1), group: m.group, classes: m.classes }))
+  return { rules, swatches, signatures }
+}
+
+/**
+ * The class list for a component rendered under a renamed slot (an alias):
+ * the base plus, for each variant group, the classes for the prop value given
+ * on the tag or, failing that, the component's own default.
+ */
+export function aliasClasses(cap: CapturedVariant, props: Record<string, string>): string[] {
+  const classes = [...cap.base]
+  for (const [group, values] of Object.entries(cap.variants)) {
+    const chosen = props[group] ?? cap.defaultVariants[group]
+    if (chosen == null) continue
+    const picked = values[String(chosen)]
+    if (picked) classes.push(...picked)
+  }
+  return classes
 }
 
 // --- buildCss: capture all components, emit, compile ------------------------
@@ -240,6 +279,23 @@ export interface BuildResult {
   distDir: string
   /** Utility classes @apply couldn't resolve, dropped so the build succeeds. */
   dropped: string[]
+  /**
+   * Every `.cui-*` class token emitted (sans leading dot), e.g. `cui-badge`,
+   * `cui-badge--success`. The SSR demo rewrite validates candidate classes
+   * against this so it only applies classes that actually have rules.
+   */
+  classNames: string[]
+  /**
+   * Variant fingerprints per base slot (e.g. `button` -> [primary, sm, …]),
+   * so the rewrite can recover a rendered element's variant from its original
+   * classes when the component doesn't expose it via a `data-*` attribute.
+   */
+  signatures: Record<string, VariantSignature[]>
+}
+
+/** Pull the `.cui-*` class tokens (no leading dot) out of a rule selector. */
+export function selectorClassNames(selector: string): string[] {
+  return (selector.match(/\.cui-[a-zA-Z0-9_-]+/g) ?? []).map((c) => c.slice(1))
 }
 
 const SRC_HEADER = `/* SPDX-License-Identifier: MIT */\n/* GENERATED by packages/css/generate.ts from the components' cva() + inline classes. Do not edit. */\n`
@@ -270,57 +326,106 @@ export async function buildCss(): Promise<BuildResult> {
     .map((d) => d.name)
     .sort()
 
-  mkdirSync(tmpDir, { recursive: true })
   const comps: Array<{ name: string; rules: RawRule[] }> = []
   const captured: string[] = []
   const skipped: string[] = []
   const gallery: GalleryComponent[] = []
+  const classNames = new Set<string>()
+  const signatures: Record<string, VariantSignature[]> = {}
 
+  // Phase 1: capture every component's cva config up front, so alias rules
+  // (a component rendered under a renamed slot) can reference any other
+  // component regardless of processing order.
+  mkdirSync(tmpDir, { recursive: true })
+  const capsByName = new Map<string, CapturedVariant[]>()
+  const captureFailed = new Set<string>()
   try {
     for (const name of names) {
-      const entry = join(componentsDir, name, `${name}.tsx`)
-      const rules: RawRule[] = []
-      const swatches: Swatch[] = []
-
-      // 1. cva-driven variants (buttons, alerts, …).
-      const cvaClasses = new Set<string>()
       try {
-        const caps = await captureComponent(entry)
-        for (const cap of caps) {
-          cvaClasses.add(`cui-${classBase(cap.exportName)}`)
-          const emitted = emitVariant(cap)
-          rules.push(...emitted.rules)
-          swatches.push(...emitted.swatches)
-        }
+        capsByName.set(name, await captureComponent(join(componentsDir, name, `${name}.tsx`)))
       } catch (err) {
         const esb = (err as { errors?: Array<{ text: string }> }).errors
         const detail = esb ? esb.map((e) => e.text).join('; ') : (err as Error).message.split('\n')[0]
         skipped.push(`${name} (capture error: ${detail})`)
-        continue
+        captureFailed.add(name)
       }
-
-      // 2. inline data-slot parts (sub-parts + components with no cva),
-      // skipping any slot already produced by cva.
-      for (const [slot, classes] of extractInlineSlots(entry)) {
-        if (cvaClasses.has(`cui-${slot}`)) continue
-        const slotRules = rulesForClasses(`.cui-${slot}`, classes)
-        if (slotRules.length > 0) {
-          rules.push(...slotRules)
-          // A component's own main slot gets a gallery swatch; sub-parts don't.
-          if (slot === name) swatches.push({ classes: `cui-${slot}`, label: 'base' })
-        }
-      }
-
-      if (rules.length === 0) {
-        skipped.push(`${name} (no styling found)`)
-        continue
-      }
-      comps.push({ name, rules })
-      gallery.push({ name, swatches })
-      captured.push(name)
     }
   } finally {
     rmSync(tmpDir, { recursive: true, force: true })
+  }
+
+  const capByBase = new Map<string, CapturedVariant>()
+  for (const caps of capsByName.values()) {
+    for (const cap of caps) capByBase.set(classBase(cap.exportName), cap)
+  }
+  const knownBases = new Set(capByBase.keys())
+
+  // Phase 2: emit rules per component.
+  for (const name of names) {
+    if (captureFailed.has(name)) continue
+    // A component can span several files (radio-group/radio.tsx, …); scan them
+    // all for inline slots + aliases, not just <name>.tsx.
+    const partFiles = readdirSync(join(componentsDir, name))
+      .filter((f) => f.endsWith('.tsx') && !f.endsWith('.test.tsx'))
+      .sort()
+      .map((f) => join(componentsDir, name, f))
+    const rules: RawRule[] = []
+    const swatches: Swatch[] = []
+    const localSlots = new Set<string>()
+
+    // 1. cva-driven variants (buttons, alerts, …).
+    for (const cap of capsByName.get(name) ?? []) {
+      const slot = classBase(cap.exportName)
+      localSlots.add(slot)
+      const emitted = emitVariant(cap)
+      rules.push(...emitted.rules)
+      swatches.push(...emitted.swatches)
+      if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
+    }
+
+    // 2. inline data-slot parts (sub-parts + components with no cva), merged
+    // across the component's files, skipping any slot already produced by cva.
+    const inlineAgg = new Map<string, string[]>()
+    for (const file of partFiles) {
+      for (const [slot, classes] of extractInlineSlots(file)) {
+        if (localSlots.has(slot)) continue
+        inlineAgg.set(slot, [...new Set([...(inlineAgg.get(slot) ?? []), ...classes])])
+      }
+    }
+    for (const [slot, classes] of inlineAgg) {
+      const slotRules = rulesForClasses(`.cui-${slot}`, classes)
+      if (slotRules.length > 0) {
+        rules.push(...slotRules)
+        localSlots.add(slot)
+        // A component's own main slot gets a gallery swatch; sub-parts don't.
+        if (slot === name) swatches.push({ classes: `cui-${slot}`, label: 'base' })
+      }
+    }
+
+    // 3. alias slots — another cva component rendered under a renamed slot
+    // (`<Link data-slot="breadcrumb-link">`). Give the slot that component's
+    // base + resolved default variant so it isn't left unstyled.
+    for (const file of partFiles) {
+      for (const alias of extractSlotAliases(file, knownBases)) {
+        if (localSlots.has(alias.slot)) continue
+        const cap = capByBase.get(alias.base)
+        if (!cap) continue
+        const aliasRules = rulesForClasses(`.cui-${alias.slot}`, aliasClasses(cap, alias.props))
+        if (aliasRules.length > 0) {
+          rules.push(...aliasRules)
+          localSlots.add(alias.slot)
+        }
+      }
+    }
+
+    if (rules.length === 0) {
+      skipped.push(`${name} (no styling found)`)
+      continue
+    }
+    comps.push({ name, rules })
+    gallery.push({ name, swatches })
+    captured.push(name)
+    for (const rule of rules) for (const cls of selectorClassNames(rule.selector)) classNames.add(cls)
   }
 
   // Compile @apply -> token-based CSS via Tailwind (no preflight; core owns the
@@ -356,5 +461,13 @@ export async function buildCss(): Promise<BuildResult> {
     }
   }
   rmSync(join(distDir, '_input.css'), { force: true })
-  return { captured, skipped, gallery, distDir, dropped: [...dropped].sort() }
+  return {
+    captured,
+    skipped,
+    gallery,
+    distDir,
+    dropped: [...dropped].sort(),
+    classNames: [...classNames].sort(),
+    signatures,
+  }
 }

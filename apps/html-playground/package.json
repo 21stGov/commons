@@ -1,0 +1,26 @@
+{
+  "name": "html-playground",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "gen": "pnpm --filter @21stgov/commons-css build",
+    "dev": "vite --port 5198 --strictPort",
+    "build": "vite build && tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@21stgov/commons-core": "workspace:*",
+    "@21stgov/commons-css": "workspace:*",
+    "@21stgov/commons-fonts": "workspace:*",
+    "@21stgov/commons-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vite": "^8.1.4"
+  }
+}
