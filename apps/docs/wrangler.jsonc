@@ -10,6 +10,10 @@
   "name": "commons-docs",
   "account_id": "cf4b4714e2d4e9e84c788b01da4cb25b",
   "compatibility_date": "2026-07-13",
+  // Apex custom domain. commonsui.com must be a zone in this account; Cloudflare
+  // provisions the DNS record + edge cert on first deploy. The CLI resolves its
+  // registry (/r) and schemas (/schema) from this host.
+  "routes": [{ "pattern": "commonsui.com", "custom_domain": true }],
   "assets": {
     "directory": "./out",
     // Directory-style URLs (next.config trailingSlash) → serve <path>/index.html.
