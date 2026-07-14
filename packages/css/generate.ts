@@ -406,8 +406,23 @@ export async function buildCss(): Promise<BuildResult> {
       if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
     }
 
-    // 2. inline data-slot parts (sub-parts + components with no cva), skipping
-    // any slot already produced by cva.
+    // 2. alias slots — another cva component rendered under a renamed slot
+    // (`<Link data-slot="breadcrumb-link">`, `<Button data-slot="carousel-previous"
+    // className="…extras">`). Emit that component's base + resolved default
+    // variant FIRST, so any inline extras below (rounded-full, p-0) win the
+    // conflicts on override — as they do in React (utility over cva base).
+    const aliasBase = new Map<string, string[]>()
+    for (const file of partFiles) {
+      for (const alias of extractSlotAliases(file, knownBases)) {
+        if (localSlots.has(alias.slot) || aliasBase.has(alias.slot)) continue
+        const cap = capByBase.get(alias.base)
+        if (cap) aliasBase.set(alias.slot, aliasClasses(cap, alias.props))
+      }
+    }
+    for (const [slot, classes] of aliasBase) rules.push(...rulesForClasses(`.cui-${slot}`, classes))
+
+    // 3. emit inline slots (a component's own parts + alias inline extras). For
+    // an aliased slot this rule comes after its base, so its extras override.
     for (const [slot, classes] of inlineAgg) {
       if (localSlots.has(slot)) continue
       const slotRules = rulesForClasses(`.cui-${slot}`, classes)
@@ -418,22 +433,7 @@ export async function buildCss(): Promise<BuildResult> {
         if (slot === name) swatches.push({ classes: `cui-${slot}`, label: 'base' })
       }
     }
-
-    // 3. alias slots — another cva component rendered under a renamed slot
-    // (`<Link data-slot="breadcrumb-link">`). Give the slot that component's
-    // base + resolved default variant so it isn't left unstyled.
-    for (const file of partFiles) {
-      for (const alias of extractSlotAliases(file, knownBases)) {
-        if (localSlots.has(alias.slot)) continue
-        const cap = capByBase.get(alias.base)
-        if (!cap) continue
-        const aliasRules = rulesForClasses(`.cui-${alias.slot}`, aliasClasses(cap, alias.props))
-        if (aliasRules.length > 0) {
-          rules.push(...aliasRules)
-          localSlots.add(alias.slot)
-        }
-      }
-    }
+    for (const slot of aliasBase.keys()) localSlots.add(slot)
 
     if (rules.length === 0) {
       skipped.push(`${name} (no styling found)`)
@@ -454,6 +454,21 @@ export async function buildCss(): Promise<BuildResult> {
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import '${join(tokensDist, 'css', 'tailwind.css')}';
 @import './components.src.css';
+
+/* Form-control normalization the React app gets from Tailwind's preflight but
+   the framework-agnostic path (no preflight) otherwise lacks — without it bare
+   buttons (accordion trigger, ghost, carousel controls) show the UA background.
+   In the base layer so component classes (.cui-button--primary bg) still win. */
+@layer base {
+  button, [type='button'], [type='reset'], [type='submit'] {
+    appearance: button;
+    background-color: transparent;
+    background-image: none;
+  }
+  button, input, optgroup, select, textarea { margin: 0; }
+  :where(button, [role='button']) { cursor: pointer; }
+  :where(svg) { display: block; vertical-align: middle; }
+}
 
 /* The framework-agnostic markup toggles panels with the [hidden] attribute, but
    several component classes set display (grid/flex), which ties [hidden] on

@@ -998,6 +998,11 @@
       display: none;
     }
   }
+  .\[\&\[data-loading\]_\[data-slot\=button-content\]\]\:invisible {
+    &[data-loading] [data-slot=button-content] {
+      visibility: hidden;
+    }
+  }
   .\[\&\[data-selected\]\>button\]\:rounded-none {
     &[data-selected]>button {
       border-radius: 0;

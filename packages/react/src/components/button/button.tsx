@@ -26,6 +26,10 @@ export const buttonVariants = cva(
     'disabled:cursor-not-allowed disabled:border-disabled-border disabled:bg-disabled disabled:text-disabled-foreground',
     'aria-disabled:cursor-not-allowed',
     '[&_svg]:pointer-events-none [&_svg]:size-2 [&_svg]:shrink-0',
+    // While loading, hide the label (the centered spinner shows instead). The
+    // React content span also does this inline; expressing it here keeps the
+    // framework-agnostic CSS in sync (data-loading is on the button).
+    '[&[data-loading]_[data-slot=button-content]]:invisible',
   ],
   {
     variants: {
