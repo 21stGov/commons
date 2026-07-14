@@ -17,6 +17,8 @@ import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
+import { enhanceSidebar } from './sidebar.ts'
+import { enhanceSlider } from './slider.ts'
 import {
   enhanceContextMenu,
   enhanceDropdownMenu,
@@ -51,6 +53,8 @@ export const behaviors: Behavior[] = [
   enhanceCharacterCount,
   enhanceMenubar,
   enhanceNavigationMenu,
+  enhanceSlider,
+  enhanceSidebar,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -75,6 +79,8 @@ export {
   enhanceNavigationMenu,
   enhanceNumberField,
   enhancePopover,
+  enhanceSidebar,
+  enhanceSlider,
   enhanceTabs,
   enhanceToggle,
   enhanceTooltip,

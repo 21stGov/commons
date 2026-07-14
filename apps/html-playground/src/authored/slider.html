@@ -1,0 +1,44 @@
+<!--
+  Authored canonical Slider markup (no React). A native range input (overlaid,
+  opacity 0) owns interaction — drag, click, arrows, Page Up/Down; @21stgov/commons-js
+  positions the visual thumb + fills the indicator from its value.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="sl-vol-h">
+    <h3 id="sl-vol-h" class="text-sm font-semibold">Volume</h3>
+    <div class="cui-slider" data-slot="slider" style="max-width:22rem">
+      <div class="cui-slider-header" data-slot="slider-header">
+        <label class="cui-slider-label" data-slot="slider-label" for="sl-vol">Volume</label>
+        <span class="cui-slider-value" data-slot="slider-value">40</span>
+      </div>
+      <div class="cui-slider-control" data-slot="slider-control" style="position:relative">
+        <div class="cui-slider-track" data-slot="slider-track" style="position:relative">
+          <div class="cui-slider-indicator" data-slot="slider-indicator" style="position:relative;height:inherit;inset-inline-start:0;inline-size:40%"></div>
+        </div>
+        <div class="cui-slider-thumb group" data-slot="slider-thumb" style="position:absolute;inset-inline-start:40%;top:50%;translate:-50% -50%">
+          <span class="cui-slider-thumb-dot" data-slot="slider-thumb-dot"></span>
+        </div>
+        <input class="cui-slider-input" data-slot="slider-input" id="sl-vol" type="range" min="0" max="100" step="1" value="40" aria-label="Volume" style="position:absolute;inset:0;inline-size:100%;block-size:100%;opacity:0;cursor:pointer;margin:0" />
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sl-bright-h">
+    <h3 id="sl-bright-h" class="text-sm font-semibold">Brightness (step 10)</h3>
+    <div class="cui-slider" data-slot="slider" style="max-width:22rem">
+      <div class="cui-slider-header" data-slot="slider-header">
+        <label class="cui-slider-label" data-slot="slider-label" for="sl-bright">Brightness</label>
+        <span class="cui-slider-value" data-slot="slider-value">70</span>
+      </div>
+      <div class="cui-slider-control" data-slot="slider-control" style="position:relative">
+        <div class="cui-slider-track" data-slot="slider-track" style="position:relative">
+          <div class="cui-slider-indicator" data-slot="slider-indicator" style="position:relative;height:inherit;inset-inline-start:0;inline-size:70%"></div>
+        </div>
+        <div class="cui-slider-thumb group" data-slot="slider-thumb" style="position:absolute;inset-inline-start:70%;top:50%;translate:-50% -50%">
+          <span class="cui-slider-thumb-dot" data-slot="slider-thumb-dot"></span>
+        </div>
+        <input class="cui-slider-input" data-slot="slider-input" id="sl-bright" type="range" min="0" max="100" step="10" value="70" aria-label="Brightness" style="position:absolute;inset:0;inline-size:100%;block-size:100%;opacity:0;cursor:pointer;margin:0" />
+      </div>
+    </div>
+  </section>
+</div>
