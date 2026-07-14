@@ -8,6 +8,7 @@
  * is only enhanced once.
  */
 
+import { enhanceCarousel } from './carousel.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import {
@@ -36,6 +37,7 @@ export const behaviors: Behavior[] = [
   enhanceTabs,
   enhanceToggle,
   enhanceCustomSelect,
+  enhanceCarousel,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -45,6 +47,7 @@ export function enhance(root: ParentNode = document): void {
 
 export {
   enhanceAccordion,
+  enhanceCarousel,
   enhanceCollapsible,
   enhanceContextMenu,
   enhanceCustomSelect,
