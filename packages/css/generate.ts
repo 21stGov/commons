@@ -437,6 +437,12 @@ export async function buildCss(): Promise<BuildResult> {
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import '${join(tokensDist, 'css', 'tailwind.css')}';
 @import './components.src.css';
+
+/* The framework-agnostic markup toggles panels with the [hidden] attribute, but
+   several component classes set display (grid/flex), which ties [hidden] on
+   specificity and wins on source order — so overlays would show when closed.
+   Unlayered + !important makes [hidden] authoritative for consumers + our JS. */
+[hidden] { display: none !important; }
 `
   writeFileSync(join(distDir, '_input.css'), inputCss)
   const tailwindBin = join(here, 'node_modules', '.bin', 'tailwindcss')
