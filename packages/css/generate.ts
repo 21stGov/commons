@@ -355,8 +355,12 @@ export async function buildCss(): Promise<BuildResult> {
   }
 
   const capByBase = new Map<string, CapturedVariant>()
+  const cvaBases = new Map<string, string[]>()
   for (const caps of capsByName.values()) {
-    for (const cap of caps) capByBase.set(classBase(cap.exportName), cap)
+    for (const cap of caps) {
+      capByBase.set(classBase(cap.exportName), cap)
+      cvaBases.set(cap.exportName, cap.base)
+    }
   }
   const knownBases = new Set(capByBase.keys())
 
@@ -387,7 +391,7 @@ export async function buildCss(): Promise<BuildResult> {
     // across the component's files, skipping any slot already produced by cva.
     const inlineAgg = new Map<string, string[]>()
     for (const file of partFiles) {
-      for (const [slot, classes] of extractInlineSlots(file)) {
+      for (const [slot, classes] of extractInlineSlots(file, cvaBases)) {
         if (localSlots.has(slot)) continue
         inlineAgg.set(slot, [...new Set([...(inlineAgg.get(slot) ?? []), ...classes])])
       }

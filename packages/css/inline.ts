@@ -19,37 +19,50 @@ import { readFileSync } from 'node:fs'
 
 import ts from 'typescript'
 
-/** Static class tokens from a class-valued expression, resolving `const` refs. */
-function staticClasses(expr: ts.Expression, resolve: (name: string) => string[]): string[] {
+interface Resolvers {
+  /** Resolve a `const` identifier to its class tokens. */
+  const: (name: string) => string[]
+  /** Base classes for a captured `*Variants` cva export, keyed by export name. */
+  cva: Map<string, string[]>
+}
+
+/** Static class tokens from a class-valued expression, resolving `const` + cva refs. */
+function staticClasses(expr: ts.Expression, r: Resolvers): string[] {
   if (ts.isStringLiteralLike(expr)) {
     return expr.text.split(/\s+/).filter(Boolean)
   }
   if (ts.isIdentifier(expr)) {
-    return resolve(expr.text)
+    return r.const(expr.text)
   }
   if (ts.isArrayLiteralExpression(expr)) {
     // ['a b', cond && 'c', SHARED] — take the static elements.
-    return expr.elements.flatMap((el) => staticClasses(el, resolve))
+    return expr.elements.flatMap((el) => staticClasses(el, r))
   }
   if (ts.isParenthesizedExpression(expr)) {
-    return staticClasses(expr.expression, resolve)
+    return staticClasses(expr.expression, r)
   }
   if (ts.isConditionalExpression(expr)) {
     // `flag ? on : off` — take the else branch, i.e. the default/off state, so a
     // component's resting look (alert-body gap-105, …) isn't lost. The opt-in
     // state is a variant the runtime/authored markup handles.
-    return staticClasses(expr.whenFalse, resolve)
+    return staticClasses(expr.whenFalse, r)
   }
   if (ts.isCallExpression(expr)) {
+    // `xVariants()` — a cva call whose data-slot differs from the export name
+    // (input-otp-cell ← inputOTPVariants, file-input-dropzone ← fileInputVariants).
+    // Resolve it to the cva's base classes so the slot gets styled.
+    if (ts.isIdentifier(expr.expression) && r.cva.has(expr.expression.text)) {
+      return r.cva.get(expr.expression.text)!
+    }
     // `[…].join(' ')` — resolve the array being joined.
     if (
       ts.isPropertyAccessExpression(expr.expression) &&
       expr.expression.name.text === 'join'
     ) {
-      return staticClasses(expr.expression.expression, resolve)
+      return staticClasses(expr.expression.expression, r)
     }
     // cn(...) / clsx(...) — take the static parts of every argument.
-    return expr.arguments.flatMap((arg) => staticClasses(arg as ts.Expression, resolve))
+    return expr.arguments.flatMap((arg) => staticClasses(arg as ts.Expression, r))
   }
   return []
 }
@@ -130,8 +143,15 @@ export function extractSlotAliases(file: string, knownBases: Set<string>): SlotA
   return aliases
 }
 
-/** Map every `data-slot` in a component file to its static class list. */
-export function extractInlineSlots(file: string): Map<string, string[]> {
+/**
+ * Map every `data-slot` in a component file to its static class list.
+ * `cvaBases` maps captured `*Variants` export names to their base classes, so a
+ * `className={xVariants()}` on a differently-named slot still gets styled.
+ */
+export function extractInlineSlots(
+  file: string,
+  cvaBases: Map<string, string[]> = new Map(),
+): Map<string, string[]> {
   const sf = ts.createSourceFile(
     file,
     readFileSync(file, 'utf8'),
@@ -158,16 +178,17 @@ export function extractInlineSlots(file: string): Map<string, string[]> {
 
   const cache = new Map<string, string[]>()
   const resolving = new Set<string>()
-  const resolve = (name: string): string[] => {
+  const resolveConst = (name: string): string[] => {
     if (cache.has(name)) return cache.get(name)!
     const init = bindings.get(name)
     if (!init || resolving.has(name)) return []
     resolving.add(name)
-    const classes = staticClasses(init, resolve)
+    const classes = staticClasses(init, resolvers)
     resolving.delete(name)
     cache.set(name, classes)
     return classes
   }
+  const resolvers: Resolvers = { const: resolveConst, cva: cvaBases }
 
   const slots = new Map<string, string[]>()
 
@@ -194,7 +215,7 @@ export function extractInlineSlots(file: string): Map<string, string[]> {
             ts.isJsxExpression(classAttr.initializer) &&
             classAttr.initializer.expression
           ) {
-            classes = staticClasses(classAttr.initializer.expression, resolve)
+            classes = staticClasses(classAttr.initializer.expression, resolvers)
           }
         }
         if (classes.length > 0) {
