@@ -1,0 +1,28 @@
+<!--
+  Authored canonical Date Picker markup (no React). A trigger that opens the
+  vanilla Calendar in a popover; @21stgov/commons-js opens/positions it, and on
+  a calendar selection fills the trigger value and closes.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="dp-h">
+    <h3 id="dp-h" class="text-sm font-semibold">Appointment date</h3>
+    <div class="cui-date-picker" data-slot="date-picker" style="max-width:20rem">
+      <span class="text-sm font-medium" id="dp-label">Choose a date</span>
+      <button type="button" class="cui-date-picker-trigger" data-slot="date-picker-trigger" aria-haspopup="dialog" aria-expanded="false" aria-labelledby="dp-label" data-value="2026-07-14">
+        <span data-slot="date-picker-value">Jul 14, 2026</span>
+        <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="3.5" width="11" height="10" rx="1.5"></rect><path d="M2.5 6.5h11M5.5 2v2M10.5 2v2" stroke-linecap="round"></path></svg>
+      </button>
+      <div class="cui-date-picker-positioner" data-slot="date-picker-positioner" hidden>
+        <div class="cui-calendar" data-slot="calendar" data-year="2026" data-month="6" data-today="2026-07-14" data-selected="2026-07-14" role="group" aria-label="Choose date">
+          <div class="cui-calendar-header">
+            <button type="button" class="cui-calendar-nav" data-slot="calendar-prev" aria-label="Previous month"><svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m10 3.5-4.5 4.5 4.5 4.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+            <span class="cui-calendar-caption" data-slot="calendar-caption" aria-live="polite">July 2026</span>
+            <button type="button" class="cui-calendar-nav" data-slot="calendar-next" aria-label="Next month"><svg aria-hidden="true" viewBox="0 0 16 16" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 3.5 4.5 4.5L6 12.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+          </div>
+          <div class="cui-calendar-weekdays" aria-hidden="true"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+          <div class="cui-calendar-days" data-slot="calendar-days" role="grid" aria-label="July 2026"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

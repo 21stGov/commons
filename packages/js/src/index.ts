@@ -13,6 +13,7 @@ import { enhanceCarousel } from './carousel.ts'
 import { enhanceCharacterCount } from './charactercount.ts'
 import { enhanceComboBox } from './combobox.ts'
 import { enhanceCommandPalette } from './commandpalette.ts'
+import { enhanceDatePicker } from './datepicker.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
@@ -63,6 +64,7 @@ export const behaviors: Behavior[] = [
   enhanceInputMask,
   enhanceToolbar,
   enhanceCalendar,
+  enhanceDatePicker,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -80,6 +82,7 @@ export {
   enhanceCommandPalette,
   enhanceContextMenu,
   enhanceCustomSelect,
+  enhanceDatePicker,
   enhanceDialog,
   enhanceDropdownMenu,
   enhanceHoverCard,
