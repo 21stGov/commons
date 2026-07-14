@@ -30,6 +30,7 @@
       "The skeleton is not interactive and never receives focus",
       "It carries no keyboard behavior of its own"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not-applicable (non-interactive placeholder)",
     "highContrastTested": true,

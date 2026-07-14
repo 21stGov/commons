@@ -34,6 +34,7 @@
       "Escape closes the popover and returns focus to the trigger",
       "The trigger exposes aria-haspopup=dialog and aria-expanded; its accessible name includes the current value, and it inherits aria-describedby / aria-invalid / disabled from a surrounding Field"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (trigger and each day button are at least 2.75rem)",
     "highContrastTested": true,

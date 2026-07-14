@@ -38,6 +38,7 @@
       "When collapsed on narrow viewports, Tab reaches the disclosure toggle first; Enter or Space expands the list (Base UI wires aria-expanded / aria-controls)",
       "Browser Back is never hijacked — the hash is updated with a normal history entry"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each link row is min-h-11)",
     "highContrastTested": true,

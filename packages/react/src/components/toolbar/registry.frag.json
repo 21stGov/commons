@@ -41,6 +41,7 @@
       "Focus loops from the last item back to the first by default (loopFocus)",
       "Disabled items that are not focusable-when-disabled are skipped by arrow navigation"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each composed Button/Toggle keeps its own >=44px target)",
     "highContrastTested": true,

@@ -41,6 +41,7 @@
       "Enter / Space activate a focused stepper button; a stepper disabled at the min/max bound is skipped",
       "A disabled field is removed from the tab order and cannot change value"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each stepper is a 44x44 target; the group is min-h-11)",
     "highContrastTested": true,

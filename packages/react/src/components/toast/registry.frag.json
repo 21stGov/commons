@@ -39,6 +39,7 @@
       "The close button is a native button with an accessible name (closeLabel, default \"Dismiss\") and a 44px target; Enter or Space activates it",
       "The optional action button is a native button; it does not auto-dismiss, so onAction can decide whether to close"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

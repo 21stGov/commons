@@ -32,6 +32,7 @@
       "A disabled Field (or FieldGroup via the native fieldset attribute) removes its control(s) from the tab order",
       "Within a FieldGroup, each checkbox or radio keeps its native Tab/Space/Arrow behavior"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not applicable (non-interactive wrapper; wrapped controls meet the 44px project default)",
     "highContrastTested": true,

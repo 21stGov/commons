@@ -38,6 +38,8 @@ export interface RegistryFile {
 export interface AccessibilityContract {
   standard: string
   keyboard: string[]
+  /** Whether the keyboard interactions are proven by automated tests. */
+  keyboardVerified?: boolean
   nameRequired: boolean
   targetSize: string
   highContrastTested: boolean

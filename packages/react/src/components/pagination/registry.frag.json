@@ -32,6 +32,7 @@
       "Ellipsis markers are aria-hidden spans — never focusable, never announced",
       "At the first/last page Previous/Next are not rendered, so no disabled control sits in the tab order"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default — every control is min-h-11 and page numbers are additionally min-w-11",
     "highContrastTested": true,

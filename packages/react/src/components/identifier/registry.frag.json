@@ -30,6 +30,7 @@
       "Enter activates a link (native anchor behavior — no custom key handling)",
       "The band adds no focus traps and no composite-widget arrow-key behavior"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (identifier links render as min-h-11 targets)",
     "highContrastTested": true,

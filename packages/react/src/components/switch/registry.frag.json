@@ -39,6 +39,7 @@
       "A disabled switch is removed from the tab order and cannot toggle",
       "Clicking the label text also toggles the switch (the label is part of the target)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the padded label row is the pointer target)",
     "highContrastTested": true,

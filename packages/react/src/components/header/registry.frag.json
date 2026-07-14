@@ -33,6 +33,7 @@
       "Collapsed nav links are removed from the tab order via the hidden attribute (no focusable elements are hidden while reachable)",
       "Links are standard: Enter activates; the current page carries aria-current=\"page\" with a non-color indicator (2px block-end border + font weight)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

@@ -34,6 +34,7 @@
       "In Textarea, Enter inserts a newline (it does not submit)",
       "A disabled control is removed from the tab order"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (min-block-size 2.75rem)",
     "highContrastTested": true,

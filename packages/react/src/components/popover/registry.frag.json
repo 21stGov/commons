@@ -38,6 +38,7 @@
       "Enter or Space on PopoverClose closes the popover and returns focus to the trigger",
       "The trigger exposes aria-haspopup and reflects state with aria-expanded"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "44px project default",
     "highContrastTested": true,

@@ -44,6 +44,7 @@
       "Pointer users get hover-intent open (with a safe-polygon path to the panel); hover is never required — every panel is reachable by keyboard and touch",
       "Moving focus out of the bar closes any open panel"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (triggers and links are min-h-11 rows)",
     "highContrastTested": true,

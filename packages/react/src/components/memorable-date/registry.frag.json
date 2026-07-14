@@ -33,6 +33,7 @@
       "Focus is deliberately NOT auto-advanced between fields — the user controls focus, which keeps correction and screen-reader review possible",
       "A disabled group removes all three fields from the tab order via the native fieldset disabled attribute"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each sub-field min-block-size 2.75rem)",
     "highContrastTested": true,

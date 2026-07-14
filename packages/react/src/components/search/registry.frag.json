@@ -42,6 +42,7 @@
       "Down Arrow opens the suggestions and moves the highlight to the next suggestion; Up Arrow moves to the previous one (autocomplete variant)",
       "The highlighted suggestion is tracked with aria-activedescendant while focus stays in the input (autocomplete variant)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (input, clear, and submit each fill the 44px field height)",
     "highContrastTested": true,

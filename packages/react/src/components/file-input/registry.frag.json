@@ -32,6 +32,7 @@
       "Tab reaches each selected file's Remove button; Enter or Space removes that file and focus returns to the control",
       "A disabled control is removed from the tab order and ignores drops"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the drop zone is min-block-size 2.75rem; Remove buttons meet 44px)",
     "highContrastTested": true,

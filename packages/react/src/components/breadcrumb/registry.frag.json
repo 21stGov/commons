@@ -31,6 +31,7 @@
       "The current page is a <span aria-current=\"page\">, not a link — it is skipped by Tab and never focusable",
       "Separators are aria-hidden decoration inside each list item — never announced, never focusable"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "Breadcrumb links are inline text and use the WCAG 2.5.8 inline exception; the trail is an orientation aid, not an action bar",
     "highContrastTested": true,

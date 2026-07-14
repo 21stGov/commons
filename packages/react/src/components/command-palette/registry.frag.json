@@ -44,6 +44,7 @@
       "Escape closes the palette and returns focus to the element that was focused before it opened",
       "The highlighted command is tracked with aria-activedescendant while focus stays on the input; disabled commands stay visible but are skipped"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (command rows and the search input)",
     "highContrastTested": true,

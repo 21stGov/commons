@@ -42,6 +42,7 @@
       "The optional exact-value number input accepts typed values and stays in sync",
       "A disabled slider is removed from the tab order and cannot change"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the pressable track row and each thumb hit area are 44px even though the visual rail and dot are smaller)",
     "highContrastTested": true,

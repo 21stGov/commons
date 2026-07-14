@@ -41,6 +41,7 @@
       "Each trigger is wrapped in a heading element (headingLevel prop, default h3) per the APG accordion pattern",
       "Open state is not conveyed by color alone: the chevron direction flips and aria-expanded updates; the height animation is motion-safe only"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

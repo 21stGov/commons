@@ -31,6 +31,7 @@
       "Space does not activate (native <a> contract — it scrolls the page)",
       "Shift+Tab moves focus backwards; no keys are trapped"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "Inline links use the WCAG 2.5.8 inline exception; the standalone variant meets the 44px project default (min-h-11)",
     "highContrastTested": true,

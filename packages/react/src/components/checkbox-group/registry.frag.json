@@ -33,6 +33,7 @@
       "Disabling the group (native fieldset disabled) removes every option from the tab order",
       "Clicking an option's label row toggles it (the label is part of the 44px target)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each padded label row is the pointer target)",
     "highContrastTested": true,

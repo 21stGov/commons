@@ -34,6 +34,7 @@
       "Typing characters jumps to the next option starting with them (native type-ahead)",
       "All behavior is the native platform's own - none of it is re-implemented in script"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

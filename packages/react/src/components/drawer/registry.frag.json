@@ -41,6 +41,7 @@
       "On close, focus returns to the trigger that opened the drawer",
       "role=dialog with aria-modal while modal; the drawer is named by its DrawerTitle via aria-labelledby (a DrawerTitle or explicit aria-label is required \u2014 a dev warning fires otherwise)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

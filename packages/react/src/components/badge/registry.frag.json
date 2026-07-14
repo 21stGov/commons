@@ -33,6 +33,7 @@
       "The remove button has a localized accessible name and a 44px minimum target",
       "Status and category meaning is carried by visible text, never color alone"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "44px project default for RemovableTag; not applicable to static Badge and Tag",
     "highContrastTested": true,

@@ -46,6 +46,7 @@
       "Disabled items stay reachable by the arrow keys (the APG focusable-disabled pattern) but carry aria-disabled and cannot be activated",
       "Checkbox items expose aria-checked (menuitemcheckbox) and radio items expose aria-checked (menuitemradio)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

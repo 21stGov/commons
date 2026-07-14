@@ -31,6 +31,7 @@
       "aria-expanded reflects the current state and aria-controls references the explainer panel",
       "Collapsed content is removed from the tab order via the hidden attribute (no focusable elements are hidden while reachable)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

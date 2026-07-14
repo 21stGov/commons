@@ -40,6 +40,7 @@
       "The trigger works without the card on touch and by keyboard, and the card's content is supplementary \u2014 never the only copy of important information or the only path to an action",
       "A development warning fires when the trigger is not focusable, since the card must open on keyboard focus"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "Trigger is a link sized by its content; wrap it in a 44px target where it stands alone",
     "highContrastTested": true,

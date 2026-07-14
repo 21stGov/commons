@@ -30,6 +30,7 @@
       "Every button keeps its own focus-visible ring; the focused (or focus-within) button is lifted with z-index so its ring overlays adjacent buttons instead of being clipped by the collapsed seam",
       "Each button keeps its own native activation contract (Enter/Space) and its own accessible name — grouping is purely visual"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default — each child keeps its own Commons <Button> size (min-h-11 or larger); the group does not shrink targets",
     "highContrastTested": true,

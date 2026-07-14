@@ -63,6 +63,13 @@ export type RegistryItemCssVars = z.infer<typeof registryItemCssVarsSchema>;
 export const registryItemAccessibilitySchema = z.looseObject({
   standard: z.string().optional(),
   keyboard: z.array(z.string()).optional(),
+  /**
+   * Whether the `keyboard` interactions above are proven by automated tests.
+   * A claim the keyboard-coverage test refuses to let ship without a backing
+   * test (packages/react/test/keyboard-coverage.test.ts). Absent means "not
+   * yet verified", which the docs surface honestly.
+   */
+  keyboardVerified: z.boolean().optional(),
   nameRequired: z.boolean().optional(),
   targetSize: z.string().optional(),
   highContrastTested: z.boolean().optional(),

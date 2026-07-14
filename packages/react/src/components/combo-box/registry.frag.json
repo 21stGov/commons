@@ -43,6 +43,7 @@
       "The highlighted option is tracked with aria-activedescendant while focus stays on the input; the selected option carries aria-selected",
       "Home / End jump to the first / last option in the list"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

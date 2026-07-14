@@ -43,6 +43,7 @@
       "Enter/Space activates a pagination page, Previous, or Next control",
       "The filter input is a standard text field; typing filters the rows"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (sort buttons, checkboxes, and pagination controls are all >= 44px)",
     "highContrastTested": true,

@@ -33,6 +33,7 @@
       "Links and buttons inside a card retain native keyboard behavior and visible focus indicators",
       "Horizontal media is moved with CSS grid while heading, media, content, and footer stay in logical DOM order"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Inherited from interactive descendants; Card itself is not a control",
     "highContrastTested": true,

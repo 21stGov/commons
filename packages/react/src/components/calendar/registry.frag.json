@@ -33,6 +33,7 @@
       "Enter or Space selects the focused day",
       "The month grid is role=grid; each day is a role=gridcell with aria-selected and a localized aria-label; the month caption is a polite live region announcing month changes"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "44px project default (each day button is 2.75rem square)",
     "highContrastTested": true,

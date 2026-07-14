@@ -41,6 +41,7 @@
       "Enter follows a SidebarItem link; the current page carries aria-current=\"page\"",
       "The nav content stays in the DOM when collapsed on mobile, so screen-reader element lists and find-in-page remain predictable"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (links, group triggers, and the mobile trigger are all min-h-11)",
     "highContrastTested": true,

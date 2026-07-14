@@ -37,6 +37,7 @@
       "Double-click resets both panels to their default sizes",
       "When the group stacks below the breakpoint the separators leave the tab order"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the thin separator line carries an overlapping 44px hit area)",
     "highContrastTested": true,

@@ -39,10 +39,15 @@ function accessibilityTable(component: ComponentDoc): string {
       ? a11y.screenReadersTested.join(', ')
       : 'Not yet manually tested'
 
+  const keyboardVerified = a11y.keyboardVerified
+    ? 'Yes — verified by automated tests'
+    : 'Not yet verified'
+
   const rows: [string, string][] = [
     ['Standard', a11y.standard],
     ['Accessible name required', yesNo(a11y.nameRequired)],
     ['Minimum target size', a11y.targetSize],
+    ['Keyboard interactions verified', keyboardVerified],
     ['High contrast tested', yesNo(a11y.highContrastTested)],
     ['Screen readers tested', screenReaders],
     ['RTL support', yesNo(compat.rtl)],

@@ -37,6 +37,7 @@
       "Dropdown: the native Select's own keyboard model — Tab to focus, Arrow keys and type-ahead to move through languages, Enter/Escape to commit or dismiss",
       "A disabled control is removed from the tab order"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each toggle item is min-h-11; the dropdown select meets the same minimum)",
     "highContrastTested": true,

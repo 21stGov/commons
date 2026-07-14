@@ -28,6 +28,7 @@
     "keyboard": [
       "Not focusable and not interactive — a separator carries no keyboard interaction"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "role": "separator (non-decorative) with aria-orientation; aria-hidden with no role when decorative",
     "targetSize": "not-applicable",

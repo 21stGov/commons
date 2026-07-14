@@ -33,6 +33,7 @@
       "Disabling the group (native fieldset disabled) removes every radio from the tab order",
       "All behavior is the native radio inputs' own - nothing is re-implemented in script"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each padded label row is the pointer target)",
     "highContrastTested": true,

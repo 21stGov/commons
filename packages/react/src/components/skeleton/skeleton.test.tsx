@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { Skeleton } from '@/components/skeleton'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 describe('Skeleton accessibility (axe)', () => {
@@ -98,6 +99,19 @@ describe('Skeleton loading announcement', () => {
   it('renders no status region without a label', () => {
     render(<Skeleton />)
     expect(screen.queryByRole('status')).toBeNull()
+  })
+})
+
+describe('Skeleton keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: "never receives focus / no keyboard behavior".
+  it('exposes no keyboard focus surface — it is never a tab stop', () => {
+    const { container } = render(
+      <div role="status" aria-busy="true" aria-label="Loading">
+        <Skeleton variant="text" />
+        <Skeleton label="Loading your dashboard" />
+      </div>
+    )
+    expectNonInteractive(container)
   })
 })
 

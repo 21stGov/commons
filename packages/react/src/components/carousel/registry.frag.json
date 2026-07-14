@@ -30,6 +30,7 @@
       "A polite live region announces the current localized slide position",
       "Reduced-motion preference makes control navigation jump without animation"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default for every built-in control",
     "highContrastTested": true,

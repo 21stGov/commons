@@ -38,6 +38,7 @@
       "Clicking the group's padding or a decorative addon focuses the input",
       "A disabled group removes the input (and its actions) from the tab order"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the group is min-block-size 2.75rem; action buttons fill the height and are min 44px wide)",
     "highContrastTested": true,

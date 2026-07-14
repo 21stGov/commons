@@ -39,6 +39,7 @@
       "hiddenUntilFound renders the panel with hidden=\"until-found\" so the browser's find-in-page can locate the text and expand the panel automatically",
       "Open state is not conveyed by color alone: the optional chevron direction flips and aria-expanded updates; the height animation is motion-safe only"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

@@ -43,6 +43,7 @@
       "Pasting a full code fills every cell at once",
       "Disabled cells are removed from the tab order and cannot be edited"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (each cell is a 2.75rem square input)",
     "highContrastTested": true,

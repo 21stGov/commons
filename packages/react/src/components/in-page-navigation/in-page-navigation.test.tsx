@@ -10,6 +10,7 @@ import {
   useHeadings,
   type InPageNavItem,
 } from '@/components/in-page-navigation'
+import { expectActivatesOn, expectTabOrder } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 // ---------------------------------------------------------------------------
@@ -332,6 +333,52 @@ describe('useHeadings', () => {
     // The id-less heading is skipped and warned about.
     expect(screen.queryByRole('link', { name: 'Missing id' })).not.toBeInTheDocument()
     expect(warn).toHaveBeenCalledWith(expect.stringContaining('id'), expect.anything())
+  })
+})
+
+// ---------------------------------------------------------------------------
+// Keyboard contract (verified against accessibility.keyboard)
+// ---------------------------------------------------------------------------
+
+describe('InPageNavigation keyboard contract (verified)', () => {
+  beforeEach(() => {
+    // jsdom implements neither scrollIntoView nor smooth scrolling.
+    Element.prototype.scrollIntoView = vi.fn()
+  })
+
+  it('Tab moves through the anchor links in document order', async () => {
+    const user = userEvent.setup()
+    render(<Article items={ITEMS} />)
+    const links = ITEMS.map((item) => screen.getByRole('link', { name: item.label as string }))
+    await expectTabOrder(user, links)
+  })
+
+  it('Enter on a link activates it and moves focus to the target section', async () => {
+    const user = userEvent.setup()
+    render(<Article items={ITEMS} />)
+    const link = screen.getByRole('link', { name: 'How to apply' })
+    await expectActivatesOn(user, link, ['{Enter}'], () => {
+      expect(document.activeElement).toBe(document.getElementById('apply'))
+    })
+  })
+
+  it('collapsed: Enter and Space on the disclosure toggle expand the list', async () => {
+    const user = userEvent.setup()
+    render(<Article items={ITEMS} collapsible />)
+    const toggle = screen.getByRole('button', { name: 'On this page' })
+    expect(toggle).toHaveAttribute('aria-expanded', 'false')
+    await expectActivatesOn(
+      user,
+      toggle,
+      ['{Enter}', ' '],
+      () => {
+        expect(toggle).toHaveAttribute('aria-expanded', 'true')
+      },
+      // Collapse again between keys so each is verified from the closed state.
+      async () => {
+        if (toggle.getAttribute('aria-expanded') === 'true') await user.click(toggle)
+      }
+    )
   })
 })
 

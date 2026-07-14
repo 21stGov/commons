@@ -42,6 +42,7 @@
       "Enter or Space on DialogClose or the icon Close button closes the dialog",
       "On close, focus returns to the trigger that opened the dialog"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

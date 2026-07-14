@@ -32,6 +32,7 @@
       "The horizontal scroll region is a focusable role=region (tabindex=0) labelled by the caption, so keyboard-only users can scroll overflowing columns",
       "Stacked responsive mode keeps the real <table> in the DOM (only CSS display changes), so scope header associations survive; each cell supplies a label for its column name"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default — sortable header buttons are min-h-11 and full width",
     "highContrastTested": true,

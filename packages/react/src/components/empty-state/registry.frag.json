@@ -30,6 +30,7 @@
       "Any action passed in (e.g. a Button) is a real control in the normal tab order and is reachable with Tab",
       "The optional icon is decorative and aria-hidden, so it is not announced"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default for any action (inherited from the control passed in)",
     "highContrastTested": true,

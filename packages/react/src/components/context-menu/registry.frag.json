@@ -46,6 +46,7 @@
       "Checkbox items expose aria-checked (menuitemcheckbox) and radio items expose aria-checked (menuitemradio)",
       "Every action in the menu is also reachable through a visible control, so hiding it behind the gesture never removes access"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

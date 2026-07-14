@@ -6,6 +6,7 @@ import * as React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { DataTable, type DataTableColumn, type DataTableSort } from '@/components/data-table'
+import { getFocusable } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 afterEach(() => {
@@ -444,5 +445,95 @@ describe('DataTable pagination', () => {
     expect(onPageSizeChange).toHaveBeenCalledWith(5)
     expect(screen.getByRole('cell', { name: 'Ada Lovelace' })).toBeInTheDocument()
     expect(screen.getByRole('cell', { name: 'Edsger Dijkstra' })).toBeInTheDocument()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// Keyboard contract (verified against accessibility.keyboard)
+// ---------------------------------------------------------------------------
+
+describe('DataTable keyboard contract (verified)', () => {
+  function FullTable(): React.JSX.Element {
+    return (
+      <DataTable
+        caption="Permit applications"
+        columns={columns}
+        data={permits}
+        getRowId={getRowId}
+        selectable
+        filterable
+        pageSize={2}
+        pageSizeOptions={[2, 5]}
+      />
+    )
+  }
+
+  it('Tab reaches every control in the documented order (filter, page size, select-all, sort headers, row checkboxes, pagination)', () => {
+    const { container } = render(<FullTable />)
+    // No positive tabindex anywhere, so document order === tab order.
+    const order = getFocusable(container)
+    const at = (el: HTMLElement) => order.indexOf(el)
+
+    const filter = screen.getByRole('searchbox', { name: 'Filter table' })
+    const pageSize = screen.getByRole('combobox', { name: 'Rows per page' })
+    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows' })
+    const sortHeader = within(screen.getByRole('columnheader', { name: 'Permit' })).getByRole('button')
+    const rowCheckbox = screen.getByRole('checkbox', { name: 'Select P-100' })
+    const nextPage = within(screen.getByRole('navigation', { name: 'Table pages' })).getByRole(
+      'button',
+      { name: 'Next' }
+    )
+
+    for (const el of [filter, pageSize, selectAll, sortHeader, rowCheckbox, nextPage]) {
+      expect(at(el), 'every documented control is a reachable tab stop').toBeGreaterThanOrEqual(0)
+    }
+    expect(at(filter)).toBeLessThan(at(pageSize))
+    expect(at(pageSize)).toBeLessThan(at(selectAll))
+    expect(at(selectAll)).toBeLessThan(at(sortHeader))
+    expect(at(sortHeader)).toBeLessThan(at(rowCheckbox))
+    expect(at(rowCheckbox)).toBeLessThan(at(nextPage))
+  })
+
+  it('Enter and Space on a sortable header cycle none -> ascending -> descending', async () => {
+    const user = userEvent.setup()
+    render(<FullTable />)
+    const header = screen.getByRole('columnheader', { name: 'Applicant' })
+    const button = within(header).getByRole('button')
+
+    button.focus()
+    expect(button).toHaveFocus()
+    await user.keyboard('{Enter}')
+    expect(header).toHaveAttribute('aria-sort', 'ascending')
+    await user.keyboard(' ')
+    expect(header).toHaveAttribute('aria-sort', 'descending')
+    await user.keyboard('{Enter}')
+    expect(header).toHaveAttribute('aria-sort', 'none')
+  })
+
+  it('Space toggles a row checkbox and the select-all checkbox', async () => {
+    const user = userEvent.setup()
+    render(<FullTable />)
+
+    const row = screen.getByRole<HTMLInputElement>('checkbox', { name: 'Select P-100' })
+    row.focus()
+    expect(row.checked).toBe(false)
+    await user.keyboard(' ')
+    expect(row.checked).toBe(true)
+
+    const selectAll = screen.getByRole<HTMLInputElement>('checkbox', { name: 'Select all rows' })
+    selectAll.focus()
+    await user.keyboard(' ')
+    expect(selectAll.checked).toBe(true)
+  })
+
+  it('Enter on a pagination control activates it', async () => {
+    const user = userEvent.setup()
+    render(<FullTable />)
+    const nav = screen.getByRole('navigation', { name: 'Table pages' })
+    const next = within(nav).getByRole('button', { name: 'Next' })
+
+    next.focus()
+    await user.keyboard('{Enter}')
+    expect(screen.getByRole('cell', { name: 'Alan Turing' })).toBeInTheDocument()
   })
 })

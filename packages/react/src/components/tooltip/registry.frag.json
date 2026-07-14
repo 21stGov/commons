@@ -39,6 +39,7 @@
       "The tooltip closes only after pointer and focus both leave its trigger and popup",
       "The popup is associated to the trigger with aria-describedby and contains no interactive descendants"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "Trigger uses the Commons 44px project default unless replaced with render",
     "highContrastTested": true,

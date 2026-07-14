@@ -36,6 +36,7 @@
       "Enter or Space toggles between pressed and not pressed",
       "A disabled toggle is removed from the tab order and cannot toggle"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default on both axes (min-h-11 and min-w-11 keep an icon-only toggle at least 44x44px)",
     "highContrastTested": true,

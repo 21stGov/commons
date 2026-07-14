@@ -40,6 +40,7 @@
       "With automatic activation (default), moving focus selects the tab; with activateOnFocus=false, Enter or Space selects it",
       "Selection is exposed with aria-selected and shown with font weight plus a 2px logical-edge indicator, never color alone"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

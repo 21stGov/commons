@@ -45,6 +45,7 @@
       "Escape closes the list without changing the selection",
       "A disabled trigger is removed from the tab order; disabled options are skipped by keyboard navigation"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (the trigger and every option are min-h-11)",
     "highContrastTested": true,

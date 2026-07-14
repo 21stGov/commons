@@ -29,6 +29,7 @@
       "Enter or Space activates",
       "While loading, the button stays focusable but activation is suppressed (aria-busy + aria-disabled)"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

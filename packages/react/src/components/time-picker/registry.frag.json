@@ -33,6 +33,7 @@
       "Escape closes the list; pressing Escape again clears the input",
       "Home / End jump to the first / last time in the list"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default",
     "highContrastTested": true,

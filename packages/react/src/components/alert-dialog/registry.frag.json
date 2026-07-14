@@ -40,6 +40,7 @@
       "Enter or Space activates the focused action button",
       "Escape does NOT cancel by default (the interruption must be resolved by an action); set dismissOnEscape to allow Escape to cancel"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "44px project default (both action buttons are full Commons Buttons)",
     "highContrastTested": true,
