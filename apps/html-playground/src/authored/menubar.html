@@ -1,0 +1,45 @@
+<!--
+  Authored canonical Menubar markup (no React). A bar of menus; @21stgov/commons-js
+  opens one at a time, switches on hover while open, moves between triggers with
+  Arrow Left/Right, opens + focuses the first item on Arrow Down, and closes on
+  Escape / outside press.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="mb-h">
+    <h3 id="mb-h" class="text-sm font-semibold">Application menu bar</h3>
+    <div class="cui-menubar" data-slot="menubar" role="menubar" aria-label="Document">
+      <div data-slot="menubar-menu">
+        <button type="button" class="cui-menubar-trigger" data-slot="menubar-trigger" role="menuitem" aria-haspopup="menu" aria-expanded="false">File</button>
+        <div class="cui-menubar-positioner" data-slot="menubar-positioner" hidden>
+          <div class="cui-menubar-content" data-slot="menubar-content" role="menu" aria-label="File" tabindex="-1">
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">New document<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘N</span></button>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Open…<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘O</span></button>
+            <div class="cui-menubar-separator" data-slot="menubar-separator" role="separator"></div>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Save<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘S</span></button>
+          </div>
+        </div>
+      </div>
+      <div data-slot="menubar-menu">
+        <button type="button" class="cui-menubar-trigger" data-slot="menubar-trigger" role="menuitem" aria-haspopup="menu" aria-expanded="false">Edit</button>
+        <div class="cui-menubar-positioner" data-slot="menubar-positioner" hidden>
+          <div class="cui-menubar-content" data-slot="menubar-content" role="menu" aria-label="Edit" tabindex="-1">
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Undo<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘Z</span></button>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Redo<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⇧⌘Z</span></button>
+            <div class="cui-menubar-separator" data-slot="menubar-separator" role="separator"></div>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Find…<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘F</span></button>
+          </div>
+        </div>
+      </div>
+      <div data-slot="menubar-menu">
+        <button type="button" class="cui-menubar-trigger" data-slot="menubar-trigger" role="menuitem" aria-haspopup="menu" aria-expanded="false">View</button>
+        <div class="cui-menubar-positioner" data-slot="menubar-positioner" hidden>
+          <div class="cui-menubar-content" data-slot="menubar-content" role="menu" aria-label="View" tabindex="-1">
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Zoom in<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘+</span></button>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Zoom out<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘-</span></button>
+            <button type="button" class="cui-menubar-item" data-slot="menubar-item" role="menuitem" tabindex="-1">Reset zoom<span class="cui-menubar-shortcut" data-slot="menubar-shortcut">⌘0</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
