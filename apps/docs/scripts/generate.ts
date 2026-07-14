@@ -41,7 +41,7 @@ for (const component of components) {
 writeFileSync(join(generatedDir, 'index.mdx'), buildComponentsIndexMdx(components))
 writeFileSync(
   join(generatedDir, 'meta.json'),
-  `${JSON.stringify({ title: 'Components', defaultOpen: true }, null, 2)}\n`,
+  `${JSON.stringify({ title: 'Components', defaultOpen: true }, null, 2)}\n`
 )
 
 // --- 1b. Changelog page (from the repo-root CHANGELOG.md) -------------------
@@ -56,7 +56,7 @@ writeFileSync(
   join(appDir, 'content', 'docs', 'changelog.mdx'),
   `---\ntitle: "Changelog"\ndescription: "Notable, user-facing changes to Commons, release by release."\n---\n\n` +
     `{/* GENERATED from the repo-root CHANGELOG.md — edit that file, not this one. */}\n\n` +
-    changelogBody,
+    changelogBody
 )
 
 // --- 2. llms.txt ------------------------------------------------------------
@@ -83,7 +83,7 @@ if (!contentOnly) {
   if (!existsSync(join(registryDist, 'index.json'))) {
     throw new Error(
       `Registry output not found at ${registryDist}. ` +
-        'Run "pnpm --filter registry build" first (turbo does this automatically for "pnpm --filter docs build").',
+        'Run "pnpm --filter registry build" first (turbo does this automatically for "pnpm --filter docs build").'
     )
   }
   const target = join(publicDir, 'r')
@@ -94,5 +94,5 @@ if (!contentOnly) {
 console.log(
   `docs: generated ${components.length} component pages, JSON schemas` +
     `${contentOnly ? ' (content only)' : ', llms.txt, and /r passthrough'}` +
-    ` (${components.map((c) => c.name).join(', ')})`,
+    ` (${components.map((c) => c.name).join(', ')})`
 )

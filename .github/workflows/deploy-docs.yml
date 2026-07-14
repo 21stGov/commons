@@ -14,11 +14,11 @@ on:
     branches: [main]
     # Only redeploy when something that affects the built site changes.
     paths:
-      - "apps/docs/**"
-      - "apps/registry/**"
-      - "packages/**"
-      - "pnpm-lock.yaml"
-      - ".github/workflows/deploy-docs.yml"
+      - 'apps/docs/**'
+      - 'apps/registry/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/deploy-docs.yml'
   workflow_dispatch:
 
 # One docs deploy at a time; cancel the in-flight run when a newer push lands.
@@ -34,6 +34,9 @@ jobs:
       # can't be referenced in `if:` directly). Until the token exists the build
       # still runs (a smoke test) and the deploy is skipped, keeping this green.
       CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      # Fathom Site IDs are public in the embed code. Leave this repository
+      # variable unset to build and deploy the site without analytics.
+      NEXT_PUBLIC_FATHOM_SITE_ID: ${{ vars.FATHOM_SITE_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7

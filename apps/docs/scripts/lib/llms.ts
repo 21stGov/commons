@@ -46,7 +46,7 @@ export function buildLlmsTxt(components: ComponentDoc[], staticPages: StaticPage
   const componentLines = components
     .map(
       (c) =>
-        `- [${c.title}](${siteUrl}/docs/components/${c.name}.md): ${c.description} (status: ${c.status})`,
+        `- [${c.title}](${siteUrl}/docs/components/${c.name}.md): ${c.description} (status: ${c.status})`
     )
     .join('\n')
 
@@ -86,6 +86,7 @@ ${registryLines}
 
 ## Optional
 
+- [Full documentation corpus](${siteUrl}/llms-full.txt): all documentation and component guides in one generated text file.
 - [JSON schemas](${siteUrl}/schema/): resolvable \`$schema\` documents for registry items, the catalog, CLI \`--json\` output, and \`commons.json\`.
 `
 }

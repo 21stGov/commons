@@ -4,20 +4,58 @@ import '@21stgov/commons-fonts/index.css'
 import './globals.css'
 
 import { RootProvider } from 'fumadocs-ui/provider/next'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 
-import { SearchDialog } from '@/components/search-dialog'
+import { FathomAnalytics } from '@/components/fathom-analytics'
 import { RouteScrollReset } from '@/components/route-scroll-reset'
+import { SearchDialog } from '@/components/search-dialog'
+import { SiteFooter } from '@/components/site-footer'
+import { buildPageMetadata, siteConfig } from '@/lib/metadata'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://commonsui.com'),
+  metadataBase: new URL(siteConfig.url),
+  ...buildPageMetadata({
+    title: siteConfig.title,
+    description: siteConfig.description,
+    path: '/',
+    absoluteTitle: true,
+  }),
   title: {
     template: '%s | Commons',
-    default: 'Commons — the public design system local government deserves',
+    default: siteConfig.title,
   },
-  description:
-    'An open-source, accessibility-first design system for U.S. local governments by 21st Gov.',
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: '21st Gov', url: 'https://21stgov.com' }],
+  creator: '21st Gov',
+  publisher: '21st Gov',
+  category: 'technology',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: [{ url: '/favicon.png', type: 'image/png', sizes: '500x500' }],
+    shortcut: ['/favicon.png'],
+    apple: [{ url: '/favicon.png', type: 'image/png', sizes: '500x500' }],
+  },
+  manifest: '/manifest.webmanifest',
+}
+
+export const viewport: Viewport = {
+  colorScheme: 'light dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f9fafa' },
+    { media: '(prefers-color-scheme: dark)', color: '#1b1c1d' },
+  ],
 }
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -43,7 +81,9 @@ export default function Layout({ children }: { children: ReactNode }) {
             Skip to main content
           </a>
           <RouteScrollReset />
+          <FathomAnalytics />
           {children}
+          <SiteFooter />
         </RootProvider>
       </body>
     </html>

@@ -88,8 +88,9 @@ Commons ships today:
   machine interface, plus a read-only **MCP server** (`commons mcp`) so agents
   can search, inspect, and plan installs against the same registry.
 - **A fully static docs site, registry, and playground** — no third-party CDN,
-  font service, or model API required. Every page has a Markdown mirror and the
-  whole project is mapped for agents at `/llms.txt`.
+  font service, or model API required. Every page has a Markdown mirror,
+  `/llms.txt` provides a concise agent index, and `/llms-full.txt` provides a
+  generated documentation corpus.
 
 ## Develop Commons
 
@@ -182,7 +183,7 @@ Commons stands on a great deal of excellent work.
 [U.S. Web Design System](https://designsystem.digital.gov)'s discipline around
 accessible, contrast-checked design tokens, and
 [shadcn/ui](https://ui.shadcn.com)'s own-your-code distribution model — a
-registry plus CLI that copies component *source* into your repository rather
+registry plus CLI that copies component _source_ into your repository rather
 than hiding it behind a versioned black-box dependency. Commons is a fork of
 neither; it is a new, government-focused system that learns from both. Some
 `class-variance-authority` variant shapes are adapted from shadcn/ui (MIT), with

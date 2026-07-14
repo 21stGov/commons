@@ -7,30 +7,77 @@ import type { JSX } from 'react'
 import { HomeActions } from '@/components/home-actions'
 import { HomeDemoStrip } from '@/components/home-demo-strip'
 import { InstallCommand } from '@/components/install-command'
+import { StructuredData } from '@/components/structured-data'
+import { absoluteUrl, buildPageMetadata, siteConfig } from '@/lib/metadata'
 
-export const metadata: Metadata = {
-  title: 'Commons — the public design system local government deserves',
+export const metadata: Metadata = buildPageMetadata({
+  title: siteConfig.title,
+  description: siteConfig.description,
+  path: '/',
+  absoluteTitle: true,
+})
+
+const homeStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://21stgov.com/#organization',
+      name: '21st Gov',
+      url: 'https://21stgov.com',
+      logo: absoluteUrl('/logo.svg'),
+      sameAs: [
+        'https://bsky.app/profile/21stgov.com',
+        'https://x.com/21stgov',
+        'https://www.npmjs.com/org/21stgov',
+        'https://github.com/21stgov',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteConfig.url}/#website`,
+      name: siteConfig.name,
+      alternateName: 'Commons Design System',
+      url: siteConfig.url,
+      description: siteConfig.description,
+      inLanguage: siteConfig.language,
+      publisher: { '@id': 'https://21stgov.com/#organization' },
+    },
+    {
+      '@type': 'SoftwareSourceCode',
+      '@id': `${siteConfig.url}/#software`,
+      name: siteConfig.name,
+      description: siteConfig.description,
+      url: siteConfig.url,
+      image: absoluteUrl(siteConfig.socialImage),
+      codeRepository: siteConfig.repository,
+      license: siteConfig.license,
+      programmingLanguage: ['TypeScript', 'CSS'],
+      runtimePlatform: ['Web', 'Node.js'],
+      isAccessibleForFree: true,
+      author: { '@id': 'https://21stgov.com/#organization' },
+      publisher: { '@id': 'https://21stgov.com/#organization' },
+      keywords: [
+        'accessible design system',
+        'local government',
+        'public services',
+        'React components',
+        'design tokens',
+        'WCAG 2.2',
+        'open source',
+      ],
+    },
+  ],
 }
 
 export default function HomePage(): JSX.Element {
   return (
     <>
+      <StructuredData data={homeStructuredData} />
       {/* HomeLayout owns the <main> landmark; this wrapper is the skip-link target. */}
       <div id="main" tabIndex={-1} className="docs-home outline-none">
         <section className="docs-home-hero" aria-labelledby="home-hero-heading">
-          <svg
-            className="docs-home-hero-mark"
-            viewBox="0 0 160 240"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <path d="M20 18h120M30 30h100M36 42h88" />
-            <path d="M38 42c-20 0-22-26-4-30 16-3 24 17 10 24-8 4-14-6-7-11" />
-            <path d="M122 42c20 0 22-26 4-30-16-3-24 17-10 24 8 4 14-6 7-11" />
-            <path d="M44 54h72l-8 14H52zM52 68h56v128H52z" />
-            <path d="M62 72v120M74 72v120M86 72v120M98 72v120" />
-            <path d="M44 196h72v12H44zM32 208h96v14H32zM20 222h120v10H20z" />
-          </svg>
+          <span className="docs-home-hero-mark" aria-hidden="true" />
           <div className="docs-home-hero-inner">
             <div className="docs-home-hero-copy">
               <p className="docs-home-kicker">Open source · Accessible · Built in public</p>
@@ -138,21 +185,6 @@ export default function HomePage(): JSX.Element {
           </section>
         </div>
       </div>
-
-      <footer className="border-t border-border">
-        <div className="docs-home-footer-inner">
-          <p>
-            A <a href="https://21stgov.com">21st Gov</a> project, built in public. Code licensed{' '}
-            <a href="https://github.com/21stgov/commons/blob/main/LICENSE">MIT</a>.
-          </p>
-          <p>
-            The <a href="https://www.brailleinstitute.org/freefont/">Atkinson Hyperlegible</a> font
-            files contained in <code>packages/fonts</code> are licensed separately under the SIL
-            Open Font License, Version 1.1.
-          </p>
-          <p>Designed and developed in the United States.</p>
-        </div>
-      </footer>
     </>
   )
 }
