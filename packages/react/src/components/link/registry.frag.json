@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "link",
+  "type": "registry:ui",
+  "title": "Link",
+  "description": "Navigates to another page, view, or site. Native <a>, always underlined, with explicit external-link marking and a visited state driven by the link-visited token.",
+  "status": "experimental",
+  "useWhen": [
+    "Navigating to another page, view, or document",
+    "Pointing to an external website (set the explicit `external` prop)",
+    "A standalone navigational call to action (variant \"standalone\")"
+  ],
+  "avoidWhen": [
+    "Triggering an in-page action such as submit, open dialog, or delete (use a button)",
+    "Expecting external links to be detected from the href — `external` is always explicit",
+    "Removing the underline to make a link look like plain text (WCAG 1.4.1: color alone must not convey link-ness)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the link",
+      "Enter activates the link and follows the href",
+      "Space does not activate (native <a> contract — it scrolls the page)",
+      "Shift+Tab moves focus backwards; no keys are trapped"
+    ],
+    "nameRequired": true,
+    "targetSize": "Inline links use the WCAG 2.5.8 inline exception; the standalone variant meets the 44px project default (min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/link/link.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

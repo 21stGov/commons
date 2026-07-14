@@ -1,0 +1,12 @@
+{
+  "zindex": {
+    "$type": "number",
+    "deep": { "$value": -99999 },
+    "base": { "$value": 0 },
+    "dropdown": { "$value": 1000 },
+    "sticky": { "$value": 1100 },
+    "overlay": { "$value": 1300 },
+    "modal": { "$value": 1400 },
+    "toast": { "$value": 1500 }
+  }
+}

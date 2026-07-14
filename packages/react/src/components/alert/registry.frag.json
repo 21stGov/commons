@@ -1,0 +1,49 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "alert",
+  "type": "registry:ui",
+  "title": "Alert",
+  "description": "Static callout for important, often time-sensitive information. Five state variants with a per-variant icon (plus optional heading) for non-color redundancy, a uniform border, slim layout, opt-in live-region semantics, and an accessible 44px dismiss button.",
+  "status": "experimental",
+  "useWhen": [
+    "Summarizing form validation errors above a form",
+    "Confirming a completed action on the same page (success)",
+    "Warning about consequences before a user proceeds",
+    "Publishing an emergency or urgent service notice",
+    "Announcing an async result by injecting an alert with the live prop"
+  ],
+  "avoidWhen": [
+    "Field-level validation messages (use the Field error slot)",
+    "Transient notifications that disappear on their own (use a toast)",
+    "Blocking decisions that need a response (use a dialog)",
+    "Marketing or promotional callouts (alerts are for status, not persuasion)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The alert body is static content and never takes focus",
+      "When dismissible, Tab moves focus to the Dismiss button (a native button with an accessible name)",
+      "Enter or Space activates Dismiss, which calls onDismiss; the consumer removes the node",
+      "After removing a dismissed alert that held focus, the consumer must move focus to a stable nearby element so it does not fall back to <body>",
+      "With live set, role=status (polite) or role=alert (assertive) is announced by screen readers without any keyboard interaction"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/alert/alert.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

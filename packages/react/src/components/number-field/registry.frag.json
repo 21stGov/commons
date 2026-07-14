@@ -1,0 +1,63 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "number-field",
+  "type": "registry:ui",
+  "title": "Number Field",
+  "description": "A numeric input with increment/decrement steppers built on Base UI's Number Field. Supports min/max/step/largeStep, locale-aware Intl formatting (currency, percent, units), and optional scrub-on-drag. Reuses the Input box styling so it matches Input and Select. A required visible label is the accessible name; steppers are named buttons with 44px targets; state is conveyed by tokens and borders (never color alone) so it survives forced-colors mode. Field-wired, controlled and uncontrolled.",
+  "status": "experimental",
+  "useWhen": [
+    "Collecting a bounded quantity or amount where stepping by a known increment helps (quantities, ages, durations)",
+    "A currency, percent, or unit amount that benefits from locale-aware formatting",
+    "A number where min/max/step should constrain and quantize input"
+  ],
+  "avoidWhen": [
+    "Free-form numeric identifiers that are not arithmetic (phone, SSN, ZIP, card, confirmation codes — use Input with the right inputMode/autoComplete)",
+    "Choosing from a small fixed set of numbers (use a select or radio-group)",
+    "A value best set by dragging along a range with visible bounds (use a slider)"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "ambient-direction",
+    "input",
+    "icon"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the input; Tab again reaches the decrease and increase buttons",
+      "ArrowUp / ArrowDown step the value by step while the input is focused",
+      "Shift+ArrowUp / Shift+ArrowDown step by largeStep; Alt+ArrowUp / Alt+ArrowDown step by smallStep",
+      "Home / End jump to min / max when those bounds are set",
+      "Enter / Space activate a focused stepper button; a stepper disabled at the min/max bound is skipped",
+      "A disabled field is removed from the tab order and cannot change value"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each stepper is a 44x44 target; the group is min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The required visible label is the accessible name via a native htmlFor association; there is no aria-label escape hatch.",
+      "Base UI renders a text input carrying aria-roledescription='Number field' (not role=spinbutton), which lets locale formatting (currency symbols, grouping separators) live in the field while typing stays forgiving; the increment/decrement buttons carry their own accessible names.",
+      "Non-color redundancy: the group and both steppers keep visible borders in every state, and disabled/invalid are signaled by dedicated tokens plus border weight, so state survives Windows High Contrast / forced-colors mode.",
+      "An optional description is linked with aria-describedby and excluded from the accessible name; repeat any format-only unit (e.g. a currency or percent suffix) there so it reaches assistive tech.",
+      "Scrub-on-drag is an optional pointer-only enhancement; the keyboard and the stepper buttons remain the primary, accessible controls so it is never the only path to a value.",
+      "The field keeps its own input id inside a Field so the Field's label does not become a second label for the same input (form-field-multiple-labels)."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/number-field/number-field.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

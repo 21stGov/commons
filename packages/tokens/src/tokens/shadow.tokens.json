@@ -1,0 +1,21 @@
+{
+  "shadow": {
+    "$description": "Elevation scale 1 (lowest) to 5 (highest).",
+    "$type": "shadow",
+    "1": {
+      "$value": { "color": "#0a0d1214", "offsetX": "0rem", "offsetY": "0.0625rem", "blur": "0.25rem", "spread": "0rem" }
+    },
+    "2": {
+      "$value": { "color": "#0a0d121f", "offsetX": "0rem", "offsetY": "0.25rem", "blur": "0.5rem", "spread": "0rem" }
+    },
+    "3": {
+      "$value": { "color": "#0a0d1229", "offsetX": "0rem", "offsetY": "0.5rem", "blur": "1rem", "spread": "0rem" }
+    },
+    "4": {
+      "$value": { "color": "#0a0d1233", "offsetX": "0rem", "offsetY": "0.75rem", "blur": "1.5rem", "spread": "0rem" }
+    },
+    "5": {
+      "$value": { "color": "#0a0d123d", "offsetX": "0rem", "offsetY": "1rem", "blur": "2rem", "spread": "0rem" }
+    }
+  }
+}

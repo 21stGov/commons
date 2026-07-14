@@ -1,0 +1,56 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "toggle",
+  "type": "registry:ui",
+  "title": "Toggle",
+  "description": "A two-state button that stays on while pressed, built on Base UI's Toggle. Renders a native button exposing aria-pressed, toggles with Enter/Space, and signals the pressed state with a filled background PLUS a pressed-in position/border cue so it is never color-only and survives forced-colors mode. cva size and variant tokens shared with Button, 44px targets on both axes, and a dev guard that requires an accessible name on icon-only toggles.",
+  "status": "experimental",
+  "useWhen": [
+    "An in-context two-state press whose state stays visible (Bold/Italic, Show map, Grid vs list view)",
+    "A single formatting or filter control that turns on and off in place",
+    "Toolbar buttons that reflect a persistent pressed state"
+  ],
+  "avoidWhen": [
+    "A selection or consent submitted with a form (use a Checkbox)",
+    "A setting that takes effect immediately as an on/off row with a label (use a Switch)",
+    "Choosing exactly one option from a set (use a radio-group or a single-selection Toggle group)",
+    "Triggering a one-off action with no persistent state (use a Button)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the toggle; Shift+Tab moves away",
+      "Enter or Space toggles between pressed and not pressed",
+      "A disabled toggle is removed from the tab order and cannot toggle"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default on both axes (min-h-11 and min-w-11 keep an icon-only toggle at least 44x44px)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The control renders a native button exposing aria-pressed; the accessible name comes from its text content or, for icon-only toggles, a required aria-label plus a matching tooltip. A dev-only guard warns when no accessible name is present.",
+      "Non-color redundancy: the pressed state nudges the content in (translate-y position cue) and switches the border to the primary token, so on/off stays distinguishable in Windows High Contrast / forced-colors mode where the pressed fill color is overridden.",
+      "Every variant keeps a visible border so forced-colors mode paints a boundary; the content nudge is gated behind motion-safe.",
+      "translate-y is a block-axis transform, so it needs no RTL mirror; all spacing uses logical properties."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/toggle/toggle.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

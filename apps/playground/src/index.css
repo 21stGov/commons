@@ -1,0 +1,53 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * Commons playground stylesheet. Import order matters — verified against the
+ * built CSS, not assumed:
+ *
+ *  0. fonts/index.css     — Atkinson Hyperlegible @font-face (optional: the
+ *                           token stacks fall back to system fonts without it).
+ *  1. tokens/index.css    — the --cui-* custom properties (primitives plus the
+ *                           light / dark / high-contrast theme blocks keyed on
+ *                           [data-theme] with prefers-* fallbacks).
+ *  2. core/index.css      — the accessible reset + base styles. Deliberately
+ *                           unlayered so it wins over Tailwind's layered
+ *                           preflight where they overlap.
+ *  3. tailwindcss         — the engine (default theme + preflight + utilities).
+ *  4. tokens/tailwind.css — the @theme bridge. Maps utilities to var(--cui-*)
+ *                           references (@theme inline) and removes Tailwind's
+ *                           stock palette (--color-*: initial), which would
+ *                           silently void the Commons contrast contract.
+ *
+ * The bridge MUST come after `tailwindcss`: `--color-*: initial` only clears
+ * the stock palette when it follows the `@theme default` declarations.
+ * (Tested: with the reverse order, a stray `bg-red-500` candidate generated a
+ * utility backed by Tailwind's oklch red; with this order it does not.)
+ * Semantic utilities inline the tokens (.bg-primary → var(--cui-bg-emphasis)),
+ * so runtime theme switching via data-theme keeps working.
+ */
+@import '@21stgov/commons-fonts/index.css';
+@import '@21stgov/commons-tokens/index.css';
+@import '@21stgov/commons-core/index.css';
+@import 'tailwindcss';
+@import '@21stgov/commons-tokens/tailwind.css';
+
+/*
+ * Component classes live in the workspace React package, outside this app's
+ * automatic content detection — scan its source so their utilities generate.
+ */
+@source "../../../packages/react/src";
+
+/*
+ * Demo rhythm lives outside Tailwind's layer because the Commons reset is
+ * intentionally unlayered. This keeps section spacing reliable even though
+ * the reset's universal margin removal outranks layered margin utilities.
+ */
+main > section > div {
+  row-gap: var(--cui-spacing-5);
+}
+
+main > section > div > section {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--cui-spacing-105);
+}

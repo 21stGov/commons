@@ -1,0 +1,169 @@
+---
+title: "Theming"
+description: "The Commons token architecture: a graded palette with a validated contrast contract, three built-in themes, and a Tailwind v4 bridge."
+---
+
+Commons styles everything through design tokens. Tokens compile from DTCG JSON
+sources into CSS custom properties prefixed `--cui-*`, and every color
+relationship ships with a machine-validated WCAG contrast contract. Understand
+two layers — primitives and semantics — and the rest of the system follows.
+
+## Primitives: the grade contract
+
+Every palette color is named `{family}.{grade}`. There are nine families
+(gray, blue, indigo, cyan, green, gold, orange, red, violet) with ten grades
+each (5–90), plus pure white and black. In CSS they appear as
+`--cui-color-blue-60`, `--cui-color-gray-5`, and so on.
+
+The grades are not decorative steps. Each grade is pinned to a fixed relative
+luminance that is **identical across families**, so the difference between two
+grades predicts their WCAG contrast ratio — for any two colors, even across
+families:
+
+| Grade delta | Guaranteed contrast | WCAG use |
+| ----------- | ------------------- | -------- |
+| ≥ 40 | ≥ 3:1 | Large text, UI components, focus indicators (AA) |
+| ≥ 50 | ≥ 4.5:1 | Normal text (AA) |
+| ≥ 70 | ≥ 7:1 | Normal text (AAA, the high-contrast theme) |
+
+Grade 50 additionally clears 4.5:1 against both pure white and pure black.
+`blue.10` on `gray.70` passes for normal text (delta 60 ≥ 50); `green.5` on
+`red.80` passes AAA (delta 75 ≥ 70). Pick colors by arithmetic, not by
+eyeballing.
+
+This is not aspirational. `pnpm validate:contrast` independently re-derives
+the WCAG math from the **built** CSS output and re-checks every graded pair,
+every grade-50-versus-white/black pairing, and every semantic pairing in all
+three themes — 1,755 checks today. The build is red if any of them fails.
+
+## Semantics: what components actually use
+
+Components never reference primitives directly. They use the semantic layer —
+purpose-named variables that the themes remap:
+
+- **Text and links** — `--cui-text-default`, `--cui-text-muted`,
+  `--cui-text-on-emphasis`, `--cui-link-default`, `--cui-link-visited`,
+  `--cui-link-hover`
+- **Surfaces** — `--cui-bg-default`, `--cui-bg-subtle`, `--cui-bg-emphasis`
+- **Borders and focus** — `--cui-border-default`, `--cui-border-strong`,
+  `--cui-focus-ring`
+- **State trios** — `--cui-state-{info|success|warning|error|emergency}-bg`,
+  `-text`, and `-border`
+- **Disabled** — `--cui-disabled-bg`, `--cui-disabled-text`,
+  `--cui-disabled-border` (dimmed but still legible, never invisible)
+
+### Action tokens
+
+Interactive controls get their own group with **per-state fills**:
+
+```css
+--cui-action-primary-bg: var(--cui-color-blue-60);
+--cui-action-primary-text: var(--cui-color-white);
+--cui-action-primary-hover: var(--cui-color-blue-70);
+--cui-action-primary-active: var(--cui-color-blue-80);
+```
+
+The same shape exists for `secondary` and `danger`. The contract: the text
+color stays at or above 4.5:1 against the resting, hover, **and** active fills
+(7:1 in the high-contrast theme). The validator checks all nine
+text-on-fill pairings per theme, so a button can never fade below readable
+mid-press.
+
+## Three themes, one contract
+
+Commons ships light, dark, and high-contrast themes. All three remap the
+**same semantic variable names** — components contain no theme conditionals.
+Each theme file assigns its own primitives: light uses `--cui-text-default:
+var(--cui-color-gray-90)` on white; dark flips to `gray-5` text on a `gray-90`
+surface with lighter links (`blue-30`); high-contrast pushes text to pure
+black, borders to black, and every text pairing to at least 7:1, with a
+thicker focus ring (`--cui-focus-width: 0.375rem`).
+
+Switching is an attribute, no rebuild needed:
+
+```html
+<html data-theme="dark">
+```
+
+Valid values are `light`, `dark`, and `high-contrast`. For visitors who never
+chose a theme, the stylesheets fall back to media queries: with no
+`data-theme` attribute set, `prefers-color-scheme: dark` applies the dark
+values and `prefers-contrast: more` applies the high-contrast values.
+
+One caveat about **this documentation site**: its theme switcher (top right)
+always writes an explicit `data-theme` attribute, and its "System" option
+resolves only `prefers-color-scheme`. So on this site the
+`prefers-contrast: more` fallback never fires — visitors who want the 7:1
+theme pick "High contrast" explicitly. In your own app, if you never set
+`data-theme`, both media-query fallbacks work as designed.
+
+## The Tailwind v4 bridge
+
+`@21stgov/commons-tokens/tailwind.css` is an `@theme inline` block that maps
+every semantic variable to shadcn-style Tailwind tokens (`bg-background`,
+`text-foreground`, `bg-primary`, `ring-ring`, state trios like `bg-error` /
+`text-error-foreground` / `border-error-border`) plus the full primitive
+palette, spacing, type, radius, shadow, and easing scales.
+
+Two properties matter:
+
+1. **Everything is a `var(--cui-*)` reference emitted inline into the
+   utilities**, so runtime `data-theme` switching keeps working — no rebuild
+   per theme.
+2. **Tailwind's stock color palette is removed** (`--color-*: initial`).
+   Commons colors carry the contrast contract; Tailwind's defaults do not
+   (Tailwind's `gray-50` is near-white, Commons `gray-50` is a mid gray). With
+   the stock palette gone, nothing can silently bypass the contract.
+
+That removal is why **import order matters**: `--color-*: initial` only clears
+the stock palette when it comes after Tailwind's own theme declarations. The
+full, verified order for your global CSS file:
+
+```css
+@import '@21stgov/commons-fonts/index.css'; /* optional: system-font fallback works */
+@import '@21stgov/commons-tokens/index.css'; /* --cui-* custom properties + themes */
+@import '@21stgov/commons-core/index.css'; /* accessible reset (unlayered on purpose) */
+@import 'tailwindcss'; /* the engine */
+@import '@21stgov/commons-tokens/tailwind.css'; /* the @theme bridge — MUST come last */
+```
+
+`index.css` stays valid plain CSS on purpose — non-Tailwind projects can use
+the tokens and themes without the bridge.
+
+The bridge is generated with a drift guard: the token build fails if a
+semantic variable exists without a bridge entry, or if the bridge references a
+variable that no longer exists. The shipped file cannot silently fall out of
+sync with the tokens.
+
+## Theming for your agency
+
+Agency branding means overriding the semantic `--cui-*` variables — not
+editing component source and not reintroducing raw hex values. Load your
+overrides after `@21stgov/commons-tokens/index.css`:
+
+```css
+/* agency-theme.css — after @21stgov/commons-tokens/index.css */
+:root,
+[data-theme='light'] {
+  --cui-action-primary-bg: var(--cui-color-green-60);
+  --cui-action-primary-hover: var(--cui-color-green-70);
+  --cui-action-primary-active: var(--cui-color-green-80);
+  --cui-bg-emphasis: var(--cui-color-green-80);
+}
+```
+
+The safest move is the one above: **swap the family, keep the grade**. Because
+every grade sits at the same luminance across families, replacing `blue-60 /
+70 / 80` with `green-60 / 70 / 80` preserves every contrast relationship the
+validator guarantees. Remember dark and high-contrast use different grades per
+theme file — if you rebrand the light theme, provide matching
+`[data-theme='dark']` and `[data-theme='high-contrast']` overrides using the
+same grades those themes use (for example, the dark theme's primary fill is
+`blue-50`, one grade lighter than the light theme's `blue-60`).
+
+If your brand color is not in the Commons palette, you leave the validated
+contract and take responsibility for it: check every pairing you changed
+(text on each state fill, borders on surfaces, focus ring on surfaces) at the
+same thresholds — 4.5:1 text and 3:1 UI in light and dark, 7:1 text in
+high-contrast. The Commons repository's `pnpm validate:contrast` shows exactly
+which pairings matter and is the model to copy for your own checks.

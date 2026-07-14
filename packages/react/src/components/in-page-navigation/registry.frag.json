@@ -1,0 +1,60 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "in-page-navigation",
+  "type": "registry:ui",
+  "title": "In-page navigation",
+  "description": "An \"On this page\" jump list: a nav landmark of anchor links to the section headings of a long content page. Uncontrolled by default, it tracks the section in view with an IntersectionObserver (SSR-safe: attached on mount, torn down on unmount) and marks the active link with aria-current=\"location\" plus non-color cues (an inline-start accent bar and heavier weight) so it survives forced-colors mode. Nested h2/h3 levels indent with logical properties that mirror in RTL; clicking smooth-scrolls (respecting prefers-reduced-motion), moves focus to the target section, and updates the hash normally. Optionally collapses behind a disclosure on narrow viewports. Pass an explicit items array, or derive them from the DOM with the opt-in useHeadings hook.",
+  "status": "experimental",
+  "useWhen": [
+    "A long content or policy page with several headed sections readers scan and jump between",
+    "Providing an \"On this page\" / table-of-contents sidebar next to article body copy",
+    "Letting readers see which section they are currently reading via scrollspy"
+  ],
+  "avoidWhen": [
+    "Navigating between different pages of a site (use a nav menu or breadcrumbs)",
+    "Paging through a result set (use Pagination)",
+    "A short page with one or two sections that needs no in-page index",
+    "Stepping through a linear multi-step task (use a step indicator)"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "link",
+    "collapsible"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through the anchor links in order; each is a native link and a regular tab stop",
+      "Enter activates a link: it smooth-scrolls to the section (or jumps under reduced motion), updates the hash normally, and moves focus to the target section",
+      "When collapsed on narrow viewports, Tab reaches the disclosure toggle first; Enter or Space expands the list (Base UI wires aria-expanded / aria-controls)",
+      "Browser Back is never hijacked — the hash is updated with a normal history entry"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each link row is min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The list is a <nav aria-label> landmark wrapping an ordered list; the active entry carries aria-current=\"location\" (a location within the current page), never aria-current=\"page\".",
+      "Non-color redundancy: the active entry is bolded and gains an inline-start accent bar in addition to aria-current, so the current section stays identifiable when the accent color is overridden in Windows High Contrast / forced-colors mode. Every row keeps a transparent inline-start border so the box is identical across states.",
+      "Scrollspy uses an IntersectionObserver created on mount and disconnected on unmount; on the server (or where IntersectionObserver is unavailable) no observer is attached and no entry is marked active.",
+      "Nested h2/h3 indentation and the accent bar use logical properties (ps-*, border-s-*) so they mirror automatically in RTL.",
+      "Clicking moves focus to the target section — making it programmatically focusable with tabindex=-1 if it is not already — so keyboard and screen-reader users land in the content, not back at the top.",
+      "Links are underlined on hover and focus; the active state never depends on color alone."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/in-page-navigation/in-page-navigation.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

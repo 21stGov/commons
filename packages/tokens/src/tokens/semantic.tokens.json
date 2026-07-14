@@ -1,0 +1,171 @@
+{
+  "text": {
+    "$type": "color",
+    "$description": "Semantic layer: what components consume. Defaults match the light theme; themes/*.tokens.json remap the same names.",
+    "default": {
+      "$value": "{color.gray.90}"
+    },
+    "muted": {
+      "$value": "{color.gray.60}"
+    },
+    "on-emphasis": {
+      "$value": "{color.white}"
+    }
+  },
+  "link": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.blue.60}"
+    },
+    "visited": {
+      "$value": "{color.violet.60}"
+    },
+    "hover": {
+      "$value": "{color.blue.70}"
+    }
+  },
+  "bg": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.white}"
+    },
+    "subtle": {
+      "$value": "{color.gray.5}"
+    },
+    "emphasis": {
+      "$value": "{color.blue.80}"
+    }
+  },
+  "border": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.gray.40}"
+    },
+    "strong": {
+      "$value": "{color.gray.70}"
+    }
+  },
+  "focus": {
+    "ring": {
+      "$type": "color",
+      "$value": "{color.blue.40}"
+    }
+  },
+  "state": {
+    "$type": "color",
+    "info": {
+      "bg": {
+        "$value": "{color.cyan.5}"
+      },
+      "text": {
+        "$value": "{color.cyan.80}"
+      },
+      "border": {
+        "$value": "{color.cyan.50}"
+      }
+    },
+    "warning": {
+      "bg": {
+        "$value": "{color.gold.5}"
+      },
+      "text": {
+        "$value": "{color.gold.80}"
+      },
+      "border": {
+        "$value": "{color.gold.50}"
+      }
+    },
+    "error": {
+      "bg": {
+        "$value": "{color.red.5}"
+      },
+      "text": {
+        "$value": "{color.red.80}"
+      },
+      "border": {
+        "$value": "{color.red.50}"
+      }
+    },
+    "success": {
+      "bg": {
+        "$value": "{color.green.5}"
+      },
+      "text": {
+        "$value": "{color.green.80}"
+      },
+      "border": {
+        "$value": "{color.green.50}"
+      }
+    },
+    "emergency": {
+      "bg": {
+        "$value": "{color.red.70}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "border": {
+        "$value": "{color.red.20}"
+      }
+    }
+  },
+  "disabled": {
+    "$type": "color",
+    "$description": "Disabled UI stays legible: text >= 3:1 against its background (dimmed-but-readable, never invisible).",
+    "text": {
+      "$value": "{color.gray.50}"
+    },
+    "bg": {
+      "$value": "{color.gray.10}"
+    },
+    "border": {
+      "$value": "{color.gray.30}"
+    }
+  },
+  "action": {
+    "$type": "color",
+    "$description": "Interactive action tokens. Text stays >= 4.5:1 against bg, hover, and active fills (grade-delta guarantee).",
+    "primary": {
+      "bg": {
+        "$value": "{color.blue.60}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "hover": {
+        "$value": "{color.blue.70}"
+      },
+      "active": {
+        "$value": "{color.blue.80}"
+      }
+    },
+    "secondary": {
+      "bg": {
+        "$value": "{color.gray.10}"
+      },
+      "text": {
+        "$value": "{color.gray.90}"
+      },
+      "hover": {
+        "$value": "{color.gray.20}"
+      },
+      "active": {
+        "$value": "{color.gray.30}"
+      }
+    },
+    "danger": {
+      "bg": {
+        "$value": "{color.red.60}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "hover": {
+        "$value": "{color.red.70}"
+      },
+      "active": {
+        "$value": "{color.red.80}"
+      }
+    }
+  }
+}

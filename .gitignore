@@ -1,0 +1,15 @@
+node_modules
+dist
+.turbo
+.next
+out
+coverage
+*.log
+.DS_Store
+.env*
+# TypeScript incremental build info
+*.tsbuildinfo
+# Vite dep-optimizer cache
+.vite
+# npm pack output
+*.tgz

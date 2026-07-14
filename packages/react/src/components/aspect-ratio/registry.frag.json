@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "aspect-ratio",
+  "type": "registry:ui",
+  "title": "Aspect Ratio",
+  "description": "A dependency-free wrapper that gives media or other content a preferred width-to-height ratio using native CSS while leaving accessible semantics to its child.",
+  "status": "experimental",
+  "useWhen": [
+    "Keeping image, map, video, chart, or preview geometry stable while responsive width changes",
+    "Reserving predictable media space before an asset loads to reduce layout shift",
+    "Presenting a consistent gallery or card-media crop while the child controls object-fit"
+  ],
+  "avoidWhen": [
+    "The content's natural dimensions communicate useful information and should not be cropped or constrained",
+    "Text or interactive content may grow beyond the ratio — fixed media geometry can clip content or focus indicators",
+    "A fixed height is required independently of width",
+    "Using the ratio wrapper as a substitute for image alt text, video captions, or other child semantics"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Aspect Ratio is not interactive and adds no tab stop or keyboard behavior",
+      "Keyboard behavior and focus indicators belong to interactive descendants",
+      "The wrapper adds no role or accessible name; child media retains its native semantics"
+    ],
+    "nameRequired": false,
+    "targetSize": "Not applicable — non-interactive layout primitive",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/aspect-ratio/aspect-ratio.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

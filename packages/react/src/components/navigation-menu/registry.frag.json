@@ -1,0 +1,66 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "navigation-menu",
+  "type": "registry:ui",
+  "title": "Navigation Menu",
+  "description": "A site navigation menu built on Base UI's Navigation Menu: a bar of top-level destinations where some items open a disclosure / mega-menu panel of grouped links. Follows the APG disclosure-navigation contract — panels open on click, Enter, Space, the orientation's arrow key, or hover-intent (never hover-only), Escape closes and returns focus to the trigger. Renders a real nav landmark, marks the current page with aria-current, reuses the Commons Link contract for links, flips logical sides in RTL, and keeps 44px targets and visible borders for forced-colors mode.",
+  "status": "experimental",
+  "useWhen": [
+    "Primary site navigation for a government or content site (a top bar of destinations)",
+    "A top-level item that reveals a mega-menu panel of grouped links with optional descriptions",
+    "Navigation that must work by keyboard and touch, not just hover",
+    "A stacked side navigation (set orientation to vertical)"
+  ],
+  "avoidWhen": [
+    "A menu of application actions revealed from a trigger (use a Dropdown Menu)",
+    "A single on/off control (use a Button or a Switch)",
+    "A long, filterable set of choices bound to a form value (use the Combo Box)",
+    "A simple flat row of links with no panels (a plain nav landmark with links is enough)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "link",
+    "icon",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves between top-level triggers and links; Shift+Tab moves back, and Tab past the bar leaves it",
+      "The trigger exposes aria-expanded and aria-controls; Enter or Space opens and closes its panel",
+      "The orientation's arrow key opens a panel and moves focus into it (Down Arrow for a horizontal bar; the inline-end arrow for a vertical one)",
+      "Arrow keys move between links inside an open panel",
+      "Escape closes the open panel and returns focus to its trigger",
+      "Pointer users get hover-intent open (with a safe-polygon path to the panel); hover is never required — every panel is reachable by keyboard and touch",
+      "Moving focus out of the bar closes any open panel"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (triggers and links are min-h-11 rows)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The root renders the nav landmark and takes an aria-label (or aria-labelledby); the panel popup is a nav region named by popupLabel so the two landmarks stay distinct.",
+      "The current page is marked with aria-current=page plus non-color indicators (a 2px block-end border and heavier weight on bar items, a weight bump on panel links), so it stays distinguishable in Windows High Contrast / forced-colors mode.",
+      "The open trigger adds weight + underline alongside its border tint, so the active item is not signalled by color alone.",
+      "Links reuse the Commons Link visual contract (always underlined — link-ness is never conveyed by color alone); the trailing trigger chevron is decorative and the open/closed state comes from aria-expanded.",
+      "The popup keeps a visible border in every state so forced-colors mode paints a boundary; the panel fade, scale, and size transitions are gated behind motion-safe.",
+      "AmbientDirection feeds the DOM dir into Base UI so logical sides and the anchored panel flip under dir=rtl like the native components."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/navigation-menu/navigation-menu.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

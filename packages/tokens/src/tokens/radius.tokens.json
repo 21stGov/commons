@@ -1,0 +1,10 @@
+{
+  "radius": {
+    "$type": "dimension",
+    "0": { "$value": "0rem" },
+    "sm": { "$value": "0.125rem" },
+    "md": { "$value": "0.25rem" },
+    "lg": { "$value": "0.5rem" },
+    "pill": { "$value": "99rem" }
+  }
+}

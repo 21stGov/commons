@@ -1,0 +1,48 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "date-picker",
+  "type": "registry:ui",
+  "title": "Date picker",
+  "description": "An Input-styled trigger button that shows the formatted selected date (or a placeholder) and opens a popover holding the Commons Calendar. Composes the Commons Popover, Calendar, and Field contract. The trigger carries aria-haspopup=dialog and aria-expanded; its accessible name always includes the current value. Selecting a day updates the value and (by default) closes the popover and returns focus to the trigger. Supports controlled and uncontrolled value, min/max/disabled dates, locale, and Intl date formatting.",
+  "status": "experimental",
+  "useWhen": [
+    "Browsing or choosing a single date visually, where seeing the month helps",
+    "Selection that depends on availability, weekends, or a min/max window",
+    "A date field in a form that should stay compact until opened"
+  ],
+  "avoidWhen": [
+    "Collecting a date the user already knows by heart such as a date of birth (use a memorable date — typing month/day/year is faster and more accessible)",
+    "Embedding a calendar directly in the page without a trigger (use the calendar)",
+    "Choosing a date range or multiple dates (use the calendar in range or multiple mode)",
+    "A small fixed set of dates (use a select or radio group)"
+  ],
+  "dependencies": ["react-day-picker"],
+  "registryDependencies": ["cn", "calendar", "popover", "button", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the trigger button",
+      "Enter or Space opens the popover and moves focus into the calendar",
+      "Inside the calendar: arrow keys move by day/week (RTL-aware), Home/End to week ends, PageUp/PageDown by month, Shift by year; Enter or Space selects the focused day",
+      "Selecting a day updates the value, closes the popover by default (configurable), and returns focus to the trigger",
+      "Escape closes the popover and returns focus to the trigger",
+      "The trigger exposes aria-haspopup=dialog and aria-expanded; its accessible name includes the current value, and it inherits aria-describedby / aria-invalid / disabled from a surrounding Field"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (trigger and each day button are at least 2.75rem)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/date-picker/date-picker.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

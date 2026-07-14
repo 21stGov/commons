@@ -1,0 +1,43 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Initiates an immediate action. Native <button> with accessible loading state, five variants, and 44px minimum target size.",
+  "status": "experimental",
+  "useWhen": [
+    "Submitting a form",
+    "Confirming an explicit action",
+    "Triggering an in-page action (open dialog, add row, start upload)"
+  ],
+  "avoidWhen": [
+    "Navigating to another page (use a link)",
+    "Toggling a persistent on/off state (use a switch)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the button",
+      "Enter or Space activates",
+      "While loading, the button stays focusable but activation is suppressed (aria-busy + aria-disabled)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/button/button.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

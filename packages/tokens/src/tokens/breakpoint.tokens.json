@@ -1,0 +1,13 @@
+{
+  "breakpoint": {
+    "$description": "USWDS-compatible viewport breakpoints. Media queries are viewport-based, so px is intentional here (the one place px is allowed).",
+    "$type": "dimension",
+    "mobile": { "$value": "320px" },
+    "mobile-lg": { "$value": "480px" },
+    "tablet": { "$value": "640px" },
+    "tablet-lg": { "$value": "880px" },
+    "desktop": { "$value": "1024px" },
+    "desktop-lg": { "$value": "1200px" },
+    "widescreen": { "$value": "1400px" }
+  }
+}

@@ -1,0 +1,18 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * @21stgov/commons-core — framework-agnostic CSS foundation for Commons.
+ *
+ * IMPORTANT: consumers must import the design tokens FIRST so the --cui-*
+ * custom properties these styles consume are defined:
+ *
+ *   @import "@21stgov/commons-tokens/index.css";  <-- first
+ *   @import "@21stgov/commons-core/index.css";    <-- then this file
+ *
+ * Every rule degrades gracefully (system-color / UA fallbacks) if tokens are
+ * missing, but themes only work with the tokens loaded.
+ */
+
+@import './reset.css';
+@import './base.css';
+@import './a11y.css';

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "date-range-picker",
+  "type": "registry:ui",
+  "title": "Date range picker",
+  "description": "An Input-styled trigger button that shows the formatted selected range (e.g. Jul 1 – 8, 2026) or a placeholder and opens a popover holding the Commons Calendar in range selection mode. Composes the Commons Popover, Calendar, and Field contract. The trigger carries aria-haspopup=dialog and aria-expanded; its accessible name always includes the current range. Picking the start then the end updates the value, and (by default) completing the range closes the popover and returns focus to the trigger. Supports controlled and uncontrolled value, min/max/disabled dates, locale, and Intl range formatting.",
+  "status": "experimental",
+  "useWhen": [
+    "Choosing a span of dates visually, such as a reservation window, report period, or availability search",
+    "A range that depends on availability, weekends, or a min/max window",
+    "A start/end date field in a form that should stay compact until opened"
+  ],
+  "avoidWhen": [
+    "Choosing a single date (use the date picker)",
+    "Collecting a date the user already knows by heart such as a date of birth (use a memorable date)",
+    "Embedding a calendar directly in the page without a trigger (use the calendar in range mode)",
+    "A small fixed set of ranges or presets (use a select or radio group)"
+  ],
+  "dependencies": ["react-day-picker"],
+  "registryDependencies": ["cn", "calendar", "popover", "button", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the trigger button",
+      "Enter or Space opens the popover and moves focus into the calendar",
+      "Inside the calendar: arrow keys move by day/week (RTL-aware), Home/End to week ends, PageUp/PageDown by month, Shift by year; Enter or Space picks the focused day as the range start, then the range end",
+      "Completing the range updates the value, closes the popover by default (configurable), and returns focus to the trigger",
+      "Escape closes the popover and returns focus to the trigger",
+      "The trigger exposes aria-haspopup=dialog and aria-expanded; its accessible name includes the current range, and it inherits aria-describedby / aria-invalid / disabled from a surrounding Field"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (trigger and each day button are at least 2.75rem)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The trigger's accessible name always includes the current range, so the value is announced when focus returns to the trigger after selection.",
+      "The between-endpoints highlight is a lighter continuous fill carried on the day cells (not the day buttons), so consecutive middle days join edge-to-edge into one band; selection is also conveyed by aria-selected and a non-color pill on the endpoints for forced-colors safety.",
+      "The trigger keeps a visible border in every state (including forced-colors) and shows the invalid state with an inset ring plus border, never color alone.",
+      "Inside a Field the trigger inherits id, aria-describedby, aria-invalid, required, and disabled; explicit props take precedence."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/date-range-picker/date-range-picker.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

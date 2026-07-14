@@ -1,0 +1,66 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "custom-select",
+  "type": "registry:ui",
+  "title": "Custom Select",
+  "description": "A styled listbox-select built on Base UI's Select for cases the native Select cannot cover: option groups, disabled options, and rich rows (icon + text). The trigger is a role=combobox button with aria-haspopup=listbox over a listbox popup; APG listbox keyboard (arrows, type-ahead, Home/End, Enter/Space, Escape), a selected-option check plus aria-selected, a forced-colors-safe chevron, Field wiring, and 44px targets. Not filterable — use ComboBox for type-ahead.",
+  "status": "experimental",
+  "useWhen": [
+    "A single-select where options need grouping under labelled sections (agencies by department, wards by district)",
+    "Options need richer content than plain text (an icon, a status marker) that a native <option> cannot render",
+    "You need a consistent, themeable dropdown surface across browsers for a short-to-medium option set"
+  ],
+  "avoidWhen": [
+    "An ordinary short list of plain-text options (use the native Commons Select — it is lighter and uses the platform's own popup)",
+    "A long list users need to filter by typing (use the combo-box for type-ahead)",
+    "Free-text entry or values not constrained to a list (use an Input)",
+    "Fewer than ~5 options where every choice should be visible (use a radio-group)",
+    "Multiple selection (this v1 is single-select)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "input",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the trigger; Shift+Tab moves away",
+      "Enter, Space, or Down/Up Arrow opens the listbox",
+      "Down Arrow / Up Arrow move the highlight to the next / previous option",
+      "Home / End jump to the first / last option",
+      "Typing printable characters moves the highlight to the matching option (type-ahead)",
+      "Enter or Space selects the highlighted option and closes the list",
+      "Escape closes the list without changing the selection",
+      "A disabled trigger is removed from the tab order; disabled options are skipped by keyboard navigation"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the trigger and every option are min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The trigger exposes role=combobox with aria-haspopup=listbox and aria-expanded; the popup (or its list) is role=listbox and each option is role=option.",
+      "The accessible name always includes the current value: aria-labelledby references the Field label (or a visually-hidden triggerLabel when standalone) plus the value text, so the trigger reads '<label>, <value>'.",
+      "Non-color redundancy: the selected option carries a check indicator and aria-selected in addition to any fill; the keyboard highlight adds font-medium as well as a muted background, so state survives forced-colors mode.",
+      "The trigger, popup, and options keep visible borders/indicators so forced-colors mode paints boundaries; the chevron is an inline SVG drawn with currentColor (not a background image) so it is not stripped there.",
+      "Option groups render role=group with an associated GroupLabel; option icons are decorative (aria-hidden) so the label carries the meaning."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/custom-select/custom-select.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

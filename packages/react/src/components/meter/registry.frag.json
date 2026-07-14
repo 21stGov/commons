@@ -1,0 +1,57 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "meter",
+  "type": "registry:ui",
+  "title": "Meter",
+  "description": "A labelled gauge for a static measured value within a known range (disk usage, budget spent, a score). Built on Base UI Meter with role=meter semantics — distinct from Progress's role=progressbar, which tracks task advancement over time. Optional threshold segments (low/optimal/high) always pair color with a visible text label and a track tick, so the coloring is never the only cue.",
+  "status": "experimental",
+  "useWhen": [
+    "Displaying a current measured level within a known range (disk usage, budget spent, a score, capacity used)",
+    "The number is a snapshot reading of a static or slowly-changing quantity, not a task's completion",
+    "You want threshold-based coloring (low/optimal/high) that stays readable without color (forced-colors, color-blindness)"
+  ],
+  "avoidWhen": [
+    "Tracking a task's advancement toward completion over time, such as an upload or import (use Progress — role=progressbar)",
+    "An indeterminate wait with no measurable value yet (use Progress's indeterminate state or a Spinner)",
+    "The number has no meaningful min/max range to gauge against (use plain text or a Badge)"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The meter is a status indicator and never takes focus",
+      "Exposes role=meter with aria-valuenow, aria-valuemin, aria-valuemax, and aria-valuetext",
+      "Unlike Progress, a Meter has no indeterminate state — a static measurement is always a known value when it is shown",
+      "The value is paired with visible label/value text so meaning never relies on the fill color or fill length alone"
+    ],
+    "nameRequired": true,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "role=meter (not role=progressbar) tells assistive tech this is a static gauge, not task progress — screen readers announce the two differently, which is the whole reason both components exist.",
+      "Threshold segments always render two non-color cues alongside the tone: the active segment's name as visible text next to the value, and a tick mark in the track at each threshold boundary.",
+      "Track and indicator both keep a visible border (forced-colors:border-[CanvasText]) so the filled portion stays legible when Windows High Contrast overrides background colors and the track/indicator would otherwise resolve to the same system color.",
+      "The indicator's inline width is anchored with Base UI's inset-inline-start positioning, so the fill grows from the inline-start edge and mirrors correctly in RTL with no extra CSS.",
+      "Width transitions are gated behind motion-safe via transition-[width] motion-reduce:transition-none."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/meter/meter.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

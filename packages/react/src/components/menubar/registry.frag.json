@@ -1,0 +1,68 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "menubar",
+  "type": "registry:ui",
+  "title": "Menubar",
+  "description": "A horizontal application menu bar (File / Edit / View) built on Base UI's Menubar, which coordinates a row of Base UI Menus under one role=menubar. Left/Right Arrow rove between top menus with a roving tabindex, Home/End jump to the ends, Down opens the focused menu, and once any menu is open, hovering or arrowing to an adjacent top menu switches to it. Each menu is a full Menu with items, checkbox and radio items, grouped labels, destructive items, shortcuts via Kbd, and nested submenus, sharing the Dropdown Menu's popup styling. The desktop-application command pattern, not website navigation.",
+  "status": "experimental",
+  "useWhen": [
+    "A desktop-application-style command bar for an app-like tool (a document editor, a data-grid console, an admin workbench)",
+    "Grouping many commands under persistent top menus (File / Edit / View / Help) that stay visible in the chrome",
+    "Commands that benefit from keyboard shortcuts, checkbox/radio state, and nested submenus organized by top menu",
+    "A workbench where users expect Alt-style menu traversal and roving between menus"
+  ],
+  "avoidWhen": [
+    "Primary navigation between the pages of an ordinary website (use the Navigation Menu, a nav landmark of links — a menubar is for app commands, not page links)",
+    "A single trigger that reveals one list of actions (use the Dropdown Menu)",
+    "A right-click / long-press action list on a region (use the Context Menu)",
+    "Marketing or content sites where a menubar's app affordances and roving keyboard model would confuse visitors"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction",
+    "dropdown-menu",
+    "kbd"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The bar exposes role=menubar with aria-orientation; each top menu is a role=menuitem button with aria-haspopup=menu and aria-expanded",
+      "Left Arrow and Right Arrow rove between the top menus (roving tabindex — only one top menu is a tab stop); the row loops at the ends by default",
+      "Home jumps to the first top menu; End jumps to the last top menu",
+      "Down Arrow (or Enter, Space) opens the focused top menu and moves focus to its first item; Up Arrow opens onto the last item",
+      "Once any menu is open, arrowing Left/Right to an adjacent top menu (or hovering it) switches menus without closing the bar",
+      "Inside an open menu: Up/Down rove between items, Home/End jump to the ends, first-letter typeahead moves the highlight, Enter or Space activates (actions close; checkbox and radio items stay open)",
+      "Escape closes the open menu and returns focus to its top menu",
+      "Right Arrow opens a submenu and focuses its first item; Left Arrow closes it back to the submenu trigger (mirrored in RTL)",
+      "Disabled top menus and items stay reachable by the arrow keys (the APG focusable-disabled pattern) but carry aria-disabled and cannot be activated",
+      "Checkbox items expose aria-checked (menuitemcheckbox) and radio items expose aria-checked (menuitemradio)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (top menus and items are min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The open/highlighted top menu and highlighted items pair their muted fill with a font-weight bump, so the active element is never signalled by color alone (WCAG 1.4.1); the roving focus ring and aria-expanded carry state in forced-colors mode.",
+      "The bar and every popup keep visible borders so forced-colors mode paints a boundary; popup motion is gated behind motion-safe.",
+      "MenubarShortcut renders decorative (aria-hidden) Kbd key caps so an item's accessible name stays the command label alone; add aria-keyshortcuts to the MenubarItem to also announce the shortcut.",
+      "This is the desktop-application command pattern; for site navigation use a nav landmark of links, not a menubar.",
+      "Wrapped in AmbientDirection so Base UI reads the DOM dir from a provider: logical sides flip, Left/Right rove the correct way, and submenu chevrons mirror in RTL."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/menubar/menubar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

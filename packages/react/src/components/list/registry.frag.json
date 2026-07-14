@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "list",
+  "type": "registry:ui",
+  "title": "List",
+  "description": "Native semantic lists — no ARIA listbox, no Base UI. List renders <ol>/<ul> with token-driven decimal, disc, or unstyled markers (unstyled adds role=\"list\" so Safari/VoiceOver keeps announcing it as a list once list-style is removed). DescriptionList/DescriptionTerm/DescriptionDetails renders <dl>/<dt>/<dd> for term-detail pairs, in stacked or two-column inline layouts. Logical properties throughout, so markers and indentation flip automatically under RTL.",
+  "status": "experimental",
+  "useWhen": [
+    "A genuine ordered or unordered sequence of items (steps, requirements, documents)",
+    "A nav-like or link list that should not show bullets but must still announce as a list (use variant=\"unstyled\")",
+    "A set of term/detail pairs — contact details, a case summary, key-value metadata (use DescriptionList)"
+  ],
+  "avoidWhen": [
+    "A list of interactive choices the user selects from (use RadioGroup, ComboBox, or DropdownMenu instead)",
+    "A collection of media-rich cards or articles (use Collection or CardGroup)",
+    "Tabular data with rows and columns (use Table)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Static content — List, ListItem, DescriptionList, DescriptionTerm, and DescriptionDetails never take focus and add no keyboard behavior",
+      "Any interactive element placed inside an item (a Link, a Button) keeps its own native keyboard contract"
+    ],
+    "nameRequired": false,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "ordered/unordered keep native list-style markers, so the <ol>/<ul> is never stripped of list semantics.",
+      "unstyled removes list-style for a nav-like list but adds an explicit role=\"list\" — Safari/VoiceOver silently drops list semantics from a marker-less <ul>/<ol> otherwise (see packages/core/src/reset.css for the same fix applied to raw HTML).",
+      "Markers use marker:text-muted-foreground, a token, and convey structure only (never a status or a color-only distinction), so they carry no meaning that forced-colors mode could remove.",
+      "DescriptionTerm/DescriptionDetails render real <dt>/<dd>, preserving the browser's built-in term-to-detail association without any added ARIA.",
+      "All indentation uses logical properties (ps-*), so markers and the two-column inline DescriptionList layout mirror automatically under dir=\"rtl\" with no AmbientDirection needed — these are native elements, not a Base UI primitive."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/list/list.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

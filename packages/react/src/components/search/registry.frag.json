@@ -1,0 +1,63 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "search",
+  "type": "registry:ui",
+  "title": "Search",
+  "description": "A site-search landmark: a form role=search wrapping a labelled type=search input with a leading magnifier and a submit button, styled as one bordered control with a single focus ring on the input. A clear button appears once there is text; Enter submits and, with an action, the form performs a native GET/POST so search works without JavaScript. Passing suggestions upgrades it to a Base UI Autocomplete combobox with a listbox, aria-activedescendant highlight tracking, and a no-results boundary — an enhancement that never blocks submitting a free-text query.",
+  "status": "experimental",
+  "useWhen": [
+    "A site-wide or section search box in a header, hero, or results page",
+    "A single free-text query submitted to a search results page or endpoint",
+    "You want optional type-ahead suggestions without losing a plain, no-JS search form"
+  ],
+  "avoidWhen": [
+    "Choosing one value from a constrained list rather than searching (use a Combo Box or Select)",
+    "Filtering a list in place with no submit step (use a labelled Input with your own filtering)",
+    "Collecting a non-query field in a larger form (use an Input inside a Field)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "input",
+    "icon",
+    "button",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the search input; Tab again reaches the clear button (when present) and the submit button",
+      "Enter submits the search from the input",
+      "Space or Enter activates the focused submit or clear button",
+      "Escape clears the highlighted suggestion / closes the suggestions list in the autocomplete variant",
+      "Down Arrow opens the suggestions and moves the highlight to the next suggestion; Up Arrow moves to the previous one (autocomplete variant)",
+      "The highlighted suggestion is tracked with aria-activedescendant while focus stays in the input (autocomplete variant)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (input, clear, and submit each fill the 44px field height)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The input has a real, visually-hidden <label> (default \"Search\"); the submit button has an accessible name from its visible text, or from aria-label when rendered icon-only.",
+      "The whole control sits in a role=search landmark form; with an `action` it submits natively (GET/POST) so search works with JavaScript disabled, and onSearch runs alongside it.",
+      "One border wraps the leading icon, input, clear, and submit, and a single focus ring appears scoped to the input (focus-within cancelled, then re-added via has-[[data-slot=input]:focus]) so a focused button rings only itself.",
+      "Non-color redundancy: a real border is kept in every state, error state adds a thicker inset ring (not color alone), and the leading/submit magnifier uses currentColor so it survives forced-colors mode; suggestion highlight adds font-weight, not just a fill.",
+      "The autocomplete variant is a strict enhancement: with no `suggestions` it is a plain search form, and a free-text query can always be submitted whether or not it matches a suggestion. The Base UI combobox is wrapped in AmbientDirection so its portalled popup follows dir=rtl."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/search/search.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

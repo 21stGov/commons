@@ -1,0 +1,248 @@
+---
+title: "CLI reference"
+description: "The @21stgov/commons command line — init, add, search, inspect — with the versioned JSON machine interface and stable exit codes."
+---
+
+The Commons CLI ships as `@21stgov/commons` and runs with `npx` — no global
+install. Four workflow commands: `init` sets up a project, `search` and
+`inspect` explore the registry, `add` copies component source into your
+repository — plus [`mcp`](/docs/mcp), which runs a read-only Model Context
+Protocol server over the same registry. Every command is designed to be equally
+usable by a person, a shell script, and an AI agent.
+
+Two flags work on every command:
+
+- `--cwd <dir>` — operate on another project directory instead of the current
+  one.
+- `--json` — print a single versioned JSON envelope to stdout (see
+  [the machine interface](#the-machine-interface---json) below).
+
+## init
+
+Sets up Commons in a project by writing `commons.json`:
+
+<Tabs groupId="package-manager" persist items={["npm", "pnpm", "yarn", "bun"]}>
+
+<Tab value="npm">
+
+```sh
+npx @21stgov/commons init --yes
+```
+
+</Tab>
+
+<Tab value="pnpm">
+
+```sh
+pnpm dlx @21stgov/commons init --yes
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```sh
+yarn dlx @21stgov/commons init --yes
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```sh
+bunx @21stgov/commons init --yes
+```
+
+</Tab>
+
+</Tabs>
+
+Without `--yes`, `init` is a preview: it prints the config it would write and
+touches nothing. With `--yes` (alias `-y`) it writes `commons.json`, refusing
+to overwrite an existing one unless you also pass `--force`.
+
+The written `commons.json`:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/commons.json",
+  "registry": "https://commonsui.com/r",
+  "paths": {
+    "ui": "src/components/ui",
+    "components": "src/components",
+    "lib": "src/lib"
+  },
+  "theme": "light"
+}
+```
+
+- `registry` — base URL the CLI fetches `{name}.json` items and the
+  `index.json` catalog from.
+- `paths` — where installed files land, by registry file type. Projects
+  without a `src` directory get `components/ui`, `components`, and `lib`
+  instead.
+- `theme` — default theme layer: `light`, `dark`, or `high-contrast`.
+
+Unknown fields never fail validation, so the file is forward-compatible.
+
+`init` then prints two manual steps it will not do for you:
+
+1. Add the `@/*` import alias to `tsconfig.json` so component imports
+   resolve: `"compilerOptions": { "paths": { "@/*": ["./src/*"] } }` (use
+   `["./*"]` when there is no `src` directory).
+2. Add the five CSS imports, in this exact order, to your global CSS file:
+
+```css
+@import '@21stgov/commons-fonts/index.css';
+@import '@21stgov/commons-tokens/index.css';
+@import '@21stgov/commons-core/index.css';
+@import 'tailwindcss';
+@import '@21stgov/commons-tokens/tailwind.css';
+```
+
+The bridge must come after `tailwindcss` — [Theming](/docs/theming) explains
+why.
+
+## add
+
+Copies one or more components — and everything they depend on — into your
+project:
+
+```sh
+npx @21stgov/commons add button
+npx @21stgov/commons add button alert gov-banner
+npx @21stgov/commons add button --dry-run
+npx @21stgov/commons add button --overwrite
+```
+
+What happens, in order:
+
+1. **Resolution.** Each named item is fetched from `{registry}/{name}.json`,
+   and its `registryDependencies` are resolved recursively — deduplicated,
+   cycle-safe, dependencies first. `add button` also installs the `cn`
+   class-name utility because `button` declares it.
+2. **Integrity verification.** When an item carries sha256 `integrity`
+   metadata, every file's hash is checked before anything else happens. A
+   mismatch — or a file missing from the integrity map — aborts with exit 3
+   and zero writes.
+3. **Path safety.** Registry items are treated as untrusted input. File paths
+   with `..` segments, absolute paths, drive letters, UNC paths,
+   Windows-reserved device names (`CON`, `NUL`, `COM1`, …), or trailing
+   dots/spaces are rejected, and every destination is re-checked against the
+   real (symlink-resolved) project root. Anything unsafe aborts with exit 3
+   and zero writes.
+4. **Pre-flight.** Every destination is classified before a single byte is
+   written: `write` (new file, or a differing file with `--overwrite`),
+   `skip` (already identical), or `conflict` (exists with different content).
+5. **Atomic outcome.** Any conflict without `--overwrite` aborts the whole
+   operation with exit 1 and **zero writes** — `add` never leaves a project
+   half-installed. So does any pair of files whose destinations collide
+   case-insensitively (Windows and macOS filesystems would silently clobber
+   one). `--overwrite` explicitly replaces files that differ.
+6. **Dependencies.** npm dependencies are collected, deduplicated, and
+   printed as an install command for your package manager — detected from
+   your lockfile (`pnpm-lock.yaml`, `yarn.lock`, `package-lock.json`,
+   `bun.lock`; default pnpm). **The CLI never runs installs itself.**
+
+`--dry-run` performs steps 1–4 and reports the complete plan — every file
+with its action, every dependency, the install command — without writing
+anything. Conflicts stay visible in the plan instead of failing, which makes
+`add <name> --dry-run --json` the safe way for scripts and agents to preview
+an installation.
+
+Files land by type: `registry:ui` files go to `paths.ui`, `registry:lib` to
+`paths.lib`, everything else to `paths.components`.
+
+## search
+
+Case-insensitive match over the registry catalog's name, title, description,
+and `useWhen` fields:
+
+```sh
+npx @21stgov/commons search date
+```
+
+Prints a name / status / description table. No matches is still exit 0 with
+an empty result list — only real failures use non-zero codes.
+
+## inspect
+
+Fetches and schema-validates a single registry item, then prints its
+contract — description, use/avoid guidance, the accessibility contract,
+files, and dependencies — without installing anything:
+
+```sh
+npx @21stgov/commons inspect button
+```
+
+With `--json`, the envelope's `data` is the complete validated registry item,
+including its file contents. Inspect before you install; it is the CLI
+equivalent of reading the label.
+
+## The machine interface (`--json`)
+
+With `--json`, every command prints **exactly one** JSON envelope to stdout
+and nothing else; diagnostics, progress, and help text go to stderr. The
+envelope is versioned and self-describing:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/cli-output.v1.json",
+  "schemaVersion": "1",
+  "cli": "0.1.0",
+  "command": "add",
+  "ok": true,
+  "data": {
+    "registry": "https://commonsui.com/r",
+    "items": ["cn", "button"],
+    "files": [{ "path": "src/lib/cn.ts", "action": "write", "item": "cn" }],
+    "dependencies": ["clsx", "tailwind-merge"],
+    "packageManager": "pnpm",
+    "installCommand": "pnpm add clsx tailwind-merge",
+    "dryRun": false,
+    "written": 2
+  }
+}
+```
+
+On failure the envelope carries `"ok": false` and
+`"error": { "code": "...", "message": "..." }` instead of `data`. This holds
+even for argument and usage errors: stdout still gets a valid envelope (with
+`"command": "unknown"` when no subcommand could be resolved), and the exit
+code is 1. A consumer can always parse stdout.
+
+Error codes are stable strings grouped by kind (the list below is
+representative, not exhaustive):
+
+- **Input / usage** — `USAGE`, `NO_TERM`, `NO_NAME`, `NO_ITEMS`,
+  `INVALID_CLIENT`, `INVALID_CONFIG`
+- **Conflict** — `CONFLICT`, `DESTINATION_COLLISION` (existing files; `add` is
+  atomic and writes nothing when it would overwrite)
+- **Registry / network** — `NETWORK`, `HTTP` (non-404 status), `NOT_FOUND`
+  (404), `INVALID_JSON` (unparseable registry response)
+- **Validation / safety** — `INVALID_SCHEMA`, `INTEGRITY_MISMATCH`,
+  `UNSAFE_PATH`
+- **Generic** — `ERROR` (an unclassified failure)
+
+## Exit codes
+
+Stable and part of the contract:
+
+| Code | Meaning |
+| ---- | ------- |
+| 0 | Success |
+| 1 | User error or conflict (bad input, existing files, config problems) |
+| 2 | Network or registry error (unreachable, 404, HTTP failure, bad JSON) |
+| 3 | Validation error (schema mismatch, integrity mismatch, unsafe paths) |
+
+## Self-hosted registries
+
+The registry is static JSON: a catalog at `{registry}/index.json` and one
+item per component at `{registry}/{name}.json`. Any static file host can
+serve one — which supports reviewed internal forks and restricted or
+disconnected environments.
+
+Point the `registry` field in `commons.json` at your own URL, or set the
+`COMMONS_REGISTRY` environment variable to override the registry for a single
+invocation without touching the config file. Every command resolves the
+registry the same way, so `search`, `inspect`, and `add` all follow it.

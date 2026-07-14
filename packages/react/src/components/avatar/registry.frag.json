@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "A person or organization identity primitive with resilient image fallback, optional non-color-only status, sizes, and RTL-safe groups.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing a compact visual identity beside a person's or organization's visible name",
+    "Representing several participants in a bounded group with an explicit overflow count",
+    "Showing presence or another status when the badge also has a localized text alternative"
+  ],
+  "avoidWhen": [
+    "The person's name or role is more important than their image — always keep useful visible text nearby",
+    "A status would be communicated by badge color alone; provide AvatarBadge label or visible status text",
+    "Using the avatar itself as an unlabeled control; wrap it in a named Button with an adequate target",
+    "Loading a remote profile image without an appropriate privacy, retention, and failure strategy"
+  ],
+  "dependencies": ["@base-ui/react", "class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Avatar is non-interactive and adds no tab stop or keyboard behavior",
+      "Interactive avatar controls must be wrapped in a named control with the Commons target-size contract",
+      "Image alt text is required by the TypeScript API; use an empty alt when adjacent visible text already names the person",
+      "A meaningful badge requires a localized label so status is not conveyed by color alone",
+      "Group overlap and badge placement use logical properties and retain meaning in RTL"
+    ],
+    "nameRequired": false,
+    "targetSize": "Not applicable until placed inside an interactive control",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/avatar/avatar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

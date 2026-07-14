@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "footer",
+  "type": "registry:ui",
+  "title": "Footer",
+  "description": "Site footer landmark with heading-titled link columns, an agency/contact strip, and an automatically current copyright line designed to follow an optional Identifier. Columns reflow at narrow widths and 400% zoom.",
+  "status": "experimental",
+  "useWhen": [
+    "The last content region on every page of a government site",
+    "Grouping secondary navigation (departments, services, policies) into labelled columns",
+    "Showing the agency line with phone and email contact links",
+    "Pairing with the identifier component inside Footer, before FooterCopyright",
+    "Keeping a copyright year current without rebuilding or reloading the page"
+  ],
+  "avoidWhen": [
+    "The identity band with policy and support links (Accessibility, Public records, Privacy) — that is the identifier component",
+    "Primary page navigation (use a header navigation instead)",
+    "More than one per page (a page has a single contentinfo landmark)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus through footer links in document order; Shift+Tab reverses",
+      "Enter activates a link (native anchor behavior — no custom key handling)",
+      "The footer adds no focus traps and no composite-widget arrow-key behavior"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (footer links render as min-h-11 targets)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/footer/footer.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "src/components/footer/footer-copyright.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

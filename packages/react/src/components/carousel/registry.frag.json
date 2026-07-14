@@ -1,0 +1,39 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "carousel",
+  "type": "registry:ui",
+  "title": "Carousel",
+  "description": "A named Embla-powered carousel with swipe, separated Commons Button controls, visible API-backed position, localized slide names, current-slide announcements, RTL arrow flipping, vertical orientation, optional direct-navigation dots, and reduced-motion behavior. Autoplay is intentionally excluded.",
+  "status": "experimental",
+  "useWhen": [
+    "A small set of equivalent featured items must share limited page space",
+    "People benefit from swipe as an additional input while visible buttons remain available",
+    "Horizontal or vertical paging materially improves a focused browsing task"
+  ],
+  "avoidWhen": [
+    "All items can fit in a normal list or grid — visible content is easier to discover",
+    "Content is urgent, required, sequential, or must not be missed",
+    "Automatic advancement is desired; Commons deliberately excludes autoplay",
+    "A carousel would hide core navigation or require an in-component scroll trap"
+  ],
+  "dependencies": ["embla-carousel-react"],
+  "registryDependencies": ["button", "cn"],
+  "compatibility": { "react": ">=19", "rtl": true, "forcedColors": true },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab reaches previous, next, optional pagination, and interactive slide descendants in document order",
+      "Enter or Space activates native carousel control buttons",
+      "Arrow keys move to the previous or next snap and flip horizontally in RTL",
+      "The carousel is a named region and each slide is a named group with slide roledescription",
+      "A polite live region announces the current localized slide position",
+      "Reduced-motion preference makes control navigation jump without animation"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default for every built-in control",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [{ "path": "src/components/carousel/carousel.tsx", "type": "registry:ui" }]
+}

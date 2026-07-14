@@ -1,0 +1,59 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "An immediate on/off setting built on Base UI's Switch. Exposes role=switch with aria-checked, Space toggles, and a required visible label that doubles as part of the 44px pointer target. State is signaled by thumb POSITION (not color alone), so it survives forced-colors mode. Optional linked description, disabled state, controlled and uncontrolled, and Field wiring.",
+  "status": "experimental",
+  "useWhen": [
+    "Toggling a single setting that takes effect immediately (notifications on/off, dark mode)",
+    "A binary preference with no separate Save step",
+    "Replacing a lone checkbox where the choice is an instant setting rather than a form value"
+  ],
+  "avoidWhen": [
+    "A selection or consent that is submitted with a form (use a Checkbox)",
+    "Choosing exactly one option from a set (use a radio-group)",
+    "Selecting multiple options from a list (use checkboxes)",
+    "Triggering an immediate action rather than a persistent state (use a button)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the switch; Shift+Tab moves away",
+      "Space toggles between on and off",
+      "A disabled switch is removed from the tab order and cannot toggle",
+      "Clicking the label text also toggles the switch (the label is part of the target)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the padded label row is the pointer target)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The control exposes role=switch and aria-checked; the label is required and provides the accessible name via aria-labelledby.",
+      "Non-color redundancy: the thumb POSITION (moved to the inline-end when on) signals state, so on/off remains distinguishable in Windows High Contrast / forced-colors mode where the checked fill color is overridden.",
+      "The track and thumb keep visible borders so forced-colors mode paints a boundary; the thumb slide is gated behind motion-safe.",
+      "An optional description is linked with aria-describedby and excluded from the accessible name."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/switch/switch.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

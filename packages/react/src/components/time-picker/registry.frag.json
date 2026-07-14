@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "time-picker",
+  "type": "registry:ui",
+  "title": "Time Picker",
+  "description": "A filterable time-of-day picker built on ComboBox: generates times at a fixed interval (every 30 minutes by default) between a start and end time, displays them in 12- or 24-hour form via Intl while storing a 24-hour \"HH:mm\" value, and lets users type to filter (\"2:30\" or \"14:30\") or pick from the list. Inherits the combobox keyboard contract and Field wiring.",
+  "status": "experimental",
+  "useWhen": [
+    "Choosing a time of day from predictable slots (appointment times, office hours, pickup windows)",
+    "The set of acceptable times is a fixed cadence (every 15, 30, or 60 minutes) users should pick from rather than free-type",
+    "Type-ahead ('2:30') is faster than scanning a long list of times"
+  ],
+  "avoidWhen": [
+    "Capturing a duration or elapsed time rather than a clock time (use a number input with a unit)",
+    "A precise timestamp to the second, or a date-and-time together (use separate date and time fields)",
+    "Any minute is valid and the value is truly free-form (use a plain time input)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "combo-box"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the input; Shift+Tab moves away",
+      "Down Arrow opens the list and moves the highlight to the next time; Up Arrow moves to the previous time",
+      "Typing filters the times against both the visible label and the 24-hour value, keeping focus in the input",
+      "Enter selects the highlighted time and closes the list",
+      "Escape closes the list; pressing Escape again clears the input",
+      "Home / End jump to the first / last time in the list"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/time-picker/time-picker.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

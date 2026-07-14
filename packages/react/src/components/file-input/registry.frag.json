@@ -1,0 +1,46 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "file-input",
+  "type": "registry:ui",
+  "title": "File input",
+  "description": "Native input[type=file] inside a clickable, keyboard-operable drop zone with an enhancement-only drag target, a live-announced list of selected files with per-file Remove buttons, and multiple/accept passthrough. Integrates with Field.",
+  "status": "experimental",
+  "useWhen": [
+    "Letting a resident attach one or more documents to a form (permit application, evidence, photos)",
+    "Accepting an upload where drag-and-drop is a convenience but must not be the only way",
+    "Showing which files are staged, with a way to remove each before submitting"
+  ],
+  "avoidWhen": [
+    "Capturing a photo directly from a device camera (use a dedicated capture input)",
+    "Selecting from files already stored in the app (that is a picker/list, not an upload)",
+    "Enforcing file type or size in the browser as a security control — accept is only a hint; validate on the server"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn", "button", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the file control (the drop zone is a label wrapping a visually-hidden but focusable native input)",
+      "Enter or Space opens the native file dialog — the single-pointer/keyboard alternative to dragging (WCAG 2.5.7)",
+      "Dragging files onto the zone is an optional enhancement; every action is available without it",
+      "Tab reaches each selected file's Remove button; Enter or Space removes that file and focus returns to the control",
+      "A disabled control is removed from the tab order and ignores drops"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the drop zone is min-block-size 2.75rem; Remove buttons meet 44px)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/file-input/file-input.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

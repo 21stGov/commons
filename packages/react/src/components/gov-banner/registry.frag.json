@@ -1,0 +1,49 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "gov-banner",
+  "type": "registry:ui",
+  "title": "Gov Banner",
+  "description": "A local-government trust banner with a native disclosure that explains who operates the site and what a secure connection does. It does not assume a .gov domain. Explainer content stays in the DOM (hidden attribute) so screen readers and find-in-page behave predictably.",
+  "status": "experimental",
+  "useWhen": [
+    "The first informational region on a public-facing local government website, after the skip link",
+    "Establishing trust before users share personal information or start a service flow",
+    "Sites serving multilingual audiences (every string is a prop, so the banner can be fully localized per page)"
+  ],
+  "avoidWhen": [
+    "Non-government products or internal tools where the official-website claim would be untrue",
+    "Announcing emergencies or service disruptions (use a site alert instead)",
+    "More than once per page (one banner, above the header, only)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the \"How to verify this site\" disclosure button",
+      "Enter or Space toggles the explainer content",
+      "aria-expanded reflects the current state and aria-controls references the explainer panel",
+      "Collapsed content is removed from the tab order via the hidden attribute (no focusable elements are hidden while reachable)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "usage": {
+    "import": "import { GovBanner } from '@21stgov/commons-react'",
+    "example": "<GovBanner\n  entity=\"the City of Springfield\"\n  brandMark={<img src=\"/city-seal.svg\" alt=\"\" />}\n/>"
+  },
+  "files": [
+    {
+      "path": "src/components/gov-banner/gov-banner.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

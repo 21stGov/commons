@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge and Tag",
+  "description": "Distinct primitives for compact status badges, static taxonomy tags, and removable filter tokens with a named 44px native button.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing a short visible status, state, or count beside related content",
+    "Labelling content with a static category or taxonomy term",
+    "Representing an applied filter that the user can remove with an explicit named control"
+  ],
+  "avoidWhen": [
+    "The label initiates navigation or an action — use Link or Button instead of making a badge look clickable",
+    "Color would carry the only status meaning; every badge needs useful visible text",
+    "Many tags would compete for attention or make the page harder to scan",
+    "Removing a token would silently change important results; announce the updated result state nearby"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Badge and Tag are non-interactive spans and add no tab stops",
+      "Tab reaches each RemovableTag remove button in document order",
+      "Enter or Space activates the focused remove button using native button behavior",
+      "The remove button has a localized accessible name and a 44px minimum target",
+      "Status and category meaning is carried by visible text, never color alone"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default for RemovableTag; not applicable to static Badge and Tag",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/badge/badge.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

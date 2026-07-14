@@ -1,0 +1,46 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "table",
+  "type": "registry:ui",
+  "title": "Table",
+  "description": "A static, semantic data table: a native <table> with caption, thead/tbody, th scope, and td. Composed primitives (Table.Head/Body/Row/HeaderCell/Cell) over real table semantics — not an ARIA grid. Supports bordered/borderless, striped, comfortable/compact density, opt-in per-column sorting (aria-sort + button + icon, consumer-controlled), and a stacked-card responsive mode. Wraps the table in a focusable, labelled scroll region for overflow.",
+  "status": "experimental",
+  "useWhen": [
+    "Displaying tabular data with relationships across rows and columns (records with shared attributes)",
+    "Data whose columns benefit from header association via scope (column and/or row headers)",
+    "Sortable columns where the consumer sorts the data and the component owns aria-sort + the sort control"
+  ],
+  "avoidWhen": [
+    "Page or section layout (use CSS grid/flex — never a table for visual arrangement)",
+    "A simple list of items with no cross-column relationships (use a list or the Collection component)",
+    "Spreadsheet-style cell navigation, inline editing, or focus-per-cell (that is a future interactive data grid using the ARIA APG Grid pattern — a native table is not a role=grid)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "A caption is REQUIRED — it names the table for screen readers and labels the scroll region; a missing caption is a dev-time warning",
+      "th uses scope=\"col\" by default; pass scope=\"row\" for row headers so cells associate with both axes",
+      "Sortable columns render a native <button> inside <th aria-sort=\"ascending|descending|none\">; Tab reaches it, Enter or Space activates it, and sort direction is conveyed by aria-sort (non-color) plus a decorative icon",
+      "The horizontal scroll region is a focusable role=region (tabindex=0) labelled by the caption, so keyboard-only users can scroll overflowing columns",
+      "Stacked responsive mode keeps the real <table> in the DOM (only CSS display changes), so scope header associations survive; each cell supplies a label for its column name"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default — sortable header buttons are min-h-11 and full width",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/table/table.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

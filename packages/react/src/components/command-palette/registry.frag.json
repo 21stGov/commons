@@ -1,0 +1,66 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "command-palette",
+  "type": "registry:ui",
+  "title": "Command Palette",
+  "description": "A ⌘K-style searchable action launcher: a modal Dialog wrapping Base UI's Combobox in inline mode. A role=combobox search input over a grouped listbox with case-insensitive label+keyword filtering, aria-activedescendant highlight, an empty state, and a polite results-count announcement. Grouped commands carry an optional leading Icon, a trailing Kbd shortcut hint, and an onSelect handler; disabled commands stay visible. Opening is the consumer's job (an optional Cmd/Ctrl+K hook is provided); once open, type to filter, arrows move, Enter runs, Escape closes and returns focus. 44px rows, forced-colors-safe highlight, RTL-aware.",
+  "status": "experimental",
+  "useWhen": [
+    "Giving keyboard-first users a fast launcher for actions and navigation across an app (⌘K / Ctrl+K)",
+    "Surfacing many scattered commands or destinations searchable by name (Pay a bill, Report an issue, Find a service)",
+    "Offering a type-ahead alternative to hunting through menus and pages"
+  ],
+  "avoidWhen": [
+    "Choosing one value to submit with a form (use a Combo Box or Select)",
+    "A short, fixed set of actions better shown as visible buttons or a Dropdown Menu",
+    "Free-text entry rather than picking a known command (use an Input)",
+    "The only trigger would be a visible button with no search need (use a Dialog or Dropdown Menu directly)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction",
+    "dialog",
+    "icon",
+    "kbd"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Opening is the consumer's responsibility — wire ⌘K (macOS) / Ctrl+K (Windows/Linux), or a button, to control the open prop; the provided useCommandPaletteShortcut hook does this SSR-safely",
+      "On open, focus moves into the search input (the dialog traps focus and Tab cycles inside)",
+      "Typing filters commands case-insensitively against each command's label and its hidden keywords, keeping focus in the input",
+      "Down Arrow / Up Arrow move the highlight through the filtered commands; Home / End jump to the first / last",
+      "Enter runs the highlighted command, then closes the palette",
+      "Escape closes the palette and returns focus to the element that was focused before it opened",
+      "The highlighted command is tracked with aria-activedescendant while focus stays on the input; disabled commands stay visible but are skipped"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (command rows and the search input)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The dialog gets its accessible name from a visually-hidden DialogTitle (default \"Command palette\"); Base UI provides the focus trap, Esc-to-close, scroll lock, and focus return.",
+      "The Combobox runs in inline mode with its open state bound to the dialog's, so the list renders inside the dialog body and the query, highlight, and input value all reset each time the palette closes.",
+      "Commands are activated, not persistently selected (value is pinned to null), so no row stays checked between opens.",
+      "Non-color redundancy: the highlighted row pairs a muted fill with a font-weight bump (font-medium), so the active command stays distinguishable in Windows High Contrast / forced-colors mode where the fill color is overridden; the search input and command rows keep visible borders.",
+      "The current match count is announced politely via a live region so screen-reader users hear results narrow as they type (WCAG 4.1.3).",
+      "Group headings are linked to their command clusters via aria-labelledby; leading icons are decorative (aria-hidden) and shortcut hints are announced as a single named Kbd group."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/command-palette/command-palette.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

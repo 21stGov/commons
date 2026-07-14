@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "memorable-date",
+  "type": "registry:ui",
+  "title": "Memorable date",
+  "description": "A date entered as three separate fields — Month (native <select>), Day, and Year (native numeric text inputs) — under a fieldset + legend. The USWDS memorable-date pattern for dates a user already knows (date of birth, issue date): faster and more accessible than a calendar picker. Hint and error wire at the group level via FieldGroup; focus is never auto-advanced.",
+  "status": "experimental",
+  "useWhen": [
+    "Collecting a date the user already knows by heart (date of birth, issue or incident date)",
+    "A month/day/year answer where typing is faster than navigating a calendar",
+    "Forms where a date picker's grid would be slower or less accessible for known dates"
+  ],
+  "avoidWhen": [
+    "Picking a date from a calendar or browsing availability (use a date picker)",
+    "Choosing a start and end date (use a date-range picker)",
+    "Dates constrained to a small known set (use a select or radio group)",
+    "Times of day (use a time input)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through Month, Day, then Year in reading order; Shift+Tab reverses",
+      "Month is a native <select>: Up/Down Arrow and type-ahead pick a month (platform behavior)",
+      "Day and Year are native text inputs with inputmode=numeric; printable digits insert, arrows/Home/End move the caret",
+      "Focus is deliberately NOT auto-advanced between fields — the user controls focus, which keeps correction and screen-reader review possible",
+      "A disabled group removes all three fields from the tab order via the native fieldset disabled attribute"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each sub-field min-block-size 2.75rem)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/memorable-date/memorable-date.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

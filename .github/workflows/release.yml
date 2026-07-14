@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: MIT
+name: Release
+
+# Runs on every push to main. When unreleased changesets are present it opens
+# (or updates) a "Version Packages" PR that applies them — bumping versions and
+# writing CHANGELOGs. When that PR is merged and no changesets remain, this same
+# job publishes the changed packages to the PUBLIC npm registry (npmjs.com).
+#
+# Requires one repository secret: NPM_TOKEN — an npm "Automation" access token
+# for the @21stgov org (npmjs.com → Access Tokens). GITHUB_TOKEN is provided by
+# Actions automatically.
+
+on:
+  push:
+    branches: [main]
+
+# Never let two releases run at once.
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the Version Packages PR + tags
+      pull-requests: write # open/update that PR
+      id-token: write # npm publish provenance (supply-chain attestation)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        # Version comes from the "packageManager" field in package.json.
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          # Point npm at the PUBLIC registry and wire auth for publishing.
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        # Publish needs the built dist/ for every package.
+        run: pnpm build
+
+      - name: Create release PR or publish
+        uses: changesets/action@v1
+        with:
+          # When changesets exist → open/update the "Version Packages" PR.
+          version: pnpm changeset version
+          # When none remain (version PR merged) → publish to npm.
+          publish: pnpm changeset publish
+          commit: "chore: release packages"
+          title: "chore: release packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Attach npm provenance to published tarballs.
+          NPM_CONFIG_PROVENANCE: "true"

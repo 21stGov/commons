@@ -1,0 +1,8 @@
+{
+  "focus": {
+    "$description": "Focus indicator geometry (WCAG 2.4.13 Focus Appearance grade). 0.25rem = 4px at default root size; never below the 2px minimum.",
+    "$type": "dimension",
+    "width": { "$value": "0.25rem" },
+    "offset": { "$value": "0.125rem" }
+  }
+}

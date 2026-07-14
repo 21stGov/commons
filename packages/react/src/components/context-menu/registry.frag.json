@@ -1,0 +1,60 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "context-menu",
+  "type": "registry:ui",
+  "title": "Context Menu",
+  "description": "A menu of application actions revealed by right-clicking or long-pressing an anchor region, or by the keyboard Menu key / Shift+F10. Built on Base UI's Context Menu and sharing the Dropdown Menu's popup and item styling: role=menu with roving focus, first-letter typeahead, checkbox and radio items, grouped labels, destructive items, and nested submenus, cursor-anchored and collision-aware with logical sides that flip in RTL and 44px item targets. It hides functionality behind a gesture, so it must only duplicate actions that are also reachable another way \u2014 never be the sole path to an action.",
+  "status": "experimental",
+  "useWhen": [
+    "A power-user accelerator that duplicates actions already available on visible controls (a right-click shortcut for a row's edit/duplicate/delete that also live in a visible More menu)",
+    "Offering the platform-conventional right-click menu on an object as a faster path to actions offered elsewhere",
+    "Adding contextual keyboard shortcuts (Menu key / Shift+F10) to actions that a visible button or toolbar already exposes"
+  ],
+  "avoidWhen": [
+    "The primary or sole access to an action \u2014 a context menu is unreachable for most touch users and easy to miss for keyboard users (use a visible Button, toolbar, or Dropdown Menu)",
+    "Touch-first flows, where right-click has no equivalent and long-press is undiscoverable",
+    "Primary site navigation between pages (use a nav landmark with links)",
+    "A long, filterable set of choices bound to a form value (use the Combo Box)"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "dropdown-menu",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Right click or long press on the trigger region opens the menu at the pointer",
+      "The Menu key or Shift+F10 opens the menu when a focusable element inside the trigger region has focus (the keyboard contextmenu event bubbles to the trigger), so the region must contain a real focusable control",
+      "On open, focus moves into the menu and lands on the first item",
+      "Up Arrow and Down Arrow rove between items (roving focus); the list loops at the ends by default",
+      "Home jumps to the first item; End jumps to the last item",
+      "Typing a character moves the highlight to the next item beginning with it (first-letter typeahead)",
+      "Enter or Space activates the highlighted item and closes the menu (actions close by default; checkbox and radio items stay open)",
+      "Escape closes the menu and returns focus to the trigger region",
+      "Right Arrow opens a submenu and focuses its first item; Left Arrow closes it back to the submenu trigger (mirrored in RTL)",
+      "Disabled items stay reachable by the arrow keys (the APG focusable-disabled pattern) but carry aria-disabled and cannot be activated",
+      "Checkbox items expose aria-checked (menuitemcheckbox) and radio items expose aria-checked (menuitemradio)",
+      "Every action in the menu is also reachable through a visible control, so hiding it behind the gesture never removes access"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/context-menu/context-menu.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

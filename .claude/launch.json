@@ -1,0 +1,26 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "playground",
+      "runtimeExecutable": "/Users/seth/.nvm/versions/node/v24.18.0/bin/node",
+      "runtimeArgs": [
+        "apps/playground/node_modules/vite/bin/vite.js",
+        "apps/playground",
+        "--port",
+        "5199",
+        "--strictPort"
+      ],
+      "port": 5199
+    },
+    {
+      "name": "docs",
+      "runtimeExecutable": "/Users/seth/.nvm/versions/node/v24.18.0/bin/node",
+      "runtimeArgs": [
+        "apps/docs/node_modules/tsx/dist/cli.mjs",
+        "apps/docs/scripts/dev.ts"
+      ],
+      "port": 5200
+    }
+  ]
+}

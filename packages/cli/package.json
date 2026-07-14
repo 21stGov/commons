@@ -1,0 +1,56 @@
+{
+  "name": "@21stgov/commons",
+  "version": "0.1.0",
+  "description": "The Commons CLI — add accessible, government-ready components from the Commons design system registry.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "commons": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "pnpm run build",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21stgov/commons.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://commonsui.com",
+  "bugs": {
+    "url": "https://github.com/21stgov/commons/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "design-system",
+    "accessibility",
+    "government",
+    "civic-tech",
+    "cli",
+    "commons",
+    "21stgov"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "citty": "^0.2.2",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "site-alert",
+  "type": "registry:ui",
+  "title": "Site alert",
+  "description": "Persistent, page-level band for sitewide emergencies or important service notices at the top of every page. Region landmark with a configurable label, info and emergency variants with an icon for non-color redundancy, optional heading, slim layout, and opt-in live-region semantics for dynamically injected emergencies.",
+  "status": "experimental",
+  "useWhen": [
+    "Publishing a sitewide emergency notice at the top of every page",
+    "Announcing an important service disruption across the whole site (e.g. a boil-water notice or system outage)",
+    "Keeping a persistent, page-level notice visible on page load as a named region landmark",
+    "Injecting an emergency band into an already-loaded page (set the live prop so it is announced)"
+  ],
+  "avoidWhen": [
+    "Reporting the status of one form field (use the Field error slot)",
+    "A contextual callout inside page content (use Alert)",
+    "A blocking decision that needs a response (use a dialog)",
+    "Transient notifications that disappear on their own (use a toast)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The band is static content and never takes focus",
+      "Screen-reader users can navigate to it as a region landmark named by the label prop",
+      "Any links inside follow the native anchor keyboard contract and are always underlined",
+      "With live set, role=status (polite) or role=alert (assertive) is announced without any keyboard interaction"
+    ],
+    "nameRequired": true,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/site-alert/site-alert.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

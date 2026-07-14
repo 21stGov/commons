@@ -1,0 +1,95 @@
+---
+title: "Installation"
+description: "Set up Commons in your project with the CLI, then add your first component."
+---
+
+## Requirements
+
+- **Node.js 22 or later** for the CLI and build tooling.
+- **React 19** for `@21stgov/commons-react` components.
+- **Tailwind CSS v4** — Commons components are styled with utilities that the
+  token bridge maps onto Commons design tokens.
+
+## Initialize your project
+
+`init` inspects your project, writes a `commons.json` configuration, and sets
+up the token and CSS entry points:
+
+<Tabs groupId="package-manager" persist items={["npm", "pnpm", "yarn", "bun"]}>
+
+<Tab value="npm">
+
+```sh
+npx @21stgov/commons init
+```
+
+</Tab>
+
+<Tab value="pnpm">
+
+```sh
+pnpm dlx @21stgov/commons init
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```sh
+yarn dlx @21stgov/commons init
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```sh
+bunx @21stgov/commons init
+```
+
+</Tab>
+
+</Tabs>
+
+Add `--yes` for non-interactive setup (CI, scripts, agents), and `--json` for
+a versioned machine-readable result envelope.
+
+## Add a component
+
+```sh
+npx @21stgov/commons add button
+```
+
+The CLI copies the component source into your repository — you own the code —
+and installs any npm dependencies it needs. Registry dependencies (like the
+`cn` class-name utility) are resolved automatically. Preview everything first
+with `--dry-run`.
+
+Browse the [component catalog](/docs/components) for what's available.
+
+## CSS import order
+
+Commons layers its stylesheets deliberately. If you wire the CSS yourself,
+the order matters:
+
+```css
+@import '@21stgov/commons-fonts/index.css'; /* optional: system-font fallback works */
+@import '@21stgov/commons-tokens/index.css'; /* --cui-* custom properties + themes */
+@import '@21stgov/commons-core/index.css'; /* accessible reset (unlayered on purpose) */
+@import 'tailwindcss'; /* the engine */
+@import '@21stgov/commons-tokens/tailwind.css'; /* the @theme bridge — MUST come last */
+```
+
+The bridge must come after `tailwindcss`: it removes Tailwind's stock color
+palette (`--color-*: initial`) so nothing can silently bypass the Commons
+contrast contract, and that removal only works when it follows Tailwind's own
+theme declarations. Semantic utilities reference `var(--cui-*)` at runtime, so
+switching themes via `data-theme` keeps working without a rebuild.
+
+## Fonts
+
+`@21stgov/commons-fonts` ships self-hosted Atkinson Hyperlegible Next and
+Atkinson Hyperlegible Mono variable fonts — no third-party font CDN. The
+Atkinson Hyperlegible font files are licensed separately under the SIL Open
+Font License, Version 1.1. Skipping the fonts package is safe: every token
+font stack declares system-font fallbacks.

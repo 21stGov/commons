@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "breadcrumb",
+  "type": "registry:ui",
+  "title": "Breadcrumb",
+  "description": "Shows where the current page sits in the site hierarchy as a trail of links inside a nav landmark. The current page is a span with aria-current=\"page\", never a link. Links render the Commons Link (default variant), keeping the underline, visited-state, and forced-colors contract.",
+  "status": "experimental",
+  "useWhen": [
+    "Pages two or more levels deep in a hierarchy (service → category → detail)",
+    "Helping users jump back up to any ancestor level in one activation",
+    "Orienting users who arrive deep in the site from search results or shared links"
+  ],
+  "avoidWhen": [
+    "Single-level sites or landing pages — a trail of one item orients no one",
+    "Replacing primary navigation or a step indicator in a multi-step form (steps are a sequence, not a hierarchy)",
+    "Trails that need collapsing/truncation of middle items — not in v1; long trails wrap onto new lines instead (flex-wrap)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "link"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through the breadcrumb links in document order; Shift+Tab moves backwards",
+      "Enter activates a link and follows the href (native <a> contract)",
+      "The current page is a <span aria-current=\"page\">, not a link — it is skipped by Tab and never focusable",
+      "Separators are aria-hidden decoration inside each list item — never announced, never focusable"
+    ],
+    "nameRequired": true,
+    "targetSize": "Breadcrumb links are inline text and use the WCAG 2.5.8 inline exception; the trail is an orientation aid, not an action bar",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/breadcrumb/breadcrumb.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

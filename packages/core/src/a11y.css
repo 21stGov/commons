@@ -1,0 +1,129 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * a11y.css — accessibility utilities and global hardening for Commons
+ * (@21stgov/commons-core). This file implements the always-on guarantees in
+ * docs/accessibility.md: visible focus, skip link, screen-reader utilities,
+ * forced-colors / reduced-transparency handling, and AAA target sizing.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Skip link (WCAG 2.4.1 Bypass Blocks)
+ *
+ * Usage — first focusable element inside <body>:
+ *   <a class="cui-skip-link" href="#main">Skip to main content</a>
+ *
+ * Visually offscreen (screen-reader accessible) until keyboard focus, then
+ * pinned to the block/inline start of the viewport above all other layers.
+ * ------------------------------------------------------------------------- */
+.cui-skip-link {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--cui-z-toast, 1000);
+  padding-block: 0.75rem;
+  padding-inline: 1.25rem;
+  font-weight: 600;
+  text-decoration-line: underline;
+
+  /* Inverted-canvas fallbacks guarantee strong contrast even without tokens. */
+  background-color: var(--cui-bg-inverse, CanvasText);
+  color: var(--cui-text-inverse, Canvas);
+}
+
+.cui-skip-link:not(:focus-visible) {
+  /* Same technique as .cui-sr-only: in the accessibility tree, off screen. */
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------------
+ * Screen-reader-only utilities (modern clip-path variant; no deprecated
+ * `clip`). .cui-sr-only-focusable becomes visible when it receives focus —
+ * use it for controls that only keyboard/AT users need.
+ * ------------------------------------------------------------------------- */
+.cui-sr-only,
+.cui-sr-only-focusable:not(:focus, :focus-within) {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Global focus ring (WCAG 2.4.7 Focus Visible; sized/offset for 2.4.13 Focus
+ * Appearance). :focus-visible keeps the ring keyboard-triggered without ever
+ * using `outline: none` — Commons NEVER removes outlines.
+ * ------------------------------------------------------------------------- */
+:focus-visible {
+  outline: var(--cui-focus-ring-width, 0.1875rem) solid
+    var(--cui-focus-ring, currentColor);
+  outline-offset: var(--cui-focus-ring-offset, 0.125rem);
+
+  /* WCAG 2.2 — 2.4.11 Focus Not Obscured: when scrolled into view, keep the
+     focused element clear of sticky headers/footers/cookie bars. */
+  scroll-margin-block: 3rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Forced colors (Windows High Contrast Mode) hardening.
+ *
+ * In forced-colors mode the browser repaints everything with the user's
+ * system palette and strips background colors, so any control whose boundary
+ * is drawn by background alone disappears. The documented pattern: give
+ * interactive elements a `1px solid transparent` border — invisible in normal
+ * mode, repainted with a visible system color under forced colors. Commons
+ * components ship transparent borders by default; the rules below are the
+ * safety net for native controls.
+ *
+ * forced-color-adjust guidance: leave it at `auto` so the user's palette
+ * always wins. Only set `forced-color-adjust: none` on elements whose color
+ * IS the information (e.g. a color swatch) — never to preserve branding.
+ * ------------------------------------------------------------------------- */
+@media (forced-colors: active) {
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea {
+    border: 1px solid transparent;
+  }
+
+  /* Links must use the user's configured link color, not a brand token. */
+  a {
+    color: LinkText;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * prefers-reduced-transparency: users who ask for less translucency get
+ * opaque surfaces. --cui-backdrop-opacity is the translucency amount consumed
+ * by frosted/overlay surfaces; forcing it to 0 disables see-through and blur
+ * effects. Components must pair it with an opaque background fallback.
+ * ------------------------------------------------------------------------- */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --cui-backdrop-opacity: 0;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Target-size helper: 2.75rem = 44px at the default root size.
+ * WCAG 2.5.5 Target Size (AAA) is the Commons default — stricter than the
+ * 24px minimum of WCAG 2.2's 2.5.8 (AA). Apply to any small pointer target.
+ * ------------------------------------------------------------------------- */
+.cui-target {
+  min-inline-size: 2.75rem;
+  min-block-size: 2.75rem;
+}

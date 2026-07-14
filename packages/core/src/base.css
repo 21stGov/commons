@@ -1,0 +1,57 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * base.css — html/body foundation for Commons (@21stgov/commons-core).
+ * Consumes --cui-* custom properties from @21stgov/commons-tokens; every
+ * declaration carries a safe fallback (system colors / UA defaults) so the
+ * file degrades gracefully if tokens are not loaded.
+ */
+
+html {
+  /*
+   * font-size stays at 100% — NEVER a px value. This respects the user's
+   * browser font-size setting (WCAG 1.4.4 Resize Text); all type in Commons
+   * derives from it in rem/em.
+   */
+  font-size: 100%;
+  font-family: var(--cui-font-family-sans, system-ui, sans-serif);
+  line-height: var(--cui-line-height-default, 1.5);
+
+  /* Let the UA render form controls, scrollbars, etc. for both themes. */
+  color-scheme: light dark;
+
+  /* Stop mobile browsers from arbitrarily inflating text on rotate. Users
+     who want bigger text control it via their own settings, which we honor
+     through the 100% root size above. */
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+body {
+  min-block-size: 100dvb;
+  color: var(--cui-text-default, CanvasText);
+  background-color: var(--cui-bg-default, Canvas);
+}
+
+/*
+ * Links are underlined by default. Color alone never conveys interactivity
+ * (WCAG 1.4.1 Use of Color) — the underline is the non-color indicator.
+ *
+ * In `@layer base` (below Tailwind's utilities) so a component can still opt a
+ * specific link OUT with `no-underline` when it is primary nav rather than a
+ * body link — e.g. a navigation-menu bar item. An unlayered rule here would
+ * beat the layered `no-underline` utility regardless of specificity (the same
+ * cascade trap the margin reset avoids). Plain-CSS consumers, whose own rules
+ * are unlayered, still win over this and still get underlined links by default.
+ */
+@layer base {
+  a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.15em;
+  }
+}
+
+a:visited {
+  color: var(--cui-link-visited, VisitedText);
+}

@@ -1,0 +1,23 @@
+{
+  "name": "registry",
+  "version": "0.0.1",
+  "description": "Registry builder for Commons — compiles component sources and co-located registry.frag.json fragments into the static JSON registry served at /r.",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsx build.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@21stgov/commons": "workspace:*",
+    "@types/node": "^22.20.1",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  }
+}

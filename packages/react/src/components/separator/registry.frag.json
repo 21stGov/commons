@@ -1,0 +1,43 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "A thin horizontal or vertical rule that separates or groups content. Renders a semantic role=\"separator\" with aria-orientation by default, or an aria-hidden decoration when purely visual. Drawn with a logical border so it stays visible in forced-colors / Windows High Contrast mode.",
+  "status": "experimental",
+  "useWhen": [
+    "Dividing distinct groups of content or controls where the boundary carries meaning (e.g. between toolbar action groups)",
+    "Adding a vertical rule between inline items such as metadata or actions",
+    "Reinforcing a section break that assistive technology should announce"
+  ],
+  "avoidWhen": [
+    "The boundary is already conveyed by a heading, landmark, spacing, or list semantics — mark the rule decorative instead",
+    "You need an interactive splitter or resize handle (that is a different, focusable widget)",
+    "Purely spacing is required (use margin or padding, not a rule)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Not focusable and not interactive — a separator carries no keyboard interaction"
+    ],
+    "nameRequired": false,
+    "role": "separator (non-decorative) with aria-orientation; aria-hidden with no role when decorative",
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/separator/separator.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

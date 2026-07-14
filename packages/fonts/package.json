@@ -1,0 +1,34 @@
+{
+  "name": "@21stgov/commons-fonts",
+  "version": "0.1.0",
+  "description": "Self-hosted Atkinson Hyperlegible Next + Mono variable fonts for Commons, the accessibility-first design system for U.S. local governments.",
+  "type": "module",
+  "license": "(MIT AND OFL-1.1)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21stgov/commons.git",
+    "directory": "packages/fonts"
+  },
+  "homepage": "https://commonsui.com",
+  "bugs": {
+    "url": "https://github.com/21stgov/commons/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./index.css": "./index.css",
+    "./files/*": "./files/*"
+  },
+  "files": [
+    "index.css",
+    "files",
+    "LICENSE.txt"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "engines": {
+    "node": ">=22"
+  }
+}

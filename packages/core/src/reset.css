@@ -1,0 +1,118 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * reset.css — modern minimal reset for Commons (@21stgov/commons-core).
+ * Deliberately small: it removes UA inconsistencies without destroying the
+ * accessible defaults browsers give us (list semantics, control padding).
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Zero the default margins browsers put on flow content, so components own
+ * their spacing via tokens.
+ *
+ * This rule lives in `@layer base` on purpose. The rest of this reset is
+ * intentionally unlayered (so it wins over a consumer's Tailwind preflight for
+ * box-sizing, media defaults, etc.), but an unlayered margin reset ALSO beats
+ * Tailwind's *layered* margin utilities regardless of specificity — silently
+ * making every `mt-*`/`mb-*`/`mx-auto` on these elements inert (the bug that
+ * killed Prose's vertical rhythm and forced summary-box/carousel workarounds).
+ * Putting just the margin reset in `base` keeps it below the `utilities` layer,
+ * so utilities win in Tailwind apps, while plain-CSS consumers (whose own rules
+ * are unlayered and therefore still win over `base`) get UA margins zeroed as
+ * before. Tailwind's own preflight resets the same margins, also in `base`, so
+ * this is redundant-but-harmless there and the sole reset for non-Tailwind use.
+ */
+@layer base {
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  figure,
+  blockquote,
+  dl,
+  dd,
+  ul,
+  ol,
+  fieldset,
+  pre {
+    margin: 0;
+  }
+}
+
+/*
+ * Strip list styling only when the author keeps the semantics explicit with
+ * role="list" (Safari/VoiceOver drops list semantics when list-style is
+ * removed, so requiring the role keeps lists announced to screen readers).
+ */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+/* Media defaults: block-level, never overflow their container. */
+img,
+picture,
+video,
+canvas {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/* SVGs stay inline: in a component library they are overwhelmingly icons
+ * flowing with text (links, buttons, alerts). They still must not
+ * overflow. Block-level illustrations can opt in with `display: block`. */
+svg {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/* Form controls inherit typography (also prevents iOS zoom-on-focus when the
+   inherited size is at least 1rem). */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Long words and URLs must never force 2D scrolling (WCAG 1.4.10 Reflow). */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/*
+ * prefers-reduced-motion (WCAG 2.3.3): neutralize animation and transitions
+ * globally. Durations are forced to 0.01ms rather than 0 so that
+ * animationend/transitionend events still fire and script waiting on them
+ * cannot hang. Smooth scrolling is disabled for the same reason vestibular
+ * triggers are.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

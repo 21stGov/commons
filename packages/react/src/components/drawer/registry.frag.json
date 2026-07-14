@@ -1,0 +1,55 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "drawer",
+  "type": "registry:ui",
+  "title": "Drawer",
+  "description": "An edge-anchored dialog built on Base UI: focus trap, Esc to close, backdrop dismiss, scroll lock, and focus return to the trigger. Composed parts (Drawer, DrawerTrigger, DrawerContent, DrawerTitle, DrawerDescription, DrawerClose, DrawerHeader, DrawerFooter) with a required title and a 44px Close button. The side prop (start | end | top | bottom) is logical: start/end map to the inline-start/inline-end edges and flip in RTL; top/bottom sit on the block axis. Slide-in is motion-safe (transform) with a reduced-motion fade, the backdrop respects prefers-reduced-transparency, and the panel scrolls internally at 400% zoom.",
+  "status": "experimental",
+  "useWhen": [
+    "A side panel of supplementary controls that belong to the current page \u2014 filters, facets, or a secondary form the user can apply and dismiss",
+    "Primary navigation on small screens (a menu that slides in from the inline-start edge)",
+    "Contextual detail or a quick edit panel that should sit beside the task without navigating away"
+  ],
+  "avoidWhen": [
+    "A centered decision the user must resolve \u2014 confirmations, destructive actions, short blocking forms (use Dialog)",
+    "Inline supporting content that can expand in place within the page flow (use Collapsible, or Accordion for several sections)",
+    "A persistent layout region that is always visible (that is app chrome or a sidebar, not a drawer)",
+    "Content important or long enough to deserve its own page \u2014 deep links, printing, and back-button behavior all break in an overlay"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "button",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Enter or Space on the trigger opens the drawer; focus moves to the first tabbable element inside",
+      "Tab and Shift+Tab cycle through the drawer's controls only (focus is trapped while open)",
+      "Escape closes the drawer",
+      "Enter or Space on DrawerClose or the icon Close button closes the drawer",
+      "On close, focus returns to the trigger that opened the drawer",
+      "role=dialog with aria-modal while modal; the drawer is named by its DrawerTitle via aria-labelledby (a DrawerTitle or explicit aria-label is required \u2014 a dev warning fires otherwise)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/drawer/drawer.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

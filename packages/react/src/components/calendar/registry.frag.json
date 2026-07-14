@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "calendar",
+  "type": "registry:ui",
+  "title": "Calendar",
+  "description": "A styled, accessible month grid built on react-day-picker. Renders a role=grid month table with roving tabindex, full arrow-key navigation (RTL-aware), aria-selected days, and a localized aria-label per day. Commons adds token styling, 44px day targets, an inline navigation chevron, and a non-color selected state. Supports single, multiple, and range selection modes with min/max/disabled dates.",
+  "status": "experimental",
+  "useWhen": [
+    "Browsing or choosing a date visually from a month grid",
+    "Selecting a start and end date (range mode) or several dates (multiple mode)",
+    "Building a date picker or availability view where the calendar itself is embedded"
+  ],
+  "avoidWhen": [
+    "Collecting a date the user already knows by heart such as a date of birth (use a memorable date — typing month/day/year is faster and more accessible)",
+    "Anchoring the calendar to a trigger input (use the date picker, which composes this calendar inside a popover)",
+    "Choosing from a small fixed set of dates (use a select or radio group)"
+  ],
+  "dependencies": ["react-day-picker"],
+  "registryDependencies": ["cn", "button"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves to the previous/next month buttons, then into the grid at a single tab-focusable day (roving tabindex)",
+      "Left/Right Arrow move by one day and flip direction under dir=rtl; Up/Down Arrow move by one week",
+      "Home and End move to the first and last day of the focused week",
+      "PageUp and PageDown move to the same day in the previous/next month; add Shift to move by a year",
+      "Enter or Space selects the focused day",
+      "The month grid is role=grid; each day is a role=gridcell with aria-selected and a localized aria-label; the month caption is a polite live region announcing month changes"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default (each day button is 2.75rem square)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/calendar/calendar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

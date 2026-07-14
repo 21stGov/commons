@@ -1,0 +1,51 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "icon-list",
+  "type": "registry:ui",
+  "title": "Icon List",
+  "description": "A native semantic <ul> whose items lead with an Icon instead of a bullet — for benefit lists, feature checklists, and \"what you'll get\" summaries. Keeps role=\"list\" so it is still announced as a list after list-style is removed (the Safari/VoiceOver gotcha). Leading icons are decorative by default (aria-hidden) or meaningful (role=img with an accessible name) per item; the icon pins to the first text line while multi-line content wraps under the text, not the icon. A default list glyph with per-item overrides, logical properties for RTL, and currentColor stroke for forced-colors safety.",
+  "status": "experimental",
+  "useWhen": [
+    "A benefits, features, or \"what you'll need\" list where a glyph (a check bullet) reads better than a plain marker",
+    "Marking individual rows differently — e.g. an x \"not included\" row among check rows",
+    "A leading icon must convey status the text does not, needing an accessible name"
+  ],
+  "avoidWhen": [
+    "A plain ordered or unordered bullet list (use List)",
+    "A list of interactive choices the user selects from (use RadioGroup, ComboBox, or DropdownMenu)",
+    "Media-rich cards or article summaries (use Collection or CardGroup)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "icon"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Static content — IconList and IconListItem never take focus and add no keyboard behavior",
+      "Any interactive element placed inside an item (a Link, a Button) keeps its own native keyboard contract"
+    ],
+    "nameRequired": false,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The <ul> uses list-style: none (the marker is replaced by an icon) but adds an explicit role=\"list\" — Safari/VoiceOver silently drops list semantics from a marker-less <ul> otherwise (the same fix packages/core/src/reset.css applies to raw ul[role=\"list\"], mirrored by List's unstyled variant and Collection).",
+      "Leading icons are DECORATIVE by default: with no iconLabel the Icon is aria-hidden and skipped, so a screen reader is not prefixed with 'image' before every line whose meaning the text already carries.",
+      "Passing iconLabel on an item flips its icon to MEANINGFUL (role=img with that accessible name), for a status glyph that conveys something the text does not.",
+      "Icons stroke with currentColor (never a hardcoded fill), so they inherit text color and stay visible in Windows High Contrast / forced-colors mode; no state is conveyed by color alone.",
+      "All spacing uses logical properties (gap, paddingInlineStart:0), so the leading icon sits at the inline-start and the layout mirrors automatically under dir=\"rtl\" with no AmbientDirection needed — these are native elements, not a Base UI primitive.",
+      "The item is top-aligned (items-start) with the icon centered on a line-height-tall box, so the icon pins to the first text line while multi-line content wraps under the text, not the icon."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/icon-list/icon-list.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

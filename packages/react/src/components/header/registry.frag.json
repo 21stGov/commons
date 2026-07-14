@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "header",
+  "type": "registry:ui",
+  "title": "Header",
+  "description": "Site header (banner landmark) with a site-title home link and a primary nav that collapses behind a native disclosure button below the md breakpoint. Nav content stays in the DOM (hidden attribute) so screen readers and find-in-page behave predictably. The skip link is not included: pages place the core .cui-skip-link anchor before the Header (and before the gov banner) as the first focusable element.",
+  "status": "experimental",
+  "useWhen": [
+    "The persistent top-of-page site identity and primary navigation, directly below the gov banner",
+    "Sites with a handful of top-level destinations that fit a single horizontal row on desktop",
+    "Sites serving multilingual audiences (every string is a prop, so the header can be fully localized per page)"
+  ],
+  "avoidWhen": [
+    "Application chrome with complex menus, mega-menus, or nested dropdowns (use the future navigation-menu component)",
+    "In-page or secondary navigation (use in-page navigation or side navigation instead)",
+    "More than once per page (one banner landmark per page)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through the title link, the menu button (below md), and the nav links in DOM order",
+      "Enter or Space on the menu button toggles the nav disclosure (native button semantics)",
+      "Escape anywhere inside the header closes the open menu and returns focus to the menu button",
+      "aria-expanded reflects the menu state and aria-controls references the nav landmark",
+      "Collapsed nav links are removed from the tab order via the hidden attribute (no focusable elements are hidden while reachable)",
+      "Links are standard: Enter activates; the current page carries aria-current=\"page\" with a non-color indicator (2px block-end border + font weight)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/header/header.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

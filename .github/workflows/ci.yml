@@ -1,0 +1,82 @@
+# SPDX-License-Identifier: MIT
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Full workspace checks on the development baseline (Node 24) across all
+  # first-class platforms (docs/platform-support.md).
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        # Version is read from the "packageManager" field in package.json.
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        # Includes the token contrast audit (tokens' test script runs validate:contrast).
+        run: pnpm test
+
+  # Consumer contract: published packages declare "node": ">=22". Prove it by
+  # packing real tarballs (not workspace links) and exercising them on Node 22.
+  consumer-node-minimum:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node 24 (build)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install and build
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Pack tarballs
+        run: |
+          mkdir -p /tmp/tarballs
+          pnpm -r --filter './packages/*' exec pnpm pack --pack-destination /tmp/tarballs
+
+      - name: Set up Node 22 (consumer minimum)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Smoke-test tarballs on Node 22
+        run: node scripts/consumer-smoke.mjs /tmp/tarballs

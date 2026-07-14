@@ -1,0 +1,170 @@
+{
+  "text": {
+    "$type": "color",
+    "$description": "Dark theme: every semantic pairing >= 4.5:1 for text, >= 3:1 for borders and focus.",
+    "default": {
+      "$value": "{color.gray.5}"
+    },
+    "muted": {
+      "$value": "{color.gray.30}"
+    },
+    "on-emphasis": {
+      "$value": "{color.white}"
+    }
+  },
+  "link": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.blue.30}"
+    },
+    "visited": {
+      "$value": "{color.violet.30}"
+    },
+    "hover": {
+      "$value": "{color.blue.20}"
+    }
+  },
+  "bg": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.gray.90}"
+    },
+    "subtle": {
+      "$value": "{color.gray.80}"
+    },
+    "emphasis": {
+      "$value": "{color.blue.60}"
+    }
+  },
+  "border": {
+    "$type": "color",
+    "default": {
+      "$value": "{color.gray.40}"
+    },
+    "strong": {
+      "$value": "{color.gray.20}"
+    }
+  },
+  "focus": {
+    "ring": {
+      "$type": "color",
+      "$value": "{color.blue.20}"
+    }
+  },
+  "state": {
+    "$type": "color",
+    "info": {
+      "bg": {
+        "$value": "{color.cyan.90}"
+      },
+      "text": {
+        "$value": "{color.cyan.20}"
+      },
+      "border": {
+        "$value": "{color.cyan.50}"
+      }
+    },
+    "warning": {
+      "bg": {
+        "$value": "{color.gold.90}"
+      },
+      "text": {
+        "$value": "{color.gold.20}"
+      },
+      "border": {
+        "$value": "{color.gold.50}"
+      }
+    },
+    "error": {
+      "bg": {
+        "$value": "{color.red.90}"
+      },
+      "text": {
+        "$value": "{color.red.20}"
+      },
+      "border": {
+        "$value": "{color.red.50}"
+      }
+    },
+    "success": {
+      "bg": {
+        "$value": "{color.green.90}"
+      },
+      "text": {
+        "$value": "{color.green.20}"
+      },
+      "border": {
+        "$value": "{color.green.50}"
+      }
+    },
+    "emergency": {
+      "bg": {
+        "$value": "{color.red.60}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "border": {
+        "$value": "{color.red.20}"
+      }
+    }
+  },
+  "disabled": {
+    "$type": "color",
+    "text": {
+      "$value": "{color.gray.30}"
+    },
+    "bg": {
+      "$value": "{color.gray.80}"
+    },
+    "border": {
+      "$value": "{color.gray.40}"
+    }
+  },
+  "action": {
+    "$type": "color",
+    "$description": "Dark theme action tokens: fills darken on interaction so white text keeps >= 4.5:1 at every state.",
+    "primary": {
+      "bg": {
+        "$value": "{color.blue.50}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "hover": {
+        "$value": "{color.blue.60}"
+      },
+      "active": {
+        "$value": "{color.blue.70}"
+      }
+    },
+    "secondary": {
+      "bg": {
+        "$value": "{color.gray.70}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "hover": {
+        "$value": "{color.gray.60}"
+      },
+      "active": {
+        "$value": "{color.gray.50}"
+      }
+    },
+    "danger": {
+      "bg": {
+        "$value": "{color.red.50}"
+      },
+      "text": {
+        "$value": "{color.white}"
+      },
+      "hover": {
+        "$value": "{color.red.60}"
+      },
+      "active": {
+        "$value": "{color.red.70}"
+      }
+    }
+  }
+}

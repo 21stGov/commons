@@ -1,0 +1,52 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "popover",
+  "type": "registry:ui",
+  "title": "Popover",
+  "description": "Interactive, anchored content built on Base UI: opens from a trigger, portals and positions against it with collision handling, moves focus into the popup on open, closes on Escape or outside press, and returns focus to the trigger. Composed parts (Popover, PopoverTrigger, PopoverContent, PopoverTitle, PopoverDescription, PopoverClose) with an open children API for filters, small forms, and extra actions.",
+  "status": "experimental",
+  "useWhen": [
+    "Interactive, anchored content tied to a control \u2014 a filter panel, a small inline form, or a set of extra actions",
+    "Progressive disclosure that keeps the rest of the page interactive while open",
+    "Anchoring richer content (such as a date picker) to a trigger without blocking the page"
+  ],
+  "avoidWhen": [
+    "Plain, non-interactive supplementary text on hover or focus (use a Tooltip)",
+    "A blocking decision the user must resolve before continuing (use a Dialog)",
+    "A list of commands or navigation actions (use a Dropdown menu)",
+    "Content long or important enough to be its own page or route"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Enter or Space on the trigger opens the popover; focus moves into the popup",
+      "Tab and Shift+Tab move through the popover's interactive content",
+      "Escape closes the popover and returns focus to the trigger",
+      "Enter or Space on PopoverClose closes the popover and returns focus to the trigger",
+      "The trigger exposes aria-haspopup and reflects state with aria-expanded"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/popover/popover.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

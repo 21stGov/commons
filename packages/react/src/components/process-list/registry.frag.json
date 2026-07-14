@@ -1,0 +1,52 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "process-list",
+  "type": "registry:ui",
+  "title": "Process list",
+  "description": "The USWDS process-list pattern: a native <ol> of long-form instructional steps, each with a numbered circular marker connected to the next by a vertical line, a heading, and body content. Distinct from StepIndicator (a compact horizontal progress tracker for a fixed wizard) — ProcessList is for reading instructions, not navigating a flow, so it adds no ARIA beyond real list/heading semantics. Each item's visible ordinal number is derived from real render order via ProcessList, not hand-typed. Optional per-item status (complete/current/upcoming) is conveyed with non-color marker cues (filled + checkmark, doubled border, lighter weight) plus a visually hidden status word. Supports substeps via a nested ProcessList (size=\"compact\") inside an item's body.",
+  "status": "experimental",
+  "useWhen": [
+    "Long-form instructional content presented as an ordered sequence (\"How to apply: 1. Gather documents … 2. Submit … 3. Await review\")",
+    "Each step needs a heading plus explanatory body content, not just a short label",
+    "Optionally annotating which steps are already done, in progress, or not yet started within that reading content"
+  ],
+  "avoidWhen": [
+    "A compact progress tracker for a fixed multi-page wizard or checkout flow (use StepIndicator)",
+    "A plain bullet or numbered list with no per-item heading/body structure (use List)",
+    "A set of interactive choices the user selects from (use RadioGroup, ComboBox, or DropdownMenu)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Static, non-interactive content — ProcessList and ProcessListItem never take focus and add no keyboard behavior of their own",
+      "Any interactive element placed inside an item's body (a Link, a Button) keeps its own native keyboard contract and 44px target",
+      "The current step (status=\"current\") carries aria-current=\"step\", matching StepIndicator's convention, so assistive technology can identify it directly"
+    ],
+    "nameRequired": false,
+    "targetSize": "not applicable (non-interactive by default)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Renders a real <ol>/<li> so posinset/setsize (\"1 of 4\", \"2 of 4\", …) is computed from DOM order, independent of the decorative marker or list-style CSS.",
+      "list-style: none replaces the native decimal marker with the circular marker, which silently drops list semantics from Safari/VoiceOver — role=\"list\" is added explicitly, the same fix List's unstyled variant and IconList apply.",
+      "The circular marker is decorative (aria-hidden); its visible number is auto-derived from render order by ProcessList, not typed by hand, so reordering JSX renumbers it for free.",
+      "Status is never conveyed by color alone: complete swaps in a checkmark glyph and a filled marker, current doubles the marker's border weight, upcoming uses a lighter number weight — each also carries a visually hidden, translatable status word.",
+      "Marker and connector use flexbox's direction-aware row axis (not absolute positioning), so the whole component mirrors under dir=\"rtl\" automatically with no rtl: overrides needed.",
+      "forced-colors:border-[CanvasText] and forced-colors:bg-[CanvasText] guarantee the marker and connector stay visible once Windows High Contrast Mode forces colors, including the filled complete state's normally-transparent border."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/process-list/process-list.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

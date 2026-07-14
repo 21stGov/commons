@@ -1,0 +1,104 @@
+---
+title: "Using Commons without React"
+description: "The tokens and framework-agnostic CSS core work in any stack — PHP, Drupal, WordPress, .NET, Java, or any server-rendered site — with zero JavaScript framework."
+---
+
+A large share of local-government sites are server-rendered — PHP, Drupal,
+WordPress, .NET (Razor/MVC), Java (Spring/JSP), Rails, or plain HTML. Commons is
+built for that reality. The **tokens** and the **framework-agnostic CSS core**
+have no React dependency and no build step: you import two (or three) stylesheets
+and style your own markup with the same accessible design language the React
+components use.
+
+## What works everywhere
+
+| Package | Framework-agnostic? | What you get |
+| --- | --- | --- |
+| `@21stgov/commons-tokens` | ✅ Yes | `--cui-*` CSS custom properties: color, type, spacing, focus, motion, and the light / dark / high-contrast themes. |
+| `@21stgov/commons-core` | ✅ Yes | A modern accessible reset, base element styles (underlined links, user-controlled root font size), a skip link, `.cui-sr-only`, global `:focus-visible` rings, forced-colors hardening, and 44px `.cui-target` sizing. |
+| `@21stgov/commons-fonts` | ✅ Yes | Self-hosted Atkinson Hyperlegible Next + Mono variable fonts (no font CDN). |
+| `@21stgov/commons-react` | ⚠️ React only | The interactive components. Web components for other stacks are a later phase — see below. |
+
+## Install
+
+You do not need Node or a bundler. Either vendor the built CSS files into your
+project, or serve them from your own static host. Import them **in this order**
+(tokens first — the core and your styles consume the `--cui-*` variables):
+
+```html
+<link rel="stylesheet" href="/assets/commons-tokens.css" />
+<link rel="stylesheet" href="/assets/commons-core.css" />
+<link rel="stylesheet" href="/assets/commons-fonts.css" />
+```
+
+If you use a bundler or a CSS `@import` pipeline (Sass, PostCSS, a Drupal
+library, a .NET bundle), the same order applies:
+
+```css
+@import "@21stgov/commons-tokens/index.css";
+@import "@21stgov/commons-core/index.css";
+@import "@21stgov/commons-fonts/index.css";
+```
+
+Every rule degrades gracefully to system colors and UA defaults if the tokens
+are missing, so a partial adoption never breaks the page.
+
+## Use the tokens
+
+Style your existing server-rendered markup with the `--cui-*` variables. This is
+the whole point: your PHP/Drupal/WordPress/.NET/Java templates keep their
+markup, and pick up Commons' contrast-checked colors, spacing, and type.
+
+```css
+.btn-primary {
+  background: var(--cui-action-primary-bg);
+  color: var(--cui-action-primary-text);
+  min-block-size: 2.75rem; /* 44px target */
+  padding-inline: var(--cui-spacing-2);
+  border-radius: var(--cui-radius-sm);
+}
+.card {
+  background: var(--cui-bg-subtle);
+  border: 1px solid var(--cui-border-default);
+  border-radius: var(--cui-radius-md);
+  padding: var(--cui-spacing-3);
+}
+```
+
+Theme switching is a single attribute on the root — no JavaScript required for
+the default (it follows the OS via `prefers-color-scheme` / `prefers-contrast`):
+
+```html
+<html data-theme="dark">   <!-- or "light", or "high-contrast"; omit to follow the OS -->
+```
+
+## Accessibility utilities
+
+The core ships the always-on guarantees as plain classes you can drop into any
+template:
+
+- `.cui-skip-link` — a "skip to main content" link (first focusable element in `<body>`)
+- `.cui-sr-only` — visually-hidden, screen-reader-only text
+- `.cui-target` — enforces the 44×44px minimum touch target
+- Global visible `:focus-visible` rings, forced-colors support, and reduced-motion handling apply automatically.
+
+## Interactive components
+
+The React components in `@21stgov/commons-react` are, for now, React-only —
+their keyboard behavior, focus management, and ARIA wiring are implemented with
+[Base UI](https://base-ui.com). For a non-React stack you have three options
+today:
+
+1. **Build the interaction yourself** on top of the tokens and core CSS, following the accessibility contract published on each [component's page](/docs/components) and in the registry JSON. The contracts are normative and framework-neutral.
+2. **Render Commons React components server-side** if your stack can host a small React island (e.g. a Laravel/Inertia or Rails view that mounts React for one widget).
+3. **Wait for web components** — a framework-neutral component layer is a planned phase so that Drupal, WordPress, .NET, and Java sites get the interactive components without React. It is not shipped yet; this page will link it when it lands.
+
+## Adoption modes, at a glance
+
+- **Tokens + core only** — restyle an existing server-rendered site. Works today, everywhere.
+- **Tokens + core + React islands** — server-rendered pages with a few Commons React widgets mounted client-side. Works today.
+- **Full React** — a React/Vite/Next/Astro app using the component library and the CLI. Works today; see [Installation](/docs/installation).
+
+If you are adopting Commons in one of these stacks and hit a gap, please
+[open an issue](https://github.com/21stgov/commons) — the non-React path is a
+first-class use case, not an afterthought.

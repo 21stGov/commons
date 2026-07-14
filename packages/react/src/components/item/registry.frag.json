@@ -1,0 +1,53 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "item",
+  "type": "registry:ui",
+  "title": "Item",
+  "description": "A generic, composable media/content/action row primitive — the building block for settings rows, notification rows, search results, and list rows. ItemMedia (leading icon/avatar/thumbnail), ItemContent with ItemTitle/ItemDescription, and ItemActions (trailing controls) compose inside an Item, and ItemGroup lays out a list with spacing or hairline dividers. Independent of the Icon component, logical-property layout that mirrors under RTL, and default/outline/muted surfaces that stay visible in forced-colors mode.",
+  "status": "experimental",
+  "useWhen": [
+    "Building a settings row with a title, description, and a trailing control such as a Switch",
+    "Laying out a media row with a leading avatar or thumbnail plus trailing actions",
+    "Composing a grouped list of notification, search-result, or content rows with consistent spacing or dividers"
+  ],
+  "avoidWhen": [
+    "Presenting a self-contained summary with a heading, media, and footer (use a Card)",
+    "Rendering tabular records that users compare across columns (use a table)",
+    "Building a menu of commands with roving focus (use a dropdown-menu)",
+    "Making the whole row a click target while it also contains other separately focusable controls"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Item and its structural slots add no keyboard behavior or tab stops",
+      "Interactive descendants (links, buttons, a Switch) retain native keyboard behavior and visible focus indicators",
+      "When the whole row is one link or button, the padded row is already at least 44px so it meets the minimum pointer target",
+      "ItemActions is moved to the inline end with margin-inline-start:auto while DOM order stays media, content, actions"
+    ],
+    "nameRequired": false,
+    "targetSize": "Inherited from interactive descendants; Item itself is not a control. An interactive whole-row is padded to at least 44px.",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The root adds no role or accessible name so it never competes with the semantics of the controls it wraps.",
+      "ItemTitle is a neutral element (not a heading) so a long list of rows does not inject headings into the page outline.",
+      "The outline and muted surfaces keep a visible border (transparent borders resolve to CanvasText) so the row boundary survives forced-colors mode; state is never conveyed by color alone.",
+      "ItemMedia adds no role or name — a child img keeps its own alt text and decorative images should use alt=\"\".",
+      "Item does not depend on the Icon component; ItemMedia renders whatever leading visual the consumer provides."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/item/item.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

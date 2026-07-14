@@ -1,0 +1,62 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "toolbar",
+  "type": "registry:ui",
+  "title": "Toolbar",
+  "description": "A role=toolbar container that groups related controls (buttons, toggles, a separator, maybe an input) into a single tab stop with APG roving tabindex and RTL-aware arrow-key navigation, built on Base UI's Toolbar. Composes the Commons Button (ToolbarButton) and reuses the Commons Separator (ToolbarSeparator); a Commons ToggleGroup nests directly. Horizontal or vertical orientation, a required accessible name enforced by a dev guard, forced-colors safe.",
+  "status": "experimental",
+  "useWhen": [
+    "You want a single tab stop with arrow-key navigation over a cluster of controls (a text-editor formatting bar, a table action bar)",
+    "Grouping buttons, toggles, and a separator that act on the same target",
+    "A dense control strip where Tab-per-button would be tedious for keyboard users"
+  ],
+  "avoidWhen": [
+    "A simple segmented set of buttons with normal Tab order (use a button-group)",
+    "A set of mutually related two-state presses on their own (use a toggle-group)",
+    "Primary page navigation between views or routes (use a navigation menu or tabs)",
+    "A single standalone action (use a button)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction",
+    "button",
+    "separator"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus into the toolbar and lands on a single item (roving tabindex); Shift+Tab moves away from the whole toolbar",
+      "Arrow keys move focus between items — Left/Right on a horizontal toolbar, Up/Down on a vertical one",
+      "Arrow navigation is RTL-aware: in dir=rtl, ArrowLeft moves to the next item that sits visually to the left",
+      "Focus loops from the last item back to the first by default (loopFocus)",
+      "Disabled items that are not focusable-when-disabled are skipped by arrow navigation"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each composed Button/Toggle keeps its own >=44px target)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The container renders role=toolbar with aria-orientation and MUST be named via aria-label or aria-labelledby; a dev-only guard warns when neither is present.",
+      "Roving tabindex makes the whole toolbar one tab stop; arrow keys move focus between items, unlike button-group which keeps a normal Tab stop per button.",
+      "Base UI reads direction from its DirectionProvider, not the DOM dir; an explicit dir prop is fed to the provider, otherwise AmbientDirection supplies the resolved DOM direction so arrow-key order matches the visual order in RTL.",
+      "ToolbarButton renders the Commons Button so every variant keeps its border, 44px target, and un-clipped focus ring; the ToolbarSeparator reuses the Commons Separator (a border-drawn rule that survives forced-colors mode).",
+      "A Commons ToggleGroup nested inside integrates into the toolbar's single tab stop via Base UI's toolbar context."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/toolbar/toolbar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

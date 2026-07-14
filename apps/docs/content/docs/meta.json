@@ -1,0 +1,17 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "---Getting started---",
+    "index",
+    "installation",
+    "theming",
+    "without-react",
+    "cli",
+    "mcp",
+    "accessibility",
+    "---Components---",
+    "components",
+    "---Release notes---",
+    "changelog"
+  ]
+}

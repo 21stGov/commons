@@ -1,0 +1,59 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "language-selector",
+  "type": "registry:ui",
+  "title": "Language selector",
+  "description": "Switches a site between languages with each language named in its OWN language (its endonym) and announced in the right language via per-item lang/hreflang. Two presentations from one contract: an inline toggle for two-language (bilingual) sites and the Commons native Select dropdown for three or more. A universal globe plus an accessible name, non-color active state, RTL-safe endonyms, 44px targets, and forced-colors borders. Fires onLanguageChange(code) and leaves routing to the consumer.",
+  "status": "experimental",
+  "useWhen": [
+    "Letting people read a government site in their own language",
+    "A bilingual site needs a compact English | Español toggle",
+    "A multilingual site needs a language dropdown placed consistently in the header/utility nav"
+  ],
+  "avoidWhen": [
+    "Choosing a form value that happens to be a language (use a Select/combo-box with translated labels for that context)",
+    "Only one language is offered (render nothing)",
+    "You need automatic machine translation UI rather than switching between human-translated versions"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "link",
+    "select"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Toggle: Tab moves to each language link/button; Shift+Tab moves back; Enter (link) or Enter/Space (button) selects",
+      "Dropdown: the native Select's own keyboard model — Tab to focus, Arrow keys and type-ahead to move through languages, Enter/Escape to commit or dismiss",
+      "A disabled control is removed from the tab order"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each toggle item is min-h-11; the dropdown select meets the same minimum)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Each language is labeled by its endonym (its name in its own language), never translated into the current page language, so speakers recognize their language.",
+      "Every option/link carries lang (and, for links, hreflang) set to its own BCP-47 tag, so assistive tech pronounces the endonym in the correct language.",
+      "The active language is signaled by font weight plus aria-current, not color alone, so it survives forced-colors mode; the toggle and dropdown keep visible borders in every state.",
+      "The control always has an accessible name (default 'Select language') alongside a universal globe icon, because a text label alone may be in a language the reader does not know.",
+      "Endonyms render with dir=auto so a right-to-left name (e.g. العربية) lays out correctly even on a left-to-right page, and the component uses logical properties throughout so it is safe on RTL pages.",
+      "Selecting a language fires onLanguageChange(code); the component does not navigate, leaving routing to the consumer (the link variant carries a real href per language)."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/language-selector/language-selector.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

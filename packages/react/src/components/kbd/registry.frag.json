@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "A single keyboard key rendered as a native <kbd> key cap, plus KbdGroup to compose a full shortcut. Semantic tokens (mod, cmd, ctrl, alt, shift, enter, esc, tab, space, backspace, delete, arrows) render the correct glyph for the visitor's platform (⌘ on macOS, Ctrl elsewhere) with a matching spoken label, since glyphs like ⌘/⌥ are unreliably announced by screen readers. Non-interactive: no tab stop, no ARIA widget role. KbdGroup wraps its keys in role=group with an auto-computed aria-label so a shortcut like Cmd+K announces as one clean phrase instead of each key and the separator being read separately.",
+  "status": "experimental",
+  "useWhen": [
+    "Documenting a keyboard shortcut next to the control it triggers (a Button's label, a Tooltip, a menu item)",
+    "Showing a cross-platform shortcut that should read ⌘ on macOS and Ctrl on Windows/Linux (use token=\"mod\")",
+    "Composing a multi-key combination (e.g. Cmd+K) with KbdGroup so it announces as a single phrase"
+  ],
+  "avoidWhen": [
+    "The key itself needs to be interactive or trigger an action (use a Button)",
+    "Describing a mouse or pointer gesture rather than a keyboard key",
+    "Long-form instructions better suited to prose (e.g. \"press and hold\")"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Non-interactive: Kbd and KbdGroup add no tab stop and receive no keyboard focus",
+      "Not a form control or button — activating the described shortcut is the surrounding UI's responsibility, not this component's"
+    ],
+    "nameRequired": false,
+    "targetSize": "not applicable — decorative/informational, not a pointer target",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Platform detection is SSR-safe: the initial render always reports the non-Mac glyph set so server and first client paint match exactly; a useEffect corrects to the Mac glyph set after mount with no hydration mismatch.",
+      "Glyphs (⌘, ⌥, ⇧, ⏎, ⎋, ␣, ⌫, ⌦, arrows) are aria-hidden and paired with a visually-hidden spoken label (e.g. \"Command\", \"Option\", \"Escape\") because symbols are inconsistently announced across screen readers.",
+      "KbdGroup renders role=group with an aria-label auto-computed from its parts' spoken labels (e.g. \"Command K\"); the decorative separator between keys is always aria-hidden so it is never read aloud.",
+      "When KbdGroup cannot auto-compute a label (a composed Kbd child has non-string children) and no explicit aria-label is passed, a dev-only console warning flags the missing accessible name — mirroring ToggleGroup's required-name guard.",
+      "The key cap keeps a visible border in every state (forced-colors:border-[CanvasText]) so it reads as a physical key even when Windows High Contrast overrides background/shadow colors."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/kbd/kbd.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

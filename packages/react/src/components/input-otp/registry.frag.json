@@ -1,0 +1,66 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "input-otp",
+  "type": "registry:ui",
+  "title": "Input OTP",
+  "description": "A one-time-passcode entry field built on Base UI's OTP Field. Renders a labeled role=group of N single-character inputs (default 6) that keep paste, SMS one-time-code autofill (autocomplete=one-time-code), and assistive tech fully working. The active cell is signaled by a focus ring plus border (not color alone), filled cells by a stronger border, and errors by a thicker inset ring, so state survives forced-colors mode. Numeric, alpha, alphanumeric, or unrestricted validation; optional masking; controlled and uncontrolled; onValueChange and onValueComplete; and Field wiring.",
+  "status": "experimental",
+  "useWhen": [
+    "Entering a short verification / one-time passcode sent by SMS or email (2FA, sign-in, confirmation)",
+    "A fixed-length code where per-character cells help users read and correct it",
+    "You want SMS-code autofill and full-code paste to fill every cell automatically"
+  ],
+  "avoidWhen": [
+    "Collecting free-form or variable-length text (use an Input)",
+    "A long secret such as a password (use an Input with type=password)",
+    "A single value chosen from a set (use a radio-group or select)",
+    "The code carries meaning beyond a fixed count of characters"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus into the field (the active cell); Shift+Tab moves away",
+      "Typing a character fills the current cell and advances to the next",
+      "Backspace clears the current cell and retreats to the previous cell",
+      "Arrow Left / Arrow Right move between cells (mirrored under dir=rtl)",
+      "Home or Arrow Up jumps to the first cell; End or Arrow Down jumps to the last filled cell",
+      "Delete removes the current character; Ctrl/Cmd+Backspace clears the whole field",
+      "Pasting a full code fills every cell at once",
+      "Disabled cells are removed from the tab order and cannot be edited"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each cell is a 2.75rem square input)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The container exposes role=group named by the required visible label via aria-labelledby; every cell inherits that name so a screen reader announces the field at each caret position.",
+      "Cells are real <input> elements, so full-code paste, SMS one-time-code autofill (autocomplete=one-time-code on the first cell), and assistive technology are never intercepted or blocked.",
+      "Non-color redundancy: the active cell shows a focus ring plus a color-shifted border, filled cells carry a stronger border, and error state adds a thicker inset ring — each is distinguishable in Windows High Contrast / forced-colors mode.",
+      "Every cell keeps a visible border in every state so forced-colors mode always paints a boundary.",
+      "inputMode follows the validation type (numeric by default; text for alpha/alphanumeric) so the correct virtual keyboard appears on mobile.",
+      "An optional description is linked via aria-describedby on both the group and each cell and excluded from the accessible name.",
+      "Direction-aware: wrapped in AmbientDirection so Arrow-key navigation and Home/End mirror under dir=rtl like the native components."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/input-otp/input-otp.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

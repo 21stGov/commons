@@ -1,0 +1,51 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "radio-group",
+  "type": "registry:ui",
+  "title": "Radio Group",
+  "description": "Native radio inputs grouped under a fieldset radiogroup. The group shares one native name via context, each Radio's visible label is the 44px pointer target with start or center content alignment, and selection plus arrow-key navigation are the browser's own behavior.",
+  "status": "experimental",
+  "useWhen": [
+    "Choosing exactly one option from roughly 2-6 visible choices",
+    "All options should be visible at once so users can compare them",
+    "Each option needs supporting description text"
+  ],
+  "avoidWhen": [
+    "More than ~6 options or constrained space (use select)",
+    "Multiple selections are allowed (use checkboxes)",
+    "A single yes/no choice (use one checkbox)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus into the group (to the checked radio, or the first radio when none is checked); a second Tab leaves the group",
+      "Arrow Down / Arrow Right move focus and selection to the next radio, wrapping to the first",
+      "Arrow Up / Arrow Left move focus and selection to the previous radio, wrapping to the last",
+      "Space selects the focused radio when none is selected",
+      "Disabling the group (native fieldset disabled) removes every radio from the tab order",
+      "All behavior is the native radio inputs' own - nothing is re-implemented in script"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each padded label row is the pointer target)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/radio-group/radio-group.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "src/components/radio-group/radio.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

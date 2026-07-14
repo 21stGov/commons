@@ -1,0 +1,128 @@
+---
+title: "MCP server"
+description: "A local, read-only MCP server built into the Commons CLI — let your coding agent search, inspect, and plan Commons installs safely."
+---
+
+Commons ships a [Model Context Protocol](https://modelcontextprotocol.io)
+server inside the CLI package. `commons mcp` starts a **local, read-only**
+stdio server — no separate install, no API key, no telemetry. It gives MCP
+clients like Claude Code, Cursor, VS Code, and Codex a structured way to
+discover Commons components, read their contracts, and plan installations
+against your actual project.
+
+Read-only is the design, not a limitation: the server never writes to your
+project. Installation stays in the CLI, where the plan is previewable and the
+outcome is atomic — the model returns you the exact command to run.
+
+## Setup
+
+One command writes the client configuration for you:
+
+<Tabs groupId="package-manager" persist items={["npm", "pnpm", "yarn", "bun"]}>
+
+<Tab value="npm">
+
+```sh
+npx @21stgov/commons mcp init --client claude
+```
+
+</Tab>
+
+<Tab value="pnpm">
+
+```sh
+pnpm dlx @21stgov/commons mcp init --client claude
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```sh
+yarn dlx @21stgov/commons mcp init --client claude
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```sh
+bunx @21stgov/commons mcp init --client claude
+```
+
+</Tab>
+
+</Tabs>
+
+`--client claude` writes a project-scoped `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "commons": {
+      "command": "npx",
+      "args": ["@21stgov/commons", "mcp"]
+    }
+  }
+}
+```
+
+- `--client cursor` writes the same shape to `.cursor/mcp.json`.
+- `--client vscode` writes `.vscode/mcp.json`, with the top-level key
+  `servers` instead of `mcpServers` (VS Code's format).
+- `--client codex` prints a snippet to add to `~/.codex/config.toml`, since
+  Codex configuration is user-level TOML:
+
+```toml
+[mcp_servers.commons]
+command = "npx"
+args = ["@21stgov/commons", "mcp"]
+```
+
+There are no secrets in any of these files — the server is local and
+read-only — so they are safe to commit and share with your team.
+
+## Tools
+
+The tool surface is small and bounded on purpose:
+
+| Tool | Input | Returns |
+| ---- | ----- | ------- |
+| `search_components` | `{ query, limit? }` | Matching catalog entries — name, status, description, use-when guidance |
+| `get_component` | `{ name }` | The component's full registry-item v1 JSON: files, dependencies, and the [accessibility contract](/docs/accessibility) |
+| `plan_install` | `{ names, cwd? }` | A dry-run install plan: every file with its `write` / `conflict` / `skip` action, npm dependencies, and the exact `installCommand` to run. **Never writes.** |
+| `get_setup` | — | The registry URL, the five CSS imports in order, and tsconfig alias guidance |
+
+`plan_install` is the same pre-flight the CLI's `add --dry-run` performs, so
+what the agent shows you is exactly what `add` will do — including conflicts
+with files you have already modified, surfaced before anything is written.
+
+## Prompts that work well
+
+- "What Commons components exist for collecting a date?"
+- "Plan installing button and field into this project."
+- "Show me the accessibility contract for radio-group before we use it."
+- "What setup does this project still need for Commons?"
+
+A good agent workflow is search → inspect → plan → hand you the `add`
+command. The server gives the model versioned facts from the registry instead
+of trained guesses, and the write stays a human decision.
+
+## How it resolves the registry
+
+The MCP server reads `commons.json` and the `COMMONS_REGISTRY` environment
+variable exactly like every other CLI command. If your project points at a
+[self-hosted registry](/docs/cli#self-hosted-registries), the agent searches
+and plans against that registry — same code path, same answers.
+
+## Notes
+
+- **Local by design.** The server runs on your machine over stdio and sends
+  nothing anywhere. No telemetry, no analytics, no model calls inside the
+  tools.
+- **Read-only by design.** There is no tool that writes files. If a model
+  claims it installed a component through MCP, it did not — check for the
+  CLI command it should have given you instead.
+- A hosted read-only endpoint (`mcp.commonsui.com`) is planned so agents can
+  discover Commons without cloning or installing anything; the local server
+  in the CLI is the supported path today.

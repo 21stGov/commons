@@ -1,0 +1,47 @@
+/* SPDX-License-Identifier: MIT */
+/*
+ * Atkinson Hyperlegible Next + Atkinson Hyperlegible Mono
+ * Copyright 2020, Braille Institute of America, Inc.
+ * Licensed under the SIL Open Font License, Version 1.1 — see LICENSE.txt.
+ * Reserved Font Names: "ATKINSON" and "HYPERLEGIBLE".
+ *
+ * Both families ship as single variable WOFF2 files (wght 200-800 +
+ * ital 0-1). Two @font-face rules per family point at the same file:
+ * browsers select ital=1 for the italic-style face, so italics are the
+ * real drawn glyphs, never synthesized — and the file is cached once.
+ *
+ * font-display: swap keeps text visible while the font loads; the
+ * fallback stacks are defined in @21stgov/commons-tokens.
+ */
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("./files/AtkinsonHyperlegibleNextVF-Variable.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Next";
+  src: url("./files/AtkinsonHyperlegibleNextVF-Variable.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Mono";
+  src: url("./files/AtkinsonHyperlegibleMonoVF-Variable.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Atkinson Hyperlegible Mono";
+  src: url("./files/AtkinsonHyperlegibleMonoVF-Variable.woff2") format("woff2-variations");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "alert-dialog",
+  "type": "registry:ui",
+  "title": "Alert Dialog",
+  "description": "A modal that interrupts to demand a decision, built on Base UI's Alert Dialog. Exposes role=alertdialog, traps focus, and returns focus to the trigger. Unlike Dialog it never closes on an outside press and does not close on Escape by default — the user must choose an explicit action. Ships primitive parts (Root, Trigger, Content, Title, Description, Cancel, Action, Footer) plus a convenience AlertDialog with title, description, confirm/cancel labels, onConfirm, and a destructive option that styles the confirm as danger and moves initial focus to the safer Cancel button.",
+  "status": "experimental",
+  "useWhen": [
+    "Confirming a destructive or irreversible action (delete a permit application, revoke access)",
+    "Interrupting a flow to force an explicit confirm/cancel decision before continuing",
+    "Any modal where an accidental outside-click or Escape dismissal would be harmful"
+  ],
+  "avoidWhen": [
+    "General modal content that may be dismissed casually (use a Dialog)",
+    "A non-blocking, transient message (use a toast/status region)",
+    "A simple on/off setting (use a Switch) or an immediate action with no consequence (use a Button)",
+    "Collecting multi-field input as part of a larger task (use a Dialog or a page)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction",
+    "button"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab / Shift+Tab cycle focus among the dialog's controls only (focus is trapped)",
+      "On open, focus moves into the dialog — to the Cancel button when destructive, otherwise to the confirming action",
+      "On close, focus returns to the trigger",
+      "Enter or Space activates the focused action button",
+      "Escape does NOT cancel by default (the interruption must be resolved by an action); set dismissOnEscape to allow Escape to cancel"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (both action buttons are full Commons Buttons)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The popup exposes role=alertdialog with aria-modal=true; the title provides the accessible name via aria-labelledby and the description is linked via aria-describedby.",
+      "No outside-press (light) dismiss and no default Escape dismiss: the dialog can only be closed by choosing the Cancel or the confirming action. WAI-ARIA's Alert and Message Dialogs pattern permits Escape as a cancel shortcut, exposed via the opt-in dismissOnEscape prop.",
+      "There is intentionally no icon '×' close button; the cancelling action (a Base UI Close) is what lets touch screen-reader users escape the modal.",
+      "For a destructive action, initial focus lands on the SAFE Cancel button so an accidental Enter cancels rather than confirms, and the confirming button uses the Button danger variant.",
+      "Non-color redundancy: actions are labelled text buttons with a visible border in every state, so intent survives Windows High Contrast / forced-colors mode; the backdrop turns fully opaque under prefers-reduced-transparency.",
+      "Motion (fade + scale) is gated behind motion-safe and disabled for reduced-motion users."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/alert-dialog/alert-dialog.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

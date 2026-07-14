@@ -1,0 +1,55 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Vertically stacked disclosure sections built on Base UI. Each header is a heading wrapping a native button; multiple panels may be open at once by default (USWDS convention), with an optional single-open mode.",
+  "status": "experimental",
+  "useWhen": [
+    "FAQ pages where residents scan questions and expand only the answers they need",
+    "Progressive disclosure of long supporting content (eligibility details, fee schedules, step-by-step instructions)",
+    "Long pages that would otherwise force excessive scrolling past content most users skip"
+  ],
+  "avoidWhen": [
+    "Content everyone must read (legal notices, deadlines, safety instructions) \u2014 hidden content gets missed",
+    "Tiny amounts of content that do not need hiding \u2014 show the text directly",
+    "Switching between peer views of the same content (use tabs)",
+    "A single collapsible section inside body copy (use a simple disclosure)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to each trigger in turn \u2014 every trigger is a regular tab stop",
+      "Enter or Space toggles the focused panel",
+      "Arrow keys do not move focus between triggers (Base UI v1.6 follows the updated APG accordion pattern, which removed arrow-key roving focus); this is verified by a test",
+      "aria-expanded on each trigger reflects its panel state; aria-controls is present while the panel is open (Base UI unmounts closed panels from the DOM by default, so there is no id to reference while closed \u2014 pass keepMounted or hiddenUntilFound on the panel to keep it rendered)",
+      "Each open panel is a region labelled by its trigger (role=region + aria-labelledby)",
+      "Each trigger is wrapped in a heading element (headingLevel prop, default h3) per the APG accordion pattern",
+      "Open state is not conveyed by color alone: the chevron direction flips and aria-expanded updates; the height animation is motion-safe only"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/accordion/accordion.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

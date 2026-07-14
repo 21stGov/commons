@@ -1,0 +1,35 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components/ui/button": ["./src/components/button/button.tsx"],
+      "@/components/ui/calendar": ["./src/components/calendar/calendar.tsx"],
+      "@/components/ui/checkbox": ["./src/components/checkbox/checkbox.tsx"],
+      "@/components/ui/collapsible": ["./src/components/collapsible/collapsible.tsx"],
+      "@/components/ui/combo-box": ["./src/components/combo-box/combo-box.tsx"],
+      "@/components/ui/context": ["./src/components/field/context.ts"],
+      "@/components/ui/dialog": ["./src/components/dialog/dialog.tsx"],
+      "@/components/ui/drawer": ["./src/components/drawer/drawer.tsx"],
+      "@/components/ui/dropdown-menu": ["./src/components/dropdown-menu/dropdown-menu.tsx"],
+      "@/components/ui/field": ["./src/components/field/field.tsx"],
+      "@/components/ui/icon": ["./src/components/icon/icon.tsx"],
+      "@/components/ui/input": ["./src/components/input/input.tsx"],
+      "@/components/ui/kbd": ["./src/components/kbd/kbd.tsx"],
+      "@/components/ui/link": ["./src/components/link/link.tsx"],
+      "@/components/ui/list": ["./src/components/list/list.tsx"],
+      "@/components/ui/pagination": ["./src/components/pagination/pagination.tsx"],
+      "@/components/ui/popover": ["./src/components/popover/popover.tsx"],
+      "@/components/ui/radio-group": ["./src/components/radio-group/radio-group.tsx"],
+      "@/components/ui/select": ["./src/components/select/select.tsx"],
+      "@/components/ui/separator": ["./src/components/separator/separator.tsx"],
+      "@/components/ui/table": ["./src/components/table/table.tsx"],
+      "@/components/ui/toggle": ["./src/components/toggle/toggle.tsx"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "test", "tsup.config.ts", "vitest.config.ts"]
+}

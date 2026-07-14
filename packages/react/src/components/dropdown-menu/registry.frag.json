@@ -1,0 +1,60 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "dropdown-menu",
+  "type": "registry:ui",
+  "title": "Dropdown Menu",
+  "description": "A composed menu of application actions revealed from a trigger, built on Base UI's Menu: role=menu popup with roving focus, first-letter typeahead, checkbox and radio items, grouped labels, destructive items, and nested submenus. Portalled and collision-aware, with logical sides that flip in RTL and 44px item targets. A menu of actions, not site navigation.",
+  "status": "experimental",
+  "useWhen": [
+    "A trigger that reveals a compact set of actions (a row's More menu, a table row's edit/duplicate/delete actions)",
+    "An account or profile menu of actions (settings, sign out)",
+    "Toggling display state with checkbox items, or picking one option in a group with radio items",
+    "Grouping related actions, optionally nesting less-common ones in a submenu"
+  ],
+  "avoidWhen": [
+    "Primary site navigation between pages (use a nav landmark with links, not a menu of actions)",
+    "A single on/off control (use a Button or a Checkbox)",
+    "A long, filterable set of choices bound to a form value (use the Combo Box)",
+    "Selecting one value from a short, always-relevant list in a form (use the Select)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "button",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The trigger exposes aria-haspopup=menu and toggles aria-expanded",
+      "Enter, Space, or Down Arrow on the trigger opens the menu and moves focus to the first item",
+      "Up Arrow and Down Arrow rove between items (roving focus); the list loops at the ends by default",
+      "Home jumps to the first item; End jumps to the last item",
+      "Typing a character moves the highlight to the next item beginning with it (first-letter typeahead)",
+      "Enter or Space activates the highlighted item and closes the menu (actions close by default; checkbox and radio items stay open)",
+      "Escape closes the menu and returns focus to the trigger",
+      "Right Arrow opens a submenu and focuses its first item; Left Arrow closes it back to the submenu trigger (mirrored in RTL)",
+      "Disabled items stay reachable by the arrow keys (the APG focusable-disabled pattern) but carry aria-disabled and cannot be activated",
+      "Checkbox items expose aria-checked (menuitemcheckbox) and radio items expose aria-checked (menuitemradio)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/dropdown-menu/dropdown-menu.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

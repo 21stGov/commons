@@ -1,0 +1,392 @@
+{
+  "$description": "GENERATED FILE — do not edit by hand. Run `pnpm generate` (scripts/generate-palette.ts). Grades encode WCAG contrast: delta >= 40 -> 3:1, >= 50 -> 4.5:1, >= 70 -> 7:1, across ALL families.",
+  "color": {
+    "$type": "color",
+    "gray": {
+      "5": {
+        "$value": "#f9fafa",
+        "$description": "gray grade 5; WCAG relative luminance 0.9541 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#e1e8f2",
+        "$description": "gray grade 10; WCAG relative luminance 0.8013 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#c4c6c9",
+        "$description": "gray grade 20; WCAG relative luminance 0.5634 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#a5a8ad",
+        "$description": "gray grade 30; WCAG relative luminance 0.3902 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#8a8e92",
+        "$description": "gray grade 40; WCAG relative luminance 0.2682 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#72767a",
+        "$description": "gray grade 50; WCAG relative luminance 0.1794 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#5c6064",
+        "$description": "gray grade 60; WCAG relative luminance 0.1156 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#484a4e",
+        "$description": "gray grade 70; WCAG relative luminance 0.0683 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#333538",
+        "$description": "gray grade 80; WCAG relative luminance 0.0354 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#1b1c1d",
+        "$description": "gray grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "blue": {
+      "5": {
+        "$value": "#f7faff",
+        "$description": "blue grade 5; WCAG relative luminance 0.9537 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#d9e9ff",
+        "$description": "blue grade 10; WCAG relative luminance 0.8025 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#a4c9f8",
+        "$description": "blue grade 20; WCAG relative luminance 0.5644 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#7cabe7",
+        "$description": "blue grade 30; WCAG relative luminance 0.3918 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#5990d5",
+        "$description": "blue grade 40; WCAG relative luminance 0.2687 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#4177bb",
+        "$description": "blue grade 50; WCAG relative luminance 0.1791 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#2e609f",
+        "$description": "blue grade 60; WCAG relative luminance 0.1145 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#1f4b80",
+        "$description": "blue grade 70; WCAG relative luminance 0.0688 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#16365c",
+        "$description": "blue grade 80; WCAG relative luminance 0.0358 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#091c35",
+        "$description": "blue grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "indigo": {
+      "5": {
+        "$value": "#f8faff",
+        "$description": "indigo grade 5; WCAG relative luminance 0.9555 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#e1e7ff",
+        "$description": "indigo grade 10; WCAG relative luminance 0.8038 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#b7c3ff",
+        "$description": "indigo grade 20; WCAG relative luminance 0.5632 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#95a4ef",
+        "$description": "indigo grade 30; WCAG relative luminance 0.3917 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#7987de",
+        "$description": "indigo grade 40; WCAG relative luminance 0.2667 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#626fc3",
+        "$description": "indigo grade 50; WCAG relative luminance 0.1791 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#4e59a6",
+        "$description": "indigo grade 60; WCAG relative luminance 0.1152 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#3c4487",
+        "$description": "indigo grade 70; WCAG relative luminance 0.0684 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#2a3161",
+        "$description": "indigo grade 80; WCAG relative luminance 0.0355 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#151938",
+        "$description": "indigo grade 90; WCAG relative luminance 0.0114 (target 0.0115)"
+      }
+    },
+    "cyan": {
+      "5": {
+        "$value": "#f0fcff",
+        "$description": "cyan grade 5; WCAG relative luminance 0.9537 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#c9eef7",
+        "$description": "cyan grade 10; WCAG relative luminance 0.8028 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#93cfdf",
+        "$description": "cyan grade 20; WCAG relative luminance 0.5616 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#61b4c7",
+        "$description": "cyan grade 30; WCAG relative luminance 0.3931 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#2d9ab0",
+        "$description": "cyan grade 40; WCAG relative luminance 0.2680 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#008196",
+        "$description": "cyan grade 50; WCAG relative luminance 0.1790 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#00697b",
+        "$description": "cyan grade 60; WCAG relative luminance 0.1153 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#005260",
+        "$description": "cyan grade 70; WCAG relative luminance 0.0688 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#003b46",
+        "$description": "cyan grade 80; WCAG relative luminance 0.0357 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#002026",
+        "$description": "cyan grade 90; WCAG relative luminance 0.0117 (target 0.0115)"
+      }
+    },
+    "green": {
+      "5": {
+        "$value": "#eefef1",
+        "$description": "green grade 5; WCAG relative luminance 0.9541 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#cef0d4",
+        "$description": "green grade 10; WCAG relative luminance 0.8020 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#9bd3a6",
+        "$description": "green grade 20; WCAG relative luminance 0.5631 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#6fb87f",
+        "$description": "green grade 30; WCAG relative luminance 0.3919 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#459f5d",
+        "$description": "green grade 40; WCAG relative luminance 0.2685 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#298646",
+        "$description": "green grade 50; WCAG relative luminance 0.1796 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#0f6e33",
+        "$description": "green grade 60; WCAG relative luminance 0.1149 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#005724",
+        "$description": "green grade 70; WCAG relative luminance 0.0694 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#043e1a",
+        "$description": "green grade 80; WCAG relative luminance 0.0355 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#01220a",
+        "$description": "green grade 90; WCAG relative luminance 0.0117 (target 0.0115)"
+      }
+    },
+    "gold": {
+      "5": {
+        "$value": "#fff9ef",
+        "$description": "gold grade 5; WCAG relative luminance 0.9524 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#f5e6c7",
+        "$description": "gold grade 10; WCAG relative luminance 0.8013 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#dcc391",
+        "$description": "gold grade 20; WCAG relative luminance 0.5629 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#c4a462",
+        "$description": "gold grade 30; WCAG relative luminance 0.3917 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#ad8834",
+        "$description": "gold grade 40; WCAG relative luminance 0.2674 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#947013",
+        "$description": "gold grade 50; WCAG relative luminance 0.1793 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#7a5a00",
+        "$description": "gold grade 60; WCAG relative luminance 0.1145 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#604600",
+        "$description": "gold grade 70; WCAG relative luminance 0.0687 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#453200",
+        "$description": "gold grade 80; WCAG relative luminance 0.0355 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#261a00",
+        "$description": "gold grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "orange": {
+      "5": {
+        "$value": "#fff9f4",
+        "$description": "orange grade 5; WCAG relative luminance 0.9554 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#ffe2d0",
+        "$description": "orange grade 10; WCAG relative luminance 0.8021 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#f7b98f",
+        "$description": "orange grade 20; WCAG relative luminance 0.5646 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#e4965e",
+        "$description": "orange grade 30; WCAG relative luminance 0.3911 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#d1762f",
+        "$description": "orange grade 40; WCAG relative luminance 0.2672 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#b55e07",
+        "$description": "orange grade 50; WCAG relative luminance 0.1784 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#964b00",
+        "$description": "orange grade 60; WCAG relative luminance 0.1152 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#763a00",
+        "$description": "orange grade 70; WCAG relative luminance 0.0688 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#562900",
+        "$description": "orange grade 80; WCAG relative luminance 0.0356 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#311400",
+        "$description": "orange grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "red": {
+      "5": {
+        "$value": "#fef9f8",
+        "$description": "red grade 5; WCAG relative luminance 0.9560 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#ffe1dc",
+        "$description": "red grade 10; WCAG relative luminance 0.8028 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#ffb3a9",
+        "$description": "red grade 20; WCAG relative luminance 0.5636 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#f38b80",
+        "$description": "red grade 30; WCAG relative luminance 0.3908 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#e0695f",
+        "$description": "red grade 40; WCAG relative luminance 0.2678 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#c45047",
+        "$description": "red grade 50; WCAG relative luminance 0.1793 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#a63b35",
+        "$description": "red grade 60; WCAG relative luminance 0.1149 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#862a25",
+        "$description": "red grade 70; WCAG relative luminance 0.0686 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#611e1a",
+        "$description": "red grade 80; WCAG relative luminance 0.0354 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#370e0b",
+        "$description": "red grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "violet": {
+      "5": {
+        "$value": "#fbf9ff",
+        "$description": "violet grade 5; WCAG relative luminance 0.9548 (target 0.9542)"
+      },
+      "10": {
+        "$value": "#eee3fe",
+        "$description": "violet grade 10; WCAG relative luminance 0.8027 (target 0.8021)"
+      },
+      "20": {
+        "$value": "#d7baf9",
+        "$description": "violet grade 20; WCAG relative luminance 0.5640 (target 0.5635)"
+      },
+      "30": {
+        "$value": "#be98e8",
+        "$description": "violet grade 30; WCAG relative luminance 0.3923 (target 0.3917)"
+      },
+      "40": {
+        "$value": "#a67ad6",
+        "$description": "violet grade 40; WCAG relative luminance 0.2688 (target 0.2681)"
+      },
+      "50": {
+        "$value": "#8e61bc",
+        "$description": "violet grade 50; WCAG relative luminance 0.1793 (target 0.1790)"
+      },
+      "60": {
+        "$value": "#754c9f",
+        "$description": "violet grade 60; WCAG relative luminance 0.1145 (target 0.1149)"
+      },
+      "70": {
+        "$value": "#5d3981",
+        "$description": "violet grade 70; WCAG relative luminance 0.0684 (target 0.0687)"
+      },
+      "80": {
+        "$value": "#43295c",
+        "$description": "violet grade 80; WCAG relative luminance 0.0355 (target 0.0355)"
+      },
+      "90": {
+        "$value": "#251435",
+        "$description": "violet grade 90; WCAG relative luminance 0.0115 (target 0.0115)"
+      }
+    },
+    "white": {
+      "$value": "#ffffff",
+      "$description": "Pure white anchor (grade 0 equivalent)"
+    },
+    "black": {
+      "$value": "#000000",
+      "$description": "Pure black anchor (grade 100 equivalent)"
+    }
+  }
+}

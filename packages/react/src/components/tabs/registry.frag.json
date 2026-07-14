@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "An APG tabs pattern with roving tabindex, automatic or manual activation, Home/End support, disabled-item skipping, RTL-aware horizontal arrows, and a selected state conveyed by structure and weight as well as color.",
+  "status": "experimental",
+  "useWhen": [
+    "Switching between a small set of peer views within the same context without navigating to a new page",
+    "The tab labels are short, distinct, and the panel content is available immediately",
+    "People benefit from comparing related categories while preserving the surrounding page context"
+  ],
+  "avoidWhen": [
+    "The sections should all be visible or discoverable by document search \u2014 use headings",
+    "The choices are steps in a process \u2014 use a stepper or separate pages",
+    "There are too many labels to fit or understand at a glance \u2014 use navigation or a select",
+    "Changing tabs triggers a slow network request \u2014 use manual activation or ordinary links"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab enters the tablist on the selected tab and then moves into the open panel",
+      "ArrowLeft and ArrowRight move through horizontal tabs, wrap at the ends, skip disabled tabs, and flip meaning in RTL",
+      "ArrowUp and ArrowDown move through vertical tabs and wrap at the ends",
+      "Home and End move to the first and last enabled tab",
+      "With automatic activation (default), moving focus selects the tab; with activateOnFocus=false, Enter or Space selects it",
+      "Selection is exposed with aria-selected and shown with font weight plus a 2px logical-edge indicator, never color alone"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/tabs/tabs.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "title": "Checkbox",
+  "description": "Native input[type=checkbox] with token-driven marks and restored platform appearance in forced colors, a required visible label that doubles as the 44px pointer target, optional linked description and alignment, and native indeterminate support.",
+  "status": "experimental",
+  "useWhen": [
+    "Toggling a single independent yes/no choice (accept terms, subscribe)",
+    "Selecting any number of options from a list (multi-select)",
+    "Representing a parent select-all over child options (indeterminate state)"
+  ],
+  "avoidWhen": [
+    "Choosing exactly one option from a set (use radio-group)",
+    "An on/off setting that applies immediately with no form submit (a switch reads better)",
+    "Triggering an immediate action (use a button)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the checkbox; Shift+Tab moves away",
+      "Space toggles between checked and unchecked (an indeterminate checkbox becomes checked)",
+      "A disabled checkbox is removed from the tab order",
+      "All behavior is the native input's own - nothing is re-implemented in script"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the padded label row is the pointer target)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/checkbox/checkbox.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

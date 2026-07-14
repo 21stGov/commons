@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "field",
+  "type": "registry:ui",
+  "title": "Field",
+  "description": "Form-field wrapper (Field) and group wrapper (FieldGroup) providing label, hint, required indicator, and a polite live-region error with icon + text — all wired to the control via the Field context (id, aria-describedby, aria-invalid, required, disabled).",
+  "status": "experimental",
+  "useWhen": [
+    "Wrapping a single form control that needs a label, hint, or validation error",
+    "Marking a control required with both a visible and screen-reader indicator",
+    "Announcing validation errors to screen readers as they appear (live region)",
+    "Grouping checkboxes or radios under one question (FieldGroup fieldset + legend)"
+  ],
+  "avoidWhen": [
+    "The control already has its own composite labeling (e.g. a search input inside a labelled search landmark)",
+    "Static, non-form content — use headings and paragraphs instead",
+    "A single checkbox with its own inline label and no hint or error (plain label is enough)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The wrapper adds no keyboard behavior of its own; the wrapped control keeps its native contract",
+      "Tab moves focus to the wrapped control; clicking the label focuses it (native htmlFor association)",
+      "A disabled Field (or FieldGroup via the native fieldset attribute) removes its control(s) from the tab order",
+      "Within a FieldGroup, each checkbox or radio keeps its native Tab/Space/Arrow behavior"
+    ],
+    "nameRequired": true,
+    "targetSize": "not applicable (non-interactive wrapper; wrapped controls meet the 44px project default)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/field/field.tsx",
+      "type": "registry:ui"
+    },
+    {
+      "path": "src/components/field/context.ts",
+      "type": "registry:ui"
+    }
+  ]
+}

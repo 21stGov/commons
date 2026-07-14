@@ -1,0 +1,48 @@
+---
+title: "Introduction"
+description: "What Commons is, who it serves, and the contract it makes with the people who depend on it."
+---
+
+Commons is an open-source, accessibility-first design system for U.S. local
+governments, built in public by [21st Gov](https://21stgov.com). It combines a
+rigorous token foundation, first-class React components, framework-agnostic
+CSS, and an own-your-code registry.
+
+## Public software deserves better defaults
+
+People should not need a new device, a particular browser, perfect vision,
+precise motor control, English fluency, or deep technical confidence to use a
+public service. Commons is built around a stronger contract:
+
+- **Accessible by default.** WCAG 2.2 AA is the enforced baseline, with
+  selected AAA defaults: 44px touch targets, a 7:1 high-contrast theme,
+  enhanced focus indicators, visible focus everywhere, forced-colors support,
+  reduced motion, text enlargement, and bidirectional layouts. Every component
+  publishes a normative accessibility contract as data, not prose.
+- **Owned by the institution.** The Commons CLI places understandable
+  component source in a government's repository instead of hiding essential
+  interfaces behind a proprietary runtime. What you install is what you own.
+- **Modern without being fragile.** The CSS and token core remain useful
+  without React. The documentation site, registry, and CLI are all fully
+  static and self-hostable — no third-party CDN, font service, or model API is
+  required.
+
+## How the pieces fit
+
+| Package | What it is |
+| ------- | ---------- |
+| `@21stgov/commons` | The CLI — `init`, `search`, `inspect`, `add`, and `mcp`, with a versioned `--json` machine interface |
+| `@21stgov/commons-tokens` | DTCG token sources compiled to CSS custom properties with a validated contrast contract |
+| `@21stgov/commons-core` | Framework-agnostic accessible reset and base styles |
+| `@21stgov/commons-react` | React 19 components (also distributed as source via the registry) |
+| `@21stgov/commons-fonts` | Self-hosted Atkinson Hyperlegible Next + Mono variable fonts |
+
+## Built for machines too
+
+Everything on this site is generated from canonical, versioned sources: the
+component pages come from the same registry metadata served at
+[/r/index.json](https://commonsui.com/r/index.json), every page has a Markdown
+mirror at the same path with a `.md` extension, and
+[/llms.txt](https://commonsui.com/llms.txt) maps the whole project for agents.
+
+Ready to start? Head to [Installation](/docs/installation).

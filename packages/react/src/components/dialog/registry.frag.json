@@ -1,0 +1,56 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "dialog",
+  "type": "registry:ui",
+  "title": "Dialog",
+  "description": "Modal dialog built on Base UI: focus trap, Esc to close, backdrop dismiss, scroll lock, and focus return to the trigger. Composed parts (Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogClose, DialogFooter) with a required title, a 44px Close button, token-driven backdrop translucency, and reduced-motion-safe transitions.",
+  "status": "experimental",
+  "useWhen": [
+    "Confirming a destructive or irreversible action before it runs",
+    "A blocking decision the user must resolve before continuing the task",
+    "A short, self-contained form that belongs to the current page (rename, quick edit)",
+    "Required legal or policy acknowledgement before proceeding"
+  ],
+  "avoidWhen": [
+    "Content long or important enough to be its own page \u2014 deep links, printing, and back-button behavior all break in a modal",
+    "Non-blocking status updates or confirmations (use an alert, or a toast for transient notices)",
+    "Multi-step flows or complex forms (use a dedicated page or route)",
+    "Anything that opens on page load or interrupts without a user action \u2014 modals must be user-initiated",
+    "Supplementary help content (use a link, disclosure, or tooltip pattern instead)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "button",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Enter or Space on the trigger opens the dialog; focus moves to the first tabbable element inside",
+      "Tab and Shift+Tab cycle through the dialog's controls only (focus is trapped while open)",
+      "Escape closes the dialog",
+      "Enter or Space on DialogClose or the icon Close button closes the dialog",
+      "On close, focus returns to the trigger that opened the dialog"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/dialog/dialog.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "A brief, non-interactive description that appears on hover or focus. It is dismissible, hoverable, and persistent under WCAG 1.4.13, with a development warning for interactive descendants.",
+  "status": "experimental",
+  "useWhen": [
+    "A familiar icon needs a short accessible explanation and permanently visible text would create genuine layout pressure",
+    "A compact data visualization needs a brief, noncritical label that is also available by keyboard focus"
+  ],
+  "avoidWhen": [
+    "In almost every case where the text can remain visible \u2014 tooltips are a last resort, not a default labeling pattern",
+    "Critical instructions, errors, deadlines, eligibility rules, or any content a person must read",
+    "Long explanations or content that repeats the trigger's accessible name",
+    "Links, buttons, form controls, or any other interactive content \u2014 use a popover or dialog",
+    "Touch-only actions; hover is never the only way to expose required information"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab focuses the trigger and exposes the tooltip without moving focus into the popup",
+      "Escape dismisses the tooltip without moving focus from the trigger",
+      "The tooltip remains visible while the trigger has focus",
+      "Pointer users can move from the trigger onto the tooltip without it disappearing",
+      "The tooltip closes only after pointer and focus both leave its trigger and popup",
+      "The popup is associated to the trigger with aria-describedby and contains no interactive descendants"
+    ],
+    "nameRequired": true,
+    "targetSize": "Trigger uses the Commons 44px project default unless replaced with render",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/tooltip/tooltip.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

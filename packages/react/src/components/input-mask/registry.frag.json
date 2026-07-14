@@ -1,0 +1,48 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "input-mask",
+  "type": "registry:ui",
+  "title": "Input Mask",
+  "description": "An Input that guides entry of a fixed-format value (phone, SSN, ZIP, ZIP+4, date MM/DD/YYYY). Sets inputMode, pattern, and maxLength for the mask and, by default, inserts separators as the user types — without blocking valid keystrokes, hijacking paste, or trapping the caret. A `secure` prop obscures sensitive values (e.g. an SSN) as password bullets with a keyboard-operable reveal toggle, while masking still applies. Presets plus custom mask templates. The mask is a client-side guide; authoritative validation belongs on the server.",
+  "status": "experimental",
+  "useWhen": [
+    "Collecting a fixed-format, known-length value (US phone, SSN, ZIP or ZIP+4, MM/DD/YYYY date)",
+    "The separators are predictable and the same for every valid entry",
+    "A visible format guide helps users enter and self-correct the value"
+  ],
+  "avoidWhen": [
+    "Free text or any value whose length or shape varies (use a plain Input)",
+    "Values that need real validation as the source of truth (validate on the server; the mask only guides)",
+    "International formats where the pattern differs by locale (offer a plain Input or locale-specific field)",
+    "A whole date users think of as parts (consider the memorable-date pattern)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "input"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the control; Shift+Tab moves focus away backwards",
+      "Printable keys insert characters; separators are added automatically and never block a valid keystroke",
+      "Backspace and Delete remove characters freely — deleting a digit also drops its separators, so the caret is never trapped",
+      "Paste is accepted and re-masked; the value can always be cleared and corrected",
+      "When secure, Tab reaches the reveal toggle; Enter or Space shows or hides the value",
+      "A disabled control is removed from the tab order"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (min-block-size 2.75rem)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/input-mask/input-mask.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "select",
+  "type": "registry:ui",
+  "title": "Select",
+  "description": "Native <select> with theme tokens, a forced-colors-safe inline-SVG chevron, Field wiring, and 44px minimum target size. Platform keyboard and screen-reader behavior, nothing re-implemented.",
+  "status": "experimental",
+  "useWhen": [
+    "Choosing exactly one option from a known list of roughly 5-15 items",
+    "Space is constrained and radio buttons would not fit",
+    "The platform picker is the right UX (mobile wheels, OS listboxes)"
+  ],
+  "avoidWhen": [
+    "Fewer than ~5 options (use radio buttons so all choices are visible)",
+    "Long or unfamiliar lists that need type-ahead filtering (use the Phase 2 combobox)",
+    "Toggling a single on/off state (use a checkbox or switch)",
+    "Navigating on change (unexpected context change, WCAG 3.2.2)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the select; Shift+Tab moves away",
+      "Down Arrow / Up Arrow move through options (platform may open the listbox first)",
+      "Alt+Down Arrow (or Space on some platforms) opens the option list; Enter or Alt+Up Arrow commits; Escape closes without changing",
+      "Home / End jump to the first / last option (platform-dependent)",
+      "Typing characters jumps to the next option starting with them (native type-ahead)",
+      "All behavior is the native platform's own - none of it is re-implemented in script"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/select/select.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+# Changelog
+
+All notable, user-facing changes to Commons are recorded here. This is the
+curated changelog for the whole system; the machine-generated per-package
+histories live in each package's own `CHANGELOG.md`.
+
+Commons is **pre-1.0** — every component ships `experimental`, and `0.x` minor
+releases may include breaking changes. See
+[RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
+versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
+
+## 0.1.0 — 2026-07-13
+
+The first public pre-release. All five packages
+(`@21stgov/commons-tokens`, `-core`, `-react`, `-fonts`, and the CLI
+`@21stgov/commons`) ship together at `0.1.0`.
+
+### Added
+
+- **~85 accessible React components** on [Base UI](https://base-ui.com)
+  primitives — full parity with Base UI's primitive surface plus
+  government-specific and utility components. By area:
+  - **Forms & inputs** — field, input, textarea, select, custom select, combo
+    box, checkbox, checkbox group, radio group, switch, toggle, toggle group,
+    slider, number field, input OTP, input group, input mask, date picker, date
+    range picker, time picker, memorable date, character count, file input,
+    form, validation, language selector.
+  - **Actions & feedback** — button, button group, alert, alert dialog, dialog,
+    drawer, toast, tooltip, progress, meter, spinner, skeleton, empty state,
+    badge, site alert.
+  - **Overlays & disclosure** — popover, hover card, accordion, collapsible,
+    dropdown menu, context menu, menubar, command palette, scroll area,
+    resizable panels.
+  - **Navigation** — navigation menu, sidebar, in-page navigation, breadcrumb,
+    pagination, tabs, link, step indicator, process list, toolbar, kbd.
+  - **Data & layout** — data table, table, card, collection, list, item, icon,
+    icon list, avatar, aspect ratio, carousel, calendar, separator, prose.
+  - **Civic identity** — gov banner, identifier, header, footer.
+
+  Each component ships tests, an [axe](https://github.com/dequelabs/axe-core)
+  suite, a docs page, and a machine-readable registry contract.
+
+- **Design tokens** (`@21stgov/commons-tokens`) — DTCG sources compiled to
+  `--cui-*` CSS custom properties for color, type, spacing, focus, motion,
+  elevation, breakpoints, radii, and z-index, with **light, dark, and dedicated
+  high-contrast themes** and automated contrast validation (1,755 checks).
+
+- **Framework-agnostic CSS core** (`@21stgov/commons-core`) — a modern
+  accessible reset, base element styles, a skip link, screen-reader utilities,
+  global focus rings, forced-colors hardening, and 44px targets. Works with zero
+  React (PHP, Drupal, WordPress, .NET, Java, or any server-rendered stack) — see
+  [Using Commons without React](https://commonsui.com/docs/without-react).
+
+- **Self-hosted fonts** (`@21stgov/commons-fonts`) — Atkinson Hyperlegible Next
+  and Mono variable fonts, no font CDN.
+
+- **The CLI** (`@21stgov/commons`) — `init`, `add`, `search`, and `inspect`,
+  with a versioned `--json` machine interface and stable exit codes, plus a
+  read-only **Model Context Protocol server** (`commons mcp`) so agents can
+  search, inspect, and plan installs against the same registry. `add` copies
+  component source into your project and never runs a package manager for you.
+
+- **A fully static docs site, registry, and playground** — no third-party CDN,
+  font service, or model API required. Every page has a Markdown mirror and the
+  whole project is mapped for agents at `/llms.txt`.
+
+### Accessibility
+
+- WCAG 2.2 AA is the enforced baseline, with selected AAA defaults: 44px touch
+  targets, visible focus everywhere, forced-colors support, reduced motion, text
+  enlargement, and bidirectional (RTL) layouts.
+- **Not verified yet:** no component has completed manual screen-reader testing
+  or inclusive user testing. This is tracked per component in the
+  `screenReadersTested` field of its registry contract and is the gate for
+  graduating a component from `experimental` to `stable`.

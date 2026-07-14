@@ -1,0 +1,46 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "pagination",
+  "type": "registry:ui",
+  "title": "Pagination",
+  "description": "Splits long result sets into pages: a nav landmark with an ordered list of page controls. Each control is a real link (href) or button (onClick); the current page carries aria-current=\"page\" plus a visible border and heavier weight. Includes the paginationRange helper for ellipsis overflow.",
+  "status": "experimental",
+  "useWhen": [
+    "Search results, document lists, or data tables too long for one page",
+    "Server-rendered pages where each page has its own URL (pass href per control)",
+    "Client-side collections without per-page URLs (pass onClick — controls render as buttons)"
+  ],
+  "avoidWhen": [
+    "Content better consumed continuously on one page (prefer a single page or in-page navigation over paginating short content)",
+    "Rendering a disabled Previous/Next at the bounds — at the first page omit PaginationPrevious entirely, at the last omit PaginationNext (USWDS behavior; nothing inert is left in the tab order)",
+    "Sequential multi-step flows like forms (use a step indicator — steps are a process, not a result set)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through Previous, the page controls, and Next in document order; Shift+Tab moves backwards",
+      "Enter activates link controls; Enter or Space activates button controls (native element contracts)",
+      "The current page stays focusable (aria-current=\"page\"); activating it is a no-op navigation",
+      "Ellipsis markers are aria-hidden spans — never focusable, never announced",
+      "At the first/last page Previous/Next are not rendered, so no disabled control sits in the tab order"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default — every control is min-h-11 and page numbers are additionally min-w-11",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/pagination/pagination.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "combo-box",
+  "type": "registry:ui",
+  "title": "Combo Box",
+  "description": "Filterable single-select built on Base UI's Combobox: a role=combobox input over a listbox popup with case-insensitive contains filtering, aria-activedescendant highlight tracking, an empty state, a clear button, Field wiring, a forced-colors-safe chevron, and 44px targets. The type-ahead upgrade to Select.",
+  "status": "experimental",
+  "useWhen": [
+    "Choosing one value from a long list users need to filter by typing (US states, agencies, service categories, countries)",
+    "A known but unfamiliar option set where type-ahead is faster than scanning",
+    "The user must pick an existing option rather than enter free text"
+  ],
+  "avoidWhen": [
+    "Short, familiar lists of roughly 5-15 options (use the native Select)",
+    "Fewer than ~5 options (use radio buttons so every choice is visible)",
+    "Free-text entry or values not constrained to a list (use an Input)",
+    "Multiple selection (this v1 is single-select)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "input",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the input; Shift+Tab moves away",
+      "Down Arrow opens the list and moves the highlight to the next option; Up Arrow moves to the previous option",
+      "Typing filters the options (case-insensitive contains match) and keeps focus in the input",
+      "Enter selects the highlighted option and closes the list",
+      "Escape closes the list; pressing Escape again clears the input",
+      "The highlighted option is tracked with aria-activedescendant while focus stays on the input; the selected option carries aria-selected",
+      "Home / End jump to the first / last option in the list"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/combo-box/combo-box.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

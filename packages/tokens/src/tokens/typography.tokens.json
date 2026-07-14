@@ -1,0 +1,122 @@
+{
+ "font": {
+  "family": {
+   "$type": "fontFamily",
+   "sans": {
+    "$value": [
+     "Atkinson Hyperlegible Next",
+     "-apple-system",
+     "BlinkMacSystemFont",
+     "Segoe UI",
+     "Roboto",
+     "Helvetica Neue",
+     "Arial",
+     "sans-serif"
+    ],
+    "$description": "Atkinson Hyperlegible Next (Braille Institute; self-hosted via @21stgov/commons-fonts) with system fallbacks."
+   },
+   "serif": {
+    "$value": [
+     "Merriweather",
+     "Georgia",
+     "Cambria",
+     "Times New Roman",
+     "Times",
+     "serif"
+    ]
+   },
+   "mono": {
+    "$value": [
+     "Atkinson Hyperlegible Mono",
+     "ui-monospace",
+     "SFMono-Regular",
+     "Menlo",
+     "Consolas",
+     "Liberation Mono",
+     "monospace"
+    ],
+    "$description": "Atkinson Hyperlegible Mono for numeric entry (SSNs, case numbers, codes) and code."
+   }
+  },
+  "size": {
+   "$description": "Type scale in rem (px equivalents at 16px root: 13, 14, 15, 16, 17, 22, 32, 40, 48). rem only \u2014 never px \u2014 so user font-size preferences scale everything.",
+   "$type": "dimension",
+   "3xs": {
+    "$value": "0.8125rem"
+   },
+   "2xs": {
+    "$value": "0.875rem"
+   },
+   "xs": {
+    "$value": "0.9375rem"
+   },
+   "sm": {
+    "$value": "1rem"
+   },
+   "md": {
+    "$value": "1.0625rem"
+   },
+   "lg": {
+    "$value": "1.375rem"
+   },
+   "xl": {
+    "$value": "2rem"
+   },
+   "2xl": {
+    "$value": "2.5rem"
+   },
+   "3xl": {
+    "$value": "3rem"
+   }
+  },
+  "line-height": {
+   "$type": "number",
+   "1": {
+    "$value": 1
+   },
+   "2": {
+    "$value": 1.15
+   },
+   "3": {
+    "$value": 1.35
+   },
+   "4": {
+    "$value": 1.5
+   },
+   "5": {
+    "$value": 1.62
+   }
+  },
+  "weight": {
+   "$type": "fontWeight",
+   "light": {
+    "$value": 300
+   },
+   "regular": {
+    "$value": 400
+   },
+   "semibold": {
+    "$value": 600
+   },
+   "bold": {
+    "$value": 700
+   }
+  },
+  "measure": {
+   "$description": "Maximum comfortable reading widths, in ch.",
+   "$type": "dimension",
+   "sm": {
+    "$value": "44ch"
+   },
+   "md": {
+    "$value": "60ch"
+   },
+   "lg": {
+    "$value": "68ch"
+   },
+   "xl": {
+    "$value": "76ch"
+   }
+  }
+ }
+}

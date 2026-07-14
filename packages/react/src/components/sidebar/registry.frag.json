@@ -1,0 +1,61 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "sidebar",
+  "type": "registry:ui",
+  "title": "Sidebar",
+  "description": "A nested side navigation for section/subsection wayfinding on government sites. Renders a labelled <nav> landmark wrapping a nested list of links: static SidebarSections, expandable SidebarGroups (built on Collapsible, so each is a native button with aria-expanded), and SidebarItems (Commons Link, optional leading Icon). The current page is marked aria-current=\"page\" with TWO non-color indicators — an inline-start accent bar (border-s, flips in RTL) and heavier weight. On desktop the nav is a persistent rail; below md it collapses behind a SidebarTrigger disclosure button (aria-expanded / aria-controls, Escape closes and returns focus), so it stays operable by keyboard and screen reader.",
+  "status": "experimental",
+  "useWhen": [
+    "Section and subsection wayfinding for a multi-level government site or a document set (a department landing page with sub-pages)",
+    "A persistent left rail on desktop that collapses behind a menu button on small screens",
+    "Marking the reader's current page within a nested set of navigation links"
+  ],
+  "avoidWhen": [
+    "Primary site-wide navigation in the page banner (use Header)",
+    "Showing the path to the current page as a trail (use Breadcrumb)",
+    "A flat list of a few top-level links with no nesting (use a plain nav with Link)",
+    "Switching between panels of content on the same page (use Tabs)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "link",
+    "collapsible",
+    "icon"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves through the links and group triggers in reading order; Shift+Tab moves back",
+      "Enter or Space toggles an expandable SidebarGroup (a native disclosure button with aria-expanded / aria-controls)",
+      "On small screens Enter or Space on the SidebarTrigger opens and closes the nav; Escape closes it and returns focus to the trigger",
+      "Enter follows a SidebarItem link; the current page carries aria-current=\"page\"",
+      "The nav content stays in the DOM when collapsed on mobile, so screen-reader element lists and find-in-page remain predictable"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (links, group triggers, and the mobile trigger are all min-h-11)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The <nav> landmark is named via aria-label (default \"Sections\") so multiple navs on a page are distinguishable; a SidebarSection heading names its nested list via aria-labelledby.",
+      "Non-color redundancy for the current page: aria-current=\"page\" plus an inline-start accent bar (border-s, mirrors in RTL) and heavier font weight, so it stays distinguishable in Windows High Contrast / forced-colors mode where the accent color is overridden.",
+      "Links keep the Commons Link mandatory underline (WCAG 1.4.1); the group trigger is the documented nav-landmark exception and underlines on hover only.",
+      "The mobile menu is a disclosure, not a dialog: no focus trap, content stays in the DOM, and md:block makes the nav a persistent rail on wider viewports."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/sidebar/sidebar.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

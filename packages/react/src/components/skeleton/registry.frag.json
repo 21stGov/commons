@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "A loading placeholder that mirrors the geometry of not-yet-loaded content. Text, block, and circle shapes with a motion-safe pulse (static block under reduced motion). Always aria-hidden — it conveys no progress or content; announce loading on a surrounding role=status / aria-busy container or via the optional sr-only label.",
+  "status": "experimental",
+  "useWhen": [
+    "Filling the space of content with a stable, known layout while it loads (cards, list rows, avatars, text lines)",
+    "Reducing perceived load time and layout shift by reserving the final geometry up front",
+    "Showing a first-load placeholder for a region whose shape you can predict"
+  ],
+  "avoidWhen": [
+    "An indeterminate, spinner-style wait with no known content shape (use a Spinner)",
+    "A determinate operation with measurable progress (use a Progress bar)",
+    "Conveying that the load itself is the message to a screen reader (put role=status / aria-busy on the container instead — the skeleton is aria-hidden)",
+    "Content whose final size is unknown, where a placeholder would cause layout shift on arrival"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The skeleton is not interactive and never receives focus",
+      "It carries no keyboard behavior of its own"
+    ],
+    "nameRequired": false,
+    "targetSize": "not-applicable (non-interactive placeholder)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The placeholder is always aria-hidden and exposes no role, name, or progress semantics to assistive technology.",
+      "Announce the loading state on a surrounding container with role=status (or aria-busy=true), present in the DOM before content is injected; the optional label prop renders an sr-only role=status for a lone placeholder.",
+      "The pulse animation is gated behind motion-safe; prefers-reduced-motion users see a static block, satisfying WCAG 2.3.3.",
+      "bg-muted is a theme token, so the placeholder remains visible in forced-colors mode."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/skeleton/skeleton.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "resizable-panels",
+  "type": "registry:ui",
+  "title": "Resizable Panels",
+  "description": "A split-pane layout with draggable, keyboard-operable separators. Each ResizableHandle is a real role=separator implementing the WAI-ARIA Window Splitter pattern with aria-orientation, aria-valuenow/min/max, and aria-controls. Arrow keys resize by a step (mirrored in RTL), Home/End jump to min/max, and Enter/Space optionally collapse. Below a breakpoint the panels stack and the separators go inert so the layout reflows (WCAG 1.4.10). Self-contained (no third-party resizable dependency).",
+  "status": "experimental",
+  "useWhen": [
+    "A list + detail layout where the reader controls how much space each pane gets",
+    "A code/preview or content/inspector split that should remember its sizes",
+    "Any dashboard region where users benefit from resizing panes to their content"
+  ],
+  "avoidWhen": [
+    "Fixed layouts that never need user resizing (use plain flex/grid)",
+    "Collapsible disclosure of a single region (use a Collapsible or Drawer)",
+    "Small-screen-only layouts where panes should always stack (skip the separators)"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to each separator; Shift+Tab moves away",
+      "Arrow keys resize by the step, mirrored under dir=rtl for horizontal groups",
+      "Home moves the resized panel to its minimum; End to its maximum",
+      "Enter or Space toggles a collapse to the minimum when the handle is collapsible",
+      "Double-click resets both panels to their default sizes",
+      "When the group stacks below the breakpoint the separators leave the tab order"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the thin separator line carries an overlapping 44px hit area)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Each separator exposes role=separator with aria-orientation, aria-valuenow/min/max (the resized panel's size %), aria-valuetext, and aria-controls referencing the panel it resizes.",
+      "Non-color redundancy: the separator keeps a visible border/grip in every state and conveys size via aria-valuetext and panel position, so it survives Windows High Contrast / forced-colors mode where the accent fill is overridden.",
+      "Reflow (WCAG 1.4.10): below stackAt the panels stack into one column and the separators are removed from the DOM a11y tree and tab order so content reflows for small screens and 400% zoom.",
+      "RTL: horizontal resize direction inverts under dir=rtl for both pointer drag and Arrow keys; logical properties and mirrored transforms keep the visuals correct.",
+      "Grip color/position transitions are gated behind motion-safe (prefers-reduced-motion respected); resizing itself is instantaneous."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/resizable-panels/resizable-panels.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

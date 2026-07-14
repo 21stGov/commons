@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "button-group",
+  "type": "registry:ui",
+  "title": "Button group",
+  "description": "Visually joins related Commons <Button>s into one connected segment — a segmented control of independent actions or a split button (a primary action attached to a menu trigger). Styles the passed buttons rather than rendering its own: collapses the shared seam, rounds only the outer corners, and lifts the focused child so its focus ring is never clipped.",
+  "status": "experimental",
+  "useWhen": [
+    "A cluster of related, independently-actionable buttons that reads as one control, e.g. Cut / Copy / Paste",
+    "A split button — a primary action button attached to a menu-trigger button (chevron)",
+    "Toolbar-style action clusters where the seam between adjacent buttons should visually collapse"
+  ],
+  "avoidWhen": [
+    "Mutually exclusive choices where only one option is active at a time (use a radio-group or toggle group instead — ButtonGroup does not manage selection state or roving tabindex)",
+    "A single standalone button (no grouping benefit)",
+    "Unrelated actions that happen to sit near each other (grouping implies a relationship; do not use it purely for spacing)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Normal Tab order between buttons — this is NOT a toggle/radio group, so there is no roving tabindex",
+      "Every button keeps its own focus-visible ring; the focused (or focus-within) button is lifted with z-index so its ring overlays adjacent buttons instead of being clipped by the collapsed seam",
+      "Each button keeps its own native activation contract (Enter/Space) and its own accessible name — grouping is purely visual"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default — each child keeps its own Commons <Button> size (min-h-11 or larger); the group does not shrink targets",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "role=\"group\" conveys nothing to a screen reader on its own — an `aria-label` (or `aria-labelledby`) is required on <ButtonGroup>; a dev-only console warning fires once if neither is present",
+      "The group renders the buttons it is given verbatim (data-slot=\"button-group\"); it does not clone, wrap, or alter each button's own accessible name or role",
+      "Outer corner rounding uses logical radii (rounded-s-sm / rounded-e-sm) in the horizontal orientation, so first/last rounding flips correctly under dir=\"rtl\"",
+      "Each Commons <Button> keeps a real border in every state, so the seam between buttons stays visible in Windows High Contrast / forced-colors mode"
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/button-group/button-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

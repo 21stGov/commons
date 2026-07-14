@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Accessible loading indicator. Inline currentColor SVG that spins only when motion is allowed, wrapped by default in a polite role=status region with a required status message so a stationary screen reader still learns of the wait.",
+  "status": "experimental",
+  "useWhen": [
+    "Indicating a brief indeterminate wait (a button action, a small async fetch)",
+    "Signalling background activity where progress cannot be measured"
+  ],
+  "avoidWhen": [
+    "Showing measurable task completion (use Progress)",
+    "Page-level or route transitions (use a skeleton plus a status region)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The spinner is a status indicator and never takes focus",
+      "By default the icon is wrapped in role=status with aria-live=polite and a visually hidden label, because a spinning icon conveys nothing to a stationary screen reader",
+      "The status text can instead be supplied via aria-label on the role=status wrapper",
+      "The decorative prop makes the icon aria-hidden with no status role, for when an adjacent element already announces the loading state",
+      "The icon spins only under motion-safe; reduced motion shows a static ring while the status text still announces the wait",
+      "currentColor stroke keeps the icon visible in forced-colors mode"
+    ],
+    "nameRequired": true,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/spinner/spinner.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

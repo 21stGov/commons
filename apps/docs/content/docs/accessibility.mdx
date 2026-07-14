@@ -1,0 +1,152 @@
+---
+title: "Accessibility"
+description: "What Commons verifies by machine, what still requires manual testing, and where your responsibility as an adopter begins."
+---
+
+Commons is accessibility-first, and it is honest about what that means.
+**Commons never labels anything "compliant."** Conformance is a property of a
+finished service tested with real assistive technology, not a property of a
+component library. What Commons does instead: publish a normative contract per
+component, verify what a machine can verify on every build, and state plainly
+what has not been verified yet.
+
+## The bar
+
+- **The legal floor for our users** is WCAG 2.1 AA, set by the 2024 ADA
+  Title II rule for state and local governments. The compliance deadlines were
+  extended in 2026: **April 26, 2027** for public entities serving populations
+  of 50,000 or more, and **April 26, 2028** for populations under 50,000 and
+  special district governments. The rule covers web pages, mobile apps, online
+  forms, electronic documents, and multimedia.
+- **The Commons baseline is WCAG 2.2 AA** — deliberately stricter than the
+  legal floor. All nine of 2.2's new success criteria are built into
+  components, not left as integration work.
+- **Selected AAA defaults** ship on top: 44px minimum touch targets (2.2 AA
+  asks for 24px; AAA 2.5.5 asks for 44px), a 7:1 high-contrast theme
+  (1.4.6), and enhanced focus appearance (2.4.13).
+- Forced colors, reduced motion, 400% zoom reflow, text-spacing overrides, and
+  RTL layouts are handled by default, not opt-in.
+
+## Machine-verified today
+
+These checks run on every build and the build fails if any of them does.
+Counts below are from running the suites against the current source
+(`pnpm test`, `pnpm validate:contrast`).
+
+### 1,755 contrast checks
+
+`pnpm validate:contrast` recomputes WCAG contrast math independently from the
+**built** token CSS — not from the sources, so a build bug cannot hide a
+regression. Today that is 1,755 checks, 0 failures:
+
+- **1,620 graded-pair checks** — every palette pair at grade delta ≥ 40,
+  across all nine families, against the [grade contract](/docs/theming)
+  (delta 40 → 3:1, delta 50 → 4.5:1, delta 70 → 7:1).
+- **18 checks** that every grade-50 color clears 4.5:1 against both pure
+  white and pure black.
+- **117 semantic checks** — 39 pairings per theme across light, dark, and
+  high-contrast: text on every surface, link states, state trios, disabled
+  text, action-button text against resting/hover/active fills, borders at
+  3:1, and the focus ring against both default and emphasis backgrounds. The
+  high-contrast theme is held to 7:1 for text.
+
+### Component test suite
+
+The React package currently runs **1,600+ tests across 80+ files** — one suite
+per component (`pnpm --filter @21stgov/commons-react test`). Two categories
+matter most here:
+
+- **axe checks** — every component tests its meaningful states individually
+  (variants, sizes, loading, error, checked, disabled, RTL, and so on) and
+  asserts each is axe-clean. States are checked separately because a component
+  can pass idle and fail loading.
+- **keyboard-contract tests** — they drive components with the keyboard and
+  assert the documented behavior: Tab reaches the control, Enter or Space
+  activates, arrow keys move within composite widgets (radio groups, menus,
+  toolbars, sliders), typeahead, and focus return — per the ARIA Authoring
+  Practices Guide and native HTML semantics.
+
+The rest cover name/role/value in the accessibility tree, Field wiring
+(`aria-describedby` for hints and errors), and RTL rendering. Separately,
+**1,755 automated contrast checks** (`pnpm validate:contrast`) hold every
+token pairing to its WCAG ratio across the light, dark, and high-contrast
+themes.
+
+### Automation has a ceiling
+
+Automated tools catch only around 57% of accessibility issues. Passing axe
+means "no machine-detectable violations in the tested states" — nothing more.
+That is why the next section exists.
+
+## Not verified yet
+
+Commons states this as data, not fine print:
+
+- **No component has completed manual screen-reader testing.** Every
+  component's registry contract has an `accessibility.screenReadersTested`
+  field, and today that array is empty — `[]` — for all of them. The planned
+  matrix is NVDA+Firefox, JAWS+Chrome, VoiceOver+Safari (macOS and iOS), and
+  TalkBack+Chrome. Until a component lists entries there, treat screen-reader
+  behavior as designed-for but unverified.
+- **Inclusive user testing** with people with disabilities has not been run
+  on any flow yet.
+- Every component is currently marked `experimental`. The path to `stable`
+  runs through the manual testing above.
+
+When an entry lands in `screenReadersTested`, it will appear in the registry
+JSON and on the component's page at the same time — both are generated from
+the same fragment.
+
+## Per-component contracts
+
+Each component publishes a normative accessibility contract as structured
+data, not prose. It appears on the component's documentation page and in its
+registry item (`/r/{name}.json`), and you can read it before installing with
+`npx @21stgov/commons inspect <name>`:
+
+```json
+"accessibility": {
+  "standard": "WCAG 2.2 AA",
+  "keyboard": [
+    "Tab moves focus to the button",
+    "Enter or Space activates",
+    "While loading, the button stays focusable but activation is suppressed (aria-busy + aria-disabled)"
+  ],
+  "nameRequired": true,
+  "targetSize": "44px project default",
+  "highContrastTested": true,
+  "screenReadersTested": []
+}
+```
+
+`nameRequired: true` means the component cannot be accessible without an
+accessible name you provide — an icon-only button with no label fails
+regardless of what Commons ships.
+
+## Your half of the contract
+
+Commons's primary model copies component source into your repository. That
+creates a shared responsibility, and the split is explicit:
+
+**Commons is responsible for** the contracts above: correct name/role/value,
+APG keyboard behavior, contrast-validated tokens, forced-colors and RTL
+support, target sizes, and publishing upgrade guidance and diffs when
+components change.
+
+**You are responsible for:**
+
+- **Composition.** Page structure, heading order, landmarks, focus management
+  across views, form flow logic, and plain-language content are properties of
+  your application. Accessible parts do not add up to an accessible page on
+  their own.
+- **Modifications.** The moment you change installed component source, the
+  tested baseline no longer describes your code. The contract stays useful as
+  a checklist, but the verification evidence is Commons's, not yours.
+- **Accessible names and alt content.** Everything `nameRequired` implies.
+- **Your own testing.** The ADA obligation attaches to your service. Run
+  keyboard-only passes and assistive-technology testing on your real flows —
+  Commons reduces this work; it cannot do it for you.
+
+The same rule applies to AI-generated code that uses Commons components:
+using an accessible component is not evidence the result is accessible. Ask
+what was tested, in which states, with what.

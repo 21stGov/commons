@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "checkbox-group",
+  "type": "registry:ui",
+  "title": "Checkbox Group",
+  "description": "Coordinates a set of related checkboxes that share one value array (value / defaultValue / onValueChange / allValues), mirroring Base UI's checkbox-group contract while reusing the native Commons Checkbox for every 44px option row. Renders a fieldset with a legend as the group's accessible name, supports data-driven items or composed Checkbox children, and offers an optional parent select-all checkbox with a correct indeterminate (mixed) state. Inherits hint/error wiring, aria-invalid, and disabled from the Field contract.",
+  "status": "experimental",
+  "useWhen": [
+    "Selecting any number of options (zero, some, or all) from a related set",
+    "A multi-select filter list that benefits from a select-all shortcut",
+    "Grouping consent or preference checkboxes under one labelled question"
+  ],
+  "avoidWhen": [
+    "Choosing exactly one option from a set (use a radio-group)",
+    "A single yes/no choice (use one checkbox)",
+    "Toggling a setting that takes effect immediately (use a switch)",
+    "More than ~10 options where a searchable control fits better (use a combo-box or select)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn", "checkbox", "field"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to each checkbox in turn; Shift+Tab moves back",
+      "Space toggles the focused checkbox (including the select-all parent)",
+      "Toggling select-all ticks or unticks every enabled option at once",
+      "Disabling the group (native fieldset disabled) removes every option from the tab order",
+      "Clicking an option's label row toggles it (the label is part of the 44px target)"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (each padded label row is the pointer target)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The group is a fieldset role=group named by its legend, an explicit aria-labelledby, or a surrounding Field's label; each option is named by its own visible label via aria-labelledby.",
+      "The select-all parent carries the native indeterminate ('mixed') state when only some options are ticked, so its state is announced without relying on color; it exposes aria-controls listing the options it governs.",
+      "Select-all only toggles enabled options, preserving any disabled-and-ticked selections.",
+      "Each option keeps a visible border in every state (from the Commons Checkbox), so state survives Windows High Contrast / forced-colors mode; option descriptions are linked with aria-describedby and excluded from the accessible name.",
+      "Direction follows the DOM dir via CSS logical properties (native inputs), so RTL needs no extra provider."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/checkbox-group/checkbox-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

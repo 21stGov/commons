@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "A semantic compound card family with real list collections, selectable heading levels, shared spacing, full-bleed or inset media, and responsive RTL-safe flag layouts.",
+  "status": "experimental",
+  "useWhen": [
+    "Presenting a collection of self-contained summaries that link to more detailed information",
+    "Grouping one subject's heading, description, media, actions, and supporting content",
+    "Showing media-led summaries in vertical or responsive horizontal flag layouts"
+  ],
+  "avoidWhen": [
+    "Presenting tabular records or values that users need to compare across rows",
+    "Wrapping continuous prose that should be read sequentially",
+    "Using a border or shadow only for decoration without a self-contained subject",
+    "Making the entire card a hidden click target while it also contains other interactive controls"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Card and its structural slots add no keyboard behavior or tab stops",
+      "CardGroup is a real list so assistive technology announces the number of cards",
+      "CardTitle renders the consumer-selected heading level without skipping the document outline",
+      "Links and buttons inside a card retain native keyboard behavior and visible focus indicators",
+      "Horizontal media is moved with CSS grid while heading, media, content, and footer stay in logical DOM order"
+    ],
+    "nameRequired": false,
+    "targetSize": "Inherited from interactive descendants; Card itself is not a control",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/card/card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "step-indicator",
+  "type": "registry:ui",
+  "title": "Step indicator",
+  "description": "Multi-step progress indicator: a <nav> landmark wrapping an ordered list of steps. Status (complete / current / incomplete) is derived from currentStep. The current step carries aria-current=step; every step also carries a visually hidden status word and a non-color marker (checkmark or ring), so progress never depends on color alone. Optional 'Step X of Y' counter; on narrow screens only the current label stays visible while assistive tech still reads them all.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing progress through a fixed, ordered, multi-step flow (application, wizard, checkout)",
+    "Orienting the user to which step they are on and how many remain",
+    "A linear process where steps are known ahead of time"
+  ],
+  "avoidWhen": [
+    "A single-step form (no progress to show)",
+    "Free navigation between unordered sections (use tabs or in-page navigation)",
+    "An indeterminate or open-ended process (use a status message or spinner)",
+    "As the primary navigation control — this communicates status, it is not a menu"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The indicator communicates status and is not interactive, so it adds no keyboard behavior of its own",
+      "It is exposed as a navigation landmark (<nav> with an accessible name) that screen-reader users can jump to",
+      "The current step is programmatically marked with aria-current=step",
+      "Each step announces a spelled-out status word (completed / current / not completed) so progress is never color-only"
+    ],
+    "nameRequired": true,
+    "targetSize": "not applicable (non-interactive status indicator)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/step-indicator/step-indicator.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

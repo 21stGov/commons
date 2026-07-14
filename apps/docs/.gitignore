@@ -1,0 +1,16 @@
+# Build output
+/.next/
+/out/
+
+# fumadocs-mdx generated collections
+/.source/
+
+# Generated at build time from canonical sources — never hand-edited
+/content/docs/components/
+/content/docs/changelog.mdx
+/public/r/
+/public/llms.txt
+
+# Next.js
+next-env.d.ts
+*.tsbuildinfo

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "progress",
+  "type": "registry:ui",
+  "title": "Progress",
+  "description": "Labelled progress bar for determinate task completion and indeterminate waits. Built on Base UI Progress with role=progressbar semantics, a value-text pairing for non-color redundancy, and a reduced-motion-safe indeterminate state.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing determinate task progress (file uploads, imports)",
+    "Tracking completion across a multi-step flow or form",
+    "Indicating an indeterminate wait whose duration is unknown"
+  ],
+  "avoidWhen": [
+    "A brief indeterminate wait with no measurable progress (use a Spinner)",
+    "Communicating the user's position among discrete steps (use a Step indicator)"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The progress bar is a status indicator and never takes focus",
+      "Determinate bars expose role=progressbar with aria-valuenow, aria-valuemin, aria-valuemax, and aria-valuetext",
+      "Indeterminate bars omit aria-valuenow and set aria-busy so screen readers announce an ongoing, position-less task",
+      "The value is paired with visible label/value text so meaning never relies on the fill color alone",
+      "The indeterminate sweep is motion-safe only; reduced motion shows a static in-progress fill, never a fake position"
+    ],
+    "nameRequired": true,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/progress/progress.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

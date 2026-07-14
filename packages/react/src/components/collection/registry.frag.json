@@ -1,0 +1,38 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "collection",
+  "type": "registry:ui",
+  "title": "Collection",
+  "description": "A semantic content list for local notices, articles, meetings, and service updates with optional media, metadata, and calendar dates.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing a short, related set of articles, public notices, meetings, or service updates",
+    "Each item needs a descriptive heading link plus optional summary and metadata",
+    "A thumbnail, seal, civic icon, or calendar date improves scanning"
+  ],
+  "avoidWhen": [
+    "The items are actions or settings rather than content destinations",
+    "More than roughly six items require filtering, sorting, or pagination",
+    "A dense data table communicates column relationships more clearly",
+    "An internal scrolling panel would hide content or trap navigation"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn", "link"],
+  "compatibility": { "react": ">=19", "rtl": true, "forcedColors": true },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The outer collection and metadata are semantic lists",
+      "Each item title is a unique, descriptive link inside a real heading",
+      "Calendar dates expose machine-readable and fully spoken values",
+      "Media semantics remain with consumer-provided image alt text",
+      "Collection never creates an internal scroll region"
+    ],
+    "nameRequired": false,
+    "targetSize": "Link targets follow their visible text; adjacent controls must meet the Commons 44px default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [{ "path": "src/components/collection/collection.tsx", "type": "registry:ui" }]
+}

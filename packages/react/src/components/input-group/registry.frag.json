@@ -1,0 +1,59 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "input-group",
+  "type": "registry:ui",
+  "title": "Input group",
+  "description": "Composes the Commons Input with a prefix and/or suffix into a single bordered control: text addons (units, currency, protocol), leading/trailing icons, and trailing action buttons (clear, copy, visibility toggle). One border wraps prefix + input + suffix, one focus ring appears when the input is focused, and aria-invalid styles the whole group border. Field-wired, RTL-aware via logical properties, and forced-colors safe.",
+  "status": "experimental",
+  "useWhen": [
+    "Showing a unit, currency symbol, or protocol beside a value as part of one control (e.g. $ amount, lbs, https://)",
+    "Adding a trailing action to a text field (clear the value, copy it, toggle password visibility)",
+    "Pairing a leading or trailing icon with an input inside a single bordered field"
+  ],
+  "avoidWhen": [
+    "A plain field with only a decorative symbol (use Input's own prefix/suffix)",
+    "Choosing from a set of options (use select, radio-group, or combobox)",
+    "The addon is the primary action of a form (use a separate labeled Button)",
+    "Search with suggestions (use a combobox)"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "cn",
+    "field",
+    "input",
+    "button"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the text input; Shift+Tab moves focus away backwards",
+      "Trailing action buttons are individual tab stops after the input",
+      "Prefix/suffix text and icons are decorative and non-interactive — they are not tab stops",
+      "Clicking the group's padding or a decorative addon focuses the input",
+      "A disabled group removes the input (and its actions) from the tab order"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (the group is min-block-size 2.75rem; action buttons fill the height and are min 44px wide)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "One border wraps prefix + input + suffix as a single visual control; the focus ring is scoped to the input (has-[input:focus]) so a focused action button rings only itself.",
+      "Decorative prefix/suffix are aria-hidden so a repeated symbol does not pollute the input's accessible name; a MEANINGFUL unit is surfaced via prefixLabel/suffixLabel, rendered visually-hidden and linked with aria-describedby.",
+      "aria-invalid (from a Field or explicit prop) styles the WHOLE group border with the error token via data-invalid, and error state is border + ring, never color alone.",
+      "Action buttons are real <button>s (via InputGroupButton) with required accessible names; they are never aria-hidden.",
+      "Logical properties place prefix at the inline-start and suffix at the inline-end, mirroring under dir=rtl; a visible border is kept in every state for forced-colors mode."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/input-group/input-group.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

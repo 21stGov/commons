@@ -1,0 +1,66 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "data-table",
+  "type": "registry:ui",
+  "title": "Data table",
+  "description": "A column-driven, accessible data table composed from the Commons Table, Checkbox, Input, Select, Pagination, and Icon primitives. Stays a real semantic <table> (never an ARIA grid) while adding controlled/uncontrolled sorting (aria-sort header buttons with a non-color glyph), row selection (per-row plus an indeterminate select-all, each checkbox named), a global filter with a politely announced result count, client- or server-side pagination with an optional page-size selector, and a responsive stacked-card fallback below the sm breakpoint.",
+  "status": "experimental",
+  "useWhen": [
+    "Displaying structured records users scan, sort, filter, select, or page through (permit applications, service requests, roster tables)",
+    "You need a real semantic table (caption, thead, th scope) with light interactivity, not a fully keyboard-navigable data grid",
+    "You want sorting, selection, filtering, and pagination wired together from one column definition"
+  ],
+  "avoidWhen": [
+    "Cell-by-cell arrow-key navigation or editable cells are required (that is an ARIA grid/treegrid, a separate pattern)",
+    "A simple static table with no interactivity (use Table directly)",
+    "A single-select typeahead over one field (use ComboBox)",
+    "Laying out non-tabular content (use CSS grid/flex, not a table)"
+  ],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "table",
+    "checkbox",
+    "input",
+    "select",
+    "pagination",
+    "icon"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab reaches every control in order: filter input, page-size select, select-all, each sort header button, each row checkbox, then the pagination links",
+      "Enter/Space on a sortable header cycles no sort, ascending, and descending",
+      "Space toggles a row checkbox or the select-all checkbox",
+      "Enter/Space activates a pagination page, Previous, or Next control",
+      "The filter input is a standard text field; typing filters the rows"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (sort buttons, checkboxes, and pagination controls are all >= 44px)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Renders a native <table> with caption, thead, tbody, and th scope; the Commons Table wraps it in a focusable, caption-labelled scroll region so overflowing columns stay keyboard reachable.",
+      "Sort state is exposed via aria-sort on the <th> and conveyed visually by a non-color direction glyph, so it survives forced-colors mode; the cycle is none, ascending, descending.",
+      "Selection uses the Commons Checkbox: a header select-all shows the native indeterminate (mixed) state when the visible page is partially selected, and every checkbox has an accessible name referencing its row (the row select label defaults to the first cell value).",
+      "The global filter is a labelled Input; the result/range count is announced in an aria-live polite region, and the empty state ('No results') is a full-width cell that is likewise announced.",
+      "Alignment uses logical text-start/center/end so columns flip in RTL; borders, glyphs, and checkbox position keep state distinguishable without color.",
+      "Below the sm breakpoint each row reflows into a labelled card (every cell shows its column header as a label) so narrow viewports never rely on horizontal scrolling alone; the DOM stays a real table.",
+      "Per-column filtering is intentionally an extension: filter the data upstream and pass it in, or drive filterValue and match yourself."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/data-table/data-table.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

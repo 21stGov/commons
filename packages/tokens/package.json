@@ -1,0 +1,59 @@
+{
+  "name": "@21stgov/commons-tokens",
+  "version": "0.1.0",
+  "description": "Design tokens for Commons, the accessibility-first design system for U.S. local governments. DTCG JSON sources compiled to CSS custom properties with a mathematically guaranteed color-contrast contract.",
+  "type": "module",
+  "license": "MIT",
+  "private": false,
+  "homepage": "https://commonsui.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21stgov/commons.git",
+    "directory": "packages/tokens"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "design-tokens",
+    "dtcg",
+    "css-variables",
+    "accessibility",
+    "wcag",
+    "design-system",
+    "government"
+  ],
+  "files": [
+    "dist",
+    "src/tokens"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    "./css/*": "./dist/css/*",
+    "./index.css": "./dist/index.css",
+    "./tailwind.css": "./dist/css/tailwind.css",
+    "./tokens.json": "./dist/json/tokens.json"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate-palette.ts",
+    "build": "tsx build.ts",
+    "prepublishOnly": "pnpm run build",
+    "validate:contrast": "tsx scripts/validate-contrast.ts",
+    "validate:tailwind": "tsx scripts/validate-tailwind.ts",
+    "test": "pnpm validate:contrast && pnpm validate:tailwind"
+  },
+  "devDependencies": {
+    "@types/culori": "^4.0.1",
+    "@types/node": "^22.20.1",
+    "culori": "^4.0.2",
+    "style-dictionary": "^5.5.0",
+    "tailwindcss": "^4.3.2",
+    "tsx": "^4.23.0",
+    "typescript": "^5.9.3"
+  }
+}

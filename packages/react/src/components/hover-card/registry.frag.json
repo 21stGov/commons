@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "hover-card",
+  "type": "registry:ui",
+  "title": "Hover Card",
+  "description": "A rich, supplementary preview of a link's destination, built on Base UI's Preview Card: opens on hover and on keyboard focus of the trigger, closes on Escape or blur, portals and positions against the trigger with collision handling that flips logical sides in RTL, and uses open/close delays so the pointer can cross onto the card. Non-critical by contract \u2014 the trigger is a real link and the preview only summarizes information reachable elsewhere. Hover surfaces are inaccessible on touch, so the trigger must be independently useful.",
+  "status": "experimental",
+  "useWhen": [
+    "A rich preview of where a link goes \u2014 a profile, agency, or record summary with a name, avatar, and short description \u2014 that saves a click",
+    "Supplementary context around an inline link that is also available on the linked page itself",
+    "Progressive disclosure of a preview that both hover and keyboard-focus users can reach, layered on a genuine link"
+  ],
+  "avoidWhen": [
+    "Essential information or any action the user must take \u2014 put it in the page, or use a Popover (hover surfaces are unreachable on touch and easy to miss)",
+    "Plain, short descriptive text (use a Tooltip)",
+    "A list of commands or navigation actions (use a Dropdown menu)",
+    "Touch-primary flows, where there is no hover and the preview would never appear"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab focuses the trigger, which is a real link, and opens the card on focus (not hover alone)",
+      "The card also opens on pointer hover after the open delay",
+      "Pointer users can move from the trigger onto the card without it closing, thanks to the close delay",
+      "Escape closes the card without moving focus from the trigger",
+      "Moving focus away from the trigger (blur) closes the card",
+      "The trigger works without the card on touch and by keyboard, and the card's content is supplementary \u2014 never the only copy of important information or the only path to an action",
+      "A development warning fires when the trigger is not focusable, since the card must open on keyboard focus"
+    ],
+    "nameRequired": true,
+    "targetSize": "Trigger is a link sized by its content; wrap it in a 44px target where it stands alone",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/hover-card/hover-card.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

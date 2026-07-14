@@ -1,0 +1,60 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "scroll-area",
+  "type": "registry:ui",
+  "title": "Scroll Area",
+  "description": "A scrollable region with a styled overlay scrollbar, built on Base UI's ScrollArea. Native scrolling stays fully intact: the viewport keeps overflow: scroll, is focusable so keyboard scrolling works, and the overlay scrollbar stays visible while content overflows (never a scroll trap). The OS scrollbar is replaced by an on-token thumb (bg-border-strong, >=44px on its axis) that darkens on hover and keeps a visible border in forced-colors mode. Supports vertical, horizontal, or both axes, sizing via the viewport className, and RTL.",
+  "status": "experimental",
+  "useWhen": [
+    "Capping a long list, table, code block, or panel to a fixed height/width with a tidy custom scrollbar",
+    "Keeping a consistent, themeable scrollbar across platforms instead of the OS default",
+    "A scrolling container that must stay usable in forced-colors mode and under dir=rtl"
+  ],
+  "avoidWhen": [
+    "The whole page should scroll (let the document scroll natively — do not wrap the page)",
+    "Content should reflow instead of scroll at small sizes or high zoom (prefer wrapping/responsive layout)",
+    "Hiding overflow to visually clip content (use overflow utilities, not a scroll region)",
+    "Paginating large data sets (use pagination or virtualized loading)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the scrollable viewport (it is focusable, tabIndex=0)",
+      "With the region focused, Arrow keys scroll by a small step",
+      "PageUp and PageDown scroll by a viewport page; Home and End jump to the start and end",
+      "Scrolling is never trapped — focus and the wheel/touch/keyboard all pass through natively"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default (the thumb is floored at 44px on its scroll axis)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "The viewport keeps native overflow: scroll and is focusable so keyboard scrolling works; the styled overlay never replaces or disables native scroll behavior.",
+      "The overlay scrollbar stays visible while content overflows (no hover-only reveal), so it remains usable for low-vision and motor users.",
+      "The scrollbar track and thumb keep visible borders and use currentColor-independent tokens, so they remain perceivable in Windows High Contrast / forced-colors mode.",
+      "Scroll state is conveyed by thumb POSITION and LENGTH (not color alone); the thumb color only adds a hover affordance.",
+      "The region is presentational and has no accessible name of its own — give the scrolled content meaning at the call site (a heading, aria-label, or role on the content).",
+      "Color transitions are gated behind motion-reduce so they are disabled for prefers-reduced-motion users."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/scroll-area/scroll-area.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

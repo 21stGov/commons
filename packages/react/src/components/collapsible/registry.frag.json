@@ -1,0 +1,53 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "collapsible",
+  "type": "registry:ui",
+  "title": "Collapsible",
+  "description": "A single show/hide disclosure built on Base UI. A native trigger button (aria-expanded / aria-controls wired by Base UI) toggles one panel with a motion-safe height animation; reduced-motion users get an instant show/hide. The panel is removed from the DOM when closed by default; keepMounted or hiddenUntilFound (hidden=\"until-found\", so browser find-in-page can reveal it) keep it rendered. An optional chevron rotates with aria-expanded so state never depends on color.",
+  "status": "experimental",
+  "useWhen": [
+    "One inline section of supporting detail a reader can expand in place (a \"show more details\" toggle under a summary line)",
+    "Trimming a long page by hiding a single block of secondary content most users skip",
+    "Progressive disclosure of optional help text next to a form control or heading"
+  ],
+  "avoidWhen": [
+    "Several coordinated sections that stack and read as one group (use Accordion)",
+    "Content that must overlay the page or block the task until dismissed (use Dialog, or Drawer for an edge panel)",
+    "Content everyone must read \u2014 legal notices, deadlines, safety instructions \u2014 since hidden content gets missed",
+    "A tiny amount of text that does not need hiding \u2014 show it directly"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus to the trigger \u2014 a native button and a regular tab stop",
+      "Enter or Space toggles the panel open and closed",
+      "aria-expanded on the trigger reflects the panel state; aria-controls references the panel while it is in the DOM (Base UI unmounts the closed panel by default, so there is no id to reference while closed \u2014 pass keepMounted or hiddenUntilFound on the panel to keep it rendered)",
+      "hiddenUntilFound renders the panel with hidden=\"until-found\" so the browser's find-in-page can locate the text and expand the panel automatically",
+      "Open state is not conveyed by color alone: the optional chevron direction flips and aria-expanded updates; the height animation is motion-safe only"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/collapsible/collapsible.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

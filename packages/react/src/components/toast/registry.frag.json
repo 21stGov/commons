@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "toast",
+  "type": "registry:ui",
+  "title": "Toast",
+  "description": "Transient notification queued imperatively with toast() and rendered in a live region. Four state variants with a per-variant icon (plus bold title) for non-color redundancy, a uniform border, pausable auto-dismiss, priority-driven politeness, an optional action button, and an accessible 44px close button. Built on Base UI Toast.",
+  "status": "experimental",
+  "useWhen": [
+    "Briefly confirming a completed async action (saved, sent, copied)",
+    "Reporting a background result that does not need a response",
+    "Acknowledging an action the user can optionally undo via an action button"
+  ],
+  "avoidWhen": [
+    "Critical errors the user must act on (use an inline Alert or the Field error slot so the message persists)",
+    "Anything requiring a decision or confirmation (use a Dialog)",
+    "Long or essential content a user needs time to read and re-read (auto-dismissing toasts are the wrong container)",
+    "Form field validation (use the Field error slot)"
+  ],
+  "dependencies": [
+    "@base-ui/react",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "ambient-direction"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Toasts announce via the viewport live region without any keyboard interaction: low priority is polite (aria-live=polite), high priority is assertive (rendered as an alertdialog)",
+      "F6 moves focus into the toast viewport; Tab then reaches each toast's action and close controls",
+      "Esc dismisses the focused toast",
+      "The close button is a native button with an accessible name (closeLabel, default \"Dismiss\") and a 44px target; Enter or Space activates it",
+      "The optional action button is a native button; it does not auto-dismiss, so onAction can decide whether to close"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "notes": "The auto-dismiss timer is pausable (WCAG 2.2.1): Base UI pauses it on hover, on focus, and while the window is blurred. The error() helper defaults to no auto-dismiss (duration 0) and high priority so users are never rushed past an error. Keep durations comfortably above reading time; use duration 0 for anything essential. Politeness is managed by Base UI from each toast's priority (low = polite, high = assertive). Positioning is fixed to the block-end/inline-end corner with logical insets, so it flips to the opposite corner in RTL; motion is slide+fade under motion-safe and fully disabled under prefers-reduced-motion.",
+  "files": [
+    {
+      "path": "src/components/toast/toast.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "identifier",
+  "type": "registry:ui",
+  "title": "Identifier",
+  "description": "The organization-identity band below the site footer: an optional domain and ownership statement, a labelled navigation of locally appropriate policy and support links, and an optional local resource pointer. It uses the clarity of the USWDS identifier without assuming a .gov domain, federal language, or a federal destination.",
+  "status": "experimental",
+  "useWhen": [
+    "The very last band on every page of an official government website, directly below the footer",
+    "Publishing the policy and support links required by the site's own jurisdiction, such as Accessibility, Privacy, Public records, Contact, and Terms",
+    "Stating which public organization operates the site and optionally pointing to a useful local service or contact resource"
+  ],
+  "avoidWhen": [
+    "Sites that cannot accurately identify the public organization operating the service",
+    "General footer navigation like departments and services (use the footer component)",
+    "The top-of-page official-website banner (use gov-banner — the identifier is its bottom-of-page counterpart)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab moves focus through policy, support, and optional resource links in document order; Shift+Tab reverses",
+      "Enter activates a link (native anchor behavior — no custom key handling)",
+      "The band adds no focus traps and no composite-widget arrow-key behavior"
+    ],
+    "nameRequired": true,
+    "targetSize": "44px project default (identifier links render as min-h-11 targets)",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/identifier/identifier.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "prose",
+  "type": "registry:ui",
+  "title": "Prose",
+  "description": "Applies readable long-form typography to rendered rich text — Markdown output, CMS content, or hand-authored HTML that Prose does not itself control the markup of. Styles semantic descendant elements (headings, paragraphs, lists, links, inline code, code blocks, blockquotes, hr, images, tables) via CSS child selectors, caps the reading measure, and reuses the same link/code/border tokens as the rest of Commons.",
+  "status": "experimental",
+  "useWhen": [
+    "Rendering Markdown or rich-text CMS content (policy pages, articles, help center entries)",
+    "Displaying hand-authored long-form HTML that should read comfortably at a capped measure",
+    "Theming arbitrary nested markup you don't control so it matches Commons typography and stays legible in dark mode and forced-colors mode"
+  ],
+  "avoidWhen": [
+    "Structured, interactive card, table, or collection content you fully control the markup of (use Card, Table, or Collection instead)",
+    "A single short label or UI string (use ordinary text utilities, not Prose)",
+    "Content where you need sorting, striping, or other table interactivity (use Table)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Prose sets no role, no aria-*, and no tab stops of its own; it only styles whatever semantic elements the consumer's markup already contains",
+      "Links are always underlined (color alone never conveys link-ness, WCAG 1.4.1) and keep a visible focus-visible ring identical to the standalone Link component",
+      "The reading-measure cap (max-w-measure-*, ~65ch) supports sustained reading per WCAG 1.4.8, and all type sizes use rem-based text-* tokens so they scale with the user's browser/OS text-size setting (WCAG 1.4.4)",
+      "Inline code, code blocks, blockquotes, hr, and tables keep a visible border (not background-color alone) so their boundaries survive forced-colors / Windows High Contrast Mode",
+      "The blockquote accent border sits on the logical inline-start edge (border-s-4), so it renders on the correct side automatically under dir=\"rtl\" with no rtl: override needed",
+      "Prose does not sanitize HTML, generate alt text, or add table sorting — img alt text and semantic correctness of the rendered markup remain the consumer's responsibility"
+    ],
+    "nameRequired": false,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/prose/prose.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "form",
+  "type": "registry:ui",
+  "title": "Form",
+  "description": "A real, progressively enhanced <form> built on Base UI's Form that coordinates multi-field validation and routes server-side errors. Keeps native action/method/onSubmit semantics (works without JS), consolidates errors keyed by field name, surfaces each to the matching Field's error message and aria-invalid via useFormFieldError, and moves focus to the first errored control on a failed submit. Compose a page-level error summary from useFormErrors.",
+  "status": "experimental",
+  "useWhen": [
+    "Coordinating several Fields and needing server-side errors routed back to the right controls after submit",
+    "Wanting a real form that submits with action/method and still works without JavaScript, with client and server validation reconciled",
+    "Managing focus to the first error (or an error summary) when a submit comes back invalid"
+  ],
+  "avoidWhen": [
+    "A single field — the field component alone carries its label, hint, error live region, and aria-invalid",
+    "Needing a full client-side form-state library (validation schemas, arrays, wizard state) — Form only handles error-routing and submission wiring",
+    "A control that triggers an immediate action rather than submitting values (use a button)"
+  ],
+  "dependencies": [
+    "@base-ui/react"
+  ],
+  "registryDependencies": [
+    "cn"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Tab / Shift+Tab move between the form's controls in document order",
+      "Enter submits from a text control; the submit button is reachable and activates with Enter or Space",
+      "On a submit that returns errors, focus moves to the first errored control in document order"
+    ],
+    "nameRequired": false,
+    "targetSize": "44px project default is met by the fields and buttons composed inside the form",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Progressive enhancement: renders a native <form> with standard action/method/onSubmit, so submission and server validation work without JavaScript; server errors return via the errors prop.",
+      "Server errors are keyed by control name and routed to the matching field, which announces them in a polite live region and sets aria-invalid (WCAG 3.3.1). Pair each message with a correction suggestion for 3.3.3.",
+      "Focus is moved to the first errored control on a failed submit; for longer forms set focusOnError={false} and move focus to a page-level error summary composed from useFormErrors() (e.g. the validation component).",
+      "The initial mount never steals focus even when server errors are already present — such pages should lead with an error summary."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/form/form.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

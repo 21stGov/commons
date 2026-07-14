@@ -1,0 +1,45 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "summary-box",
+  "type": "registry:ui",
+  "title": "Summary box",
+  "description": "Bordered, emphasized box that highlights key information or next steps (e.g. \"What you'll need\") so users do not have to hunt for it. A labelled region named by its heading, with a subtle tint and border; structural rather than status-colored, so it stays legible in forced-colors mode.",
+  "status": "experimental",
+  "useWhen": [
+    "Summarizing the documents or information a user needs before starting a task",
+    "Listing the next steps in a process so they are easy to find",
+    "Pulling key takeaways out of longer content into an emphasized box"
+  ],
+  "avoidWhen": [
+    "Reporting a status, result, or warning (use Alert)",
+    "A sitewide emergency or service notice at the top of every page (use Site alert)",
+    "Long-form content that is better served by ordinary headings and prose"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "The box is static content and never takes focus",
+      "It is a region landmark labelled by its heading (aria-labelledby), so screen-reader users can navigate to it and hear its name",
+      "The heading participates in the page outline at the level set by headingLevel",
+      "Any links inside follow the native anchor keyboard contract and are always underlined"
+    ],
+    "nameRequired": true,
+    "targetSize": "not-applicable",
+    "highContrastTested": true,
+    "screenReadersTested": []
+  },
+  "files": [
+    {
+      "path": "src/components/summary-box/summary-box.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

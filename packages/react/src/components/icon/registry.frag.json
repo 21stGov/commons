@@ -1,0 +1,50 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "icon",
+  "type": "registry:ui",
+  "title": "Icon",
+  "description": "A dependency-free SVG icon primitive with a curated 23-glyph starter set drawn on a shared 16x16 grid. Standardizes the paint contract (currentColor stroke, forced-colors safe), sizing (1em by default so icons scale with adjacent text, plus named sizes and arbitrary), RTL mirroring for directional glyphs, and the accessibility contract: decorative by default (aria-hidden, focusable=false) or meaningful (role=img with an accessible name) when a label or title is provided.",
+  "status": "experimental",
+  "useWhen": [
+    "Placing a small glyph beside text (a button label, list item, menu entry)",
+    "Needing a standalone meaningful icon with an accessible name and no visible text",
+    "Standardizing icon size, color inheritance, and RTL flipping across a design system without pulling in an icon library"
+  ],
+  "avoidWhen": [
+    "You need a large illustration or spot art rather than a UI glyph",
+    "The glyph must carry status meaning by color alone — pair it with text or a label instead",
+    "A logo or brand mark is required (icons here are single-color, currentColor-stroked UI glyphs)"
+  ],
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Icons are not interactive and add no tab stops",
+      "SVGs are marked focusable=false so they never become a stray tab stop in browsers that focus SVGs",
+      "Wrap an icon in a Button or Link when it needs to be operable"
+    ],
+    "nameRequired": false,
+    "targetSize": "Not applicable — Icon is presentational; the interactive control that wraps it owns the 44px target",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "Decorative by default: with no label or title the icon is aria-hidden and focusable=false, so a screen reader skips it and it is not announced twice beside a visible text label.",
+      "Meaningful when a label or title is provided: the icon gets role=img and that accessible name, for the rare standalone icon that is the only thing conveying meaning.",
+      "currentColor stroke (never a hardcoded fill) means the icon inherits text color and stays visible in Windows High Contrast / forced-colors mode, where a background-image icon would disappear.",
+      "Directional glyphs (chevrons, arrows, external-link) carry rtl:-scale-x-100 so they point along the reading direction in RTL; the flip prop overrides per instance."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/icon/icon.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}
