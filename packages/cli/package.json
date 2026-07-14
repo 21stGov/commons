@@ -15,7 +15,8 @@
     "./registry": {
       "types": "./dist/registry/lib.d.ts",
       "import": "./dist/registry/lib.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
