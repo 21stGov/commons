@@ -19,6 +19,7 @@ import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceSidebar } from './sidebar.ts'
 import { enhanceSlider } from './slider.ts'
+import { enhanceTable } from './table.ts'
 import {
   enhanceContextMenu,
   enhanceDropdownMenu,
@@ -55,6 +56,7 @@ export const behaviors: Behavior[] = [
   enhanceNavigationMenu,
   enhanceSlider,
   enhanceSidebar,
+  enhanceTable,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -81,6 +83,7 @@ export {
   enhancePopover,
   enhanceSidebar,
   enhanceSlider,
+  enhanceTable,
   enhanceTabs,
   enhanceToggle,
   enhanceTooltip,
