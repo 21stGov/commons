@@ -17,7 +17,7 @@ import { enhanceDatePicker } from './datepicker.ts'
 import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
-import { enhanceIndeterminate } from './form.ts'
+import { enhanceCheckboxAll, enhanceIndeterminate } from './form.ts'
 import { enhanceInPageNavigation } from './inpagenav.ts'
 import { enhanceInputMask } from './inputmask.ts'
 import { enhanceInputOTP } from './inputotp.ts'
@@ -44,6 +44,7 @@ export type Behavior = (root: ParentNode) => void
 /** Every behavior, in application order. */
 export const behaviors: Behavior[] = [
   enhanceIndeterminate,
+  enhanceCheckboxAll,
   enhanceAccordion,
   enhanceCollapsible,
   enhanceDialog,
@@ -85,6 +86,7 @@ export {
   enhanceCalendar,
   enhanceCarousel,
   enhanceCharacterCount,
+  enhanceCheckboxAll,
   enhanceCollapsible,
   enhanceComboBox,
   enhanceCommandPalette,

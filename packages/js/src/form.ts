@@ -17,3 +17,33 @@ export function enhanceIndeterminate(root: ParentNode): void {
     ;(input as HTMLInputElement).indeterminate = true
   }
 }
+
+/**
+ * Select-all checkbox tree. A master `input[data-checkbox-all="<name>"]` toggles
+ * every `input[data-checkbox-member="<name>"]`; the master reflects the members
+ * (all → checked, none → unchecked, some → indeterminate).
+ */
+export function enhanceCheckboxAll(root: ParentNode): void {
+  for (const master of claim(root, 'input[data-checkbox-all]', 'checkbox-all')) {
+    const name = master.getAttribute('data-checkbox-all')
+    const input = master as HTMLInputElement
+    const members = Array.from(
+      root.querySelectorAll<HTMLInputElement>(`input[data-checkbox-member="${name}"]`),
+    )
+    if (members.length === 0) continue
+
+    const sync = (): void => {
+      const checked = members.filter((m) => m.checked).length
+      input.checked = checked === members.length
+      input.indeterminate = checked > 0 && checked < members.length
+      input.toggleAttribute('data-indeterminate', input.indeterminate)
+    }
+    input.addEventListener('change', () => {
+      for (const m of members) m.checked = input.checked
+      input.indeterminate = false
+      input.removeAttribute('data-indeterminate')
+    })
+    for (const m of members) m.addEventListener('change', sync)
+    sync()
+  }
+}

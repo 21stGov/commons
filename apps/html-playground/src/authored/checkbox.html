@@ -1,0 +1,85 @@
+<!--
+  Authored canonical Checkbox markup (no React). Native inputs drive the check
+  (peer + :checked CSS); @21stgov/commons-js sets the indeterminate DOM property
+  and wires the select-all master (data-checkbox-all) to its members
+  (data-checkbox-member) — all/none/some → checked/unchecked/indeterminate.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="cbx-states-h">
+    <h3 id="cbx-states-h" class="text-sm font-semibold">Checkbox states</h3>
+    <div class="flex flex-col">
+      <div data-slot="checkbox" class="cui-checkbox">
+        <label data-slot="checkbox-label" class="cui-checkbox-label">
+          <span data-slot="checkbox-row" class="cui-checkbox-row">
+            <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-1" type="checkbox" aria-labelledby="cbx-1-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-1-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Subscribe to city updates</span></span>
+          </span>
+        </label>
+      </div>
+      <div data-slot="checkbox" class="cui-checkbox">
+        <label data-slot="checkbox-label" class="cui-checkbox-label">
+          <span data-slot="checkbox-row" class="cui-checkbox-row">
+            <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-2" type="checkbox" checked aria-labelledby="cbx-2-label" aria-describedby="cbx-2-desc" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-2-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Get service alerts</span><span id="cbx-2-desc" data-slot="checkbox-description" class="cui-checkbox-description">Water, power, and road closures. At most one email per day.</span></span>
+          </span>
+        </label>
+      </div>
+      <div data-slot="checkbox" class="cui-checkbox">
+        <label data-slot="checkbox-label" class="cui-checkbox-label">
+          <span data-slot="checkbox-row" class="cui-checkbox-row">
+            <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-3" type="checkbox" disabled aria-labelledby="cbx-3-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-3-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Disabled option</span></span>
+          </span>
+        </label>
+      </div>
+      <div data-slot="checkbox" class="cui-checkbox">
+        <label data-slot="checkbox-label" class="cui-checkbox-label">
+          <span data-slot="checkbox-row" class="cui-checkbox-row">
+            <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-4" type="checkbox" checked disabled aria-labelledby="cbx-4-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-4-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Disabled and checked</span></span>
+          </span>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cbx-all-h">
+    <h3 id="cbx-all-h" class="text-sm font-semibold">Indeterminate (select all)</h3>
+    <div class="flex flex-col">
+      <div data-slot="checkbox" class="cui-checkbox">
+        <label data-slot="checkbox-label" class="cui-checkbox-label">
+          <span data-slot="checkbox-row" class="cui-checkbox-row">
+            <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-all" type="checkbox" data-checkbox-all="services" data-indeterminate aria-labelledby="cbx-all-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+            <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-all-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Select all services</span></span>
+          </span>
+        </label>
+      </div>
+      <div style="padding-inline-start:2.25rem">
+        <div data-slot="checkbox" class="cui-checkbox">
+          <label data-slot="checkbox-label" class="cui-checkbox-label">
+            <span data-slot="checkbox-row" class="cui-checkbox-row">
+              <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-m1" type="checkbox" checked data-checkbox-member="services" aria-labelledby="cbx-m1-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-m1-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Trash pickup</span></span>
+            </span>
+          </label>
+        </div>
+        <div data-slot="checkbox" class="cui-checkbox">
+          <label data-slot="checkbox-label" class="cui-checkbox-label">
+            <span data-slot="checkbox-row" class="cui-checkbox-row">
+              <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-m2" type="checkbox" data-checkbox-member="services" aria-labelledby="cbx-m2-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-m2-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Recycling</span></span>
+            </span>
+          </label>
+        </div>
+        <div data-slot="checkbox" class="cui-checkbox">
+          <label data-slot="checkbox-label" class="cui-checkbox-label">
+            <span data-slot="checkbox-row" class="cui-checkbox-row">
+              <span data-slot="checkbox-control-box" class="cui-checkbox-control-box"><span data-slot="checkbox-control" class="cui-checkbox-control"><input id="cbx-m3" type="checkbox" data-checkbox-member="services" aria-labelledby="cbx-m3-label" data-slot="checkbox-input" class="cui-checkbox-input peer"><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-checkmark" class="cui-checkbox-checkmark"><path d="m4.5 10 3.25 3.25 7.75-7.75" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"></path></svg><svg aria-hidden="true" viewBox="0 0 20 20" fill="none" data-slot="checkbox-indeterminate-mark" class="cui-checkbox-indeterminate-mark"><path d="M5 10h10" stroke="currentColor" stroke-width="2.25" stroke-linecap="round"></path></svg></span></span>
+              <span class="flex min-w-0 flex-1 flex-col gap-0"><span id="cbx-m3-label" data-slot="checkbox-label-text" class="cui-checkbox-label-text">Yard waste</span></span>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
