@@ -13,6 +13,7 @@ import { enhanceCarousel } from './carousel.ts'
 import { enhanceCharacterCount } from './charactercount.ts'
 import { enhanceComboBox } from './combobox.ts'
 import { enhanceCommandPalette } from './commandpalette.ts'
+import { enhanceDataTable } from './datatable.ts'
 import { enhanceDatePicker } from './datepicker.ts'
 import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
@@ -74,6 +75,7 @@ export const behaviors: Behavior[] = [
   enhanceInputOTP,
   enhanceInPageNavigation,
   enhanceResizable,
+  enhanceDataTable,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -92,6 +94,7 @@ export {
   enhanceCommandPalette,
   enhanceContextMenu,
   enhanceCustomSelect,
+  enhanceDataTable,
   enhanceDatePicker,
   enhanceDateRangePicker,
   enhanceDialog,

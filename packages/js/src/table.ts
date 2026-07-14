@@ -13,8 +13,11 @@
 
 import { all, claim } from './dom.ts'
 
-function cellValue(row: HTMLElement, index: number): string {
-  return (row.children[index]?.textContent ?? '').trim()
+export function cellValue(row: HTMLElement, index: number): string {
+  const cell = row.children[index]
+  // A cell may carry an explicit sort key (e.g. an ISO date behind a formatted
+  // "Jan 5, 2026"); otherwise sort by its visible text.
+  return (cell?.getAttribute('data-sort-value') ?? cell?.textContent ?? '').trim()
 }
 
 /** Parse a wholly-numeric value (allowing $, %, thousands commas); else NaN. */
@@ -23,7 +26,7 @@ function asNumber(s: string): number {
   return /^-?\d*\.?\d+$/.test(t) ? Number(t) : NaN
 }
 
-function compare(a: string, b: string): number {
+export function compareCells(a: string, b: string): number {
   const na = asNumber(a)
   const nb = asNumber(b)
   if (!Number.isNaN(na) && !Number.isNaN(nb)) return na - nb
@@ -31,27 +34,37 @@ function compare(a: string, b: string): number {
   return a.localeCompare(b, undefined, { numeric: true })
 }
 
+/**
+ * Wire the sortable headers of one table. `onSort` (optional) runs after the
+ * rows are reordered — the data table uses it to re-apply filter/pagination.
+ */
+export function wireTableSort(table: HTMLElement, onSort?: () => void): void {
+  const tbody = table.querySelector('tbody')
+  if (!tbody) return
+  const headers = all<HTMLElement>(table, 'th[aria-sort]')
+  for (const button of all<HTMLElement>(table, '[data-slot="table-sort-button"]')) {
+    const th = button.closest('th')
+    if (!th) continue
+    const colIndex = Array.from(th.parentElement?.children ?? []).indexOf(th)
+    button.addEventListener('click', () => {
+      const dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending'
+      for (const other of headers) other.setAttribute('aria-sort', other === th ? dir : 'none')
+      const rows = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr'))
+      rows.sort((a, b) => {
+        const cmp = compareCells(cellValue(a, colIndex), cellValue(b, colIndex))
+        return dir === 'ascending' ? cmp : -cmp
+      })
+      for (const row of rows) tbody.appendChild(row)
+      onSort?.()
+    })
+  }
+}
+
 export function enhanceTable(root: ParentNode): void {
   for (const table of claim(root, 'table', 'table-sort')) {
-    const buttons = all<HTMLElement>(table, '[data-slot="table-sort-button"]')
-    const tbody = table.querySelector('tbody')
-    if (buttons.length === 0 || !tbody) continue
-    const headers = all<HTMLElement>(table, 'th[aria-sort]')
-
-    for (const button of buttons) {
-      const th = button.closest('th')
-      if (!th) continue
-      const colIndex = Array.from(th.parentElement?.children ?? []).indexOf(th)
-      button.addEventListener('click', () => {
-        const dir = th.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending'
-        for (const other of headers) other.setAttribute('aria-sort', other === th ? dir : 'none')
-        const rows = Array.from(tbody.querySelectorAll<HTMLElement>(':scope > tr'))
-        rows.sort((a, b) => {
-          const cmp = compare(cellValue(a, colIndex), cellValue(b, colIndex))
-          return dir === 'ascending' ? cmp : -cmp
-        })
-        for (const row of rows) tbody.appendChild(row)
-      })
-    }
+    // Tables inside a data table are wired by enhanceDataTable (sort re-applies
+    // its filter/pagination); skip them here.
+    if (table.closest('[data-slot="data-table"]')) continue
+    wireTableSort(table)
   }
 }
