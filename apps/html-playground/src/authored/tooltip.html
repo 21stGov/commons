@@ -1,0 +1,18 @@
+<!--
+  Authored canonical Tooltip markup (no React). Shown while the trigger is
+  hovered or focused; @21stgov/commons-js positions it above the trigger.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="tt-h">
+    <h3 id="tt-h" class="text-sm font-semibold">Inline help</h3>
+    <p>
+      Your parcel ID is printed on your assessment notice.
+      <span data-slot="tooltip" style="position:relative;display:inline-block">
+        <button type="button" class="cui-tooltip-trigger" data-slot="tooltip-trigger" aria-describedby="tt-parcel">Parcel ID format</button>
+        <span class="cui-tooltip-positioner" data-slot="tooltip-positioner" hidden>
+          <span class="cui-tooltip-content" data-slot="tooltip-content" role="tooltip" id="tt-parcel">Two letters followed by eight numbers, such as AB-12345678.</span>
+        </span>
+      </span>
+    </p>
+  </section>
+</div>

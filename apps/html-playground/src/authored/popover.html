@@ -1,0 +1,28 @@
+<!--
+  Authored canonical Popover markup (no React). @21stgov/commons-js positions
+  the content under the trigger and handles open/close + outside/Escape dismiss.
+-->
+<div style="display:flex;flex-wrap:wrap;gap:2rem">
+  <div data-slot="popover">
+    <button type="button" class="cui-button cui-button--outline cui-button--md" data-slot="popover-trigger" aria-haspopup="dialog" aria-expanded="false">Filters</button>
+    <div class="cui-popover-positioner" data-slot="popover-positioner" hidden>
+      <div class="cui-popover-content" data-slot="popover-content" role="dialog" aria-labelledby="pop-filters-title" aria-describedby="pop-filters-desc" tabindex="-1">
+        <h2 class="cui-popover-title" data-slot="popover-title" id="pop-filters-title">Filter results</h2>
+        <p class="cui-popover-description" data-slot="popover-description" id="pop-filters-desc">Narrow the list to matching records.</p>
+        <label style="display:flex;flex-direction:column;gap:0.25rem">Keyword<input type="text" name="keyword" class="cui-input" /></label>
+        <button type="button" class="cui-button cui-button--primary cui-button--sm" data-slot="popover-close" data-popup-close>Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div data-slot="popover">
+    <button type="button" class="cui-button cui-button--secondary cui-button--md" data-slot="popover-trigger" aria-haspopup="dialog" aria-expanded="false">Extra actions</button>
+    <div class="cui-popover-positioner" data-slot="popover-positioner" hidden>
+      <div class="cui-popover-content" data-slot="popover-content" role="dialog" aria-labelledby="pop-actions-title" tabindex="-1">
+        <h2 class="cui-popover-title" data-slot="popover-title" id="pop-actions-title">Record actions</h2>
+        <button type="button" class="cui-button cui-button--ghost cui-button--sm" data-slot="popover-close" data-popup-close>Duplicate</button>
+        <button type="button" class="cui-button cui-button--ghost cui-button--sm" data-slot="popover-close" data-popup-close>Export</button>
+      </div>
+    </div>
+  </div>
+</div>
