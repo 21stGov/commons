@@ -17,6 +17,7 @@ import {
   enhancePopover,
   enhanceTooltip,
 } from './popup.ts'
+import { enhanceCustomSelect } from './select.ts'
 import { enhanceTabs } from './tabs.ts'
 import { enhanceToggle } from './toggle.ts'
 
@@ -34,6 +35,7 @@ export const behaviors: Behavior[] = [
   enhanceHoverCard,
   enhanceTabs,
   enhanceToggle,
+  enhanceCustomSelect,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -45,6 +47,7 @@ export {
   enhanceAccordion,
   enhanceCollapsible,
   enhanceContextMenu,
+  enhanceCustomSelect,
   enhanceDialog,
   enhanceDropdownMenu,
   enhanceHoverCard,
