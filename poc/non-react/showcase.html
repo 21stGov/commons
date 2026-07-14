@@ -4591,6 +4591,7 @@ a:visited {
     font-size: var(--cui-font-size-sm);
     line-height: var(--tw-leading, var(--cui-font-line-height-4));
     color: var(--cui-text-default);
+    text-decoration-line: none;
     text-underline-offset: 2px;
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -4639,6 +4640,7 @@ a:visited {
     --tw-font-weight: var(--cui-font-weight-semibold);
     font-weight: var(--cui-font-weight-semibold);
     color: var(--cui-text-default);
+    text-decoration-line: none;
     text-underline-offset: 2px;
     &:hover {
       @media (hover: hover) {
@@ -5270,6 +5272,27 @@ a:visited {
     width: var(--cui-spacing-2);
     height: var(--cui-spacing-2);
     flex-shrink: 0;
+  }
+  .cui-input-control {
+    width: 100%;
+    min-width: var(--cui-spacing-0);
+    flex: 1;
+    align-self: stretch;
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+    background-color: transparent;
+    padding: var(--cui-spacing-0);
+    font-size: var(--text-base);
+    line-height: var(--tw-leading, var(--text-base--line-height));
+    color: inherit;
+    --tw-outline-style: none;
+    outline-style: none;
+    &::placeholder {
+      color: var(--cui-text-muted);
+    }
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
   .cui-input-suffix {
     display: flex;
@@ -8930,7 +8953,7 @@ a:visited {
       transition-property: none;
     }
   }
-  .cui-input {
+  .cui-input-control {
     min-height: calc(var(--spacing) * 11);
     width: 100%;
     min-width: var(--cui-spacing-0);
