@@ -3,6 +3,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  aliasClasses,
   camelToKebab,
   classBase,
   emitVariant,
@@ -113,5 +114,38 @@ describe('emitVariant', () => {
       defaultVariants: {},
     })
     expect(rule(rules, '.cui-x')?.utilities).toEqual(['relative'])
+  })
+
+  it('emits a signature per non-empty modifier, tagged with its cva group', () => {
+    const { signatures } = emitVariant(cap)
+    expect(signatures).toContainEqual({
+      modifier: 'cui-alert--info',
+      group: 'variant',
+      classes: ['bg-info'],
+    })
+    expect(signatures).toContainEqual({
+      modifier: 'cui-alert--slim',
+      group: 'slim',
+      classes: ['p-1'],
+    })
+    // The folded boolean default (slim=false) produces no modifier/signature.
+    expect(signatures.some((s) => s.modifier === 'cui-alert--slim-false')).toBe(false)
+  })
+})
+
+describe('aliasClasses', () => {
+  const link: CapturedVariant = {
+    exportName: 'linkVariants',
+    base: ['underline'],
+    variants: { variant: { default: ['text-link'], subtle: ['text-muted'] } },
+    defaultVariants: { variant: 'default' },
+  }
+
+  it('resolves the component default when no prop is given', () => {
+    expect(aliasClasses(link, {})).toEqual(['underline', 'text-link'])
+  })
+
+  it('honors an explicit variant prop', () => {
+    expect(aliasClasses(link, { variant: 'subtle' })).toEqual(['underline', 'text-muted'])
   })
 })

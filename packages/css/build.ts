@@ -27,9 +27,19 @@ if (result.dropped.length > 0) {
 console.log('\nwrote dist/components.src.css, dist/commons.css, dist/gallery.html')
 console.log('gallery (self-contained, open directly): poc/non-react/gallery.html')
 
-const demos = await generateDemos(result.classNames, result.signatures, playgroundGenerated)
+const { results: demos, internalGap } = await generateDemos(
+  result.classNames,
+  result.signatures,
+  playgroundGenerated,
+)
 const failed = demos.filter((d) => !d.ok)
 console.log(`\nhtml-playground: rendered ${demos.length - failed.length}/${demos.length} demos to .cui-* HTML`)
 if (failed.length > 0) {
   for (const d of failed) console.log(`  FAILED ${d.slug}: ${d.error}`)
+}
+if (internalGap.length > 0) {
+  console.log(
+    `\ncommons.css coverage gap — ${internalGap.length} utility classes still needed by component internals (mostly icon sizing), supplied by the playground's scaffold.css for now:`,
+  )
+  console.log(`  ${internalGap.join(' ')}`)
 }

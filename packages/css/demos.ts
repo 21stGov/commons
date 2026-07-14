@@ -48,6 +48,15 @@ export interface DemoResult {
   error?: string
 }
 
+export interface DemosSummary {
+  results: DemoResult[]
+  /**
+   * Component-internal utility classes still needed (no `.cui-*` rule covers
+   * them) — the honest coverage gap in commons.css, sorted.
+   */
+  internalGap: string[]
+}
+
 /** A React demo module, once bundled and imported. */
 interface DemoModule {
   title?: string
@@ -142,18 +151,24 @@ function cuiClassesFor(
   return out
 }
 
-/**
- * Rewrite server-rendered component markup to `.cui-*`, in place. Returns the
- * scaffolding utility classes seen (elements outside any component subtree),
- * so they can be compiled into scaffold.css.
- */
-export function rewrite(
-  html: string,
-  manifest: Set<string>,
-  signatures: Signatures,
-): { html: string; scaffold: Set<string> } {
+export interface RewriteResult {
+  html: string
+  /** Utility classes on demo scaffolding (outside any component subtree). */
+  scaffold: Set<string>
+  /**
+   * Utility classes still needed by elements *inside* a component that carry no
+   * `data-slot` (mostly icon sizing) — the true measure of what `commons.css`
+   * doesn't yet cover on its own. Kept so the playground renders correctly, and
+   * reported so the gap is visible.
+   */
+  internal: Set<string>
+}
+
+/** Rewrite server-rendered component markup to `.cui-*`, in place. */
+export function rewrite(html: string, manifest: Set<string>, signatures: Signatures): RewriteResult {
   const root = parse(html, { comment: false })
   const scaffold = new Set<string>()
+  const internal = new Set<string>()
 
   const walk = (node: unknown, inComponent: boolean): void => {
     if (!(node instanceof HTMLElement)) return
@@ -167,13 +182,12 @@ export function rewrite(
       childInComponent = true
     } else {
       const cls = node.getAttribute('class')
-      if (inComponent) {
-        // A styled element inside a component with no data-slot has no `.cui-*`
-        // rule — leave it unstyled rather than fake it with Tailwind, so the
-        // gap is visible and fixable at the source.
-        node.removeAttribute('class')
-      } else if (cls) {
-        for (const c of cls.split(/\s+/)) if (c) scaffold.add(c)
+      if (cls) {
+        // Keep the classes so the demo renders correctly, and bucket them:
+        // scaffolding (demo layout) vs component-internal (a `commons.css`
+        // coverage gap — an element the generator hasn't given a `.cui-*` rule).
+        const target = inComponent ? internal : scaffold
+        for (const c of cls.split(/\s+/)) if (c) target.add(c)
       }
     }
 
@@ -181,7 +195,7 @@ export function rewrite(
   }
 
   for (const child of root.childNodes) walk(child, false)
-  return { html: root.toString(), scaffold }
+  return { html: root.toString(), scaffold, internal }
 }
 
 /** Compile the union of scaffolding utilities into a standalone stylesheet. */
@@ -215,7 +229,7 @@ export async function generateDemos(
   classNames: string[],
   signatures: Signatures,
   outDir: string,
-): Promise<DemoResult[]> {
+): Promise<DemosSummary> {
   const manifest = new Set(classNames)
   const demosOut = join(outDir, 'demos')
   mkdirSync(demosOut, { recursive: true })
@@ -227,6 +241,7 @@ export async function generateDemos(
 
   const results: DemoResult[] = []
   const scaffold = new Set<string>()
+  const internal = new Set<string>()
 
   try {
     for (const file of files) {
@@ -235,20 +250,24 @@ export async function generateDemos(
         const mod = await loadDemo(join(demosSrcDir, file))
         if (typeof mod.default !== 'function') throw new Error('no default export')
         const rendered = renderToStaticMarkup(React.createElement(mod.default))
-        const { html, scaffold: s } = rewrite(rendered, manifest, signatures)
-        for (const c of s) scaffold.add(c)
-        writeFileSync(join(demosOut, `${slug}.html`), `${html}\n`)
+        const r = rewrite(rendered, manifest, signatures)
+        for (const c of r.scaffold) scaffold.add(c)
+        for (const c of r.internal) internal.add(c)
+        writeFileSync(join(demosOut, `${slug}.html`), `${r.html}\n`)
         results.push({ slug, title: mod.title ?? slug, ok: true })
       } catch (err) {
         results.push({ slug, title: slug, ok: false, error: (err as Error).message.split('\n')[0] })
       }
     }
-    compileScaffold(scaffold, outDir)
+    // Compile scaffolding + the internal utilities the components still need,
+    // so every demo renders; components' own styling still comes from the
+    // `.cui-*` classes in commons.css.
+    compileScaffold(new Set([...scaffold, ...internal]), outDir)
   } finally {
     rmSync(tmpDir, { recursive: true, force: true })
   }
 
   results.sort((a, b) => a.title.localeCompare(b.title, 'en'))
   writeFileSync(join(outDir, 'demos.json'), `${JSON.stringify(results, null, 2)}\n`)
-  return results
+  return { results, internalGap: [...internal].sort() }
 }
