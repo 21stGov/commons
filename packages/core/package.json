@@ -30,7 +30,7 @@
   "scripts": {
     "build": "node build.mjs",
     "prepublishOnly": "pnpm run build",
-    "lint": "stylelint 'src/**/*.css'"
+    "lint": "stylelint \"src/**/*.css\""
   },
   "peerDependencies": {
     "@21stgov/commons-tokens": "workspace:^"
