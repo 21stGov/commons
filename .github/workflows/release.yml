@@ -22,6 +22,10 @@ name: Release
 on:
   push:
     branches: [main]
+  # Manual trigger — lets a stuck publish be finished from the Actions tab
+  # (e.g. after a Release run is cancelled mid-flight, leaving versions bumped
+  # on main but not yet published to npm).
+  workflow_dispatch:
 
 # Never let two releases run at once.
 concurrency: ${{ github.workflow }}-${{ github.ref }}
