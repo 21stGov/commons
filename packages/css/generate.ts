@@ -464,6 +464,10 @@ export async function buildCss(): Promise<BuildResult> {
     appearance: button;
     background-color: transparent;
     background-image: none;
+    /* Zero the UA 3D "outset" border (Tailwind preflight does this globally):
+       otherwise bare buttons — the sortable table header, ghost triggers —
+       show a rogue inset stroke. Component classes re-add borders as needed. */
+    border: 0 solid;
     padding: 0;
   }
   button, input, optgroup, select, textarea { margin: 0; }

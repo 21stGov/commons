@@ -182,6 +182,74 @@
   box-shadow: var(--cui-shadow-3, 0 12px 32px rgba(0, 0, 0, 0.3));
 }
 
+/* Command-palette item internals (icon gutter, grow label, trailing shortcut).
+   The React item is `[icon|spacer] [grow label] [KbdGroup ms-auto]`, built from
+   utilities the authored markup can't pull into scaffold — supply them here so
+   the palette matches the richer React look (icons + ⌘-shortcuts). */
+.cui-command-palette-input-icon {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0.75rem;
+  margin-block: auto;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  color: var(--cui-text-muted);
+  pointer-events: none;
+}
+.cui-command-palette-item-icon,
+.cui-command-palette-item-spacer {
+  flex-shrink: 0;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+.cui-command-palette-item-icon {
+  color: var(--cui-text-muted);
+}
+.cui-command-palette-item-label {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cui-command-palette-item .cui-kbd-group {
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+.cui-command-palette-item[data-disabled] {
+  pointer-events: none;
+  color: var(--cui-disabled-text);
+}
+
+/* ---- Data table filter (search input) ------------------------------------
+   React renders the filter as an <Input prefix={<SearchIcon/>}> — an input-group
+   wrapper carrying the box, a muted search glyph, and a borderless inner input.
+   The inner input's utilities aren't in scaffold, so style it here. */
+.cui-data-table-filter-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--cui-text-muted);
+}
+.cui-data-table-filter-icon svg {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+.cui-data-table-filter-input {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  align-self: stretch;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 1rem;
+  color: inherit;
+  outline: none;
+}
+.cui-data-table-filter-input::placeholder {
+  color: var(--cui-text-muted);
+}
+
 /* ---- Table cell padding --------------------------------------------------
    React applies cell padding via a dynamic density lookup (DENSITY[density])
    the generator can't capture, so cells render at padding:0 and content touches

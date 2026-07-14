@@ -36,6 +36,9 @@ export function enhanceComboBox(root: ParentNode): void {
     const visible = (): HTMLElement[] => items.filter((i) => !i.hidden)
 
     let open = false
+    // Set while pick() re-focuses the input, so the focus handler below does
+    // not immediately re-open the list we just closed on selection.
+    let suppressFocusOpen = false
     const highlight = (item: HTMLElement | undefined): void => {
       for (const i of items) i.removeAttribute('data-highlighted')
       if (item) {
@@ -70,7 +73,9 @@ export function enhanceComboBox(root: ParentNode): void {
         if (indicator) indicator.hidden = i !== item
       }
       setOpen(false)
+      suppressFocusOpen = true
       input.focus()
+      suppressFocusOpen = false
     }
 
     input.addEventListener('input', () => {
@@ -78,7 +83,7 @@ export function enhanceComboBox(root: ParentNode): void {
       filter()
     })
     input.addEventListener('focus', () => {
-      if (!open) {
+      if (!open && !suppressFocusOpen) {
         setOpen(true)
         filter()
       }

@@ -9,11 +9,13 @@
   <section aria-labelledby="dt-h" class="flex flex-col gap-2">
     <h3 id="dt-h" class="text-sm font-semibold">Sort, filter, select, and paginate</h3>
     <div data-slot="data-table" class="flex flex-col gap-3">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <label class="flex flex-col gap-1 text-sm" style="min-width:16rem">
-          <span class="font-medium">Filter</span>
-          <input class="cui-input" data-datatable-filter type="text" placeholder="Filter permits" aria-label="Filter permits" autocomplete="off" />
-        </label>
+      <div class="flex flex-wrap items-end justify-between gap-2" data-slot="data-table-toolbar">
+        <div class="w-full max-w-xs" data-slot="data-table-filter">
+          <div class="cui-input flex items-center gap-1">
+            <span class="cui-data-table-filter-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3.75"></circle><path d="m12.5 12.5-2.6-2.6"></path></svg></span>
+            <input class="cui-data-table-filter-input" data-datatable-filter type="search" placeholder="Filter permits" aria-label="Filter permits" aria-controls="dt-status" autocomplete="off" />
+          </div>
+        </div>
         <label class="flex items-center gap-2 text-sm font-medium">Rows per page
           <span class="cui-select-wrapper" data-slot="select-wrapper">
             <select class="cui-select cui-select--sm peer" data-datatable-page-size data-slot="select" aria-label="Rows per page">
@@ -47,13 +49,10 @@
         </tbody>
       </table>
 
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <span class="text-sm text-muted-foreground" data-datatable-page-info>Page 1 of 2</span>
-        <span class="flex items-center gap-2">
-          <button type="button" class="cui-button cui-button--outline cui-button--sm" data-datatable-prev>Previous</button>
-          <button type="button" class="cui-button cui-button--outline cui-button--sm" data-datatable-next>Next</button>
-        </span>
-      </div>
+      <div id="dt-status" class="text-sm text-muted-foreground" data-slot="data-table-status" data-datatable-status aria-live="polite" aria-atomic="true">Showing 1 to 4 of 7 results</div>
+      <nav class="cui-pagination" data-slot="data-table-pagination" aria-label="Table pages">
+        <ol class="cui-pagination-list" data-datatable-pager></ol>
+      </nav>
     </div>
     <p class="text-sm text-muted-foreground" data-datatable-count>No permits selected.</p>
   </section>

@@ -1,29 +1,62 @@
 <!--
   Authored canonical Command Palette markup (no React). A modal launcher (reuses
   the dialog backdrop/viewport chrome) with a filtered, grouped command list.
+  Mirrors the React demo 1:1: a leading search glyph, an icon gutter (icon or a
+  same-size spacer so labels line up), and trailing ⌘-shortcut key caps.
   @21stgov/commons-js opens it from the button or Cmd/Ctrl-K, filters by label +
   keywords, hides emptied groups, and runs the highlighted command on Enter.
 -->
 <div class="flex flex-col gap-2">
   <div data-slot="command-palette-root">
-    <button type="button" class="cui-button cui-button--outline cui-button--md" data-slot="command-palette-trigger" aria-haspopup="dialog" aria-expanded="false">Open command palette&nbsp;&nbsp;<kbd class="cui-kbd cui-kbd--sm">⌘K</kbd></button>
+    <button type="button" class="cui-button cui-button--secondary cui-button--md" data-slot="command-palette-trigger" aria-haspopup="dialog" aria-expanded="false">Open command palette</button>
     <div class="cui-dialog-backdrop" data-slot="command-palette-backdrop" hidden></div>
     <div class="cui-dialog-viewport" data-slot="command-palette-viewport" hidden style="align-items:start;padding-block-start:12vh">
       <div class="cui-command-palette" data-slot="command-palette" role="dialog" aria-modal="true" aria-label="Command palette" tabindex="-1" style="inline-size:min(32rem,calc(100dvw-2rem))">
         <div class="cui-command-palette-input-row" data-slot="command-palette-input-row">
-          <input class="cui-command-palette-input" data-slot="command-palette-input" role="combobox" aria-expanded="true" aria-controls="cp-list" aria-autocomplete="list" aria-label="Type a command or search" placeholder="Type a command or search…" autocomplete="off" />
+          <svg class="cui-command-palette-input-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3.75"></circle><path d="m12.5 12.5-2.6-2.6"></path></svg>
+          <input class="cui-command-palette-input" data-slot="command-palette-input" role="combobox" aria-expanded="true" aria-controls="cp-list" aria-autocomplete="list" aria-label="Search for a command" placeholder="Type a command or search…" autocomplete="off" />
         </div>
         <div class="cui-command-palette-list-container" data-slot="command-palette-list-container">
           <div id="cp-list" data-slot="command-palette-list" role="listbox" aria-label="Commands">
             <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-pay">
               <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-pay">Payments</div>
-              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-bill" data-label="Pay a bill" data-keywords="invoice utility water tax">Pay a bill</div>
-              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-plan" data-label="Set up a payment plan" data-keywords="installment arrears">Set up a payment plan</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-bill" data-label="Pay a bill" data-keywords="invoice utility water tax">
+                <svg class="cui-command-palette-item-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="11" height="8" rx="1.25"></rect><path d="m3.25 4.75 4.02 3.2a1.2 1.2 0 0 0 1.46 0l4.02-3.2"></path></svg>
+                <span class="cui-command-palette-item-label">Pay a bill</span>
+                <kbd class="cui-kbd-group" data-slot="kbd-group" role="group" aria-label="Command B"><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd" data-token="mod"><span aria-hidden="true" data-slot="kbd-glyph">⌘</span><span class="sr-only" data-slot="kbd-label">Command</span></kbd><span class="cui-kbd-group-separator" data-slot="kbd-group-separator" aria-hidden="true">+</span><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd">B</kbd></kbd>
+              </div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-plan" data-label="Set up a payment plan" data-keywords="installment arrears">
+                <span class="cui-command-palette-item-spacer" aria-hidden="true"></span>
+                <span class="cui-command-palette-item-label">Set up a payment plan</span>
+              </div>
             </div>
-            <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-rec">
-              <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-rec">Records</div>
-              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-req-record" data-label="Request a public record" data-keywords="foia freedom information">Request a public record</div>
-              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-status" data-label="Check application status" data-keywords="permit tracking">Check application status</div>
+            <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-report">
+              <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-report">Report</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-report-issue" data-label="Report an issue" data-keywords="pothole graffiti 311">
+                <svg class="cui-command-palette-item-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.98 3.3 1.6 12.6a1.2 1.2 0 0 0 1.02 1.8h10.76a1.2 1.2 0 0 0 1.02-1.8L9.02 3.3a1.2 1.2 0 0 0-2.04 0z"></path><path d="M8 6.5v3"></path><path d="M8 11.5h.01"></path></svg>
+                <span class="cui-command-palette-item-label">Report an issue</span>
+                <kbd class="cui-kbd-group" data-slot="kbd-group" role="group" aria-label="Command R"><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd" data-token="mod"><span aria-hidden="true" data-slot="kbd-glyph">⌘</span><span class="sr-only" data-slot="kbd-label">Command</span></kbd><span class="cui-kbd-group-separator" data-slot="kbd-group-separator" aria-hidden="true">+</span><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd">R</kbd></kbd>
+              </div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-report-outage" data-label="Report an outage" data-keywords="power streetlight">
+                <span class="cui-command-palette-item-spacer" aria-hidden="true"></span>
+                <span class="cui-command-palette-item-label">Report an outage</span>
+              </div>
+            </div>
+            <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-find">
+              <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-find">Find</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-find-service" data-label="Find a service" data-keywords="permit license">
+                <svg class="cui-command-palette-item-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="3.75"></circle><path d="m12.5 12.5-2.6-2.6"></path></svg>
+                <span class="cui-command-palette-item-label">Find a service</span>
+                <kbd class="cui-kbd-group" data-slot="kbd-group" role="group" aria-label="Command F"><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd" data-token="mod"><span aria-hidden="true" data-slot="kbd-glyph">⌘</span><span class="sr-only" data-slot="kbd-label">Command</span></kbd><span class="cui-kbd-group-separator" data-slot="kbd-group-separator" aria-hidden="true">+</span><kbd class="cui-kbd cui-kbd--sm" data-slot="kbd">F</kbd></kbd>
+              </div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-find-office" data-label="Find an office near me" data-keywords="location directions">
+                <svg class="cui-command-palette-item-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 6.75c0 3.5-5 7.5-5 7.5s-5-4-5-7.5a5 5 0 0 1 10 0z"></path><circle cx="8" cy="6.75" r="1.75"></circle></svg>
+                <span class="cui-command-palette-item-label">Find an office near me</span>
+              </div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-legacy-portal" data-label="Open the legacy portal" data-disabled="" aria-disabled="true">
+                <svg class="cui-command-palette-item-icon" aria-hidden="true" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.5h3.5V7"></path><path d="M12.5 3.5 7.5 8.5"></path><path d="M11 9v2.5A1.5 1.5 0 0 1 9.5 13h-5A1.5 1.5 0 0 1 3 11.5v-5A1.5 1.5 0 0 1 4.5 5H7"></path></svg>
+                <span class="cui-command-palette-item-label">Open the legacy portal</span>
+              </div>
             </div>
           </div>
           <div class="cui-command-palette-empty" data-slot="command-palette-empty" hidden>No commands found.</div>
@@ -31,5 +64,5 @@
       </div>
     </div>
   </div>
-  <p class="text-sm text-muted-foreground">Press ⌘K / Ctrl-K, or the button. Type to filter; ↑↓ and Enter to run.</p>
+  <p class="text-sm text-muted-foreground">Press ⌘K / Ctrl-K, or the button. Type “pay”, “pothole”, or “office”. ↑↓ move, Enter runs, Esc closes.</p>
 </div>
