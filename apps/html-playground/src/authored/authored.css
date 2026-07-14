@@ -189,7 +189,7 @@
 .cui-command-palette-input-icon {
   position: absolute;
   inset-block: 0;
-  inset-inline-start: 0.75rem;
+  inset-inline-start: 1.5rem; /* React `start-3` — the input's ps-5 (40px) clears it */
   margin-block: auto;
   inline-size: 1.25rem;
   block-size: 1.25rem;
@@ -253,14 +253,16 @@
 /* ---- Table cell padding --------------------------------------------------
    React applies cell padding via a dynamic density lookup (DENSITY[density])
    the generator can't capture, so cells render at padding:0 and content touches
-   the edges. Supply the default (comfortable). Sortable header cells stay p-0
-   because their full-width button carries the padding. */
+   the edges. Mirror React's model exactly: the header <th> is p-0 and its inner
+   box — the sortable <button> or the non-sortable content span — owns the
+   padding; body <td> cells carry it directly. Comfortable = 12px / 16px. */
 .cui-table-cell,
-.cui-table-header-cell {
-  padding-block: var(--cui-spacing-105, 0.375rem);
-  padding-inline: var(--cui-spacing-2, 0.75rem);
+.cui-table-sort-button,
+.cui-table-header-cell-content {
+  padding-block: var(--cui-spacing-105);
+  padding-inline: var(--cui-spacing-2);
 }
-.cui-table-header-cell:has(> .cui-table-sort-button) {
+.cui-table-header-cell {
   padding: 0;
 }
 
