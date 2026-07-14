@@ -17,6 +17,7 @@
     "@21stgov/commons-core": "workspace:*",
     "@21stgov/commons-css": "workspace:*",
     "@21stgov/commons-fonts": "workspace:*",
+    "@21stgov/commons-js": "workspace:*",
     "@21stgov/commons-tokens": "workspace:*"
   },
   "devDependencies": {

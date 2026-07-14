@@ -184,6 +184,18 @@ body {
 .pg-demo[data-ok='false'] {
   border-color: var(--cui-border-error, #c00);
 }
+.pg-tag {
+  margin-inline-start: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  color: var(--cui-action-primary-bg, currentColor);
+  border: 1px solid color-mix(in oklab, var(--cui-action-primary-bg, currentColor) 50%, transparent);
+}
 .pg-error {
   font-size: 0.8rem;
   color: var(--cui-text-muted);

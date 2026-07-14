@@ -100,6 +100,9 @@ importers:
       '@21stgov/commons-fonts':
         specifier: workspace:*
         version: link:../../packages/fonts
+      '@21stgov/commons-js':
+        specifier: workspace:*
+        version: link:../../packages/js
       '@21stgov/commons-tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
@@ -287,6 +290,15 @@ importers:
         version: 4.1.10(@types/node@22.20.1)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(vite@8.1.4(@types/node@22.20.1)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
 
   packages/fonts: {}
+
+  packages/js:
+    devDependencies:
+      typescript:
+        specifier: ~5.9.0
+        version: 5.9.3
+      vitest:
+        specifier: ^4.1.10
+        version: 4.1.10(@types/node@24.13.3)(@vitest/coverage-v8@4.1.10)(jsdom@29.1.1)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
 
   packages/react:
     dependencies:

@@ -1,0 +1,45 @@
+<!--
+  Authored canonical Collapsible markup (no React). The panel lives in the DOM;
+  when closed it carries `hidden`. @21stgov/commons-js `enhance()` wires the
+  toggle. Degrades to a visible expanded section if the script never runs.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="c-default-h">
+    <h3 id="c-default-h" class="text-sm font-semibold">Show more details (single disclosure)</h3>
+    <p class="max-w-prose text-sm text-muted-foreground">The Assistance Program helps residents pay heating bills in winter.</p>
+    <div class="cui-collapsible" data-slot="collapsible" data-closed>
+      <button type="button" class="cui-collapsible-trigger group" data-slot="collapsible-trigger" id="c-def-t" aria-controls="c-def-p" aria-expanded="false">Show eligibility details<svg aria-hidden="true" data-slot="collapsible-chevron" viewBox="0 0 16 16" class="cui-collapsible-chevron" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"></path></svg></button>
+      <div class="cui-collapsible-panel" data-slot="collapsible-panel" id="c-def-p" hidden>
+        <div class="cui-collapsible-panel-content" data-slot="collapsible-panel-content">
+          <p class="max-w-prose text-muted-foreground">Households at or below 200% of the federal poverty level qualify. Bring a photo ID, a recent utility bill, and proof of income to any service center.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="c-open-h">
+    <h3 id="c-open-h" class="text-sm font-semibold">Open by default, no chevron indicator</h3>
+    <div class="cui-collapsible" data-slot="collapsible" data-open>
+      <button type="button" class="cui-collapsible-trigger group" data-slot="collapsible-trigger" id="c-open-t" aria-controls="c-open-p" aria-expanded="true">Toggle office hours</button>
+      <div class="cui-collapsible-panel" data-slot="collapsible-panel" id="c-open-p" style="--collapsible-panel-height:auto" data-open>
+        <div class="cui-collapsible-panel-content" data-slot="collapsible-panel-content">
+          <p class="text-muted-foreground">City Hall is open Monday through Friday, 8:00 AM to 4:30 PM.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="c-rtl-h">
+    <h3 id="c-rtl-h" class="text-sm font-semibold">RTL (Arabic — chevron flips to the inline-end edge)</h3>
+    <div dir="rtl" lang="ar">
+      <div class="cui-collapsible" data-slot="collapsible" data-closed>
+        <button type="button" class="cui-collapsible-trigger group" data-slot="collapsible-trigger" id="c-rtl-t" aria-controls="c-rtl-p" aria-expanded="false">عرض تفاصيل الأهلية<svg aria-hidden="true" data-slot="collapsible-chevron" viewBox="0 0 16 16" class="cui-collapsible-chevron" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 6 4 4 4-4"></path></svg></button>
+        <div class="cui-collapsible-panel" data-slot="collapsible-panel" id="c-rtl-p" hidden>
+          <div class="cui-collapsible-panel-content" data-slot="collapsible-panel-content">
+            <p class="text-muted-foreground">الأسر ذات الدخل المنخفض مؤهلة للحصول على الدعم. أحضر بطاقة هوية وإثبات دخل.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

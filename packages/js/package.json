@@ -1,0 +1,20 @@
+{
+  "name": "@21stgov/commons-js",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Framework-agnostic progressive-enhancement runtime for Commons — makes the .cui-* / data-slot markup interactive (accordion, dialog, menus…) with no framework.",
+  "homepage": "https://commonsui.com",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.0",
+    "vitest": "^4.1.10"
+  }
+}

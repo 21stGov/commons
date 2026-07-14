@@ -1,0 +1,91 @@
+<!--
+  Authored canonical Accordion markup (no React). All panels live in the DOM;
+  closed ones carry `hidden`. @21stgov/commons-js `enhance()` wires the toggle,
+  single-open mode (data-accordion="single"), and arrow-key roving focus. The
+  chevron plus→minus is pure CSS keyed on the trigger's aria-expanded.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="a-faq-h">
+    <h3 id="a-faq-h" class="text-sm font-semibold">FAQ (default — multiple panels may be open)</h3>
+    <div class="cui-accordion" data-slot="accordion">
+      <div class="cui-accordion-item" data-slot="accordion-item" data-open>
+        <h3 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-faq-t1" aria-controls="a-faq-p1" aria-expanded="true">Where do I pay my water bill?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h3>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-faq-p1" role="region" aria-labelledby="a-faq-t1" style="--accordion-panel-height:auto" data-open>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Pay online through the resident portal, by mail, or in person at City Hall, 100 Main Street. Online payments post the same business day.</div>
+        </div>
+      </div>
+      <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+        <h3 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-faq-t2" aria-controls="a-faq-p2" aria-expanded="false">When is trash collected in my neighborhood?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h3>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-faq-p2" role="region" aria-labelledby="a-faq-t2" hidden>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Trash is collected weekly. Enter your address in the collection-schedule lookup to find your pickup day. Holiday weeks shift pickup one day later.</div>
+        </div>
+      </div>
+      <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+        <h3 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-faq-t3" aria-controls="a-faq-p3" aria-expanded="false">How do I apply for a building permit?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h3>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-faq-p3" role="region" aria-labelledby="a-faq-t3" hidden>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Submit the permit application through the online portal. Most residential permits are reviewed within ten business days.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="a-single-h">
+    <h3 id="a-single-h" class="text-sm font-semibold">Single-open mode (only one panel at a time)</h3>
+    <div class="cui-accordion" data-slot="accordion" data-accordion="single">
+      <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+        <h4 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-one-t1" aria-controls="a-one-p1" aria-expanded="false">Where do I pay my water bill?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h4>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-one-p1" role="region" aria-labelledby="a-one-t1" hidden>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Pay online through the resident portal, by mail, or in person at City Hall, 100 Main Street.</div>
+        </div>
+      </div>
+      <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+        <h4 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-one-t2" aria-controls="a-one-p2" aria-expanded="false">When is trash collected in my neighborhood?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h4>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-one-p2" role="region" aria-labelledby="a-one-t2" hidden>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Trash is collected weekly. Enter your address in the collection-schedule lookup to find your pickup day.</div>
+        </div>
+      </div>
+      <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+        <h4 class="cui-accordion-header" data-slot="accordion-header">
+          <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-one-t3" aria-controls="a-one-p3" aria-expanded="false">How do I apply for a building permit?<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+        </h4>
+        <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-one-p3" role="region" aria-labelledby="a-one-t3" hidden>
+          <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">Submit the permit application through the online portal. Most residential permits are reviewed within ten business days.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="a-rtl-h">
+    <h3 id="a-rtl-h" class="text-sm font-semibold">RTL (Arabic — chevron flips to the inline-end edge)</h3>
+    <div dir="rtl" lang="ar">
+      <div class="cui-accordion" data-slot="accordion">
+        <div class="cui-accordion-item" data-slot="accordion-item" data-open>
+          <h3 class="cui-accordion-header" data-slot="accordion-header">
+            <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-rtl-t1" aria-controls="a-rtl-p1" aria-expanded="true">ما هي ساعات عمل البلدية؟<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+          </h3>
+          <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-rtl-p1" role="region" aria-labelledby="a-rtl-t1" style="--accordion-panel-height:auto" data-open>
+            <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">من الأحد إلى الخميس، من ٨ صباحًا حتى ٤ مساءً.</div>
+          </div>
+        </div>
+        <div class="cui-accordion-item" data-slot="accordion-item" data-closed>
+          <h3 class="cui-accordion-header" data-slot="accordion-header">
+            <button type="button" class="cui-accordion-trigger group" data-slot="accordion-trigger" id="a-rtl-t2" aria-controls="a-rtl-p2" aria-expanded="false">كيف أدفع فاتورة المياه؟<svg aria-hidden="true" data-slot="accordion-indicator" viewBox="0 0 16 16" class="cui-accordion-indicator" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M8 3v10" class="origin-center transition-opacity motion-reduce:transition-none group-aria-expanded:opacity-0"></path></svg></button>
+          </h3>
+          <div class="cui-accordion-panel" data-slot="accordion-panel" id="a-rtl-p2" role="region" aria-labelledby="a-rtl-t2" hidden>
+            <div class="cui-accordion-panel-content" data-slot="accordion-panel-content">ادفع عبر البوابة الإلكترونية أو في مبنى البلدية.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

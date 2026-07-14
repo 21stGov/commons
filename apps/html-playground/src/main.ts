@@ -11,6 +11,8 @@
 
 import './style.css'
 
+import { enhance } from '@21stgov/commons-js'
+
 import manifest from './generated/demos.json'
 
 interface DemoEntry {
@@ -29,7 +31,19 @@ const fragments = import.meta.glob('./generated/demos/*.html', {
   eager: true,
 }) as Record<string, string>
 
-const htmlFor = (slug: string): string => fragments[`./generated/demos/${slug}.html`] ?? ''
+// Hand-authored canonical markup for interactive components whose content React
+// unmounts/portals (so it can't come from SSR). These override the generated
+// fragment and are wired up by @21stgov/commons-js `enhance()`.
+const authored = import.meta.glob('./authored/*.html', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>
+
+const isAuthored = (slug: string): boolean => `./authored/${slug}.html` in authored
+
+const htmlFor = (slug: string): string =>
+  authored[`./authored/${slug}.html`] ?? fragments[`./generated/demos/${slug}.html`] ?? ''
 
 // ---------------------------------------------------------------------------
 // Display preferences — same contract as the React playground.
@@ -185,8 +199,10 @@ function render(): void {
       'data-ok': String(d.ok),
       'aria-labelledby': `demo-${d.slug}-heading`,
     })
-    section.append(el('h2', { id: `demo-${d.slug}-heading` }, [d.title]))
-    if (d.ok) {
+    const heading = el('h2', { id: `demo-${d.slug}-heading` }, [d.title])
+    if (isAuthored(d.slug)) heading.append(el('span', { class: 'pg-tag' }, ['interactive']))
+    section.append(heading)
+    if (d.ok || isAuthored(d.slug)) {
       const holder = el('div')
       holder.innerHTML = htmlFor(d.slug)
       section.append(holder)
@@ -208,6 +224,9 @@ function render(): void {
   )
 
   app.replaceChildren(skip, header, body, footer)
+
+  // Progressively enhance the interactive components (accordion, collapsible…).
+  enhance(main)
 }
 
 render()
