@@ -9,6 +9,7 @@
 /content/docs/components/
 /content/docs/changelog.mdx
 /public/r/
+/public/schema/*.json
 /public/llms.txt
 
 # Next.js

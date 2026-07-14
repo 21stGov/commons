@@ -7,15 +7,19 @@
  *    from packages/react/src/components/<name>/registry.frag.json (canonical
  *    source — never hand-copied).
  * 2. Emits public/llms.txt.
- * 3. Copies the built registry (apps/registry/dist/r) to public/r so the
+ * 3. Emits public/schema/*.json — the resolvable JSON Schema documents behind
+ *    the /schema/ `$schema` URLs, generated from the CLI's zod schemas.
+ * 4. Copies the built registry (apps/registry/dist/r) to public/r so the
  *    static export serves /r/<name>.json.
  *
- * `--content-only` skips step 3 (used by typecheck, which must not require
+ * `--content-only` skips step 4 (used by typecheck, which must not require
  * the registry app to have been built).
  */
 
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+
+import { buildJsonSchemas } from '../../../packages/cli/src/schemas.ts'
 
 import { appDir, loadComponents, repoRoot } from './lib/data.ts'
 import { buildLlmsTxt, loadStaticPages } from './lib/llms.ts'
@@ -61,7 +65,18 @@ const publicDir = join(appDir, 'public')
 mkdirSync(publicDir, { recursive: true })
 writeFileSync(join(publicDir, 'llms.txt'), buildLlmsTxt(components, loadStaticPages()))
 
-// --- 3. Registry passthrough ------------------------------------------------
+// --- 3. JSON schemas --------------------------------------------------------
+// Resolvable documents behind the /schema/ `$schema` URLs that registry items,
+// the catalog, CLI --json output, and commons.json declare. Generated from the
+// CLI's own zod schemas so the published contract can never drift from code.
+
+const schemaDir = join(publicDir, 'schema')
+mkdirSync(schemaDir, { recursive: true })
+for (const [file, doc] of Object.entries(buildJsonSchemas())) {
+  writeFileSync(join(schemaDir, file), `${JSON.stringify(doc, null, 2)}\n`)
+}
+
+// --- 4. Registry passthrough ------------------------------------------------
 
 if (!contentOnly) {
   const registryDist = join(repoRoot, 'apps', 'registry', 'dist', 'r')
@@ -77,7 +92,7 @@ if (!contentOnly) {
 }
 
 console.log(
-  `docs: generated ${components.length} component pages` +
+  `docs: generated ${components.length} component pages, JSON schemas` +
     `${contentOnly ? ' (content only)' : ', llms.txt, and /r passthrough'}` +
     ` (${components.map((c) => c.name).join(', ')})`,
 )

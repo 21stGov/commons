@@ -86,6 +86,6 @@ ${registryLines}
 
 ## Optional
 
-- [JSON schemas](${siteUrl}/schema/): not yet published; registry items declare their intended \`$schema\` URLs.
+- [JSON schemas](${siteUrl}/schema/): resolvable \`$schema\` documents for registry items, the catalog, CLI \`--json\` output, and \`commons.json\`.
 `
 }
