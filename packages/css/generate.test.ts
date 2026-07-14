@@ -86,34 +86,32 @@ describe('emitVariant', () => {
     defaultVariants: { variant: 'info', slim: false },
   }
 
+  const rule = (rules: { selector: string; utilities: string[] }[], sel: string) =>
+    rules.find((r) => r.selector === sel)
+
   it('emits base, enum modifiers, and the boolean-true modifier; folds the boolean default into base', () => {
-    const out: string[] = []
-    emitVariant(cap, out)
-    const css = out.join('\n')
-    expect(css).toContain('.cui-alert {')
-    expect(css).toContain('.cui-alert--info {')
-    expect(css).toContain('.cui-alert--error {')
-    expect(css).toContain('.cui-alert--slim {')
-    // the default (slim:false -> p-3) is folded into the base rule, not a modifier
-    expect(css).toMatch(/\.cui-alert \{\s*@apply flex border p-3;/)
-    expect(css).not.toContain('.cui-alert--slim-false')
+    const { rules } = emitVariant(cap)
+    expect(rule(rules, '.cui-alert')?.utilities).toEqual(['flex', 'border', 'p-3']) // base + folded false
+    expect(rule(rules, '.cui-alert--info')?.utilities).toEqual(['bg-info'])
+    expect(rule(rules, '.cui-alert--error')?.utilities).toEqual(['bg-error'])
+    expect(rule(rules, '.cui-alert--slim')?.utilities).toEqual(['p-1'])
+    expect(rule(rules, '.cui-alert--slim-false')).toBeUndefined()
   })
 
   it('returns a swatch for base and every modifier', () => {
-    const out: string[] = []
-    const swatches = emitVariant(cap, out)
+    const { swatches } = emitVariant(cap)
     expect(swatches[0]).toEqual({ classes: 'cui-alert', label: 'base' })
     expect(swatches.map((s) => s.label)).toEqual(['base', 'info', 'error', 'slim'])
     expect(swatches.find((s) => s.label === 'info')?.classes).toBe('cui-alert cui-alert--info')
   })
 
   it('drops group/peer marker classes from emitted rules', () => {
-    const out: string[] = []
-    emitVariant(
-      { exportName: 'xVariants', base: ['group', 'relative', 'peer'], variants: {}, defaultVariants: {} },
-      out,
-    )
-    expect(out.join('\n')).toContain('@apply relative;')
-    expect(out.join('\n')).not.toMatch(/@apply[^;]*\bgroup\b/)
+    const { rules } = emitVariant({
+      exportName: 'xVariants',
+      base: ['group', 'relative', 'peer'],
+      variants: {},
+      defaultVariants: {},
+    })
+    expect(rule(rules, '.cui-x')?.utilities).toEqual(['relative'])
   })
 })

@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Commons CSS — component gallery</title>
+<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Commons CSS — showcase</title>
 <style>/*! tailwindcss v4.3.2 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
@@ -7787,272 +7786,66 @@ a:visited {
 }
 </style>
 <style>
-  body { color: var(--cui-text-default); background: var(--cui-bg-default); font-family: system-ui, sans-serif; margin: 0; padding: 1.5rem; max-width: 76rem; margin-inline: auto; }
-  header { position: sticky; top: 0; z-index: 1; display: flex; gap: .75rem; align-items: center; justify-content: space-between; padding: .5rem 0; margin-block-end: 1rem; background: var(--cui-bg-default); border-block-end: 1px solid var(--cui-border-default, #8886); }
-  h2 { font-size: .95rem; margin: 1.75rem 0 .5rem; } h2 small { color: var(--cui-text-muted); font-weight: 400; }
-  .swatches { display: flex; flex-wrap: wrap; gap: .875rem; align-items: flex-start; }
-  .swatch { display: flex; flex-direction: column; gap: .25rem; align-items: flex-start; }
-  .swatch code { font-size: .7rem; color: var(--cui-text-muted); }
-  /* A transform establishes a containing block, so overlay components with
-     position:fixed/inset-0 (drawer, dialog…) render bounded, not full-screen. */
-  .cell { transform: translateZ(0); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; min-width: 7rem; min-height: 3rem; max-width: 22rem; padding: .5rem; border: 1px dashed color-mix(in oklab, var(--cui-text-muted) 40%, transparent); border-radius: .375rem; }
+  body { color: var(--cui-text-default); background: var(--cui-bg-default); font-family: system-ui, sans-serif; margin: 0 auto; padding: 2rem; max-width: 44rem; }
+  header { display:flex; justify-content:space-between; align-items:center; margin-block-end: 1.5rem; }
+  h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--cui-text-muted); margin: 2rem 0 .75rem; }
+  .stack > * { margin-block: .625rem; } .row { display:flex; gap:.625rem; flex-wrap:wrap; align-items:center; }
 </style>
 </head>
 <body>
-<header>
-  <strong>Commons CSS gallery — 80 components, no React or Tailwind</strong>
-  <span style="display:flex;gap:.5rem">
-    <button class="cui-button cui-button--outline cui-button--sm" onclick="var d=document.documentElement.dataset;d.theme=d.theme==='dark'?'light':'dark'">Theme</button>
-    <button class="cui-button cui-button--outline cui-button--sm" onclick="var e=document.documentElement;e.dir=e.dir==='rtl'?'ltr':'rtl'">RTL</button>
-  </span>
+<header><strong>Commons — real components (no React, no Tailwind)</strong>
+<button class="cui-button cui-button--outline cui-button--sm" onclick="var d=document.documentElement.dataset;d.theme=d.theme==='dark'?'light':'dark'">Theme</button>
 </header>
-<section><h2>accordion <small>.cui-accordion</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-accordion-item">accordion</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-accordion-panel">accordion</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-accordion-trigger">accordion</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-accordion">accordion</div></div><code>base</code></div></div></section>
-<section><h2>alert <small>.cui-alert</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-alert">alert</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--info">alert</div></div><code>info</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--success">alert</div></div><code>success</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--warning">alert</div></div><code>warning</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--error">alert</div></div><code>error</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--emergency">alert</div></div><code>emergency</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert cui-alert--slim">alert</div></div><code>slim</code></div></div></section>
-<section><h2>alert-dialog <small>.cui-alert-dialog</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-alert-dialog-popup">alert-dialog</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert-dialog-popup cui-alert-dialog-popup--sm">alert-dialog</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert-dialog-popup cui-alert-dialog-popup--md">alert-dialog</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-alert-dialog-popup cui-alert-dialog-popup--lg">alert-dialog</div></div><code>lg</code></div></div></section>
-<section><h2>aspect-ratio <small>.cui-aspect-ratio</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-aspect-ratio">aspect-ratio</div></div><code>base</code></div></div></section>
-<section><h2>avatar <small>.cui-avatar</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-avatar">avatar</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-avatar cui-avatar--sm">avatar</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-avatar cui-avatar--default">avatar</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-avatar cui-avatar--lg">avatar</div></div><code>lg</code></div></div></section>
-<section><h2>badge <small>.cui-badge</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-badge">badge</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--neutral">badge</div></div><code>neutral</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--primary">badge</div></div><code>primary</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--info">badge</div></div><code>info</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--success">badge</div></div><code>success</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--warning">badge</div></div><code>warning</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--error">badge</div></div><code>error</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--outline">badge</div></div><code>outline</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--sm">badge</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--md">badge</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-badge cui-badge--lg">badge</div></div><code>lg</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tag">badge</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tag cui-tag--default">badge</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tag cui-tag--big">badge</div></div><code>big</code></div></div></section>
-<section><h2>breadcrumb <small>.cui-breadcrumb</small></h2><div class="swatches"></div></section>
-<section><h2>button <small>.cui-button</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-button">button</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--primary">button</div></div><code>primary</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--secondary">button</div></div><code>secondary</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--outline">button</div></div><code>outline</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--ghost">button</div></div><code>ghost</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--danger">button</div></div><code>danger</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--sm">button</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--md">button</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button cui-button--lg">button</div></div><code>lg</code></div></div></section>
-<section><h2>button-group <small>.cui-button-group</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-button-group">button-group</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button-group cui-button-group--horizontal">button-group</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-button-group cui-button-group--vertical">button-group</div></div><code>vertical</code></div></div></section>
-<section><h2>card <small>.cui-card</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-card-group">card</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card-group cui-card-group--auto">card</div></div><code>auto</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card-group cui-card-group--one">card</div></div><code>one</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card-group cui-card-group--two">card</div></div><code>two</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card-group cui-card-group--three">card</div></div><code>three</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card">card</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card cui-card--bordered">card</div></div><code>bordered</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card cui-card--elevated">card</div></div><code>elevated</code></div>
-<div class="swatch"><div class="cell"><div class="cui-card cui-card--subtle">card</div></div><code>subtle</code></div></div></section>
-<section><h2>carousel <small>.cui-carousel</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-carousel">carousel</div></div><code>base</code></div></div></section>
-<section><h2>character-count <small>.cui-character-count</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-character-count">character-count</div></div><code>base</code></div></div></section>
-<section><h2>checkbox <small>.cui-checkbox</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-checkbox">checkbox</div></div><code>base</code></div></div></section>
-<section><h2>checkbox-group <small>.cui-checkbox-group</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-checkbox-group">checkbox-group</div></div><code>base</code></div></div></section>
-<section><h2>collapsible <small>.cui-collapsible</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-collapsible-panel">collapsible</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-collapsible-trigger">collapsible</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-collapsible">collapsible</div></div><code>base</code></div></div></section>
-<section><h2>collection <small>.cui-collection</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-collection">collection</div></div><code>base</code></div></div></section>
-<section><h2>combo-box <small>.cui-combo-box</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-combo-box-item">combo-box</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-combo-box-popup">combo-box</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-combo-box">combo-box</div></div><code>base</code></div></div></section>
-<section><h2>command-palette <small>.cui-command-palette</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-command-palette-item">command-palette</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-command-palette">command-palette</div></div><code>base</code></div></div></section>
-<section><h2>context-menu <small>.cui-context-menu</small></h2><div class="swatches"></div></section>
-<section><h2>custom-select <small>.cui-custom-select</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-custom-select-item">custom-select</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-custom-select-popup">custom-select</div></div><code>base</code></div></div></section>
-<section><h2>data-table <small>.cui-data-table</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-data-table-cell">data-table</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-data-table-cell cui-data-table-cell--start">data-table</div></div><code>start</code></div>
-<div class="swatch"><div class="cell"><div class="cui-data-table-cell cui-data-table-cell--center">data-table</div></div><code>center</code></div>
-<div class="swatch"><div class="cell"><div class="cui-data-table-cell cui-data-table-cell--end">data-table</div></div><code>end</code></div>
-<div class="swatch"><div class="cell"><div class="cui-data-table">data-table</div></div><code>base</code></div></div></section>
-<section><h2>date-picker <small>.cui-date-picker</small></h2><div class="swatches"></div></section>
-<section><h2>date-range-picker <small>.cui-date-range-picker</small></h2><div class="swatches"></div></section>
-<section><h2>dialog <small>.cui-dialog</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-dialog-popup">dialog</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dialog-popup cui-dialog-popup--sm">dialog</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dialog-popup cui-dialog-popup--md">dialog</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dialog-popup cui-dialog-popup--lg">dialog</div></div><code>lg</code></div></div></section>
-<section><h2>drawer <small>.cui-drawer</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-drawer-popup">drawer</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-drawer-popup cui-drawer-popup--start">drawer</div></div><code>start</code></div>
-<div class="swatch"><div class="cell"><div class="cui-drawer-popup cui-drawer-popup--end">drawer</div></div><code>end</code></div>
-<div class="swatch"><div class="cell"><div class="cui-drawer-popup cui-drawer-popup--top">drawer</div></div><code>top</code></div>
-<div class="swatch"><div class="cell"><div class="cui-drawer-popup cui-drawer-popup--bottom">drawer</div></div><code>bottom</code></div></div></section>
-<section><h2>dropdown-menu <small>.cui-dropdown-menu</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-dropdown-menu-item">dropdown-menu</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dropdown-menu-item cui-dropdown-menu-item--default">dropdown-menu</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dropdown-menu-item cui-dropdown-menu-item--destructive">dropdown-menu</div></div><code>destructive</code></div>
-<div class="swatch"><div class="cell"><div class="cui-dropdown-menu-popup">dropdown-menu</div></div><code>base</code></div></div></section>
-<section><h2>empty-state <small>.cui-empty-state</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-empty-state">empty-state</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-empty-state cui-empty-state--empty">empty-state</div></div><code>empty</code></div>
-<div class="swatch"><div class="cell"><div class="cui-empty-state cui-empty-state--no-results">empty-state</div></div><code>no-results</code></div></div></section>
-<section><h2>field <small>.cui-field</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-field">field</div></div><code>base</code></div></div></section>
-<section><h2>file-input <small>.cui-file-input</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-file-input">file-input</div></div><code>base</code></div></div></section>
-<section><h2>footer <small>.cui-footer</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-footer-link">footer</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-footer">footer</div></div><code>base</code></div></div></section>
-<section><h2>form <small>.cui-form</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-form">form</div></div><code>base</code></div></div></section>
-<section><h2>gov-banner <small>.cui-gov-banner</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-gov-banner">gov-banner</div></div><code>base</code></div></div></section>
-<section><h2>header <small>.cui-header</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-header-nav-link">header</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-header-nav-link cui-header-nav-link--current">header</div></div><code>current</code></div>
-<div class="swatch"><div class="cell"><div class="cui-header">header</div></div><code>base</code></div></div></section>
-<section><h2>hover-card <small>.cui-hover-card</small></h2><div class="swatches"></div></section>
-<section><h2>icon <small>.cui-icon</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-icon">icon</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-icon cui-icon--em">icon</div></div><code>em</code></div>
-<div class="swatch"><div class="cell"><div class="cui-icon cui-icon--xs">icon</div></div><code>xs</code></div>
-<div class="swatch"><div class="cell"><div class="cui-icon cui-icon--sm">icon</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-icon cui-icon--md">icon</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-icon cui-icon--lg">icon</div></div><code>lg</code></div></div></section>
-<section><h2>icon-list <small>.cui-icon-list</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-icon-list">icon-list</div></div><code>base</code></div></div></section>
-<section><h2>identifier <small>.cui-identifier</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-identifier-link">identifier</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-identifier">identifier</div></div><code>base</code></div></div></section>
-<section><h2>in-page-navigation <small>.cui-in-page-navigation</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-in-page-nav-item">in-page-navigation</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-nav-item cui-in-page-nav-item--0">in-page-navigation</div></div><code>0</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-nav-item cui-in-page-nav-item--1">in-page-navigation</div></div><code>1</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-nav-item cui-in-page-nav-item--2">in-page-navigation</div></div><code>2</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-nav-link">in-page-navigation</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-nav-link cui-in-page-nav-link--active">in-page-navigation</div></div><code>active</code></div>
-<div class="swatch"><div class="cell"><div class="cui-in-page-navigation">in-page-navigation</div></div><code>base</code></div></div></section>
-<section><h2>input <small>.cui-input</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-input">input</div></div><code>base</code></div></div></section>
-<section><h2>input-group <small>.cui-input-group</small></h2><div class="swatches"></div></section>
-<section><h2>input-mask <small>.cui-input-mask</small></h2><div class="swatches"></div></section>
-<section><h2>input-otp <small>.cui-input-otp</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-input-otp">input-otp</div></div><code>base</code></div></div></section>
-<section><h2>item <small>.cui-item</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-item-group">item</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item-group cui-item-group--plain">item</div></div><code>plain</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item-group cui-item-group--divided">item</div></div><code>divided</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item">item</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item cui-item--default">item</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item cui-item--outline">item</div></div><code>outline</code></div>
-<div class="swatch"><div class="cell"><div class="cui-item cui-item--muted">item</div></div><code>muted</code></div></div></section>
-<section><h2>kbd <small>.cui-kbd</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-kbd">kbd</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-kbd cui-kbd--sm">kbd</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-kbd cui-kbd--md">kbd</div></div><code>md</code></div></div></section>
-<section><h2>language-selector <small>.cui-language-selector</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-language-selector">language-selector</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-language-selector cui-language-selector--active">language-selector</div></div><code>active</code></div></div></section>
-<section><h2>link <small>.cui-link</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-link">link</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-link cui-link--default">link</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-link cui-link--subtle">link</div></div><code>subtle</code></div>
-<div class="swatch"><div class="cell"><div class="cui-link cui-link--standalone">link</div></div><code>standalone</code></div></div></section>
-<section><h2>list <small>.cui-list</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-description-list">list</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-description-list cui-description-list--stacked">list</div></div><code>stacked</code></div>
-<div class="swatch"><div class="cell"><div class="cui-description-list cui-description-list--inline">list</div></div><code>inline</code></div>
-<div class="swatch"><div class="cell"><div class="cui-list">list</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-list cui-list--ordered">list</div></div><code>ordered</code></div>
-<div class="swatch"><div class="cell"><div class="cui-list cui-list--unordered">list</div></div><code>unordered</code></div>
-<div class="swatch"><div class="cell"><div class="cui-list cui-list--unstyled">list</div></div><code>unstyled</code></div></div></section>
-<section><h2>memorable-date <small>.cui-memorable-date</small></h2><div class="swatches"></div></section>
-<section><h2>menubar <small>.cui-menubar</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-menubar-trigger">menubar</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-menubar">menubar</div></div><code>base</code></div></div></section>
-<section><h2>meter <small>.cui-meter</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-meter">meter</div></div><code>base</code></div></div></section>
-<section><h2>navigation-menu <small>.cui-navigation-menu</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-navigation-menu-popup">navigation-menu</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-navigation-menu-trigger">navigation-menu</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-navigation-menu-trigger cui-navigation-menu-trigger--current">navigation-menu</div></div><code>current</code></div>
-<div class="swatch"><div class="cell"><div class="cui-navigation-menu">navigation-menu</div></div><code>base</code></div></div></section>
-<section><h2>number-field <small>.cui-number-field</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-number-field">number-field</div></div><code>base</code></div></div></section>
-<section><h2>pagination <small>.cui-pagination</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-pagination-control">pagination</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-pagination-control cui-pagination-control--page">pagination</div></div><code>page</code></div>
-<div class="swatch"><div class="cell"><div class="cui-pagination-control cui-pagination-control--direction">pagination</div></div><code>direction</code></div>
-<div class="swatch"><div class="cell"><div class="cui-pagination-control cui-pagination-control--current">pagination</div></div><code>current</code></div></div></section>
-<section><h2>popover <small>.cui-popover</small></h2><div class="swatches"></div></section>
-<section><h2>process-list <small>.cui-process-list</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-process-list-marker">process-list</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--neutral">process-list</div></div><code>neutral</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--complete">process-list</div></div><code>complete</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--current">process-list</div></div><code>current</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--upcoming">process-list</div></div><code>upcoming</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--default">process-list</div></div><code>default</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list-marker cui-process-list-marker--compact">process-list</div></div><code>compact</code></div>
-<div class="swatch"><div class="cell"><div class="cui-process-list">process-list</div></div><code>base</code></div></div></section>
-<section><h2>progress <small>.cui-progress</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-progress">progress</div></div><code>base</code></div></div></section>
-<section><h2>prose <small>.cui-prose</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-prose">prose</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-prose cui-prose--sm">prose</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-prose cui-prose--base">prose</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-prose cui-prose--lg">prose</div></div><code>lg</code></div></div></section>
-<section><h2>radio-group <small>.cui-radio-group</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-radio-group">radio-group</div></div><code>base</code></div></div></section>
-<section><h2>resizable-panels <small>.cui-resizable-panels</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-resizable-panels">resizable-panels</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-resizable-panels cui-resizable-panels--horizontal">resizable-panels</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-resizable-panels cui-resizable-panels--vertical">resizable-panels</div></div><code>vertical</code></div>
-<div class="swatch"><div class="cell"><div class="cui-resizable-panels cui-resizable-panels--stacked">resizable-panels</div></div><code>stacked</code></div></div></section>
-<section><h2>scroll-area <small>.cui-scroll-area</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-scroll-area-scrollbar">scroll-area</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-scrollbar cui-scroll-area-scrollbar--vertical">scroll-area</div></div><code>vertical</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-scrollbar cui-scroll-area-scrollbar--horizontal">scroll-area</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-thumb">scroll-area</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-thumb cui-scroll-area-thumb--vertical">scroll-area</div></div><code>vertical</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-thumb cui-scroll-area-thumb--horizontal">scroll-area</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area-viewport">scroll-area</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-scroll-area">scroll-area</div></div><code>base</code></div></div></section>
-<section><h2>search <small>.cui-search</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-search">search</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-search cui-search--full">search</div></div><code>full</code></div>
-<div class="swatch"><div class="cell"><div class="cui-search cui-search--auto">search</div></div><code>auto</code></div></div></section>
-<section><h2>select <small>.cui-select</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-select">select</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-select cui-select--sm">select</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-select cui-select--md">select</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-select cui-select--lg">select</div></div><code>lg</code></div></div></section>
-<section><h2>separator <small>.cui-separator</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-separator">separator</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-separator cui-separator--horizontal">separator</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-separator cui-separator--vertical">separator</div></div><code>vertical</code></div></div></section>
-<section><h2>sidebar <small>.cui-sidebar</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-sidebar-item">sidebar</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-sidebar-item cui-sidebar-item--current">sidebar</div></div><code>current</code></div>
-<div class="swatch"><div class="cell"><div class="cui-sidebar">sidebar</div></div><code>base</code></div></div></section>
-<section><h2>site-alert <small>.cui-site-alert</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-site-alert">site-alert</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-site-alert cui-site-alert--info">site-alert</div></div><code>info</code></div>
-<div class="swatch"><div class="cell"><div class="cui-site-alert cui-site-alert--emergency">site-alert</div></div><code>emergency</code></div>
-<div class="swatch"><div class="cell"><div class="cui-site-alert cui-site-alert--slim">site-alert</div></div><code>slim</code></div></div></section>
-<section><h2>skeleton <small>.cui-skeleton</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-skeleton">skeleton</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-skeleton cui-skeleton--text">skeleton</div></div><code>text</code></div>
-<div class="swatch"><div class="cell"><div class="cui-skeleton cui-skeleton--block">skeleton</div></div><code>block</code></div>
-<div class="swatch"><div class="cell"><div class="cui-skeleton cui-skeleton--circle">skeleton</div></div><code>circle</code></div></div></section>
-<section><h2>slider <small>.cui-slider</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-slider">slider</div></div><code>base</code></div></div></section>
-<section><h2>spinner <small>.cui-spinner</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-spinner">spinner</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--sm">spinner</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--md">spinner</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--lg">spinner</div></div><code>lg</code></div></div></section>
-<section><h2>step-indicator <small>.cui-step-indicator</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-step-marker">step-indicator</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-step-marker cui-step-marker--complete">step-indicator</div></div><code>complete</code></div>
-<div class="swatch"><div class="cell"><div class="cui-step-marker cui-step-marker--current">step-indicator</div></div><code>current</code></div>
-<div class="swatch"><div class="cell"><div class="cui-step-marker cui-step-marker--incomplete">step-indicator</div></div><code>incomplete</code></div>
-<div class="swatch"><div class="cell"><div class="cui-step-indicator">step-indicator</div></div><code>base</code></div></div></section>
-<section><h2>summary-box <small>.cui-summary-box</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-summary-box">summary-box</div></div><code>base</code></div></div></section>
-<section><h2>switch <small>.cui-switch</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-switch">switch</div></div><code>base</code></div></div></section>
-<section><h2>table <small>.cui-table</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-table">table</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-table cui-table--bordered">table</div></div><code>bordered</code></div>
-<div class="swatch"><div class="cell"><div class="cui-table cui-table--borderless">table</div></div><code>borderless</code></div>
-<div class="swatch"><div class="cell"><div class="cui-table cui-table--striped">table</div></div><code>striped</code></div>
-<div class="swatch"><div class="cell"><div class="cui-table cui-table--stacked">table</div></div><code>stacked</code></div></div></section>
-<section><h2>tabs <small>.cui-tabs</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-tabs-list">tabs</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tabs-panel">tabs</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tabs-tab">tabs</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-tabs">tabs</div></div><code>base</code></div></div></section>
-<section><h2>time-picker <small>.cui-time-picker</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-time-picker">time-picker</div></div><code>base</code></div></div></section>
-<section><h2>toast <small>.cui-toast</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-toast">toast</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toast cui-toast--info">toast</div></div><code>info</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toast cui-toast--success">toast</div></div><code>success</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toast cui-toast--warning">toast</div></div><code>warning</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toast cui-toast--error">toast</div></div><code>error</code></div></div></section>
-<section><h2>toggle <small>.cui-toggle</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-toggle">toggle</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toggle cui-toggle--outline">toggle</div></div><code>outline</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toggle cui-toggle--ghost">toggle</div></div><code>ghost</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toggle cui-toggle--sm">toggle</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toggle cui-toggle--md">toggle</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toggle cui-toggle--lg">toggle</div></div><code>lg</code></div></div></section>
-<section><h2>toggle-group <small>.cui-toggle-group</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-toggle-group">toggle-group</div></div><code>base</code></div></div></section>
-<section><h2>toolbar <small>.cui-toolbar</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-toolbar">toolbar</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toolbar cui-toolbar--horizontal">toolbar</div></div><code>horizontal</code></div>
-<div class="swatch"><div class="cell"><div class="cui-toolbar cui-toolbar--vertical">toolbar</div></div><code>vertical</code></div></div></section>
-<section><h2>tooltip <small>.cui-tooltip</small></h2><div class="swatches"></div></section>
-<section><h2>validation <small>.cui-validation</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-validation">validation</div></div><code>base</code></div></div></section>
+
+<h2>Alert</h2>
+<div class="stack">
+  <div class="cui-alert cui-alert--info"><svg class="cui-alert-icon" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.25"/><path d="M8 7v4" stroke-linecap="round"/><circle cx="8" cy="4.75" r=".55" fill="currentColor" stroke="none"/></svg><div class="cui-alert-body"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><p class="cui-alert-heading">Applications are open</p><p>Submit your permit application by Friday at 5:00 PM.</p></div></div></div>
+  <div class="cui-alert cui-alert--error"><svg class="cui-alert-icon" viewBox="0 0 16 16" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1.5 15 14H1z" stroke-linejoin="round"/><path d="M8 6v3" stroke-linecap="round"/><circle cx="8" cy="11.25" r=".55" fill="currentColor" stroke="none"/></svg><div class="cui-alert-body"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><p class="cui-alert-heading">Payment failed</p><p>We couldn’t process your card. Check the number and try again.</p></div></div></div>
+</div>
+
+<h2>Buttons</h2>
+<div class="row">
+  <button class="cui-button cui-button--primary cui-button--md">Apply now</button>
+  <button class="cui-button cui-button--secondary cui-button--md">Save draft</button>
+  <button class="cui-button cui-button--outline cui-button--md">Cancel</button>
+  <button class="cui-button cui-button--danger cui-button--md">Delete</button>
+</div>
+
+<h2>Badges</h2>
+<div class="row">
+  <span class="cui-badge cui-badge--success">Approved</span>
+  <span class="cui-badge cui-badge--warning">Pending</span>
+  <span class="cui-badge cui-badge--error">Denied</span>
+  <span class="cui-badge cui-badge--info">In review</span>
+</div>
+
+<h2>Breadcrumb</h2>
+<nav class="cui-breadcrumb" aria-label="Breadcrumb">
+  <ol class="cui-breadcrumb-list">
+    <li class="cui-breadcrumb-item"><a class="cui-breadcrumb-link" href="#">Services</a></li>
+    <li class="cui-breadcrumb-separator" aria-hidden="true">›</li>
+    <li class="cui-breadcrumb-item"><a class="cui-breadcrumb-link" href="#">Permits</a></li>
+    <li class="cui-breadcrumb-separator" aria-hidden="true">›</li>
+    <li class="cui-breadcrumb-item"><span class="cui-breadcrumb-page" aria-current="page">Building permit</span></li>
+  </ol>
+</nav>
+
+<h2>Card</h2>
+<div class="cui-card" style="max-width:22rem">
+  <div class="cui-card-header">
+    <div class="cui-card-title">Building permit</div>
+    <div class="cui-card-description">Apply to build, renovate, or demolish.</div>
+  </div>
+  <div class="cui-card-content"><p>Most applications are reviewed within 10 business days.</p></div>
+  <div class="cui-card-footer"><button class="cui-button cui-button--primary cui-button--sm">Start application</button></div>
+</div>
+
+<h2>Meter</h2>
+<div class="cui-meter" role="meter" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="Disk usage" style="max-width:22rem">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:.875rem">
+    <span class="cui-meter-label">Disk usage</span><span class="cui-meter-value">72%</span>
+  </div>
+  <div class="cui-meter-track"><div class="cui-meter-indicator" style="inline-size:72%;block-size:100%;background:var(--cui-action-primary-bg)"></div></div>
+</div>
 </body>
 </html>

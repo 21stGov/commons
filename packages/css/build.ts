@@ -8,9 +8,10 @@ import { writeGallery } from './gallery.ts'
 const result = await buildCss()
 writeGallery(result)
 
-console.log(
-  `captured ${result.captured.length} components; skipped ${result.skipped.length} (no cva):`,
-)
-console.log(`  ${result.skipped.map((s) => s.replace(/ \(no cva\)/, '')).join(', ')}`)
+console.log(`captured ${result.captured.length} components; skipped ${result.skipped.length}:`)
+console.log(`  ${result.skipped.join(', ')}`)
+if (result.dropped.length > 0) {
+  console.log(`\ndropped ${result.dropped.length} un-@apply-able utilities: ${result.dropped.join(', ')}`)
+}
 console.log('\nwrote dist/components.src.css, dist/commons.css, dist/gallery.html')
 console.log('gallery (self-contained, open directly): poc/non-react/gallery.html')
