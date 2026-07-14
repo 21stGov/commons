@@ -36,6 +36,7 @@
       "The value is paired with visible label/value text so meaning never relies on the fill color alone",
       "The indeterminate sweep is motion-safe only; reduced motion shows a static in-progress fill, never a fake position"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not-applicable",
     "highContrastTested": true,

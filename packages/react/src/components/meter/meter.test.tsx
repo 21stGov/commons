@@ -5,6 +5,7 @@ import * as React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { Meter } from '@/components/meter'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 afterEach(() => {
@@ -225,5 +226,15 @@ describe('Meter dev guard', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
     render(<Meter aria-label="Disk usage" value={40} />)
     expect(warn).not.toHaveBeenCalled()
+  })
+})
+
+describe('Meter keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Meter label="Disk usage" value={72} showValue />,
+    )
+    expectNonInteractive(container)
   })
 })

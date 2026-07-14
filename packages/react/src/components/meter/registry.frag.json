@@ -36,6 +36,7 @@
       "Unlike Progress, a Meter has no indeterminate state — a static measurement is always a known value when it is shown",
       "The value is paired with visible label/value text so meaning never relies on the fill color or fill length alone"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not-applicable",
     "highContrastTested": true,

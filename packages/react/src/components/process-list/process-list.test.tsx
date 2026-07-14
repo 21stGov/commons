@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { ProcessList, ProcessListItem } from '@/components/process-list'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 function BasicSteps(): React.JSX.Element {
@@ -230,5 +231,19 @@ describe('ProcessList substeps', () => {
     const nestedItems = within(lists[1]).getAllByRole('listitem')
     expect(nestedItems).toHaveLength(2)
     expect(nestedItems[0]).toHaveTextContent('Proof of income')
+  })
+})
+
+describe('ProcessList keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <ProcessList>
+        <ProcessListItem heading="Gather documents" status="complete">
+          Done.
+        </ProcessListItem>
+      </ProcessList>,
+    )
+    expectNonInteractive(container)
   })
 })

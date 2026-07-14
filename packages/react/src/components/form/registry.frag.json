@@ -34,6 +34,7 @@
       "Enter submits from a text control; the submit button is reachable and activates with Enter or Space",
       "On a submit that returns errors, focus moves to the first errored control in document order"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "44px project default is met by the fields and buttons composed inside the form",
     "highContrastTested": true,

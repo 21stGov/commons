@@ -33,6 +33,7 @@
       "Any links inside follow the native anchor keyboard contract and are always underlined",
       "With live set, role=status (polite) or role=alert (assertive) is announced without any keyboard interaction"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not-applicable",
     "highContrastTested": true,

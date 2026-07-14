@@ -31,6 +31,7 @@
       "The icon spins only under motion-safe; reduced motion shows a static ring while the status text still announces the wait",
       "currentColor stroke keeps the icon visible in forced-colors mode"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not-applicable",
     "highContrastTested": true,

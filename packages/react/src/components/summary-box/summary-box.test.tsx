@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { SummaryBox } from "@/components/summary-box";
+import { expectNonInteractive } from "../../../test/keyboard.js"
 import { axeCheck } from "../../../test/setup.js";
 
 describe("SummaryBox accessibility (axe)", () => {
@@ -158,3 +159,15 @@ describe("SummaryBox RTL", () => {
     expect(await axeCheck(container)).toHaveNoViolations();
   });
 });
+
+describe('SummaryBox keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <SummaryBox heading="What you'll need">
+        <p>A valid photo ID</p>
+      </SummaryBox>,
+    )
+    expectNonInteractive(container)
+  })
+})

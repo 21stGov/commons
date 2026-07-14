@@ -30,6 +30,7 @@
       "SVGs are marked focusable=false so they never become a stray tab stop in browsers that focus SVGs",
       "Wrap an icon in a Button or Link when it needs to be operable"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Not applicable — Icon is presentational; the interactive control that wraps it owns the 44px target",
     "highContrastTested": true,

@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { IconList, IconListItem } from '@/components/icon-list'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 function Sample(): React.JSX.Element {
@@ -145,5 +146,18 @@ describe('IconList leading icons', () => {
     expect(ref.current?.tagName).toBe('LI')
     expect(ref.current).toHaveAttribute('id', 'first')
     expect(ref.current).toHaveClass('custom-item')
+  })
+})
+
+describe('IconList keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <IconList>
+        <IconListItem>Online applications</IconListItem>
+        <IconListItem>Phone applications</IconListItem>
+      </IconList>,
+    )
+    expectNonInteractive(container)
   })
 })

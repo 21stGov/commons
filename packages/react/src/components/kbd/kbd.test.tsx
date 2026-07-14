@@ -5,6 +5,7 @@ import * as React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { Kbd, KbdGroup } from '@/components/kbd'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 /**
@@ -199,5 +200,18 @@ describe('KbdGroup composing a shortcut', () => {
       </KbdGroup>
     )
     expect(warnSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('Kbd keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <KbdGroup>
+        <Kbd>Ctrl</Kbd>
+        <Kbd>K</Kbd>
+      </KbdGroup>,
+    )
+    expectNonInteractive(container)
   })
 })

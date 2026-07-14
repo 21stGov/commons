@@ -8,6 +8,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Field } from '@/components/field'
 import { Form, useFormErrors, useFormFieldError, type FormErrors } from '@/components/form'
 import { Input } from '@/components/input'
+import { expectTabOrder } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 afterEach(() => {
@@ -208,5 +209,44 @@ describe('Form focus management', () => {
       </Form>
     )
     expect(screen.getByRole('textbox', { name: 'Email' })).not.toHaveFocus()
+  })
+})
+
+describe('Form keyboard contract (verified)', () => {
+  it('Tab moves between the form controls in document order', async () => {
+    const user = userEvent.setup()
+    render(
+      <Form aria-label="Contact">
+        <NameField />
+        <EmailField />
+        <button type="submit">Submit</button>
+      </Form>
+    )
+    await expectTabOrder(user, [
+      screen.getByRole('textbox', { name: 'Full name' }),
+      screen.getByRole('textbox', { name: 'Email' }),
+      screen.getByRole('button', { name: 'Submit' }),
+    ])
+  })
+
+  it('Enter from a text control, and Enter or Space on the submit button, all submit', async () => {
+    const user = userEvent.setup()
+    const onSubmit = vi.fn((event: React.FormEvent) => event.preventDefault())
+    render(
+      <Form onSubmit={onSubmit} aria-label="Contact">
+        <NameField />
+        <EmailField />
+        <button type="submit">Submit</button>
+      </Form>
+    )
+    screen.getByRole('textbox', { name: 'Email' }).focus()
+    await user.keyboard('{Enter}')
+    expect(onSubmit).toHaveBeenCalledTimes(1)
+    const submit = screen.getByRole('button', { name: 'Submit' })
+    submit.focus()
+    await user.keyboard('{Enter}')
+    expect(onSubmit).toHaveBeenCalledTimes(2)
+    await user.keyboard(' ')
+    expect(onSubmit).toHaveBeenCalledTimes(3)
   })
 })

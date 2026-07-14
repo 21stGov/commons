@@ -15,6 +15,8 @@ import {
   CollectionMetaItem,
   CollectionTitle,
 } from '@/components/collection'
+import { expectTabOrder, getFocusable } from '../../../test/keyboard.js'
+import userEvent from '@testing-library/user-event'
 import { axeCheck } from '../../../test/setup.js'
 
 function Example(): React.JSX.Element {
@@ -113,5 +115,17 @@ describe('Collection presentation contract', () => {
     expect(ref.current).toHaveAttribute('aria-label', 'Notices')
     expect(ref.current).toHaveClass('custom')
     expect(ref.current).toHaveStyle({ paddingInlineStart: '1rem' })
+  })
+})
+
+describe('Collection keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: the list structure adds no tab stops; only the item
+  // title links are tab stops, reachable in document order.
+  it('only the item title links are tab stops, in document order', async () => {
+    const user = userEvent.setup()
+    const { container } = render(<Example />)
+    const links = within(container).getAllByRole('link')
+    expect(getFocusable(container)).toEqual(links)
+    await expectTabOrder(user, links)
   })
 })

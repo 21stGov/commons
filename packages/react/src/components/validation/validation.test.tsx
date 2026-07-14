@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { Validation, ValidationItem, type ValidationCheck } from '@/components/validation'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 const PASSWORD_CHECKS: ValidationCheck[] = [
@@ -180,5 +181,15 @@ describe('Validation RTL', () => {
     )
     expect(screen.getByRole('group', { name: 'متطلبات كلمة المرور' })).toBeInTheDocument()
     expect(await axeCheck(container)).toHaveNoViolations()
+  })
+})
+
+describe('Validation keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Validation label="Password requirements" checks={PASSWORD_CHECKS} />,
+    )
+    expectNonInteractive(container)
   })
 })

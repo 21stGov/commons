@@ -5,6 +5,7 @@ import * as React from "react";
 import { describe, expect, it } from "vitest";
 
 import { StepIndicator } from "@/components/step-indicator";
+import { expectNonInteractive } from "../../../test/keyboard.js"
 import { axeCheck } from "../../../test/setup.js";
 
 const STEPS = ["Personal information", "Household", "Documents", "Review"];
@@ -168,3 +169,13 @@ describe("StepIndicator RTL", () => {
     expect(await axeCheck(container)).toHaveNoViolations();
   });
 });
+
+describe('StepIndicator keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <StepIndicator steps={STEPS} currentStep={0} />,
+    )
+    expectNonInteractive(container)
+  })
+})

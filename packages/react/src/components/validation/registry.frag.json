@@ -29,6 +29,7 @@
       "Adds no keyboard behavior of its own; the checklist is not interactive",
       "Focus stays on the input the checklist describes"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not applicable (non-interactive checklist)",
     "highContrastTested": true,

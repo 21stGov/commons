@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { Icon, SearchIcon, iconNames } from '@/components/icon'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 describe('Icon accessibility (axe)', () => {
@@ -140,5 +141,15 @@ describe('Icon custom glyphs and named exports', () => {
     expect(iconNames).toContain('search')
     expect(iconNames).toContain('external-link')
     expect(iconNames.length).toBeGreaterThanOrEqual(18)
+  })
+})
+
+describe('Icon keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Icon name="search" />,
+    )
+    expectNonInteractive(container)
   })
 })

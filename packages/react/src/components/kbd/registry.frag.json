@@ -33,6 +33,7 @@
       "Non-interactive: Kbd and KbdGroup add no tab stop and receive no keyboard focus",
       "Not a form control or button — activating the described shortcut is the surrounding UI's responsibility, not this component's"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not applicable — decorative/informational, not a pointer target",
     "highContrastTested": true,

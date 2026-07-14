@@ -29,6 +29,7 @@
       "Adds no keyboard behavior of its own; the wrapped control keeps its native contract",
       "The wrapped control stays a single tab stop"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not applicable (the wrapper is non-interactive; the wrapped control meets the 44px project default)",
     "highContrastTested": true,

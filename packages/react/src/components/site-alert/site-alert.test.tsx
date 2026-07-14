@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { SiteAlert, type SiteAlertProps } from "@/components/site-alert";
+import { expectNonInteractive } from "../../../test/keyboard.js"
 import { axeCheck } from "../../../test/setup.js";
 
 const VARIANTS = [
@@ -193,3 +194,15 @@ describe("SiteAlert RTL", () => {
     expect(await axeCheck(container)).toHaveNoViolations();
   });
 });
+
+describe('SiteAlert keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <SiteAlert variant="info" heading="Service notice">
+        City offices are closed for the holiday.
+      </SiteAlert>,
+    )
+    expectNonInteractive(container)
+  })
+})

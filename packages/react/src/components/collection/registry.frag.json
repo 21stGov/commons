@@ -29,6 +29,7 @@
       "Media semantics remain with consumer-provided image alt text",
       "Collection never creates an internal scroll region"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Link targets follow their visible text; adjacent controls must meet the Commons 44px default",
     "highContrastTested": true,

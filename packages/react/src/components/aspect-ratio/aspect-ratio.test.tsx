@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { AspectRatio } from '@/components/aspect-ratio'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 describe('AspectRatio accessibility', () => {
@@ -74,4 +75,16 @@ describe('AspectRatio contract', () => {
       expect(() => render(<AspectRatio ratio={ratio} />)).toThrow(/finite number greater than 0/)
     }
   )
+})
+
+describe('AspectRatio keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <AspectRatio ratio={16 / 9}>
+        <img src="/city-hall.jpg" alt="City Hall entrance" />
+      </AspectRatio>,
+    )
+    expectNonInteractive(container)
+  })
 })

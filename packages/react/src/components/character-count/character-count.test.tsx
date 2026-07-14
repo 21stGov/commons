@@ -9,6 +9,7 @@ import { CharacterCount } from '@/components/character-count'
 import { FieldProvider } from '@/components/field/context'
 import { Input } from '@/components/input'
 import { Textarea } from '@/components/input/textarea'
+import { getFocusable } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 /**
@@ -248,5 +249,15 @@ describe('CharacterCount RTL', () => {
     )
     expect(screen.getByRole('textbox', { name: 'تعليق' })).toBeInTheDocument()
     expect(await axeCheck(container)).toHaveNoViolations()
+  })
+})
+
+describe('CharacterCount keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: the wrapper adds no tab stop; the wrapped control is the only one.
+  it('adds no tab stop of its own — the wrapped control is the single tab stop', () => {
+    const { container } = render(<LabeledCount />)
+    const focusable = getFocusable(container)
+    expect(focusable).toHaveLength(1)
+    expect(focusable[0]).toHaveAttribute('id', 'comment')
   })
 })

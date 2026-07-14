@@ -32,6 +32,7 @@
       "The current step is programmatically marked with aria-current=step",
       "Each step announces a spelled-out status word (completed / current / not completed) so progress is never color-only"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not applicable (non-interactive status indicator)",
     "highContrastTested": true,

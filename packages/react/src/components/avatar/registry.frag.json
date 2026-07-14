@@ -33,6 +33,7 @@
       "A meaningful badge requires a localized label so status is not conveyed by color alone",
       "Group overlap and badge placement use logical properties and retain meaning in RTL"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Not applicable until placed inside an interactive control",
     "highContrastTested": true,

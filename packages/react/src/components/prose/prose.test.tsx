@@ -5,6 +5,7 @@ import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { Prose } from '@/components/prose'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 function Article(): React.JSX.Element {
@@ -142,5 +143,17 @@ describe('Prose size variant', () => {
       </Prose>
     )
     expect(screen.getByTestId('prose-root')).toHaveClass('max-w-measure-xl', 'text-lg')
+  })
+})
+
+describe('Prose keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Prose>
+        <p>Some body copy the consumer supplied.</p>
+      </Prose>,
+    )
+    expectNonInteractive(container)
   })
 })

@@ -29,6 +29,7 @@
       "Static content — IconList and IconListItem never take focus and add no keyboard behavior",
       "Any interactive element placed inside an item (a Link, a Button) keeps its own native keyboard contract"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not-applicable",
     "highContrastTested": true,

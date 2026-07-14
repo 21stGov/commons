@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Progress } from "@/components/progress";
+import { expectNonInteractive } from "../../../test/keyboard.js"
 import { axeCheck } from "../../../test/setup.js";
 
 afterEach(() => {
@@ -128,3 +129,13 @@ describe("Progress RTL (fill grows inline-start to end)", () => {
     expect(await axeCheck(container)).toHaveNoViolations();
   });
 });
+
+describe('Progress keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Progress label="Uploading files" value={40} showValue />,
+    )
+    expectNonInteractive(container)
+  })
+})

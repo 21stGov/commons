@@ -12,6 +12,7 @@ import {
   AvatarGroupCount,
   AvatarImage,
 } from '@/components/avatar'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 describe('Avatar accessibility', () => {
@@ -154,5 +155,18 @@ describe('Avatar contract', () => {
 
   it.each([0, -1, 1.5, Number.NaN])('rejects invalid group count %s', (count) => {
     expect(() => render(<AvatarGroupCount count={count} />)).toThrow(/positive integer/)
+  })
+})
+
+describe('Avatar keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Avatar>
+        <AvatarImage src="/maya.jpg" alt="" />
+        <AvatarFallback>MC</AvatarFallback>
+      </Avatar>,
+    )
+    expectNonInteractive(container)
   })
 })

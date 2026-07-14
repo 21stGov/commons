@@ -33,6 +33,7 @@
       "The blockquote accent border sits on the logical inline-start edge (border-s-4), so it renders on the correct side automatically under dir=\"rtl\" with no rtl: override needed",
       "Prose does not sanitize HTML, generate alt text, or add table sorting — img alt text and semantic correctness of the rendered markup remain the consumer's responsibility"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not-applicable",
     "highContrastTested": true,

@@ -4,6 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { Spinner, type SpinnerProps } from "@/components/spinner";
+import { expectNonInteractive } from "../../../test/keyboard.js"
 import { axeCheck } from "../../../test/setup.js";
 
 const SIZES = ["sm", "md", "lg"] as const satisfies readonly NonNullable<
@@ -114,3 +115,13 @@ describe("Spinner RTL", () => {
     expect(await axeCheck(container)).toHaveNoViolations();
   });
 });
+
+describe('Spinner keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: this component adds no tab stop / keyboard behavior.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Spinner />,
+    )
+    expectNonInteractive(container)
+  })
+})

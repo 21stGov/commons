@@ -13,6 +13,7 @@ import {
   ItemMedia,
   ItemTitle,
 } from '@/components/item'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 afterEach(() => {
@@ -237,5 +238,19 @@ describe('Item forwarding', () => {
     expect(ref.current).toBe(root)
     expect(root).toHaveClass('custom-class')
     expect(root).toHaveAttribute('data-testid', 'row')
+  })
+})
+
+describe('Item keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <Item variant="outline">
+        <ItemContent>
+          <ItemTitle>Outlined row</ItemTitle>
+        </ItemContent>
+      </Item>,
+    )
+    expectNonInteractive(container)
   })
 })

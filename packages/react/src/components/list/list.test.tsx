@@ -11,6 +11,7 @@ import {
   DescriptionTerm,
   DescriptionDetails,
 } from '@/components/list'
+import { expectNonInteractive } from '../../../test/keyboard.js'
 import { axeCheck } from '../../../test/setup.js'
 
 describe('List accessibility (axe)', () => {
@@ -229,5 +230,18 @@ describe('List RTL', () => {
       </div>
     )
     expect(await axeCheck(container)).toHaveNoViolations()
+  })
+})
+
+describe('List keyboard contract (verified)', () => {
+  // Verifies accessibility.keyboard: static content — no tab stop / keyboard behavior of its own.
+  it('exposes no keyboard focus surface', () => {
+    const { container } = render(
+      <List variant="ordered">
+        <ListItem>Gather your documents</ListItem>
+        <ListItem>Complete the application</ListItem>
+      </List>,
+    )
+    expectNonInteractive(container)
   })
 })

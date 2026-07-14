@@ -31,6 +31,7 @@
       "Keyboard behavior and focus indicators belong to interactive descendants",
       "The wrapper adds no role or accessible name; child media retains its native semantics"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Not applicable — non-interactive layout primitive",
     "highContrastTested": true,

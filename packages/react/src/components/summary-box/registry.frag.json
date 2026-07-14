@@ -31,6 +31,7 @@
       "The heading participates in the page outline at the level set by headingLevel",
       "Any links inside follow the native anchor keyboard contract and are always underlined"
     ],
+    "keyboardVerified": true,
     "nameRequired": true,
     "targetSize": "not-applicable",
     "highContrastTested": true,

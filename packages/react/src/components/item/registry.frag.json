@@ -32,6 +32,7 @@
       "When the whole row is one link or button, the padded row is already at least 44px so it meets the minimum pointer target",
       "ItemActions is moved to the inline end with margin-inline-start:auto while DOM order stays media, content, actions"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "Inherited from interactive descendants; Item itself is not a control. An interactive whole-row is padded to at least 44px.",
     "highContrastTested": true,

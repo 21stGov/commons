@@ -30,6 +30,7 @@
       "Any interactive element placed inside an item's body (a Link, a Button) keeps its own native keyboard contract and 44px target",
       "The current step (status=\"current\") carries aria-current=\"step\", matching StepIndicator's convention, so assistive technology can identify it directly"
     ],
+    "keyboardVerified": true,
     "nameRequired": false,
     "targetSize": "not applicable (non-interactive by default)",
     "highContrastTested": true,
