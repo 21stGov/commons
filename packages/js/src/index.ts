@@ -9,11 +9,13 @@
  */
 
 import { enhanceCarousel } from './carousel.ts'
+import { enhanceCharacterCount } from './charactercount.ts'
 import { enhanceComboBox } from './combobox.ts'
 import { enhanceCommandPalette } from './commandpalette.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
+import { enhanceNumberField } from './numberfield.ts'
 import {
   enhanceContextMenu,
   enhanceDropdownMenu,
@@ -44,6 +46,8 @@ export const behaviors: Behavior[] = [
   enhanceCarousel,
   enhanceComboBox,
   enhanceCommandPalette,
+  enhanceNumberField,
+  enhanceCharacterCount,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -54,6 +58,7 @@ export function enhance(root: ParentNode = document): void {
 export {
   enhanceAccordion,
   enhanceCarousel,
+  enhanceCharacterCount,
   enhanceCollapsible,
   enhanceComboBox,
   enhanceCommandPalette,
@@ -63,6 +68,7 @@ export {
   enhanceDropdownMenu,
   enhanceHoverCard,
   enhanceIndeterminate,
+  enhanceNumberField,
   enhancePopover,
   enhanceTabs,
   enhanceToggle,

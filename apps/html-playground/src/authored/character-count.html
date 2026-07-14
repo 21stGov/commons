@@ -1,0 +1,16 @@
+<!--
+  Authored canonical Character Count markup (no React). @21stgov/commons-js
+  updates the remaining/over count as you type and flags over-limit with
+  data-over on the root. maxlength gives a hard cap.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="cc-h">
+    <h3 id="cc-h" class="text-sm font-semibold">Public notice (40 character limit)</h3>
+    <div class="cui-character-count" data-slot="character-count" data-max="40" style="max-width:28rem">
+      <label class="text-sm font-medium" for="cc-ta">Short description</label>
+      <textarea class="cui-textarea" data-slot="textarea" id="cc-ta" rows="3" maxlength="40" aria-describedby="cc-status">The council will meet on Tuesday.</textarea>
+      <span class="cui-character-count-message" data-slot="character-count-message">7 characters left</span>
+      <span class="cui-character-count-status" data-slot="character-count-status" id="cc-status" aria-live="polite">7 characters left</span>
+    </div>
+  </section>
+</div>
