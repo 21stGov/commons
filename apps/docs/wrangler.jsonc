@@ -1,0 +1,20 @@
+{
+  // Commons documentation site — commonsui.com. Deployed as a Cloudflare
+  // Workers Static Assets project (no Worker script): the Next.js static
+  // export in ./out is served directly, including the CLI registry (/r/*.json)
+  // and JSON schemas (/schema/*) that the @21stgov/commons CLI resolves.
+  //
+  // Build first (`pnpm build` at the repo root writes apps/docs/out), then
+  // `wrangler deploy` from this directory. CI does both — see
+  // .github/workflows/deploy-docs.yml.
+  "name": "commons-docs",
+  "account_id": "cf4b4714e2d4e9e84c788b01da4cb25b",
+  "compatibility_date": "2026-07-13",
+  "assets": {
+    "directory": "./out",
+    // Directory-style URLs (next.config trailingSlash) → serve <path>/index.html.
+    "html_handling": "auto-trailing-slash",
+    // Unknown paths render the exported Next 404 page.
+    "not_found_handling": "404-page"
+  }
+}
