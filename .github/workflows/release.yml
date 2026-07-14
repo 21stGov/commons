@@ -6,11 +6,18 @@ name: Release
 # writing CHANGELOGs. When that PR is merged and no changesets remain, this same
 # job publishes the changed packages to the PUBLIC npm registry (npmjs.com).
 #
-# Requires one repository secret: NPM_TOKEN — an npm "Automation" access token
-# for the @21stgov org (npmjs.com → Access Tokens). GITHUB_TOKEN is provided by
-# Actions automatically. Until NPM_TOKEN is set, every step is skipped and this
-# workflow simply passes (green) — so there is no red X before the org/token
-# exist.
+# Auth is npm Trusted Publishing (OIDC) — there is NO stored npm token. GitHub
+# mints a short-lived OIDC token (via the `id-token: write` permission), pnpm
+# exchanges it with npm, and npm verifies it against the trusted publisher we
+# configured for the @21stgov scope (repo 21stGov/commons, workflow release.yml).
+# Provenance attestation is generated automatically from that same OIDC token.
+#
+# Requirements (all satisfied here):
+#   - Node > 22 (OIDC support) — we use 24.
+#   - pnpm >= 10.16 with working OIDC (pinned via packageManager; 11.x has a
+#     known regression, so we stay on 10.x).
+#   - A trusted publisher registered on npmjs.com for this repo + workflow.
+# GITHUB_TOKEN is provided by Actions automatically.
 
 on:
   push:
@@ -25,53 +32,39 @@ jobs:
     permissions:
       contents: write # create the Version Packages PR + tags
       pull-requests: write # open/update that PR
-      id-token: write # npm publish provenance (supply-chain attestation)
-    env:
-      # Exposed at the job level so step `if:` conditions can gate on it —
-      # `secrets` can't be referenced in `if:` directly. Until NPM_TOKEN is
-      # configured, the release steps are skipped and the workflow stays green.
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      id-token: write # OIDC: npm trusted publishing + provenance
     steps:
       - name: Checkout
-        if: ${{ env.NPM_TOKEN != '' }}
         uses: actions/checkout@v4
 
       - name: Set up pnpm
-        if: ${{ env.NPM_TOKEN != '' }}
         # Version comes from the "packageManager" field in package.json.
         uses: pnpm/action-setup@v4
 
       - name: Set up Node
-        if: ${{ env.NPM_TOKEN != '' }}
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
-          # Point npm at the PUBLIC registry and wire auth for publishing.
+          # Point npm/pnpm at the PUBLIC registry. No token line needed — OIDC
+          # supplies credentials at publish time.
           registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
-        if: ${{ env.NPM_TOKEN != '' }}
         run: pnpm install --frozen-lockfile
 
       - name: Build all packages
-        if: ${{ env.NPM_TOKEN != '' }}
         # Publish needs the built dist/ for every package.
         run: pnpm build
 
       - name: Create release PR or publish
-        if: ${{ env.NPM_TOKEN != '' }}
         uses: changesets/action@v1
         with:
           # When changesets exist → open/update the "Version Packages" PR.
           version: pnpm changeset version
-          # When none remain (version PR merged) → publish to npm.
+          # When none remain (version PR merged) → publish to npm via OIDC.
           publish: pnpm changeset publish
           commit: "chore: release packages"
           title: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          # Attach npm provenance to published tarballs.
-          NPM_CONFIG_PROVENANCE: "true"

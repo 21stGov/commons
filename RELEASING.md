@@ -86,16 +86,29 @@ Merging the Version Packages PR leaves no changesets on `main`, so the next run
 of the Release workflow **publishes the changed packages to npm** (with
 provenance) and tags the release. Nothing else to do.
 
-### One-time repo setup
+### One-time repo setup — Trusted Publishing (no token)
 
-Add a single repository secret:
+We authenticate to npm with **[Trusted Publishing](https://docs.npmjs.com/trusted-publishers/)
+(OIDC)** — there is **no `NPM_TOKEN` secret** to store, leak, or rotate. GitHub
+mints a short-lived OIDC token, pnpm exchanges it with npm, and npm verifies it
+against a trusted publisher registered for the `@21stgov` scope. Provenance is
+generated automatically from that same token.
 
-- **`NPM_TOKEN`** — an npm **Automation** access token for the `@21stgov` org
-  (npmjs.com → *Access Tokens* → *Generate New Token* → *Automation*). Put it in
-  *Settings → Secrets and variables → Actions*.
+The trusted publisher is already configured on npmjs.com
+(*org `@21stgov` → Settings → Trusted Publishers*) with:
 
-`GITHUB_TOKEN` is provided automatically. The workflow already has the
-`id-token: write` permission for npm provenance.
+| Field | Value |
+| --- | --- |
+| Publisher | GitHub Actions |
+| Organization | `21stGov` |
+| Repository | `commons` |
+| Workflow filename | `release.yml` |
+| Allowed actions | `npm publish` |
+
+`GITHUB_TOKEN` is provided automatically. The workflow already declares
+`id-token: write` (required for OIDC) and runs on **Node 24** with a **pnpm 10.x**
+that supports OIDC — both are hard requirements (Node must be > 22; pnpm 11.x
+has a known OIDC regression, so we stay on 10.x, pinned via `packageManager`).
 
 ## Manual release (fallback)
 
