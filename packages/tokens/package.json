@@ -8,7 +8,7 @@
   "homepage": "https://commonsui.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/21stgov/commons.git",
+    "url": "git+https://github.com/21stGov/commons.git",
     "directory": "packages/tokens"
   },
   "publishConfig": {

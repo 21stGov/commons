@@ -30,12 +30,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/21stgov/commons.git",
+    "url": "git+https://github.com/21stGov/commons.git",
     "directory": "packages/cli"
   },
   "homepage": "https://commonsui.com",
   "bugs": {
-    "url": "https://github.com/21stgov/commons/issues"
+    "url": "https://github.com/21stGov/commons/issues"
   },
   "publishConfig": {
     "access": "public"

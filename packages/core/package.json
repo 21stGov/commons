@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons-core",
-  "version": "1.0.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic CSS foundation for the Commons design system — accessible reset, base styles, and a11y utilities.",
   "license": "MIT",
   "type": "module",
@@ -8,7 +8,7 @@
   "homepage": "https://commonsui.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/21stgov/commons.git",
+    "url": "git+https://github.com/21stGov/commons.git",
     "directory": "packages/core"
   },
   "publishConfig": {
