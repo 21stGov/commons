@@ -194,6 +194,10 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(functi
                 aria-invalid={invalid}
                 aria-labelledby={labelId}
                 aria-describedby={describedBy}
+                // Mirror the IDL-only `indeterminate` property to an attribute
+                // so server-rendered / static markup can convey it (the
+                // framework-agnostic runtime sets the property back from this).
+                data-indeterminate={indeterminate ? '' : undefined}
                 data-slot="checkbox-input"
                 className={inputClasses}
               />

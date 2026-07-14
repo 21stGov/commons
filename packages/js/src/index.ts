@@ -13,6 +13,7 @@ import { enhanceComboBox } from './combobox.ts'
 import { enhanceCommandPalette } from './commandpalette.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
+import { enhanceIndeterminate } from './form.ts'
 import {
   enhanceContextMenu,
   enhanceDropdownMenu,
@@ -28,6 +29,7 @@ export type Behavior = (root: ParentNode) => void
 
 /** Every behavior, in application order. */
 export const behaviors: Behavior[] = [
+  enhanceIndeterminate,
   enhanceAccordion,
   enhanceCollapsible,
   enhanceDialog,
@@ -60,6 +62,7 @@ export {
   enhanceDialog,
   enhanceDropdownMenu,
   enhanceHoverCard,
+  enhanceIndeterminate,
   enhancePopover,
   enhanceTabs,
   enhanceToggle,
