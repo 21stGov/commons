@@ -137,9 +137,36 @@
   outline: 2px solid var(--cui-action-primary-bg, currentColor);
   outline-offset: 2px;
 }
-.cui-date-picker-positioner {
+.cui-date-picker-positioner,
+.cui-date-range-picker-positioner {
   z-index: 50;
 }
-.cui-date-picker-positioner .cui-calendar {
+.cui-date-picker-positioner .cui-calendar,
+.cui-date-range-picker-positioner .cui-calendar {
   box-shadow: var(--cui-shadow-3, 0 8px 24px rgba(0, 0, 0, 0.25));
+}
+.cui-date-range-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.cui-date-range-picker-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  inline-size: 100%;
+  min-block-size: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--cui-border-strong, var(--cui-border-default, #8886));
+  border-radius: 0.375rem;
+  background: var(--cui-bg-default);
+  color: var(--cui-text-default);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.cui-date-range-picker-trigger:focus-visible {
+  outline: 2px solid var(--cui-action-primary-bg, currentColor);
+  outline-offset: 2px;
 }

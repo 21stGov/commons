@@ -38,9 +38,12 @@ export function enhanceCalendar(root: ParentNode): void {
     if (!daysEl) continue
 
     const now = new Date()
+    const mode = cal.getAttribute('data-mode') === 'range' ? 'range' : 'single'
     let year = Number(cal.getAttribute('data-year')) || now.getFullYear()
     let month = cal.hasAttribute('data-month') ? Number(cal.getAttribute('data-month')) : now.getMonth()
     let selected = cal.getAttribute('data-selected') ?? ''
+    let rangeStart = cal.getAttribute('data-range-start') ?? ''
+    let rangeEnd = cal.getAttribute('data-range-end') ?? ''
     const today = cal.getAttribute('data-today') ?? iso(now.getFullYear(), now.getMonth(), now.getDate())
     const min = cal.getAttribute('data-min') ?? ''
     const max = cal.getAttribute('data-max') ?? ''
@@ -65,12 +68,17 @@ export function enhanceCalendar(root: ParentNode): void {
         btn.setAttribute('role', 'gridcell')
         if (outside) btn.dataset.outside = ''
         if (date === today) btn.dataset.today = ''
-        if (date === selected) {
+        const isSelected =
+          mode === 'range' ? date === rangeStart || date === rangeEnd : date === selected
+        if (isSelected) {
           btn.dataset.selected = ''
           btn.setAttribute('aria-selected', 'true')
+        } else if (mode === 'range' && rangeStart && rangeEnd && date > rangeStart && date < rangeEnd) {
+          btn.dataset.rangeMiddle = ''
         }
         if (disabled) btn.disabled = true
-        btn.tabIndex = date === (focusDate ?? (selected || today)) ? 0 : -1
+        const focusAnchor = mode === 'range' ? rangeStart || today : selected || today
+        btn.tabIndex = date === (focusDate ?? focusAnchor) ? 0 : -1
         daysEl.append(btn)
       }
       if (focusDate) daysEl.querySelector<HTMLElement>(`[data-date="${focusDate}"]`)?.focus()
@@ -89,6 +97,27 @@ export function enhanceCalendar(root: ParentNode): void {
     }
 
     const select = (date: string): void => {
+      if (mode === 'range') {
+        if (!rangeStart || (rangeStart && rangeEnd)) {
+          rangeStart = date
+          rangeEnd = ''
+        } else if (date < rangeStart) {
+          rangeEnd = rangeStart
+          rangeStart = date
+        } else {
+          rangeEnd = date
+        }
+        render()
+        if (rangeStart && rangeEnd) {
+          cal.dispatchEvent(
+            new CustomEvent('cui:calendar-range', {
+              bubbles: true,
+              detail: { start: rangeStart, end: rangeEnd },
+            }),
+          )
+        }
+        return
+      }
       selected = date
       render()
       cal.dispatchEvent(new CustomEvent('cui:calendar-select', { bubbles: true, detail: { date } }))

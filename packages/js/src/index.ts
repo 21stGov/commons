@@ -14,6 +14,7 @@ import { enhanceCharacterCount } from './charactercount.ts'
 import { enhanceComboBox } from './combobox.ts'
 import { enhanceCommandPalette } from './commandpalette.ts'
 import { enhanceDatePicker } from './datepicker.ts'
+import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import { enhanceIndeterminate } from './form.ts'
@@ -65,6 +66,7 @@ export const behaviors: Behavior[] = [
   enhanceToolbar,
   enhanceCalendar,
   enhanceDatePicker,
+  enhanceDateRangePicker,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -83,6 +85,7 @@ export {
   enhanceContextMenu,
   enhanceCustomSelect,
   enhanceDatePicker,
+  enhanceDateRangePicker,
   enhanceDialog,
   enhanceDropdownMenu,
   enhanceHoverCard,

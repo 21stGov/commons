@@ -22,7 +22,7 @@ import { activateOverlay } from './overlay.ts'
 const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 /** "2026-07-20" -> "Jul 20, 2026". */
-function formatISO(date: string): string {
+export function formatISO(date: string): string {
   const [y, m, d] = date.split('-').map(Number)
   if (!y || !m || !d) return date
   return `${MONTHS_SHORT[m - 1]} ${d}, ${y}`
