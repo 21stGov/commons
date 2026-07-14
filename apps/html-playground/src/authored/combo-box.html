@@ -1,22 +1,22 @@
 <!--
   Authored canonical Combo Box markup (no React) — a text input that filters a
-  listbox. @21stgov/commons-js filters on input, opens/closes, drives
-  aria-activedescendant, and picks an item into the input. Focus stays in the
-  input (APG combobox pattern).
+  listbox. The input is the full-width bordered box (pe-12 leaves room for the
+  affordances, which sit absolutely over its trailing edge). @21stgov/commons-js
+  filters on input, opens/closes, drives aria-activedescendant, and picks an item.
 -->
 <div class="flex flex-col gap-5">
   <section aria-labelledby="cb-h">
     <h3 id="cb-h" class="text-sm font-semibold">Filter a long list (US states)</h3>
-    <div class="cui-combo-box" data-slot="combo-box" style="max-width:20rem">
-      <div class="cui-combo-box-affordances" data-slot="combo-box-affordances" style="position:relative;display:flex;align-items:center;gap:0.25rem">
-        <input class="cui-combo-box-input" data-slot="combo-box-input" role="combobox" aria-expanded="false" aria-controls="cb-list" aria-autocomplete="list" aria-label="State" placeholder="Search states…" autocomplete="off" />
-        <button type="button" class="cui-combo-box-clear" data-slot="combo-box-clear" aria-label="Clear"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path></svg></button>
-        <button type="button" class="cui-combo-box-trigger" data-slot="combo-box-trigger" aria-label="Show states" tabindex="-1"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    <div class="cui-combo-box" data-slot="combo-box" style="position:relative;max-width:20rem">
+      <input class="cui-combo-box-input" data-slot="combo-box-input" role="combobox" aria-expanded="false" aria-controls="cb-list" aria-autocomplete="list" aria-label="State" placeholder="Search states…" autocomplete="off" />
+      <div class="cui-combo-box-affordances" data-slot="combo-box-affordances">
+        <button type="button" class="cui-combo-box-clear" data-slot="combo-box-clear" aria-label="Clear" style="pointer-events:auto"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path></svg></button>
+        <button type="button" class="cui-combo-box-trigger" data-slot="combo-box-trigger" aria-label="Show states" tabindex="-1" style="pointer-events:auto"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
       </div>
       <div class="cui-combo-box-positioner" data-slot="combo-box-positioner" hidden>
         <div class="cui-combo-box-popup" data-slot="combo-box-popup">
           <div id="cb-list" data-slot="combo-box-list" role="listbox" aria-label="States">
-            <div class="cui-combo-box-item" data-slot="combo-box-item" role="option" id="cb-al" data-value="AL" data-label="Alabama" aria-selected="false"><span>Alabama</span><span class="cui-combo-box-item-indicator" data-slot="combo-box-item-indicator" hidden><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="2"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
+            <div class="cui-combo-box-item" data-slot="combo-box-item" role="option" id="cb-al" data-value="AL" data-label="Alabama" aria-selected="false"><span>Alabama</span><span class="cui-combo-box-item-indicator" data-slot="combo-box-item-indicator" hidden><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="m3.5 8.5 3 3 6-7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></div>
             <div class="cui-combo-box-item" data-slot="combo-box-item" role="option" id="cb-ak" data-value="AK" data-label="Alaska" aria-selected="false"><span>Alaska</span></div>
             <div class="cui-combo-box-item" data-slot="combo-box-item" role="option" id="cb-az" data-value="AZ" data-label="Arizona" aria-selected="false"><span>Arizona</span></div>
             <div class="cui-combo-box-item" data-slot="combo-box-item" role="option" id="cb-ca" data-value="CA" data-label="California" aria-selected="false"><span>California</span></div>
