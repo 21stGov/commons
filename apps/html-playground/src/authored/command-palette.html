@@ -1,0 +1,35 @@
+<!--
+  Authored canonical Command Palette markup (no React). A modal launcher (reuses
+  the dialog backdrop/viewport chrome) with a filtered, grouped command list.
+  @21stgov/commons-js opens it from the button or Cmd/Ctrl-K, filters by label +
+  keywords, hides emptied groups, and runs the highlighted command on Enter.
+-->
+<div class="flex flex-col gap-2">
+  <div data-slot="command-palette-root">
+    <button type="button" class="cui-button cui-button--outline cui-button--md" data-slot="command-palette-trigger" aria-haspopup="dialog" aria-expanded="false">Open command palette&nbsp;&nbsp;<kbd class="cui-kbd">⌘K</kbd></button>
+    <div class="cui-dialog-backdrop" data-slot="command-palette-backdrop" hidden></div>
+    <div class="cui-dialog-viewport" data-slot="command-palette-viewport" hidden style="align-items:start;padding-block-start:12vh">
+      <div class="cui-command-palette" data-slot="command-palette" role="dialog" aria-modal="true" aria-label="Command palette" tabindex="-1" style="inline-size:min(32rem,calc(100dvw-2rem))">
+        <div class="cui-command-palette-input-row" data-slot="command-palette-input-row">
+          <input class="cui-command-palette-input" data-slot="command-palette-input" role="combobox" aria-expanded="true" aria-controls="cp-list" aria-autocomplete="list" aria-label="Type a command or search" placeholder="Type a command or search…" autocomplete="off" />
+        </div>
+        <div class="cui-command-palette-list-container" data-slot="command-palette-list-container">
+          <div id="cp-list" data-slot="command-palette-list" role="listbox" aria-label="Commands">
+            <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-pay">
+              <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-pay">Payments</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-bill" data-label="Pay a bill" data-keywords="invoice utility water tax">Pay a bill</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-pay-plan" data-label="Set up a payment plan" data-keywords="installment arrears">Set up a payment plan</div>
+            </div>
+            <div class="cui-command-palette-group" data-slot="command-palette-group" role="group" aria-labelledby="cp-g-rec">
+              <div class="cui-command-palette-group-label" data-slot="command-palette-group-label" id="cp-g-rec">Records</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-req-record" data-label="Request a public record" data-keywords="foia freedom information">Request a public record</div>
+              <div class="cui-command-palette-item" data-slot="command-palette-item" role="option" id="cp-status" data-label="Check application status" data-keywords="permit tracking">Check application status</div>
+            </div>
+          </div>
+          <div class="cui-command-palette-empty" data-slot="command-palette-empty" hidden>No commands found.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="text-sm text-muted-foreground">Press ⌘K / Ctrl-K, or the button. Type to filter; ↑↓ and Enter to run.</p>
+</div>
