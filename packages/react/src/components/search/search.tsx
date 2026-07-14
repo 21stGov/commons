@@ -378,7 +378,10 @@ export const Search = React.forwardRef<HTMLInputElement, SearchProps>(function S
                 disabled={disabled}
                 aria-describedby={describedBy}
                 aria-invalid={invalid ? true : undefined}
-                data-slot="input"
+                // Distinct slot: this bare inner control sits inside the search
+                // box wrapper, so sharing `data-slot="input"` would emit a
+                // border-zeroing `.cui-input` that clobbers standalone inputs.
+                data-slot="input-control"
                 className={bareInputClasses}
               />
               {clearButton}

@@ -227,6 +227,13 @@ function render(): void {
 
   // Progressively enhance the interactive components (accordion, collapsible…).
   enhance(main)
+
+  // Demo forms have no backend; the React demos preventDefault in onSubmit,
+  // which the static rewrite strips. Without it a submit navigates to the
+  // current URL and jumps the page. Neutralize submits inside the demo area.
+  main.addEventListener('submit', (event) => {
+    event.preventDefault()
+  })
 }
 
 render()

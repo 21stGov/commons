@@ -175,7 +175,9 @@ export const HeaderTitle = React.forwardRef<HTMLAnchorElement, HeaderTitleProps>
         data-slot="header-title"
         className={cn(
           'flex min-h-11 items-center gap-105 text-lg font-semibold text-foreground',
-          'underline-offset-2 hover:underline',
+          // no-underline: Commons underlines links by default; this identity
+          // link opts out and restores the underline on hover only.
+          'no-underline underline-offset-2 hover:underline',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           className
         )}
@@ -249,7 +251,9 @@ export const headerNavLinkVariants = cva(
    */
   [
     'flex min-h-11 w-full items-center gap-1 border-b-2 px-105 text-sm text-foreground',
-    'underline-offset-2 transition-colors hover:underline motion-reduce:transition-none',
+    // no-underline: Commons underlines links by default; nav links opt out
+    // (the border-b-2 + weight carry current-state) and underline on hover only.
+    'no-underline underline-offset-2 transition-colors hover:underline motion-reduce:transition-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
     'md:w-auto',
   ],

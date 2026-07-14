@@ -157,7 +157,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
         aria-invalid={ariaInvalid}
         required={required}
         disabled={disabled}
-        data-slot="input"
+        // Distinct slot from the standalone input: the adornment wrapper
+        // (`input-group`) carries the box, so this inner control is border-less
+        // and transparent. Sharing `data-slot="input"` made the generator emit
+        // a second `.cui-input { border-width: 0 }` that clobbered the bordered
+        // standalone input everywhere.
+        data-slot="input-control"
         className={cn(
           'w-full min-w-0 flex-1 self-stretch border-0 bg-transparent p-0',
           'text-base text-inherit placeholder:text-muted-foreground',

@@ -274,6 +274,15 @@
   padding: 0;
 }
 
+/* ---- Hover card -----------------------------------------------------------
+   The authored hover card lives inside a <p>, so the trigger/positioner/content
+   are spans (a block <div> would auto-close the paragraph). React's content is a
+   block <div>; a bare <span> renders inline, so its border/background/padding
+   collapse around the text instead of forming a panel. Force the box to block. */
+.cui-hover-card-content {
+  display: block;
+}
+
 /* ---- Select ---------------------------------------------------------------
    The select overlays the chevron in the same wrapper grid cell via inline
    `col-start-1 row-start-1` utilities in React; those non-cva extras are
