@@ -1,33 +1,38 @@
 // SPDX-License-Identifier: MIT
 
 /**
- * Dialog / Alert Dialog behavior.
+ * Modal behaviors — Dialog, Alert Dialog, and Drawer. They share one shape:
+ *   root      <div data-slot="<p>" [data-dialog-role="alertdialog"]>
+ *   trigger   <button data-slot="<p>-trigger" aria-expanded>
+ *   backdrop  <div data-slot="<p>-backdrop" hidden>
+ *   viewport  <div data-slot="<p>-viewport" hidden>
+ *               popup <div data-slot="<p>-popup|content" role="dialog" aria-modal="true" tabindex="-1">
+ *   close     any [data-slot="<p>-dismiss"] or [data-dialog-close]
  *
- * Contract (authored markup):
- *   root      <div data-slot="dialog" [data-dialog-role="alertdialog"]>
- *   trigger   <button data-slot="dialog-trigger" aria-expanded>
- *   backdrop  <div data-slot="dialog-backdrop" hidden>
- *   viewport  <div data-slot="dialog-viewport" hidden>
- *               popup <div data-slot="dialog-popup" role="dialog" aria-modal="true" tabindex="-1">
- *   close      any [data-slot="dialog-dismiss"] or [data-dialog-close]
- *
- * A plain modal: focus moves in on open and is trapped, Escape and (for a
- * normal dialog) an outside press close it, body scroll locks, and focus
- * returns to the trigger on close. `alertdialog` opts out of outside-dismiss.
+ * where `<p>` is `dialog`, `alert-dialog`, or `drawer`. Focus moves in and is
+ * trapped, body scroll locks, Escape closes, focus returns to the trigger.
+ * Alert dialogs (and any root marked `alertdialog`) opt out of outside-dismiss;
+ * the drawer's slide direction is purely CSS (`--start/--end/--top/--bottom`).
  */
 
 import { claim } from './dom.ts'
 import { activateOverlay, focusFirst, lockScroll } from './overlay.ts'
 
-export function enhanceDialog(root: ParentNode): void {
-  for (const el of claim(root, '[data-slot="dialog"]', 'dialog')) {
-    const trigger = el.querySelector<HTMLElement>('[data-slot="dialog-trigger"]')
-    const backdrop = el.querySelector<HTMLElement>('[data-slot="dialog-backdrop"]')
-    const viewport = el.querySelector<HTMLElement>('[data-slot="dialog-viewport"]')
-    const popup = el.querySelector<HTMLElement>('[data-slot="dialog-popup"]')
+const MODALS: { prefix: string; alert: boolean }[] = [
+  { prefix: 'dialog', alert: false },
+  { prefix: 'alert-dialog', alert: true },
+  { prefix: 'drawer', alert: false },
+]
+
+function wireModal(root: ParentNode, prefix: string, alertDefault: boolean): void {
+  for (const el of claim(root, `[data-slot="${prefix}"]`, prefix)) {
+    const trigger = el.querySelector<HTMLElement>(`[data-slot="${prefix}-trigger"]`)
+    const backdrop = el.querySelector<HTMLElement>(`[data-slot="${prefix}-backdrop"]`)
+    const viewport = el.querySelector<HTMLElement>(`[data-slot="${prefix}-viewport"]`)
+    const popup = el.querySelector<HTMLElement>(`[data-slot="${prefix}-popup"], [data-slot="${prefix}-content"]`)
     if (!trigger || !viewport || !popup) continue
 
-    const alert = el.getAttribute('data-dialog-role') === 'alertdialog'
+    const alert = alertDefault || el.getAttribute('data-dialog-role') === 'alertdialog'
     let teardown: (() => void) | null = null
     let unlock: (() => void) | null = null
 
@@ -57,8 +62,12 @@ export function enhanceDialog(root: ParentNode): void {
     }
 
     trigger.addEventListener('click', open)
-    for (const closer of el.querySelectorAll<HTMLElement>('[data-slot="dialog-dismiss"], [data-dialog-close]')) {
+    for (const closer of el.querySelectorAll<HTMLElement>(`[data-slot="${prefix}-dismiss"], [data-dialog-close]`)) {
       closer.addEventListener('click', close)
     }
   }
+}
+
+export function enhanceDialog(root: ParentNode): void {
+  for (const { prefix, alert } of MODALS) wireModal(root, prefix, alert)
 }

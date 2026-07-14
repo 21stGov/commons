@@ -1,0 +1,33 @@
+<!--
+  Authored canonical Drawer markup (no React). A modal panel that slides in from
+  an edge; the slide direction is pure CSS (cui-drawer-popup--end/start/top/
+  bottom). @21stgov/commons-js reuses the dialog machinery (focus trap, Escape,
+  outside-press, scroll lock).
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="drawer-h">
+    <h3 id="drawer-h" class="text-sm font-semibold">Filters drawer (inline-end edge)</h3>
+    <div data-slot="drawer">
+      <button type="button" class="cui-button cui-button--outline cui-button--md" data-slot="drawer-trigger" aria-haspopup="dialog" aria-expanded="false">Filters</button>
+      <div class="cui-drawer-backdrop" data-slot="drawer-backdrop" hidden></div>
+      <div class="cui-drawer-viewport" data-slot="drawer-viewport" hidden>
+        <div class="cui-drawer-popup cui-drawer-popup--end" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-describedby="drawer-desc" data-slot="drawer-content" tabindex="-1">
+          <div class="cui-drawer-header" data-slot="drawer-header">
+            <h2 class="cui-drawer-title" data-slot="drawer-title" id="drawer-title">Filter results</h2>
+            <p class="cui-drawer-description" data-slot="drawer-description" id="drawer-desc">Narrow the list of public records, then apply.</p>
+          </div>
+          <form class="flex flex-col gap-2">
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="status" value="open" /> Open cases</label>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="status" value="closed" /> Closed cases</label>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" name="status" value="appeal" /> Under appeal</label>
+          </form>
+          <div class="cui-drawer-footer" data-slot="drawer-footer">
+            <button type="button" class="cui-button cui-button--outline cui-button--md" data-dialog-close>Cancel</button>
+            <button type="button" class="cui-button cui-button--primary cui-button--md" data-dialog-close>Apply</button>
+          </div>
+          <button type="button" class="cui-drawer-dismiss" data-slot="drawer-dismiss" aria-label="Close"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

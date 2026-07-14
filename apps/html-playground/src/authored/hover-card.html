@@ -1,0 +1,26 @@
+<!--
+  Authored canonical Hover Card markup (no React). The preview appears on hover
+  and on keyboard focus of the link; the link itself still works for touch.
+  @21stgov/commons-js positions and shows/hides it.
+-->
+<div style="max-width:32rem;line-height:1.7">
+  <section aria-labelledby="hc-h">
+    <h3 id="hc-h" class="text-sm font-semibold">Inline preview</h3>
+    <p>
+      The application was reviewed by the
+      <span data-slot="hover-card" style="position:relative;display:inline-block">
+        <a class="cui-hover-card-trigger cui-link cui-link--default" data-slot="hover-card-trigger" href="#parks">Parks Department</a>
+        <span class="cui-hover-card-positioner" data-slot="hover-card-positioner" hidden>
+          <span class="cui-hover-card-content" data-slot="hover-card-content" role="dialog" aria-label="Parks Department">
+            <span style="display:flex;flex-direction:column;gap:0.25rem">
+              <strong>Parks Department</strong>
+              <span>Maintains the city’s parks, trails, and recreation centers, and reviews permits for public-space events.</span>
+              <span style="opacity:0.7">parks@city.gov · (555) 010-2200</span>
+            </span>
+          </span>
+        </span>
+      </span>
+      before it was forwarded for final approval.
+    </p>
+  </section>
+</div>

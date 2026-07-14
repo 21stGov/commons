@@ -1,0 +1,25 @@
+<!--
+  Authored canonical Context Menu markup (no React). Opens on right-click over
+  the trigger area, at the pointer. @21stgov/commons-js positions + wires it
+  (outside/Escape dismiss, arrow-key roving focus). The menu reuses the visual
+  dropdown-menu item classes (a context menu looks identical to a dropdown).
+-->
+<div style="display:flex;flex-direction:column;gap:1rem;max-width:32rem">
+  <section aria-labelledby="cm-h">
+    <h3 id="cm-h" class="text-sm font-semibold">Right-click the row</h3>
+    <div data-slot="context-menu">
+      <div data-slot="context-menu-trigger" tabindex="0" class="cui-card" style="padding:1rem;cursor:context-menu">
+        Permit BP-1042 — right-click (or long-press) for actions.
+      </div>
+      <div class="cui-context-menu-positioner" data-slot="context-menu-positioner" hidden>
+        <div class="cui-dropdown-menu-popup" data-slot="context-menu-content" role="menu" aria-label="Row actions" tabindex="-1">
+          <div class="cui-context-menu-label" data-slot="context-menu-label">Permit BP-1042</div>
+          <button type="button" class="cui-dropdown-menu-item cui-dropdown-menu-item--default" data-slot="context-menu-item" role="menuitem">Open</button>
+          <button type="button" class="cui-dropdown-menu-item cui-dropdown-menu-item--default" data-slot="context-menu-item" role="menuitem">Assign reviewer</button>
+          <div class="cui-context-menu-separator" data-slot="context-menu-separator" role="separator"></div>
+          <button type="button" class="cui-dropdown-menu-item cui-dropdown-menu-item--destructive" data-slot="context-menu-item" role="menuitem">Delete</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
