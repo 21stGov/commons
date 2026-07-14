@@ -101,6 +101,14 @@
   color: var(--cui-action-primary-fg, #fff);
   font-weight: 600;
 }
+/* Hovering a selected day must NOT fall back to the muted (near-white in light
+   / high-contrast) hover fill — the selected text is already white, so it would
+   vanish. Keep the primary surface + foreground; higher specificity than the
+   generic :hover rule so it wins. */
+.cui-calendar-day[data-selected]:hover:not([disabled]) {
+  background: var(--cui-action-primary-hover, var(--cui-action-primary-bg, #345));
+  color: var(--cui-action-primary-fg, #fff);
+}
 .cui-calendar-day[data-range-middle] {
   background: var(--cui-bg-muted, color-mix(in oklab, var(--cui-action-primary-bg, #345) 18%, transparent));
   border-radius: 0;
