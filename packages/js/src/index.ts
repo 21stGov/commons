@@ -17,6 +17,7 @@ import {
   enhancePopover,
   enhanceTooltip,
 } from './popup.ts'
+import { enhanceTabs } from './tabs.ts'
 
 export type Behavior = (root: ParentNode) => void
 
@@ -30,6 +31,7 @@ export const behaviors: Behavior[] = [
   enhanceContextMenu,
   enhanceTooltip,
   enhanceHoverCard,
+  enhanceTabs,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -45,6 +47,7 @@ export {
   enhanceDropdownMenu,
   enhanceHoverCard,
   enhancePopover,
+  enhanceTabs,
   enhanceTooltip,
 }
 

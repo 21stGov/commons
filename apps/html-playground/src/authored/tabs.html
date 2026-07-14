@@ -1,0 +1,23 @@
+<!--
+  Authored canonical Tabs markup (no React). All panels live in the DOM; the
+  inactive ones carry `hidden`. @21stgov/commons-js activates the selected tab
+  (data-active + aria-selected + panel visibility) and wires roving arrow-key
+  focus (activation follows focus, per WAI-ARIA).
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="tabs-h">
+    <h3 id="tabs-h" class="text-sm font-semibold">Permit details</h3>
+    <div class="cui-tabs" data-slot="tabs" data-orientation="horizontal">
+      <div class="cui-tabs-list" data-slot="tabs-list" role="tablist" aria-label="Permit details" data-orientation="horizontal">
+        <button type="button" class="cui-tabs-tab" data-slot="tabs-tab" role="tab" id="tab-overview" aria-controls="panel-overview" aria-selected="true" data-active data-orientation="horizontal">Overview</button>
+        <button type="button" class="cui-tabs-tab" data-slot="tabs-tab" role="tab" id="tab-documents" aria-controls="panel-documents" aria-selected="false" tabindex="-1" data-orientation="horizontal">Documents</button>
+        <button type="button" class="cui-tabs-tab" data-slot="tabs-tab" role="tab" id="tab-history" aria-controls="panel-history" aria-selected="false" tabindex="-1" data-orientation="horizontal">History</button>
+        <button type="button" class="cui-tabs-tab" data-slot="tabs-tab" role="tab" id="tab-inspection" aria-controls="panel-inspection" aria-selected="false" tabindex="-1" data-disabled aria-disabled="true" data-orientation="horizontal">Inspection</button>
+      </div>
+      <div class="cui-tabs-panel" data-slot="tabs-panel" id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">Application PR-2026-1042 is under review.</div>
+      <div class="cui-tabs-panel" data-slot="tabs-panel" id="panel-documents" role="tabpanel" aria-labelledby="tab-documents" tabindex="0" hidden>Three supporting documents were submitted.</div>
+      <div class="cui-tabs-panel" data-slot="tabs-panel" id="panel-history" role="tabpanel" aria-labelledby="tab-history" tabindex="0" hidden>Submitted July 10; assigned July 11.</div>
+      <div class="cui-tabs-panel" data-slot="tabs-panel" id="panel-inspection" role="tabpanel" aria-labelledby="tab-inspection" tabindex="0" hidden>No inspection is scheduled.</div>
+    </div>
+  </section>
+</div>
