@@ -31,8 +31,14 @@ export function enhanceCarousel(root: ParentNode): void {
 
     let index = 0
     const update = (): void => {
-      const offset = -index * 100
-      content.style.transform = vertical ? `translateY(${offset}%)` : `translateX(${offset}%)`
+      // Translate by the item's real offset (not -index*100%) so the flex gap
+      // between slides doesn't leave a sliver of the neighbour showing.
+      const first = items[0]!
+      const active = items[index]!
+      const offset = vertical
+        ? active.offsetTop - first.offsetTop
+        : active.offsetLeft - first.offsetLeft
+      content.style.transform = vertical ? `translateY(${-offset}px)` : `translateX(${-offset}px)`
       if (status) status.textContent = `${index + 1} of ${items.length}`
       if (prev) prev.disabled = index === 0
       if (next) next.disabled = index === items.length - 1

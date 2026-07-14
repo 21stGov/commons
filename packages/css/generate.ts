@@ -464,6 +464,7 @@ export async function buildCss(): Promise<BuildResult> {
     appearance: button;
     background-color: transparent;
     background-image: none;
+    padding: 0;
   }
   button, input, optgroup, select, textarea { margin: 0; }
   :where(button, [role='button']) { cursor: pointer; }
