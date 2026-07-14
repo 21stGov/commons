@@ -9,6 +9,7 @@
  */
 
 import { enhanceCarousel } from './carousel.ts'
+import { enhanceComboBox } from './combobox.ts'
 import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 import {
@@ -38,6 +39,7 @@ export const behaviors: Behavior[] = [
   enhanceToggle,
   enhanceCustomSelect,
   enhanceCarousel,
+  enhanceComboBox,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -49,6 +51,7 @@ export {
   enhanceAccordion,
   enhanceCarousel,
   enhanceCollapsible,
+  enhanceComboBox,
   enhanceContextMenu,
   enhanceCustomSelect,
   enhanceDialog,
