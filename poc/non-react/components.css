@@ -1,0 +1,88 @@
+/* SPDX-License-Identifier: MIT */
+/*
+ * PoC: framework-agnostic component classes for Commons, hand-authored to
+ * match the exact shape a `cva` -> `@apply` generator would emit. Each rule's
+ * utilities are copied verbatim from the component's cva() in
+ * packages/react/src/components/<name>/<name>.tsx, so the static CSS and the
+ * React runtime share one source of truth (the utility lists).
+ *
+ * Arbitrary variants (`[&_svg]`, `[&_a]`) become explicit nested selectors,
+ * since @apply targets the element itself, not descendants.
+ */
+
+@layer components {
+  /* ---- Button (from buttonVariants) ---------------------------------- */
+  .cui-button {
+    @apply relative inline-flex min-w-0 items-center justify-center text-center
+      rounded-sm border text-sm font-medium leading-snug transition-colors
+      motion-reduce:transition-none focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-ring
+      disabled:cursor-not-allowed disabled:border-disabled-border
+      disabled:bg-disabled disabled:text-disabled-foreground
+      aria-disabled:cursor-not-allowed;
+  }
+  .cui-button svg {
+    @apply pointer-events-none size-2 shrink-0;
+  }
+
+  .cui-button--primary {
+    @apply border-transparent bg-primary text-primary-foreground shadow-1
+      hover:bg-primary-hover active:bg-primary-active active:shadow-none
+      disabled:shadow-none;
+  }
+  .cui-button--secondary {
+    @apply border-transparent bg-secondary text-secondary-foreground shadow-1
+      hover:bg-secondary-hover active:bg-secondary-active active:shadow-none
+      disabled:shadow-none;
+  }
+  .cui-button--outline {
+    @apply border-border-strong bg-transparent text-foreground hover:bg-muted
+      active:bg-muted;
+  }
+  .cui-button--ghost {
+    @apply border-transparent bg-transparent text-foreground hover:bg-muted
+      active:bg-muted;
+  }
+  .cui-button--danger {
+    @apply border-transparent bg-danger text-danger-foreground shadow-1
+      hover:bg-danger-hover active:bg-danger-active active:shadow-none
+      disabled:shadow-none;
+  }
+
+  .cui-button--sm {
+    @apply min-h-11 px-105 py-05 text-sm;
+  }
+  .cui-button--md {
+    @apply min-h-12 px-2 py-1 text-sm;
+  }
+  .cui-button--lg {
+    @apply min-h-14 px-3 py-105 text-base;
+  }
+
+  /* ---- Alert (from alertVariants) ------------------------------------ */
+  .cui-alert {
+    @apply flex flex-wrap items-start gap-1 rounded-md border text-sm p-205;
+  }
+  .cui-alert a {
+    @apply underline;
+  }
+  .cui-alert--slim {
+    @apply p-105;
+  }
+
+  .cui-alert--info {
+    @apply border-info-border bg-info text-info-foreground;
+  }
+  .cui-alert--success {
+    @apply border-success-border bg-success text-success-foreground;
+  }
+  .cui-alert--warning {
+    @apply border-warning-border bg-warning text-warning-foreground;
+  }
+  .cui-alert--error {
+    @apply border-error-border bg-error text-error-foreground;
+  }
+  .cui-alert--emergency {
+    @apply border-emergency-border bg-emergency text-emergency-foreground;
+  }
+}
