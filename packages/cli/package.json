@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The Commons CLI — add accessible, government-ready components from the Commons design system registry.",
   "type": "module",
   "license": "MIT",
