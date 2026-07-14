@@ -143,6 +143,31 @@ export function extractSlotAliases(file: string, knownBases: Set<string>): SlotA
   return aliases
 }
 
+/** Export names of `*Variants` cva calls found anywhere in an expression. */
+function cvaCallsIn(expr: ts.Expression, cvaBases: Map<string, string[]>): string[] {
+  const found: string[] = []
+  const walk = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && cvaBases.has(node.expression.text)) {
+      found.push(node.expression.text)
+    }
+    ts.forEachChild(node, walk)
+  }
+  walk(expr)
+  return found
+}
+
+export interface InlineSlots {
+  /** data-slot → its static class list. */
+  slots: Map<string, string[]>
+  /**
+   * cva export name → the data-slot its `xVariants()` call actually styles, when
+   * that differs from the export-name kebab (input-otp-cell ← inputOTPVariants).
+   * Lets the generator emit the cva under the real slot instead of colliding
+   * with a same-named root slot (`.cui-input-otp` is the flex-col wrapper).
+   */
+  cvaOnSlot: Map<string, string>
+}
+
 /**
  * Map every `data-slot` in a component file to its static class list.
  * `cvaBases` maps captured `*Variants` export names to their base classes, so a
@@ -151,7 +176,7 @@ export function extractSlotAliases(file: string, knownBases: Set<string>): SlotA
 export function extractInlineSlots(
   file: string,
   cvaBases: Map<string, string[]> = new Map(),
-): Map<string, string[]> {
+): InlineSlots {
   const sf = ts.createSourceFile(
     file,
     readFileSync(file, 'utf8'),
@@ -191,6 +216,7 @@ export function extractInlineSlots(
   const resolvers: Resolvers = { const: resolveConst, cva: cvaBases }
 
   const slots = new Map<string, string[]>()
+  const cvaOnSlot = new Map<string, string>()
 
   function visit(node: ts.Node): void {
     const attrs = ts.isJsxElement(node)
@@ -216,6 +242,9 @@ export function extractInlineSlots(
             classAttr.initializer.expression
           ) {
             classes = staticClasses(classAttr.initializer.expression, resolvers)
+            for (const cva of cvaCallsIn(classAttr.initializer.expression, cvaBases)) {
+              if (!cvaOnSlot.has(cva)) cvaOnSlot.set(cva, slot)
+            }
           }
         }
         if (classes.length > 0) {
@@ -229,5 +258,5 @@ export function extractInlineSlots(
   }
 
   visit(sf)
-  return slots
+  return { slots, cvaOnSlot }
 }

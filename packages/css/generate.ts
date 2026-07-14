@@ -202,13 +202,19 @@ export interface VariantSignature {
   classes: string[]
 }
 
-/** One component export -> its `.cui-*` raw rules, gallery swatches, and signatures. */
-export function emitVariant(cap: CapturedVariant): {
+/**
+ * One component export -> its `.cui-*` raw rules, gallery swatches, and
+ * signatures. `name` overrides the slot (defaults to the export-name kebab) for
+ * cvas whose call styles a differently-named slot (input-otp-cell).
+ */
+export function emitVariant(
+  cap: CapturedVariant,
+  name: string = classBase(cap.exportName),
+): {
   rules: RawRule[]
   swatches: Swatch[]
   signatures: VariantSignature[]
 } {
-  const name = classBase(cap.exportName)
   const sel = `.cui-${name}`
   const baseClasses = [...cap.base]
   const modifiers: Array<{ sel: string; classes: string[]; label: string; group: string }> = []
@@ -377,26 +383,33 @@ export async function buildCss(): Promise<BuildResult> {
     const swatches: Swatch[] = []
     const localSlots = new Set<string>()
 
-    // 1. cva-driven variants (buttons, alerts, …).
+    // Gather inline slots + cva→slot usage across the component's files first,
+    // so cvas can be emitted under the slot they actually style.
+    const inlineAgg = new Map<string, string[]>()
+    const cvaOnSlot = new Map<string, string>()
+    for (const file of partFiles) {
+      const { slots, cvaOnSlot: usage } = extractInlineSlots(file, cvaBases)
+      for (const [slot, classes] of slots) {
+        inlineAgg.set(slot, [...new Set([...(inlineAgg.get(slot) ?? []), ...classes])])
+      }
+      for (const [cva, slot] of usage) if (!cvaOnSlot.has(cva)) cvaOnSlot.set(cva, slot)
+    }
+
+    // 1. cva-driven variants (buttons, alerts, …), each under the slot its call
+    // styles (usually its own name; input-otp-cell ← inputOTPVariants).
     for (const cap of capsByName.get(name) ?? []) {
-      const slot = classBase(cap.exportName)
+      const slot = cvaOnSlot.get(cap.exportName) ?? classBase(cap.exportName)
       localSlots.add(slot)
-      const emitted = emitVariant(cap)
+      const emitted = emitVariant(cap, slot)
       rules.push(...emitted.rules)
       swatches.push(...emitted.swatches)
       if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
     }
 
-    // 2. inline data-slot parts (sub-parts + components with no cva), merged
-    // across the component's files, skipping any slot already produced by cva.
-    const inlineAgg = new Map<string, string[]>()
-    for (const file of partFiles) {
-      for (const [slot, classes] of extractInlineSlots(file, cvaBases)) {
-        if (localSlots.has(slot)) continue
-        inlineAgg.set(slot, [...new Set([...(inlineAgg.get(slot) ?? []), ...classes])])
-      }
-    }
+    // 2. inline data-slot parts (sub-parts + components with no cva), skipping
+    // any slot already produced by cva.
     for (const [slot, classes] of inlineAgg) {
+      if (localSlots.has(slot)) continue
       const slotRules = rulesForClasses(`.cui-${slot}`, classes)
       if (slotRules.length > 0) {
         rules.push(...slotRules)
