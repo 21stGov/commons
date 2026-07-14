@@ -274,6 +274,48 @@
   padding: 0;
 }
 
+/* ---- Process list (compact substeps) --------------------------------------
+   A nested substep list renders with size="compact": tighter item gap, smaller
+   heading/body type, and less trailing space. React applies those via inline
+   `size === 'compact' ? …` ternaries (not a cva), so they're stripped in the
+   rewrite and substeps inherit the default (md heading, 12px gap). The root
+   carries data-size, so restore the compact treatment keyed on it. The marker
+   size already comes through (it's a real cva variant). */
+.cui-process-list[data-size='compact'] .cui-process-list-item {
+  gap: var(--cui-spacing-1);
+}
+.cui-process-list[data-size='compact'] .cui-process-list-heading {
+  font-size: var(--cui-font-size-sm);
+}
+.cui-process-list[data-size='compact'] .cui-process-list-body {
+  font-size: var(--cui-font-size-xs);
+}
+.cui-process-list[data-size='compact'] .cui-process-list-content {
+  padding-bottom: var(--cui-spacing-205);
+}
+
+/* ---- Navigation menu dropdown ---------------------------------------------
+   The generated popup sizes off Base UI's runtime `--popup-width/height` vars
+   (absent statically), and the in-panel link's `flex min-h-11 flex-col
+   justify-center` menu-row layout is an inline extra stripped in the rewrite —
+   so the dropdown links collapse to inline underlined text. Restore the auto
+   popup box and the 44px menu rows (scoped to the popup so the top-level bar
+   link is untouched). The .cui-navigation-menu-content wrapper (added to the
+   authored markup) carries the panel padding. */
+.cui-navigation-menu-popup {
+  height: auto;
+  width: auto;
+}
+.cui-navigation-menu-popup .cui-navigation-menu-link {
+  display: flex;
+  min-block-size: 2.75rem;
+  flex-direction: column;
+  justify-content: center;
+  /* Left-align the label (React's in-panel link is align-items:normal); the
+     inherited items-center otherwise shrinks + centers the text. */
+  align-items: flex-start;
+}
+
 /* ---- In-page navigation (collapsible on narrow) ---------------------------
    React's collapsible In-Page Nav is responsive: on ≥48rem the list is always
    shown and the disclosure toggle is hidden (md:hidden / md:h-auto), and below

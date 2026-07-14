@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import { Meter as BaseMeter } from '@base-ui/react/meter'
+import { cva } from 'class-variance-authority'
 import * as React from 'react'
 
 import { AmbientDirection } from '@/lib/ambient-direction'
@@ -41,12 +42,26 @@ export interface MeterThreshold {
 // vs `state-*-bg` >= 3:1 in every theme). The border gives the tinted fill a
 // visible, contrast-safe edge against the track instead of a near-invisible
 // tint-on-tint boundary.
-const indicatorToneClasses: Record<MeterTone, string> = {
-  default: 'bg-primary border-transparent',
-  success: 'bg-success border-success-border',
-  warning: 'bg-warning border-warning-border',
-  error: 'bg-error border-error-border',
-}
+// The tone fill is a cva (not a runtime lookup) so the generator can emit it:
+// each tone becomes a `.cui-meter-indicator--<tone>` modifier the rewrite
+// attaches per active segment. The default fill stays in its OWN variant (NOT
+// folded into the base) — folding it in would leave `bg-primary` on every
+// indicator, so the rewrite's signature match would tag success/warning/error
+// meters as `--default` too.
+export const meterIndicatorVariants = cva(
+  ['h-full rounded-sm border forced-colors:border-[CanvasText]', 'transition-[width] motion-reduce:transition-none'],
+  {
+    variants: {
+      tone: {
+        default: 'bg-primary border-transparent',
+        success: 'bg-success border-success-border',
+        warning: 'bg-warning border-warning-border',
+        error: 'bg-error border-error-border',
+      },
+    },
+    defaultVariants: { tone: 'default' },
+  }
+)
 
 // The segment name renders as a tone CHIP, using the exact same validated
 // trio as Badge/Alert: the tone's tint background, its `*-foreground` text
@@ -55,12 +70,26 @@ const indicatorToneClasses: Record<MeterTone, string> = {
 // light/dark, and 7:1 in high-contrast) — so the colored label always sits on
 // its own guaranteed background instead of relying on tone-colored text laid
 // over the page background (an un-validated pairing).
-const segmentLabelToneClasses: Record<MeterTone, string> = {
-  default: 'border-border bg-muted text-foreground',
-  success: 'border-success-border bg-success text-success-foreground',
-  warning: 'border-warning-border bg-warning text-warning-foreground',
-  error: 'border-error-border bg-error text-error-foreground',
-}
+// Same story as the indicator: a cva (not a lookup) so each tone emits a
+// `.cui-meter-segment-label--<tone>` modifier the rewrite can attach; the
+// default tone lives in its own variant, not the base.
+export const meterSegmentLabelVariants = cva(
+  [
+    'inline-flex items-center rounded-full border px-105 py-0 text-xs font-medium leading-snug',
+    'forced-colors:border-[CanvasText]',
+  ],
+  {
+    variants: {
+      tone: {
+        default: 'border-border bg-muted text-foreground',
+        success: 'border-success-border bg-success text-success-foreground',
+        warning: 'border-warning-border bg-warning text-warning-foreground',
+        error: 'border-error-border bg-error text-error-foreground',
+      },
+    },
+    defaultVariants: { tone: 'default' },
+  }
+)
 
 /** Sorted ascending; the active segment is the first whose `max` covers `value`. */
 function resolveActiveThreshold(
@@ -235,11 +264,7 @@ export const Meter = React.forwardRef<HTMLDivElement, MeterProps>(function Meter
                 // forced-colors mode) so the segment is legible without color.
                 <span
                   data-slot="meter-segment-label"
-                  className={cn(
-                    'inline-flex items-center rounded-full border px-105 py-0 text-xs font-medium leading-snug',
-                    'forced-colors:border-[CanvasText]',
-                    segmentLabelToneClasses[tone]
-                  )}
+                  className={meterSegmentLabelVariants({ tone })}
                 >
                   {activeSegment.label}
                 </span>
@@ -265,21 +290,15 @@ export const Meter = React.forwardRef<HTMLDivElement, MeterProps>(function Meter
         >
           <BaseMeter.Indicator
             data-slot="meter-indicator"
-            className={cn(
-              // Determinate fill: Base UI sets the inline width from the
-              // value and anchors it with inset-inline-start:0, so it grows
-              // inline-start → end and mirrors automatically in RTL. A
-              // The tone class supplies the border color (a validated
-              // `*-border` for the state tones, transparent for the strong
-              // `bg-primary` default). That border keeps the fill's own edge
-              // visible against the track — and in forced-colors mode, where
-              // the track's border and the indicator's background can
-              // otherwise resolve to the same system color and hide how much
-              // is filled.
-              'h-full rounded-sm border forced-colors:border-[CanvasText]',
-              'transition-[width] motion-reduce:transition-none',
-              indicatorToneClasses[tone]
-            )}
+            // Determinate fill: Base UI sets the inline width from the value
+            // and anchors it with inset-inline-start:0, so it grows inline-start
+            // → end and mirrors automatically in RTL. The tone supplies the fill
+            // + border color (a validated `*-border` for the state tones,
+            // transparent for the strong `bg-primary` default) so the fill's
+            // edge stays visible against the track — and in forced-colors mode,
+            // where the track border and indicator background can otherwise
+            // resolve to the same system color and hide how much is filled.
+            className={meterIndicatorVariants({ tone })}
           />
           {/* Non-color cue #2: a tick at each threshold boundary. Rendered
               after the indicator so it stays visible on top of the fill. */}

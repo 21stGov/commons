@@ -6804,15 +6804,36 @@ a:visited {
       }
     }
   }
-  .cui-meter {
-    display: flex;
-    flex-direction: column;
-    gap: var(--cui-spacing-1);
+  .cui-meter-indicator {
+    height: 100%;
+    border-radius: var(--cui-radius-sm);
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+    transition-property: width;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    @media (prefers-reduced-motion: reduce) {
+      transition-property: none;
+    }
+    @media (forced-colors: active) {
+      border-color: CanvasText;
+    }
   }
-  .cui-meter-label {
-    --tw-font-weight: var(--font-weight-medium);
-    font-weight: var(--font-weight-medium);
-    color: var(--cui-text-default);
+  .cui-meter-indicator--default {
+    border-color: transparent;
+    background-color: var(--cui-action-primary-bg);
+  }
+  .cui-meter-indicator--success {
+    border-color: var(--cui-state-success-border);
+    background-color: var(--cui-state-success-bg);
+  }
+  .cui-meter-indicator--warning {
+    border-color: var(--cui-state-warning-border);
+    background-color: var(--cui-state-warning-bg);
+  }
+  .cui-meter-indicator--error {
+    border-color: var(--cui-state-error-border);
+    background-color: var(--cui-state-error-bg);
   }
   .cui-meter-segment-label {
     display: inline-flex;
@@ -6832,6 +6853,36 @@ a:visited {
       border-color: CanvasText;
     }
   }
+  .cui-meter-segment-label--default {
+    border-color: var(--cui-border-default);
+    background-color: var(--cui-bg-subtle);
+    color: var(--cui-text-default);
+  }
+  .cui-meter-segment-label--success {
+    border-color: var(--cui-state-success-border);
+    background-color: var(--cui-state-success-bg);
+    color: var(--cui-state-success-text);
+  }
+  .cui-meter-segment-label--warning {
+    border-color: var(--cui-state-warning-border);
+    background-color: var(--cui-state-warning-bg);
+    color: var(--cui-state-warning-text);
+  }
+  .cui-meter-segment-label--error {
+    border-color: var(--cui-state-error-border);
+    background-color: var(--cui-state-error-bg);
+    color: var(--cui-state-error-text);
+  }
+  .cui-meter {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cui-spacing-1);
+  }
+  .cui-meter-label {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+    color: var(--cui-text-default);
+  }
   .cui-meter-value {
     color: var(--cui-text-muted);
     --tw-numeric-spacing: tabular-nums;
@@ -6847,21 +6898,6 @@ a:visited {
     border-width: 1px;
     border-color: var(--cui-border-default);
     background-color: var(--cui-bg-subtle);
-    @media (forced-colors: active) {
-      border-color: CanvasText;
-    }
-  }
-  .cui-meter-indicator {
-    height: 100%;
-    border-radius: var(--cui-radius-sm);
-    border-style: var(--tw-border-style);
-    border-width: 1px;
-    transition-property: width;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    @media (prefers-reduced-motion: reduce) {
-      transition-property: none;
-    }
     @media (forced-colors: active) {
       border-color: CanvasText;
     }
@@ -11449,7 +11485,17 @@ a:visited {
 <section><h2>memorable-date <small>.cui-memorable-date</small></h2><div class="swatches"></div></section>
 <section><h2>menubar <small>.cui-menubar</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-menubar-trigger">menubar</div></div><code>base</code></div>
 <div class="swatch"><div class="cell"><div class="cui-menubar">menubar</div></div><code>base</code></div></div></section>
-<section><h2>meter <small>.cui-meter</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-meter">meter</div></div><code>base</code></div></div></section>
+<section><h2>meter <small>.cui-meter</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-meter-indicator">meter</div></div><code>base</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-indicator cui-meter-indicator--default">meter</div></div><code>default</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-indicator cui-meter-indicator--success">meter</div></div><code>success</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-indicator cui-meter-indicator--warning">meter</div></div><code>warning</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-indicator cui-meter-indicator--error">meter</div></div><code>error</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-segment-label">meter</div></div><code>base</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-segment-label cui-meter-segment-label--default">meter</div></div><code>default</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-segment-label cui-meter-segment-label--success">meter</div></div><code>success</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-segment-label cui-meter-segment-label--warning">meter</div></div><code>warning</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter-segment-label cui-meter-segment-label--error">meter</div></div><code>error</code></div>
+<div class="swatch"><div class="cell"><div class="cui-meter">meter</div></div><code>base</code></div></div></section>
 <section><h2>navigation-menu <small>.cui-navigation-menu</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-navigation-menu-popup">navigation-menu</div></div><code>base</code></div>
 <div class="swatch"><div class="cell"><div class="cui-navigation-menu-trigger">navigation-menu</div></div><code>base</code></div>
 <div class="swatch"><div class="cell"><div class="cui-navigation-menu-trigger cui-navigation-menu-trigger--current">navigation-menu</div></div><code>current</code></div>
