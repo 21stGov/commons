@@ -1,0 +1,24 @@
+<!--
+  Authored canonical Toggle Group markup (no React). Each toggle flips
+  aria-pressed + the data-pressed attribute the CSS reads. @21stgov/commons-js
+  enforces single vs multiple selection and roving arrow-key focus.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="tg-single-h">
+    <h3 id="tg-single-h" class="text-sm font-semibold">Single selection (segmented)</h3>
+    <div class="cui-toggle-group" data-slot="toggle-group" role="group" aria-label="Text alignment">
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="true" data-pressed><span class="cui-toggle-content" data-slot="toggle-content">Left</span></button>
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="false" tabindex="-1"><span class="cui-toggle-content" data-slot="toggle-content">Center</span></button>
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="false" tabindex="-1"><span class="cui-toggle-content" data-slot="toggle-content">Right</span></button>
+    </div>
+  </section>
+
+  <section aria-labelledby="tg-multiple-h">
+    <h3 id="tg-multiple-h" class="text-sm font-semibold">Multiple selection</h3>
+    <div class="cui-toggle-group" data-slot="toggle-group" data-toggle-multiple role="group" aria-label="Text formatting">
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="true" data-pressed><span class="cui-toggle-content" data-slot="toggle-content">Bold</span></button>
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="false" tabindex="-1"><span class="cui-toggle-content" data-slot="toggle-content">Italic</span></button>
+      <button type="button" class="cui-toggle cui-toggle--outline cui-toggle--md" data-slot="toggle" aria-pressed="true" data-pressed tabindex="-1"><span class="cui-toggle-content" data-slot="toggle-content">Underline</span></button>
+    </div>
+  </section>
+</div>
