@@ -8,19 +8,20 @@
  * is only enhanced once.
  */
 
+import { enhanceDialog } from './dialog.ts'
 import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
 
 export type Behavior = (root: ParentNode) => void
 
 /** Every behavior, in application order. */
-export const behaviors: Behavior[] = [enhanceAccordion, enhanceCollapsible]
+export const behaviors: Behavior[] = [enhanceAccordion, enhanceCollapsible, enhanceDialog]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
 export function enhance(root: ParentNode = document): void {
   for (const behavior of behaviors) behavior(root)
 }
 
-export { enhanceAccordion, enhanceCollapsible }
+export { enhanceAccordion, enhanceCollapsible, enhanceDialog }
 
 // Auto-enhance when loaded as a plain <script> (not when imported by a bundler
 // that will call enhance() itself — guarded by the document readiness check).

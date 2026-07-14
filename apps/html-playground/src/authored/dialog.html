@@ -1,0 +1,54 @@
+<!--
+  Authored canonical Dialog markup (no React). The overlay content lives in the
+  DOM (React portals it, so it can't come from SSR); backdrop + viewport start
+  `hidden`. @21stgov/commons-js `enhance()` handles open/close, focus trap,
+  Escape, outside-press, scroll lock, and focus restore.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="dlg-confirm-h">
+    <h3 id="dlg-confirm-h" class="text-sm font-semibold">Confirmation dialog</h3>
+    <div data-slot="dialog">
+      <button type="button" class="cui-button cui-button--primary cui-button--md" data-slot="dialog-trigger" aria-haspopup="dialog" aria-expanded="false">Delete record</button>
+      <div class="cui-dialog-backdrop" data-slot="dialog-backdrop" hidden></div>
+      <div class="cui-dialog-viewport" data-slot="dialog-viewport" hidden>
+        <div class="cui-dialog-popup cui-dialog-popup--sm" role="dialog" aria-modal="true" aria-labelledby="dlg-confirm-title" aria-describedby="dlg-confirm-desc" data-slot="dialog-popup" tabindex="-1">
+          <h2 class="cui-dialog-title" data-slot="dialog-title" id="dlg-confirm-title">Delete this record?</h2>
+          <p class="cui-dialog-description" data-slot="dialog-description" id="dlg-confirm-desc">This action cannot be undone. The public record will no longer appear in search.</p>
+          <div class="cui-dialog-footer" data-slot="dialog-footer">
+            <button type="button" class="cui-button cui-button--outline cui-button--md" data-dialog-close>Cancel</button>
+            <button type="button" class="cui-button cui-button--danger cui-button--md" data-dialog-close>Delete record</button>
+          </div>
+          <button type="button" class="cui-dialog-dismiss" data-slot="dialog-dismiss" aria-label="Close"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="dlg-long-h">
+    <h3 id="dlg-long-h" class="text-sm font-semibold">Long, scrolling content</h3>
+    <div data-slot="dialog">
+      <button type="button" class="cui-button cui-button--primary cui-button--md" data-slot="dialog-trigger" aria-haspopup="dialog" aria-expanded="false">Read the policy</button>
+      <div class="cui-dialog-backdrop" data-slot="dialog-backdrop" hidden></div>
+      <div class="cui-dialog-viewport" data-slot="dialog-viewport" hidden>
+        <div class="cui-dialog-popup cui-dialog-popup--md" role="dialog" aria-modal="true" aria-labelledby="dlg-long-title" aria-describedby="dlg-long-desc" data-slot="dialog-popup" tabindex="-1">
+          <h2 class="cui-dialog-title" data-slot="dialog-title" id="dlg-long-title">Public records policy</h2>
+          <p class="cui-dialog-description" data-slot="dialog-description" id="dlg-long-desc">Review before submitting a request.</p>
+          <div class="flex flex-col gap-2">
+            <p>Section 1. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 2. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 3. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 4. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 5. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 6. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 7. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+            <p>Section 8. Requests are processed in the order received and may take up to ten business days. Fees apply for copies exceeding twenty pages.</p>
+          </div>
+          <div class="cui-dialog-footer" data-slot="dialog-footer">
+            <button type="button" class="cui-button cui-button--outline cui-button--md" data-dialog-close>Close</button>
+          </div>
+          <button type="button" class="cui-dialog-dismiss" data-slot="dialog-dismiss" aria-label="Close"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-4" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 4 8 8M12 4l-8 8" stroke-linecap="round"></path></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
