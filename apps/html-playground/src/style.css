@@ -11,9 +11,15 @@
  *   5. scaffold   — generated utilities for the demos' own layout wrappers only
  *                   (flex/gap/…), never for the components themselves.
  */
+/* The core reset goes in the lowest layer so component classes win over it —
+   e.g. `.cui-accordion-trigger { font-medium }` must beat core's unlayered
+   `button { font: inherit }` (which would otherwise inherit the <h3>'s bold).
+   In React this works because the equivalent reset lives in Tailwind's base
+   layer; here we replicate that ordering. */
+@layer reset;
 @import '@21stgov/commons-fonts/index.css';
 @import '@21stgov/commons-tokens/index.css';
-@import '@21stgov/commons-core/index.css';
+@import '@21stgov/commons-core/index.css' layer(reset);
 @import '@21stgov/commons-css/commons.css';
 @import './generated/scaffold.css';
 /* CSS for authored components with no generated .cui-* rules yet (Calendar). */
