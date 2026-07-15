@@ -79,7 +79,14 @@ async function loadDemo(entry: string): Promise<DemoModule> {
     packages: 'external',
     tsconfig: join(repoRoot, 'apps', 'playground', 'tsconfig.json'),
   })
-  return (await import(pathToFileURL(outfile).href)) as DemoModule
+  try {
+    return (await import(pathToFileURL(outfile).href)) as DemoModule
+  } finally {
+    // The module is cached in memory by URL once imported, so the bundled file
+    // is safe to remove immediately — this keeps callers that don't tear down
+    // the whole tmp dir (e.g. `renderUsageSnippet`) from accumulating scratch.
+    rmSync(outfile, { force: true })
+  }
 }
 
 type Signatures = Record<string, VariantSignature[]>
@@ -176,6 +183,36 @@ export interface RewriteResult {
    * reported so the gap is visible.
    */
   internal: Set<string>
+}
+
+/**
+ * Render one curated usage example (its `import` line + JSX body) to a concise
+ * `.cui-*` HTML snippet — the copy-paste companion to the React usage shown on
+ * each docs page. Same SSR → rewrite pipeline as the full demos, smaller input.
+ * Returns null if the example fails to build or render (caller falls back).
+ */
+export async function renderUsageSnippet(
+  usageImport: string,
+  usageExample: string,
+  manifest: Set<string>,
+  signatures: Signatures,
+): Promise<string | null> {
+  mkdirSync(tmpDir, { recursive: true })
+  const entry = join(tmpDir, `snippet-${Math.random().toString(36).slice(2)}.tsx`)
+  writeFileSync(
+    entry,
+    `${usageImport}\nimport * as React from 'react'\nexport default function Snippet() {\n  return (\n    <>${usageExample}</>\n  )\n}\n`,
+  )
+  try {
+    const mod = await loadDemo(entry)
+    if (typeof mod.default !== 'function') return null
+    const rendered = renderToStaticMarkup(React.createElement(mod.default))
+    return rewrite(rendered, manifest, signatures).html
+  } catch {
+    return null
+  } finally {
+    rmSync(entry, { force: true })
+  }
 }
 
 /** Rewrite server-rendered component markup to `.cui-*`, in place. */
@@ -283,5 +320,8 @@ export async function generateDemos(
 
   results.sort((a, b) => a.title.localeCompare(b.title, 'en'))
   writeFileSync(join(outDir, 'demos.json'), `${JSON.stringify(results, null, 2)}\n`)
+  // The generator's class manifest + variant signatures, so the docs build can
+  // reuse `renderUsageSnippet` to turn each usage example into `.cui-*` HTML.
+  writeFileSync(join(outDir, 'manifest.json'), `${JSON.stringify({ classNames, signatures })}\n`)
   return { results, internalGap: [...internal].sort() }
 }
