@@ -91,8 +91,18 @@ if (!contentOnly) {
   cpSync(registryDist, target, { recursive: true })
 }
 
+// --- Vanilla "HTML" tab frames (public/cui/*) ------------------------------
+// The iframe assets for each component page's HTML tab. Skipped in
+// --content-only mode (esbuild + font copy is heavier, not needed for a
+// content-only MDX refresh).
+let cuiFrameCount = 0
+if (!contentOnly) {
+  const { generateCuiFrames } = await import('./cui-frames.ts')
+  cuiFrameCount = (await generateCuiFrames()).length
+}
+
 console.log(
   `docs: generated ${components.length} component pages, JSON schemas` +
-    `${contentOnly ? ' (content only)' : ', llms.txt, and /r passthrough'}` +
+    `${contentOnly ? ' (content only)' : `, llms.txt, /r passthrough, and ${cuiFrameCount} vanilla HTML frames`}` +
     ` (${components.map((c) => c.name).join(', ')})`
 )

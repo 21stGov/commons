@@ -11,6 +11,7 @@
 /public/r/
 /public/schema/*.json
 /public/llms.txt
+/public/cui/
 
 # Next.js
 next-env.d.ts
