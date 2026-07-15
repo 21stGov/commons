@@ -912,6 +912,94 @@ nav[data-orientation='horizontal'] li a:visited,
  * Homepage
  * -------------------------------------------------------------------------- */
 
+/* 404 — rendered in the root layout (with the footer), no nav chrome. */
+.docs-not-found {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cui-spacing-3);
+  max-width: 42rem;
+  margin-inline: auto;
+  padding: clamp(3rem, 12vh, 7rem) var(--cui-spacing-4);
+  text-align: center;
+}
+
+.docs-not-found-mark {
+  position: absolute;
+  z-index: -1;
+  inset-block-start: var(--cui-spacing-4);
+  inline-size: min(12rem, 40vw);
+  aspect-ratio: 514 / 600;
+  background: currentColor;
+  color: var(--cui-focus-ring);
+  opacity: 0.12;
+  -webkit-mask: url('/21stgov.svg') center / contain no-repeat;
+  mask: url('/21stgov.svg') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.docs-not-found-code {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cui-text-muted);
+}
+
+.docs-not-found h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.docs-not-found-lede {
+  margin: 0;
+  color: var(--cui-text-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.docs-not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-spacing-2);
+  justify-content: center;
+  margin-block-start: var(--cui-spacing-2);
+}
+
+.docs-not-found-action {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+  padding-inline: var(--cui-spacing-3);
+  border: 1px solid var(--cui-border-default);
+  border-radius: var(--cui-radius-md);
+  color: var(--cui-text-default);
+  font-weight: var(--cui-font-weight-semibold);
+  text-decoration: none;
+}
+
+.docs-not-found-action:hover {
+  border-color: var(--cui-border-strong);
+  background: var(--cui-bg-subtle);
+}
+
+.docs-not-found-action--primary {
+  border-color: var(--cui-action-primary-bg);
+  background: var(--cui-action-primary-bg);
+  color: var(--cui-action-primary-text);
+}
+
+.docs-not-found-action--primary:hover {
+  border-color: var(--cui-action-primary-hover);
+  background: var(--cui-action-primary-hover);
+}
+
+.docs-not-found-action:focus-visible {
+  outline: 2px solid var(--cui-focus-ring);
+  outline-offset: 2px;
+}
+
 .docs-home {
   inline-size: 100%;
   overflow: clip;
@@ -1682,3 +1770,4 @@ nav[data-orientation='horizontal'] li a:visited,
     forced-color-adjust: none;
   }
 }
+
