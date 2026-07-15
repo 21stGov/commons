@@ -1,0 +1,127 @@
+name: Bug report
+description: Report a reproducible problem with Commons.
+title: '[Bug]: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Commons. Search existing issues before filing a new report.
+
+        **Do not include secrets, personal information, resident data, or vulnerability details.** Report suspected security vulnerabilities through [private vulnerability reporting](https://github.com/21stgov/commons/security/advisories/new).
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      description: Where does the problem occur?
+      options:
+        - React component
+        - CLI
+        - Registry or schemas
+        - Design tokens or core CSS
+        - Fonts
+        - MCP server or agent interface
+        - Documentation site
+        - Playground
+        - Build, release, or deployment tooling
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: affected-item
+    attributes:
+      label: Affected package, component, or command
+      placeholder: 'Example: @21stgov/commons-react Button or commons add'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      description: Include the Commons version, prerelease, or commit SHA where you observed the problem.
+      placeholder: 'Example: 0.2.0 or 1a2b3c4'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-systems
+    attributes:
+      label: Operating system
+      description: Select every environment where you reproduced the problem.
+      multiple: true
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - iOS or iPadOS
+        - Android
+        - Not operating-system specific
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment details
+      description: Include relevant browser, Node.js, React, package manager, shell, and framework versions.
+      placeholder: |
+        Browser:
+        Node.js:
+        React:
+        Package manager:
+        Shell:
+        Framework:
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current behavior
+      description: What happened? Include the complete error message when applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: What did you expect Commons to do?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Provide a repository, reduced example, or exact steps that maintainers can follow.
+      placeholder: |
+        1. Create or open ...
+        2. Run ...
+        3. Interact with ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add sanitized logs, screenshots, recordings, or related links. Include equivalent text for important visual evidence.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched the existing issues for this problem.
+          required: true
+        - label: I removed secrets, personal information, resident data, and other sensitive material.
+          required: true
+        - label: This report does not disclose a suspected security vulnerability.
+          required: true

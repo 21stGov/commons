@@ -1,0 +1,107 @@
+name: Feature or component proposal
+description: Propose a component, capability, or material improvement to Commons.
+title: '[Proposal]: '
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Commons prioritizes reusable public-service needs, accessibility, portability, and source ownership. Describe the problem before prescribing a solution.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Proposed surface
+      options:
+        - New React component
+        - Existing React component
+        - CLI
+        - Registry or schemas
+        - Design tokens or core CSS
+        - Fonts
+        - MCP server or agent interface
+        - Documentation or examples
+        - Playground
+        - Build, release, or deployment tooling
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Public-service problem
+      description: What problem needs solving, who encounters it, and why should Commons solve it centrally?
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-workarounds
+    attributes:
+      label: Current approaches and limitations
+      description: How do teams solve this today, and what is inadequate about those approaches?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+      description: Describe the behavior, API, content, or workflow you would like Commons to provide.
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples and prior art
+      description: Link to government services, standards, design systems, research, or reduced examples that demonstrate the need.
+
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility considerations
+      description: Cover keyboard, focus, semantics, assistive technology, target size, contrast, motion, cognitive load, localization, and RTL as relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: portability
+    attributes:
+      label: Platform and provider portability
+      description: Explain Windows/Linux/macOS, browser, framework, shell, hosting-provider, and offline implications as relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other designs or scopes did you consider, including doing nothing?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: contribution
+    attributes:
+      label: Contribution interest
+      options:
+        - I can submit an implementation
+        - I can help with research, design, testing, or documentation
+        - I can review or test an implementation
+        - I am proposing the need only
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched existing issues and proposals for this request.
+          required: true
+        - label: I described the user and public-service problem, not only a preferred implementation.
+          required: true
+        - label: I removed personal information, resident data, and other sensitive material.
+          required: true

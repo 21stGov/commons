@@ -1,0 +1,133 @@
+name: Accessibility issue
+description: Report a barrier affecting keyboard, assistive-technology, visual, auditory, motor, speech, or cognitive access.
+title: '[Accessibility]: '
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Accessibility is part of the Commons architecture. Thank you for documenting the barrier and its impact.
+
+        **Do not include personal information or resident data.** If the issue also exposes data or crosses a security boundary, use [private vulnerability reporting](https://github.com/21stgov/commons/security/advisories/new) instead.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - React component
+        - Documentation site
+        - Playground
+        - CLI output or interaction
+        - MCP or agent interface
+        - Design tokens or core CSS
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: affected-item
+    attributes:
+      label: Affected component or page
+      placeholder: 'Example: Dialog or https://commonsui.com/docs/components/dialog/'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: 'Example: 0.2.0 or 1a2b3c4'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: access-methods
+    attributes:
+      label: Access methods and assistive technology
+      description: Select everything used to identify or reproduce the barrier.
+      multiple: true
+      options:
+        - Keyboard only
+        - VoiceOver
+        - NVDA
+        - JAWS
+        - TalkBack
+        - Voice Control or speech recognition
+        - Screen magnification or browser zoom
+        - Forced-colors or high-contrast mode
+        - Reduced motion
+        - Automated accessibility testing
+        - Not tested with assistive technology
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment details
+      description: Include operating system, browser, assistive-technology version, input method, zoom, and relevant settings.
+      placeholder: |
+        Operating system:
+        Browser:
+        Assistive technology:
+        Input method:
+        Zoom or display settings:
+    validations:
+      required: true
+
+  - type: textarea
+    id: barrier
+    attributes:
+      label: Barrier and user impact
+      description: Describe what a person cannot perceive, understand, navigate, or operate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include exact keyboard commands, gestures, announcements, focus movement, or display settings where relevant.
+      placeholder: |
+        1. Open ...
+        2. Enable or use ...
+        3. Move to ...
+        4. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected accessible behavior
+      description: Describe the expected interaction, semantics, announcement, focus behavior, or presentation.
+    validations:
+      required: true
+
+  - type: input
+    id: standard
+    attributes:
+      label: Relevant standard or pattern
+      description: Optional WCAG 2.2 criterion, WAI-ARIA APG pattern, platform convention, or other reference.
+      placeholder: 'Example: WCAG 2.4.7 Focus Visible'
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Additional evidence
+      description: Add sanitized screenshots, recordings, accessibility-tree output, or test results. Include equivalent text for important visual evidence.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Submission checks
+      options:
+        - label: I searched the existing issues for this barrier.
+          required: true
+        - label: I removed personal information, resident data, and other sensitive material.
+          required: true
+        - label: This report does not disclose a suspected security vulnerability.
+          required: true
