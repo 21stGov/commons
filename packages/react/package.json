@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons-react",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "React components for Commons — the accessibility-first design system for U.S. local governments by 21st Gov.",
   "type": "module",
   "license": "MIT",

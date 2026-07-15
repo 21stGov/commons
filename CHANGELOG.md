@@ -9,6 +9,24 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## 0.3.1 — 2026-07-15
+
+### Fixed
+
+- **Components crashed React Server Components consumers (Next.js App
+  Router).** Component sources that use client-only React APIs (hooks,
+  `createContext`) did not declare `'use client'`, so importing components like
+  Button, Card, Header, or GovBanner into a Server Component failed the
+  consumer's build with "createContext is not a function". All 54 affected
+  sources now carry the directive — shipped through both the CLI
+  copy-into-your-repo path and the registry — and the bundled
+  `@21stgov/commons-react` build re-declares the boundary with a
+  `"use client"` banner, since bundlers strip per-file directives. A test gate
+  now fails the suite if a component ever uses a client-only API without
+  declaring the boundary. Found dogfooding the
+  [Commons Town](https://github.com/21stGov/commons-town) starter template on
+  launch day.
+
 ## 0.3.0 — 2026-07-15
 
 ### Added

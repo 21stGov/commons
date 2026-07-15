@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 // Field contract-as-code. The visual <Field> wrapper (label, hint, error)
 // lives in `field.tsx` (separate deliverable); this file is the wiring
 // contract every form control consumes via `useFieldControl()`.

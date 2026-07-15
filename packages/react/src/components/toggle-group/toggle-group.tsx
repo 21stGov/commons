@@ -3,6 +3,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { DirectionProvider } from '@base-ui/react/direction-provider'
 import {
   ToggleGroup as BaseToggleGroup,

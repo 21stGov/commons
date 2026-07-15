@@ -3,6 +3,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { Toast as BaseToast } from '@base-ui/react/toast'
 import type {
   ToastManagerAddOptions,

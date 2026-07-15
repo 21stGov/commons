@@ -3,6 +3,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { Switch as BaseSwitch } from '@base-ui/react/switch'
 import { cva } from 'class-variance-authority'
 import * as React from 'react'

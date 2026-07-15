@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 // The coordination layer above the per-field `field` component and the
 // page-level `validation` error-summary. `Form` is a REAL, progressively
 // enhanced `<form>` built on Base UI's Form: it keeps native `action` /

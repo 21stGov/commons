@@ -3,6 +3,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { OTPField } from '@base-ui/react/otp-field'
 import { cva } from 'class-variance-authority'
 import * as React from 'react'

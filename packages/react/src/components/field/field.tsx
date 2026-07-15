@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 // Visual form-field wrappers. The wiring contract (FieldProvider /
 // useFieldControl) lives in `@/components/field/context` — this file only
 // renders the label / hint / error chrome and delegates all id + aria

@@ -15,6 +15,12 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   external: ["react", "react-dom"],
+  // esbuild drops per-file "use client" directives when bundling, so the
+  // single-file library build must re-declare the client boundary itself —
+  // otherwise React Server Components consumers (Next.js App Router) crash at
+  // import time with "createContext is not a function". The component sources
+  // keep per-file directives for the CLI copy-into-your-repo path.
+  banner: { js: '"use client";' },
   esbuildOptions(options) {
     options.alias = {
       ...options.alias,

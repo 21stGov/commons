@@ -6,6 +6,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import * as React from 'react'
 import {
   DayPicker,

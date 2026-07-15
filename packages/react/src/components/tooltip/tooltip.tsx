@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip'
 import * as React from 'react'
 

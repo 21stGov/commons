@@ -3,6 +3,8 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { NumberField as BaseNumberField } from '@base-ui/react/number-field'
 import * as React from 'react'
 

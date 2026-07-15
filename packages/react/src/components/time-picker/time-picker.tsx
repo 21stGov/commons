@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 import * as React from 'react'
 
 import { ComboBox, type ComboBoxItem, type ComboBoxProps } from '@/components/ui/combo-box'

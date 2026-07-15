@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 import { PreviewCard as BasePreviewCard } from '@base-ui/react/preview-card'
 import * as React from 'react'
 

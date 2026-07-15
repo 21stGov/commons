@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 import * as React from 'react'
 
 import { Icon, type IconName } from '@/components/ui/icon'

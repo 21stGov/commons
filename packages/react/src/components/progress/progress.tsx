@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: MIT
 
+'use client'
+
 import { Progress as BaseProgress } from '@base-ui/react/progress'
 import * as React from 'react'
 

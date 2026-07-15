@@ -1,5 +1,15 @@
 # playground
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @21stgov/commons-core@0.3.1
+  - @21stgov/commons-fonts@0.3.1
+  - @21stgov/commons-react@0.3.1
+  - @21stgov/commons-tokens@0.3.1
+
 ## 0.0.2
 
 ### Patch Changes
