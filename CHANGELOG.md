@@ -29,6 +29,15 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
   preference (beside the theme switcher) that reshapes the demo, its copyable
   code, and the Installation / Usage sections for React or framework-agnostic
   HTML — the same component, both ways, from one source.
+- **A first-party CDN.** The framework-agnostic assets are served from
+  `cdn.commonsui.com` at immutable, versioned paths, so the HTML path needs no
+  npm install and no build step: link `commons.css` and `commons.js` (plus an
+  optional self-contained `fonts.css`) and go. See
+  [Installation](https://commonsui.com/docs/installation).
+- **Drupal and WordPress integration guides.** Copy-paste wiring for the way
+  each platform loads assets — a Drupal `libraries.yml` + `attach_library`, a
+  WordPress `wp_enqueue` must-use plugin — plus downloadable starter files. See
+  [Using Commons without React](https://commonsui.com/docs/without-react).
 
 ### Fixed
 
@@ -36,6 +45,17 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
   icon's size/spin `cva` collided on name with its wrapper's `data-slot` in the
   `.cui-*` CSS generator, so both elements spun and the icon lost its square
   box. The generator now emits the icon styles under `.cui-spinner-icon`.
+
+## 0.2.0 — 2026-07-14
+
+### Added
+
+- **`@21stgov/commons/registry` subpath export** — the Workers-safe registry
+  core (fetch client, schemas, transitive-dependency resolver, and search
+  matcher), so the registry contract can be consumed outside the Node CLI.
+- **A hosted MCP server** built on that registry core, letting AI assistants
+  query Commons — components, public APIs, and accessibility contracts —
+  directly. See [MCP server](https://commonsui.com/docs/mcp).
 
 ## 0.1.0 — 2026-07-13
 
