@@ -90,9 +90,12 @@ describe('emitVariant', () => {
   const rule = (rules: { selector: string; utilities: string[] }[], sel: string) =>
     rules.find((r) => r.selector === sel)
 
-  it('emits base, enum modifiers, and the boolean-true modifier; folds the boolean default into base', () => {
+  it('folds BOTH defaults (enum + boolean off-state) into base; emits the non-default modifiers', () => {
     const { rules } = emitVariant(cap)
-    expect(rule(rules, '.cui-alert')?.utilities).toEqual(['flex', 'border', 'p-3']) // base + folded false
+    // The default enum value (variant=info) and the default boolean off-state
+    // (slim=false) both fold into the base, so a bare `.cui-alert` renders the
+    // default variant with no modifier.
+    expect(rule(rules, '.cui-alert')?.utilities).toEqual(['flex', 'border', 'bg-info', 'p-3'])
     expect(rule(rules, '.cui-alert--info')?.utilities).toEqual(['bg-info'])
     expect(rule(rules, '.cui-alert--error')?.utilities).toEqual(['bg-error'])
     expect(rule(rules, '.cui-alert--slim')?.utilities).toEqual(['p-1'])
@@ -116,19 +119,23 @@ describe('emitVariant', () => {
     expect(rule(rules, '.cui-x')?.utilities).toEqual(['relative'])
   })
 
-  it('emits a signature per non-empty modifier, tagged with its cva group', () => {
+  it('emits a signature per non-default, non-empty modifier, tagged with its cva group', () => {
     const { signatures } = emitVariant(cap)
     expect(signatures).toContainEqual({
-      modifier: 'cui-alert--info',
+      modifier: 'cui-alert--error',
       group: 'variant',
-      classes: ['bg-info'],
+      classes: ['bg-error'],
     })
     expect(signatures).toContainEqual({
       modifier: 'cui-alert--slim',
       group: 'slim',
       classes: ['p-1'],
     })
-    // The folded boolean default (slim=false) produces no modifier/signature.
+    // The DEFAULT enum value (variant=info) folds into base, so it is excluded
+    // from signatures — else the rewrite, seeing the folded classes on every
+    // element, would tag them all as the default.
+    expect(signatures.some((s) => s.modifier === 'cui-alert--info')).toBe(false)
+    // The folded boolean default (slim=false) likewise produces no signature.
     expect(signatures.some((s) => s.modifier === 'cui-alert--slim-false')).toBe(false)
   })
 })

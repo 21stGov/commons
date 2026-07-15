@@ -217,7 +217,13 @@ export function emitVariant(
 } {
   const sel = `.cui-${name}`
   const baseClasses = [...cap.base]
-  const modifiers: Array<{ sel: string; classes: string[]; label: string; group: string }> = []
+  const modifiers: Array<{
+    sel: string
+    classes: string[]
+    label: string
+    group: string
+    isDefault?: boolean
+  }> = []
 
   for (const [group, values] of Object.entries(cap.variants)) {
     const isBoolean = Object.keys(values).every((k) => k === 'true' || k === 'false')
@@ -237,7 +243,16 @@ export function emitVariant(
           })
         }
       } else {
-        modifiers.push({ sel: `${sel}--${camelToKebab(key)}`, classes, label: camelToKebab(key), group })
+        // Enum variant (size, tone, …). Emit the `--<value>` modifier for
+        // explicit use; and for the DEFAULT value also fold its classes into
+        // the base rule, so a bare `.cui-x` (what a hand-writing consumer types,
+        // and what the rewrite leaves on a default-variant element) renders the
+        // default instead of nothing. The default is then excluded from the
+        // signatures below — otherwise every element would carry the folded
+        // default's classes and the rewrite would tag them all as the default.
+        const isDefault = def !== undefined && String(def) === key
+        modifiers.push({ sel: `${sel}--${camelToKebab(key)}`, classes, label: camelToKebab(key), group, isDefault })
+        if (isDefault) baseClasses.push(...classes)
       }
     }
   }
@@ -250,7 +265,7 @@ export function emitVariant(
     swatches.push({ classes: `cui-${name} ${m.sel.slice(1)}`, label: m.label })
   }
   const signatures: VariantSignature[] = modifiers
-    .filter((m) => m.classes.length > 0)
+    .filter((m) => m.classes.length > 0 && !m.isDefault)
     .map((m) => ({ modifier: m.sel.slice(1), group: m.group, classes: m.classes }))
   return { rules, swatches, signatures }
 }
