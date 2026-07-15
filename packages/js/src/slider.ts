@@ -38,6 +38,34 @@ export function enhanceSlider(root: ParentNode): void {
       input.setAttribute('aria-valuenow', String(value))
     }
     input.addEventListener('input', update)
+
+    // Native range inputs only step by `step` on Arrow keys. Add the larger
+    // jumps: Shift+Arrow moves by `data-large-step` (default 10), and
+    // Cmd/Ctrl+Arrow by `data-medium-step` (default 5) — the modifier is
+    // metaKey OR ctrlKey, so it works on every OS, not just macOS.
+    const largeStep = Number(input.getAttribute('data-large-step')) || 10
+    const mediumStep = Number(input.getAttribute('data-medium-step')) || 5
+    input.addEventListener('keydown', (event) => {
+      const dir =
+        event.key === 'ArrowRight' || event.key === 'ArrowUp'
+          ? 1
+          : event.key === 'ArrowLeft' || event.key === 'ArrowDown'
+            ? -1
+            : 0
+      if (dir === 0) return
+      let step = 0
+      if (event.shiftKey) step = largeStep
+      else if (event.metaKey || event.ctrlKey) step = mediumStep
+      else return // plain Arrow: let the native range input handle it
+      event.preventDefault()
+      const cur = Number(input.value)
+      const next = Math.min(max, Math.max(min, cur + step * dir))
+      if (next !== cur) {
+        input.value = String(next)
+        input.dispatchEvent(new Event('input', { bubbles: true }))
+      }
+    })
+
     update()
   }
 }

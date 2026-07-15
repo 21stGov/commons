@@ -294,6 +294,57 @@
   padding-bottom: var(--cui-spacing-205);
 }
 
+/* ---- Resizable panels (handle) --------------------------------------------
+   The track (the visible 1px rule) keeps its cva styling, but the interactive
+   handle's hit area + resize cursor are direction-specific inline utilities
+   stripped in the rewrite — leaving it at 1px×0, so there is nothing to grab.
+   Restore the 44px hit zone, the resize cursor, and the grip pill, keyed on the
+   container's data-direction. */
+[data-slot='resizable-handle'] {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+}
+[data-slot='resizable-panels'][data-direction='horizontal'] [data-slot='resizable-handle'] {
+  inset-block: 0;
+  inset-inline-start: 50%;
+  inline-size: 2.75rem;
+  transform: translateX(-50%);
+  cursor: col-resize;
+}
+[dir='rtl'] [data-slot='resizable-panels'][data-direction='horizontal'] [data-slot='resizable-handle'] {
+  transform: translateX(50%);
+}
+[data-slot='resizable-panels'][data-direction='vertical'] [data-slot='resizable-handle'] {
+  inset-inline: 0;
+  inset-block-start: 50%;
+  block-size: 2.75rem;
+  transform: translateY(-50%);
+  cursor: row-resize;
+}
+[data-slot='resizable-handle-grip'] {
+  pointer-events: none;
+  border-radius: 9999px;
+  border: 1px solid var(--cui-border-strong);
+  background: var(--cui-border-strong);
+}
+[data-slot='resizable-panels'][data-direction='horizontal'] [data-slot='resizable-handle-grip'] {
+  block-size: 2rem;
+  inline-size: 0.25rem;
+}
+[data-slot='resizable-panels'][data-direction='vertical'] [data-slot='resizable-handle-grip'] {
+  block-size: 0.25rem;
+  inline-size: 2rem;
+}
+.cui-resizable-handle:hover [data-slot='resizable-handle-grip'],
+[data-slot='resizable-handle']:hover [data-slot='resizable-handle-grip'] {
+  background: var(--cui-action-primary-bg);
+  border-color: var(--cui-action-primary-bg);
+}
+
 /* ---- Navigation menu dropdown ---------------------------------------------
    The generated popup sizes off Base UI's runtime `--popup-width/height` vars
    (absent statically), and the in-panel link's `flex min-h-11 flex-col

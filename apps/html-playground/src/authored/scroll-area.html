@@ -1,0 +1,53 @@
+<!--
+  Authored canonical Scroll Area markup (no React). A fixed-size region whose
+  native scrollbar is hidden and replaced by a styled overlay thumb.
+  @21stgov/commons-js (enhanceScrollArea) sizes + positions each thumb from the
+  viewport's scroll metrics, hides a bar whose axis doesn't overflow, and lets
+  you drag the thumb. (React wraps Base UI's ScrollArea; the fixed height and
+  overlay bar are the same idea.)
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="sa-v-h">
+    <h3 id="sa-v-h" class="text-sm font-semibold">Fixed-height vertical list</h3>
+    <div class="cui-scroll-area" data-slot="scroll-area" style="position:relative;inline-size:18rem;block-size:14rem;overflow:hidden;border:1px solid var(--cui-border-default);border-radius:0.375rem">
+      <div class="cui-scroll-area-viewport" data-slot="scroll-area-viewport" tabindex="0" style="block-size:100%;overflow:auto;scrollbar-width:none">
+        <div style="padding:0.5rem;display:flex;flex-direction:column;gap:2px">
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit BLD-2041 — Ada Lovelace</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit ELC-2042 — Grace Hopper</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit PLM-2043 — Alan Turing</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit BLD-2044 — Katherine Johnson</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit ZON-2045 — Edsger Dijkstra</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit ELC-2046 — Barbara Liskov</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit PLM-2047 — Donald Knuth</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit BLD-2048 — Margaret Hamilton</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit ZON-2049 — John von Neumann</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit ELC-2050 — Radia Perlman</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit PLM-2051 — Vint Cerf</div>
+          <div class="flex min-h-11 items-center rounded-sm px-2 text-sm">Permit BLD-2052 — Hedy Lamarr</div>
+        </div>
+      </div>
+      <div class="cui-scroll-area-scrollbar cui-scroll-area-scrollbar--vertical" data-slot="scroll-area-scrollbar" data-orientation="vertical" style="position:absolute;inset-block:0;inset-inline-end:0">
+        <div class="cui-scroll-area-thumb cui-scroll-area-thumb--vertical" data-slot="scroll-area-thumb"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="sa-h-h">
+    <h3 id="sa-h-h" class="text-sm font-semibold">Horizontal strip</h3>
+    <div class="cui-scroll-area" data-slot="scroll-area" style="position:relative;inline-size:22rem;overflow:hidden;border:1px solid var(--cui-border-default);border-radius:0.375rem">
+      <div class="cui-scroll-area-viewport" data-slot="scroll-area-viewport" tabindex="0" style="inline-size:100%;overflow:auto;scrollbar-width:none">
+        <div style="display:flex;gap:0.5rem;padding:0.5rem 0.5rem 0.75rem">
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">January</div>
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">February</div>
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">March</div>
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">April</div>
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">May</div>
+          <div class="flex h-24 w-40 shrink-0 items-center justify-center rounded-sm bg-muted text-sm" style="flex:0 0 auto">June</div>
+        </div>
+      </div>
+      <div class="cui-scroll-area-scrollbar cui-scroll-area-scrollbar--horizontal" data-slot="scroll-area-scrollbar" data-orientation="horizontal" style="position:absolute;inset-inline:0;inset-block-end:0">
+        <div class="cui-scroll-area-thumb cui-scroll-area-thumb--horizontal" data-slot="scroll-area-thumb"></div>
+      </div>
+    </div>
+  </section>
+</div>

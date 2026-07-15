@@ -398,6 +398,11 @@ export const sidebarItemVariants = cva(
     // rail edge). The Commons Link keeps its mandatory underline (WCAG 1.4.1);
     // the focus ring comes from Link too.
     'flex min-h-11 w-full items-center gap-105 rounded-none border-s-2 pe-105 ps-105',
+    // text-foreground explicitly: the item reuses the Commons Link but overrides
+    // its data-slot, so the framework-agnostic `.cui-sidebar-item-link` loses
+    // `.cui-link`'s color and falls back to the UA link blue. Nav items read as
+    // foreground text (the underline still marks link-ness), not body links.
+    'text-foreground',
     'transition-colors motion-reduce:transition-none',
   ],
   {

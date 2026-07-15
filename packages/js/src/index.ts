@@ -27,6 +27,7 @@ import { enhanceProgress } from './progress.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceResizable } from './resizable.ts'
+import { enhanceScrollArea } from './scrollarea.ts'
 import { enhanceSidebar } from './sidebar.ts'
 import { enhanceSlider } from './slider.ts'
 import { enhanceTable } from './table.ts'
@@ -79,6 +80,7 @@ export const behaviors: Behavior[] = [
   enhanceInputOTP,
   enhanceInPageNavigation,
   enhanceResizable,
+  enhanceScrollArea,
   enhanceDataTable,
   enhanceProgress,
   enhanceLanguageSelector,
@@ -119,6 +121,7 @@ export {
   enhanceNumberField,
   enhancePopover,
   enhanceResizable,
+  enhanceScrollArea,
   enhanceSidebar,
   enhanceSlider,
   enhanceTable,
