@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons-core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Framework-agnostic CSS foundation for the Commons design system — accessible reset, base styles, and a11y utilities.",
   "license": "MIT",
   "type": "module",

@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons-tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Design tokens for Commons, the accessibility-first design system for U.S. local governments. DTCG JSON sources compiled to CSS custom properties with a mathematically guaranteed color-contrast contract.",
   "type": "module",
   "license": "MIT",

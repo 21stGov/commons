@@ -9,7 +9,7 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
-## 0.2.0 — 2026-07-15
+## 0.3.0 — 2026-07-15
 
 ### Added
 
