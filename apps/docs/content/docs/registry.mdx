@@ -1,0 +1,166 @@
+---
+title: "Registry"
+description: "The Commons registry format — how components are described as static JSON, the registry-item schema, and how to build and host your own Commons-compatible registry for internal components."
+---
+
+Commons distributes components through a **registry**: static JSON files that
+the [CLI](/docs/cli) and [MCP server](/docs/mcp) read to discover, inspect, and
+install components. The public registry lives at
+[`commonsui.com/r`](https://commonsui.com/r); the format is open, so agencies
+can host their own registry of internal components the same way.
+
+The format follows the open [shadcn registry format](https://ui.shadcn.com/docs/registry)
+(MIT), so items stay interoperable with other tooling that speaks the same
+schema. Commons adds a few first-class fields — a structured accessibility
+contract, a `high-contrast` theme layer, and content integrity hashes.
+
+## Layout
+
+A registry is three kinds of static file under one base URL (`{registry}`):
+
+| Path | Purpose |
+| --- | --- |
+| `{registry}/index.json` | The **catalog** — a small entry per item (name, type, title, description, status, use-when) for search and discovery. |
+| `{registry}/{name}.json` | One **registry item** per component — the full payload the CLI installs. |
+| `{registry}/registry.json` | Optional **full index** — `{ name, homepage, items[] }` with every item inlined. |
+
+Any static file host works — a CDN, object storage, GitHub Pages, a folder on
+your own domain. There is no server to run.
+
+## The registry item
+
+Each item is the payload served at `{registry}/{name}.json`. A minimal
+`registry:ui` component:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Initiates an immediate action.",
+  "status": "experimental",
+  "dependencies": ["class-variance-authority"],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/button.tsx",
+      "type": "registry:ui",
+      "content": "// the full source, inline"
+    }
+  ],
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": ["Tab focuses the button", "Enter or Space activates"],
+    "keyboardVerified": true,
+    "nameRequired": true,
+    "targetSize": "44px"
+  }
+}
+```
+
+### Fields
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `name` | string | Unique item id, used as `{name}.json` and in `registryDependencies`. Required. |
+| `type` | enum | The item type (see below). Required. |
+| `title`, `description` | string | Human-facing labels. |
+| `version`, `status` | string | `status` is `experimental` / `stable` / `deprecated` / `removed`. |
+| `useWhen`, `avoidWhen` | string[] | Guidance surfaced in the catalog and to agents. |
+| `dependencies` | string[] | npm packages to install. |
+| `registryDependencies` | string[] | Other registry items to resolve recursively (deduplicated). |
+| `files` | file[] | The source files (see below). |
+| `cssVars` | object | Token contributions by layer: `theme`, `light`, `dark`, `high-contrast`. |
+| `compatibility` | object | `react` range, `rtl`, `forcedColors`. |
+| `accessibility` | object | The normative [accessibility contract](/docs/accessibility). |
+| `integrity` | string \| object | sha256 of file content — a per-item string, or a `path` → hash map. |
+| `docs`, `license` | string | Free-form docs pointer and SPDX license id. |
+
+Unknown fields never fail validation — the schema validates what the CLI relies
+on and passes the rest through, so a registry can add fields without breaking
+older CLIs.
+
+### Item types
+
+Mirrors the shadcn format so items interoperate:
+
+`registry:ui` · `registry:component` · `registry:block` · `registry:lib` ·
+`registry:hook` · `registry:style` · `registry:theme`
+
+Files land in the consumer's project by `type`, mapped through the `paths` in
+their [`commons.json`](/docs/cli#init) (e.g. `registry:ui` → `paths.ui`,
+`registry:lib` → `paths.lib`).
+
+### Files
+
+```json
+{
+  "path": "components/ui/button.tsx",
+  "type": "registry:ui",
+  "content": "…the full file source…",
+  "target": "src/components/ui/button.tsx"
+}
+```
+
+`content` is required and **inline** — Commons items are self-contained, so the
+CLI writes from the validated payload and never fetches source out-of-band.
+`path` is the source location; only its basename is used when placing the file
+(remapped by `type`), unless an explicit `target` overrides it.
+
+## Build your own registry
+
+Useful when an agency has internal components (an agency-specific header, a
+permit form) it wants to install with the same `commons add` workflow.
+
+1. **Write an item** per component as `{name}.json`, following the schema above.
+   Declare `"$schema": "https://commonsui.com/schema/registry-item.v1.json"` so
+   editors validate it.
+
+2. **Write the catalog** as `index.json` — one small entry per item:
+
+   ```json
+   [
+     {
+       "name": "agency-header",
+       "type": "registry:block",
+       "title": "Agency Header",
+       "description": "County seal, primary nav, and language selector.",
+       "status": "stable"
+     }
+   ]
+   ```
+
+3. **Host the files** on any static host, so `index.json` and each
+   `{name}.json` are reachable under one base URL.
+
+4. **Point the CLI at it** — set the `registry` field in the consumer's
+   `commons.json`, or the `COMMONS_REGISTRY` environment variable for a one-off:
+
+   ```json
+   { "registry": "https://ui.yourcounty.gov/r" }
+   ```
+
+   `search`, `inspect`, `add`, and the MCP server all follow the configured
+   registry — see [self-hosted registries](/docs/cli#self-hosted-registries).
+
+Items can list Commons components (or your own) in `registryDependencies`; the
+CLI resolves them recursively against the same registry.
+
+## Schemas
+
+The registry contract is published as resolvable JSON Schema documents, so the
+`$schema` URLs validate in editors and CI. They are generated from the same
+schemas the CLI validates with at runtime, so they never drift from the code:
+
+| Schema | Describes |
+| --- | --- |
+| [`schema/registry-item.v1.json`](https://commonsui.com/schema/registry-item.v1.json) | A single registry item |
+| [`schema/catalog.v1.json`](https://commonsui.com/schema/catalog.v1.json) | The `index.json` catalog |
+| [`schema/commons.json`](https://commonsui.com/schema/commons.json) | A consumer's `commons.json` config |
+
+## Consuming the registry
+
+- **CLI** — `init`, `add`, `search`, `inspect`. See the [CLI reference](/docs/cli).
+- **MCP** — `search_components`, `get_component`, `plan_install`, `get_setup`
+  for coding agents. See the [MCP server](/docs/mcp).

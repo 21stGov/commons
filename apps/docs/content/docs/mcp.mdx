@@ -141,6 +141,10 @@ or, in a client's JSON config:
 }
 ```
 
+Any MCP-capable client connects the same way — Claude Code, Cursor, VS Code,
+Cline, Continue, Windsurf, and Zed all accept a remote MCP URL (check your
+client's docs for whether the key is `mcpServers`, `servers`, or a UI field).
+
 It exposes the same four tools, resolved against the public registry
 (`commonsui.com/r`). The difference from the local server: with no project on
 disk it can't read your `commons.json` or detect file conflicts, so
@@ -150,6 +154,47 @@ disk it can't read your `commons.json` or detect file conflicts, so
 **Use the local server** (above) to plan against *your* project and install;
 **use the hosted server** to let any agent explore Commons without installing
 anything.
+
+## Agents without MCP (llms.txt)
+
+For tools that ingest plain text rather than speak MCP — ChatGPT, local models
+run through Ollama or LM Studio, or any assistant with a "read this URL" step —
+Commons publishes its full documentation as flat text:
+
+| File | Contents |
+| --- | --- |
+| [`commonsui.com/llms.txt`](https://commonsui.com/llms.txt) | A concise index of the docs, following the [llms.txt](https://llmstxt.org) convention |
+| [`commonsui.com/llms-full.txt`](https://commonsui.com/llms-full.txt) | Every doc page inlined — paste it in when a model needs the complete context |
+
+## Give your project's agent Commons context
+
+Drop a short brief into your project's agent instructions — `AGENTS.md`,
+`CLAUDE.md`, `.cursorrules`, `.github/copilot-instructions.md`, or your client's
+rules file — so any agent working in your repo uses Commons correctly:
+
+```md
+This project uses Commons (@21stgov/commons), an accessibility-first design
+system for U.S. local governments.
+
+- Add components with the CLI, never by hand-copying from the docs:
+  `npx @21stgov/commons add <component>`. You own the copied source.
+- Discover and inspect through the Commons MCP server (search_components,
+  get_component, plan_install) when available, or `npx @21stgov/commons search`
+  / `inspect`.
+- Each component's accessibility contract is NORMATIVE: preserve keyboard
+  behavior, roles, accessible names, focus management, and 44px targets. Never
+  strip ARIA wiring or focus rings.
+- Style with the `--cui-*` design tokens; never hardcode hex colors. Switch
+  themes with `data-theme` on the root element.
+- No React? Use `commons.css` (the `.cui-*` classes) plus the
+  `@21stgov/commons-js` runtime; copy markup from a component's HTML → Code tab.
+- Full docs as text: https://commonsui.com/llms.txt
+```
+
+Claude users can go further and install the **Commons skill**, which packages
+this guidance plus the install workflow — see
+[`skills/commons-ui`](https://github.com/21stgov/commons/tree/main/skills/commons-ui)
+in the repository.
 
 ## Notes
 
