@@ -1500,7 +1500,7 @@ nav[data-orientation='horizontal'] li a:visited,
 .docs-site-footer-title p,
 .docs-site-footer-parent,
 .docs-site-footer-social > p,
-.docs-site-footer-legal p {
+.docs-site-footer-fineprint p {
   margin: 0;
 }
 
@@ -1641,7 +1641,7 @@ nav[data-orientation='horizontal'] li a:visited,
   text-decoration: none;
 }
 
-.docs-site-footer-legal a {
+.docs-site-footer-fineprint a {
   text-decoration-line: underline;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.16em;
@@ -1652,20 +1652,25 @@ nav[data-orientation='horizontal'] li a:visited,
   outline-offset: var(--cui-focus-offset, 0.125rem);
 }
 
-.docs-site-footer-links {
-  margin-block-start: var(--cui-spacing-6);
-  padding-block-start: var(--cui-spacing-3);
-  border-block-start: 1px solid color-mix(in srgb, var(--cui-text-on-emphasis) 40%, transparent);
+/* One quiet bar under the brand/socials: policy links, then the fine print. */
+.docs-site-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cui-spacing-3);
+  margin-block-start: var(--cui-spacing-7);
+  padding-block-start: var(--cui-spacing-4);
+  border-block-start: 1px solid color-mix(in srgb, var(--cui-text-on-emphasis) 30%, transparent);
 }
 
 .docs-site-footer-links ul {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: var(--cui-spacing-105) var(--cui-spacing-3);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--cui-font-size-xs);
+  font-size: var(--cui-font-size-sm);
 }
 
 .docs-site-footer-links a {
@@ -1679,36 +1684,32 @@ nav[data-orientation='horizontal'] li a:visited,
   text-decoration: underline;
 }
 
-.docs-site-footer-legal {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--cui-spacing-6);
-  align-items: end;
-  margin-block-start: var(--cui-spacing-4);
-  padding-block-start: var(--cui-spacing-3);
-  border-block-start: 1px solid color-mix(in srgb, var(--cui-text-on-emphasis) 40%, transparent);
+.docs-site-footer-fineprint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cui-spacing-2) var(--cui-spacing-5);
   font-size: var(--cui-font-size-2xs);
   line-height: var(--cui-font-line-height-4);
-  min-inline-size: 0;
+  color: color-mix(in srgb, var(--cui-text-on-emphasis) 82%, transparent);
 }
 
-.docs-site-footer-legal > div {
-  display: flex;
+.docs-site-footer-fineprint p {
+  margin: 0;
   min-inline-size: 0;
-  flex-direction: column;
-  gap: var(--cui-spacing-1);
-  max-inline-size: 78ch;
-}
-
-.docs-site-footer-legal p {
   overflow-wrap: anywhere;
+}
+
+.docs-site-footer-fineprint > p:first-child {
+  max-inline-size: 62ch;
 }
 
 .docs-site-footer-country {
   display: flex;
   gap: var(--cui-spacing-1);
   align-items: center;
-  max-inline-size: none;
+  flex: 0 0 auto;
   font-weight: var(--cui-font-weight-semibold);
 }
 
@@ -1782,21 +1783,13 @@ nav[data-orientation='horizontal'] li a:visited,
     padding-block: var(--cui-spacing-6) var(--cui-spacing-4);
   }
 
-  .docs-site-footer-primary,
-  .docs-site-footer-legal {
-    grid-template-columns: 1fr;
-  }
-
   .docs-site-footer-primary {
+    grid-template-columns: 1fr;
     gap: var(--cui-spacing-6);
   }
 
   .docs-site-footer-social ul {
-    grid-template-columns: minmax(0, 18rem);
-  }
-
-  .docs-site-footer-legal {
-    gap: var(--cui-spacing-3);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .docs-page-footer {
@@ -1884,7 +1877,7 @@ nav[data-orientation='horizontal'] li a:visited,
 
   .docs-site-footer-social a,
   .docs-site-footer-parent > a,
-  .docs-site-footer-legal,
+  .docs-site-footer-bottom,
   .docs-site-footer-country img {
     border-color: LinkText;
     background: Canvas;

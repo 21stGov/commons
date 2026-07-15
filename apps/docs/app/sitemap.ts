@@ -25,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Standalone pages outside the docs tree (footer-linked policy / legal /
   // roadmap pages). Kept in sync with the footer links in site-footer.tsx.
   const standalonePages: MetadataRoute.Sitemap = [
-    '/roadmap',
     '/terms',
     '/privacy',
     '/acceptable-use',

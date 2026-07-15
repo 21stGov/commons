@@ -17,7 +17,7 @@ const socialLinks = [
   },
   {
     platform: 'Discord',
-    handle: 'Join the community',
+    handle: '21st Gov',
     href: 'https://discord.gg/M6GAVM4Wk7',
     icon: 'discord',
   },
@@ -30,7 +30,6 @@ const socialLinks = [
 ] as const
 
 const policyLinks = [
-  { label: 'Roadmap', href: '/roadmap' },
   { label: 'Terms of Use', href: '/terms' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Acceptable Use', href: '/acceptable-use' },
@@ -83,18 +82,18 @@ export function SiteFooter(): JSX.Element {
           </nav>
         </div>
 
-        <nav className="docs-site-footer-links" aria-label="Policies and legal">
-          <ul>
-            {policyLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="docs-site-footer-bottom">
+          <nav className="docs-site-footer-links" aria-label="Policies and legal">
+            <ul>
+              {policyLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href}>{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <div className="docs-site-footer-legal">
-          <div>
+          <div className="docs-site-footer-fineprint">
             <p>
               Code licensed{' '}
               <a
@@ -104,10 +103,7 @@ export function SiteFooter(): JSX.Element {
               >
                 MIT
               </a>
-              .
-            </p>
-            <p>
-              The{' '}
+              . The{' '}
               <a
                 href="https://www.brailleinstitute.org/freefont/"
                 target="_blank"
@@ -115,8 +111,8 @@ export function SiteFooter(): JSX.Element {
               >
                 Atkinson Hyperlegible
               </a>{' '}
-              font files contained in <code>packages/fonts</code> are licensed separately under the
-              SIL Open Font License, Version 1.1.
+              font files in <code>packages/fonts</code> are licensed separately under the SIL Open
+              Font License, Version 1.1.
             </p>
             <p className="docs-site-footer-country">
               <img src="/us_flag.svg" width="32" height="22" alt="" />
