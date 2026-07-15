@@ -1,16 +1,34 @@
 ---
 title: "Installation"
-description: "Set up Commons in your project with the CLI, then add your first component."
+description: "Set up Commons the React + CLI way, or the framework-agnostic HTML way, then add your first component."
 ---
+
+Commons installs two ways from the same source. Use the **React / HTML**
+switcher (beside the theme control) to follow the path that matches your stack:
+
+- **React** — the component library plus the CLI that copies source into your repository.
+- **HTML** — `commons.css` and a small runtime for any server-rendered stack (Drupal, WordPress, .NET, Rails, plain HTML) — no React and no build step.
 
 ## Requirements
 
+<Framework only="react">
+
 - **Node.js 22 or later** for the CLI and build tooling.
 - **React 19** for `@21stgov/commons-react` components.
-- **Tailwind CSS v4** — Commons components are styled with utilities that the
-  token bridge maps onto Commons design tokens.
+- **Tailwind CSS v4** — Commons components are styled with utilities that the token bridge maps onto Commons design tokens.
 
-## Initialize your project
+</Framework>
+
+<Framework only="html">
+
+- **No build step and no React.** You serve a few stylesheets and one script.
+- **Node / npm are optional** — use them to pull the packages from npm, or vendor the built CSS and JS files into your project and serve them from your own host.
+
+</Framework>
+
+## Install
+
+<Framework only="react">
 
 `init` inspects your project, writes a `commons.json` configuration, and sets
 up the token and CSS entry points:
@@ -54,7 +72,72 @@ bunx @21stgov/commons init
 Add `--yes` for non-interactive setup (CI, scripts, agents), and `--json` for
 a versioned machine-readable result envelope.
 
+</Framework>
+
+<Framework only="html">
+
+Install the token, core, component-CSS, and runtime packages (or vendor the
+built files and skip this step):
+
+<Tabs groupId="package-manager" persist items={["npm", "pnpm", "yarn", "bun"]}>
+
+<Tab value="npm">
+
+```sh
+npm install @21stgov/commons-tokens @21stgov/commons-core @21stgov/commons-css @21stgov/commons-js
+```
+
+</Tab>
+
+<Tab value="pnpm">
+
+```sh
+pnpm add @21stgov/commons-tokens @21stgov/commons-core @21stgov/commons-css @21stgov/commons-js
+```
+
+</Tab>
+
+<Tab value="yarn">
+
+```sh
+yarn add @21stgov/commons-tokens @21stgov/commons-core @21stgov/commons-css @21stgov/commons-js
+```
+
+</Tab>
+
+<Tab value="bun">
+
+```sh
+bun add @21stgov/commons-tokens @21stgov/commons-core @21stgov/commons-css @21stgov/commons-js
+```
+
+</Tab>
+
+</Tabs>
+
+Load the stylesheets in order, plus the runtime. The `commons.global.js` build
+auto-enhances any `.cui-*` markup on the page — no code to write:
+
+```html
+<link rel="stylesheet" href="/assets/commons-tokens.css" />
+<link rel="stylesheet" href="/assets/commons-core.css" />
+<link rel="stylesheet" href="/assets/commons.css" />
+<script src="/assets/commons.global.js" defer></script>
+```
+
+With a bundler, import the runtime and call `enhance()` yourself instead of the
+global script:
+
+```js
+import { enhance } from '@21stgov/commons-js'
+enhance()
+```
+
+</Framework>
+
 ## Add a component
+
+<Framework only="react">
 
 ```sh
 npx @21stgov/commons add button
@@ -67,7 +150,23 @@ with `--dry-run`.
 
 Browse the [component catalog](/docs/components) for what's available.
 
-## CSS import order
+</Framework>
+
+<Framework only="html">
+
+There is no per-component install step — every class ships in `commons.css`.
+Open any [component](/docs/components), switch its example to **HTML**, and copy
+the markup from the **Code** tab into your template. Interactive components
+(dialogs, menus, tabs, accordions, and the rest) are wired up automatically once
+`commons-js` is loaded.
+
+Browse the [component catalog](/docs/components) for what's available.
+
+</Framework>
+
+## Wire up the CSS
+
+<Framework only="react">
 
 Commons layers its stylesheets deliberately. If you wire the CSS yourself,
 the order matters:
@@ -85,6 +184,25 @@ palette (`--color-*: initial`) so nothing can silently bypass the Commons
 contrast contract, and that removal only works when it follows Tailwind's own
 theme declarations. Semantic utilities reference `var(--cui-*)` at runtime, so
 switching themes via `data-theme` keeps working without a rebuild.
+
+</Framework>
+
+<Framework only="html">
+
+No Tailwind and no bridge — import the plain stylesheets in this order (tokens
+first; the core and the component classes consume the `--cui-*` variables):
+
+```css
+@import '@21stgov/commons-fonts/index.css'; /* optional: system-font fallback works */
+@import '@21stgov/commons-tokens/index.css'; /* --cui-* custom properties + themes */
+@import '@21stgov/commons-core/index.css'; /* accessible reset */
+@import '@21stgov/commons-css'; /* the .cui-* component classes */
+```
+
+Every rule degrades gracefully to system colors and UA defaults if the tokens
+are missing, so a partial adoption never breaks the page.
+
+</Framework>
 
 ## Fonts
 

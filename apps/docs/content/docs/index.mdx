@@ -22,10 +22,11 @@ public service. Commons is built around a stronger contract:
 - **Owned by the institution.** The Commons CLI places understandable
   component source in a government's repository instead of hiding essential
   interfaces behind a proprietary runtime. What you install is what you own.
-- **Modern without being fragile.** The CSS and token core remain useful
-  without React. The documentation site, registry, and CLI are all fully
-  static and self-hostable — no third-party CDN, font service, or model API is
-  required.
+- **Modern without being fragile.** The components work two ways from one
+  source: first-class React, or framework-agnostic `.cui-*` CSS plus a small
+  enhancement runtime for any server-rendered stack — no React and no build
+  step. The documentation site, registry, and CLI are all fully static and
+  self-hostable — no third-party CDN, font service, or model API is required.
 
 ## How the pieces fit
 
@@ -35,6 +36,8 @@ public service. Commons is built around a stronger contract:
 | `@21stgov/commons-tokens` | DTCG token sources compiled to CSS custom properties with a validated contrast contract              |
 | `@21stgov/commons-core`   | Framework-agnostic accessible reset and base styles                                                  |
 | `@21stgov/commons-react`  | React 19 components (also distributed as source via the registry)                                    |
+| `@21stgov/commons-css`    | `commons.css` — the `.cui-*` component classes for any stack, generated 1:1 from the React components |
+| `@21stgov/commons-js`     | A tiny progressive-enhancement runtime (`enhance()`) that makes the `.cui-*` markup interactive       |
 | `@21stgov/commons-fonts`  | Self-hosted Atkinson Hyperlegible Next + Mono variable fonts                                         |
 
 ## Built for machines too
@@ -47,4 +50,7 @@ mirror at the same path with a `.md` extension, and
 [/llms-full.txt](https://commonsui.com/llms-full.txt) provides the complete
 generated documentation corpus in one file.
 
-Ready to start? Head to [Installation](/docs/installation).
+Ready to start? Head to [Installation](/docs/installation) — it covers both the
+React and the framework-agnostic HTML paths. On a non-React stack (Drupal,
+WordPress, .NET, Rails, plain HTML), see [Using Commons without
+React](/docs/without-react).

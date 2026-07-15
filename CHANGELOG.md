@@ -9,6 +9,34 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## Unreleased
+
+### Added
+
+- **A framework-agnostic component layer** — the components now run in any
+  stack (Drupal, WordPress, .NET, Rails, plain HTML) with no React and no build
+  step, via two new public packages:
+  - **`@21stgov/commons-css`** — `commons.css`, the full set of `.cui-*`
+    component classes. It is generated from the same React components' `cva`
+    configs, so the vanilla markup looks 1:1 with the React output rather than
+    drifting from it.
+  - **`@21stgov/commons-js`** — a small progressive-enhancement runtime.
+    `enhance()` wires the interactive behaviors (dialogs, menus, tabs,
+    accordions, carousels, data tables, comboboxes, and ~40 more) onto `.cui-*`
+    markup; a `<script>` build (`@21stgov/commons-js/global`) auto-enhances the
+    page with no code. See [Using Commons without React](https://commonsui.com/docs/without-react).
+- **React ⇄ HTML documentation.** Component pages carry a global framework
+  preference (beside the theme switcher) that reshapes the demo, its copyable
+  code, and the Installation / Usage sections for React or framework-agnostic
+  HTML — the same component, both ways, from one source.
+
+### Fixed
+
+- The framework-agnostic spinner rendered a doubled, wobbling animation: the
+  icon's size/spin `cva` collided on name with its wrapper's `data-slot` in the
+  `.cui-*` CSS generator, so both elements spun and the icon lost its square
+  box. The generator now emits the icon styles under `.cui-spinner-icon`.
+
 ## 0.1.0 — 2026-07-13
 
 The first public pre-release. All five packages
