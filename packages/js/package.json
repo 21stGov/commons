@@ -1,19 +1,48 @@
 {
   "name": "@21stgov/commons-js",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.2.0",
   "type": "module",
   "license": "MIT",
+  "sideEffects": false,
   "description": "Framework-agnostic progressive-enhancement runtime for Commons — makes the .cui-* / data-slot markup interactive (accordion, dialog, menus…) with no framework.",
   "homepage": "https://commonsui.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21stGov/commons.git",
+    "directory": "packages/js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "//exports": "Dev/workspace resolves to source (Vite HMR); publishConfig.exports below ships dist on publish.",
   "exports": {
     ".": "./src/index.ts"
   },
+  "publishConfig": {
+    "access": "public",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "./global": "./dist/index.global.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm run build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "devDependencies": {
+    "tsup": "^8.5.1",
     "typescript": "~5.9.0",
     "vitest": "^4.1.10"
   }

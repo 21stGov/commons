@@ -1,15 +1,23 @@
 {
   "name": "@21stgov/commons-css",
   "version": "0.2.0",
-  "private": true,
   "type": "module",
   "license": "MIT",
   "description": "Framework-agnostic component CSS for Commons — use the components in any stack (Drupal, WordPress, plain HTML), no React or Tailwind build required.",
   "homepage": "https://commonsui.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/21stGov/commons.git",
+    "directory": "packages/css"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],
   "exports": {
+    ".": "./dist/commons.css",
     "./commons.css": "./dist/commons.css",
     "./components.css": "./dist/components.src.css"
   },
