@@ -1057,8 +1057,22 @@ nav[data-orientation='horizontal'] li a:visited,
   padding-inline-start: var(--cui-spacing-5);
 }
 
+/* The accessible core reset clears list markers globally; restore them for
+ * prose. */
+.docs-legal ul {
+  list-style: disc;
+}
+
+.docs-legal ol {
+  list-style: decimal;
+}
+
 .docs-legal li {
   margin-block: var(--cui-spacing-1);
+}
+
+.docs-legal li::marker {
+  color: var(--cui-text-muted);
 }
 
 .docs-legal a {
@@ -1097,6 +1111,18 @@ nav[data-orientation='horizontal'] li a:visited,
 .docs-legal-note {
   color: var(--cui-text-muted);
   font-size: 0.9375rem;
+}
+
+.docs-legal-footer {
+  margin-block-start: var(--cui-spacing-8);
+  padding-block-start: var(--cui-spacing-4);
+  border-block-start: 1px solid var(--cui-border-default);
+  color: var(--cui-text-muted);
+  font-size: 0.9375rem;
+}
+
+.docs-legal-footer p {
+  margin: 0;
 }
 
 .docs-home {
