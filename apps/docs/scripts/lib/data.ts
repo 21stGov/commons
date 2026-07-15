@@ -167,3 +167,17 @@ export function runnerCommand(pm: PackageManager, args: string): string {
       return `bunx @21stgov/commons ${args}`
   }
 }
+
+/** The dependency-install command for each package manager. */
+export function installCommand(pm: PackageManager, packages: string): string {
+  switch (pm) {
+    case 'npm':
+      return `npm install ${packages}`
+    case 'pnpm':
+      return `pnpm add ${packages}`
+    case 'yarn':
+      return `yarn add ${packages}`
+    case 'bun':
+      return `bun add ${packages}`
+  }
+}

@@ -193,6 +193,57 @@
 }
 
 /* --------------------------------------------------------------------------
+ * Framework preference (React ⇄ HTML)
+ * -------------------------------------------------------------------------- */
+
+/* Both variants are emitted into the page; the root's data-framework decides
+ * which shows. `display: contents` keeps the visible one out of the prose flow.
+ * The :not() default means an un-seeded root behaves as React. */
+[data-framework-only] {
+  display: contents;
+}
+
+:root:not([data-framework='html']) [data-framework-only='html'],
+:root[data-framework='html'] [data-framework-only='react'] {
+  display: none;
+}
+
+.docs-framework-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--cui-spacing-05);
+  margin-block: var(--cui-spacing-4) var(--cui-spacing-3);
+}
+
+.docs-framework-toggle-label {
+  margin-inline-end: var(--cui-spacing-1);
+  color: var(--cui-text-muted);
+  font-size: var(--cui-font-size-sm, 0.875rem);
+  font-weight: var(--cui-font-weight-semibold);
+}
+
+.docs-framework-toggle button {
+  min-block-size: 2.25rem;
+  padding-inline: var(--cui-spacing-3);
+  border: 1px solid var(--cui-border-default);
+  border-radius: var(--cui-radius-md);
+  background: var(--cui-bg-default);
+  color: var(--cui-text-muted);
+  font-weight: var(--cui-font-weight-semibold);
+}
+
+.docs-framework-toggle button[aria-pressed='true'] {
+  border-color: var(--cui-action-primary-bg);
+  background: var(--cui-action-primary-bg);
+  color: var(--cui-action-primary-text);
+}
+
+.docs-framework-toggle button:focus-visible {
+  outline: 2px solid var(--cui-focus-ring);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
  * Documentation typography and page rhythm
  * -------------------------------------------------------------------------- */
 

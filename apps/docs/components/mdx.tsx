@@ -7,6 +7,7 @@ import type { ComponentProps } from 'react'
 
 import { ComponentDemo } from '@/components/component-demo'
 import { ComponentStatus } from '@/components/component-status'
+import { Framework, FrameworkToggle } from '@/components/framework-toggle'
 
 function DocsTabs(props: ComponentProps<typeof FumaTabs>) {
   return (
@@ -21,6 +22,8 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     Tabs: DocsTabs,
     ComponentDemo,
     ComponentStatus,
+    Framework,
+    FrameworkToggle,
     ...components,
   }
 }

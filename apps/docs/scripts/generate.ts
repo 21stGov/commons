@@ -19,11 +19,34 @@
 import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
+import { format } from 'prettier'
+
 import { buildJsonSchemas } from '../../../packages/cli/src/schemas.ts'
 
 import { appDir, loadComponents, repoRoot } from './lib/data.ts'
 import { buildLlmsTxt, loadStaticPages } from './lib/llms.ts'
 import { buildComponentMdx, buildComponentsIndexMdx } from './lib/render.ts'
+
+// --- Vanilla HTML snippet for the "Code" tab of each demo -------------------
+// The same fragment the html-playground / cui-frames use (authored wins over
+// the SSR-generated one), pretty-printed so it reads as copyable source rather
+// than one server-rendered line.
+const playgroundSrc = join(repoRoot, 'apps', 'html-playground', 'src')
+
+async function loadHtmlSnippet(name: string): Promise<string | undefined> {
+  const authored = join(playgroundSrc, 'authored', `${name}.html`)
+  const generated = join(playgroundSrc, 'generated', 'demos', `${name}.html`)
+  const path = existsSync(authored) ? authored : existsSync(generated) ? generated : undefined
+  if (!path) return undefined
+  const raw = readFileSync(path, 'utf8').trim()
+  try {
+    return (await format(raw, { parser: 'html', printWidth: 96, htmlWhitespaceSensitivity: 'ignore' })).trimEnd()
+  } catch {
+    // If Prettier can't parse a fragment, ship it unformatted rather than
+    // dropping the HTML code entirely.
+    return raw
+  }
+}
 
 const contentOnly = process.argv.includes('--content-only')
 
@@ -36,7 +59,11 @@ rmSync(generatedDir, { recursive: true, force: true })
 mkdirSync(generatedDir, { recursive: true })
 
 for (const component of components) {
-  writeFileSync(join(generatedDir, `${component.name}.mdx`), buildComponentMdx(component))
+  const htmlSnippet = await loadHtmlSnippet(component.name)
+  writeFileSync(
+    join(generatedDir, `${component.name}.mdx`),
+    buildComponentMdx(component, htmlSnippet)
+  )
 }
 writeFileSync(join(generatedDir, 'index.mdx'), buildComponentsIndexMdx(components))
 writeFileSync(

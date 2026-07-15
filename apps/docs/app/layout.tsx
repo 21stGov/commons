@@ -63,6 +63,17 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <body className="flex min-h-screen flex-col">
         {/*
+          Seed the React ⇄ HTML docs preference before paint so CSS-driven
+          content swaps (Installation / Usage) never flash the wrong variant.
+          Defaults to 'react' when nothing is stored. See use-framework.ts.
+        */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `try{var f=localStorage.getItem('commons-framework');document.documentElement.dataset.framework=f==='html'?'html':'react'}catch(e){document.documentElement.dataset.framework='react'}`,
+          }}
+        />
+        {/*
           Theme switching writes BOTH the `class` attribute (Fumadocs UI keys
           its own dark styles on `.dark`) and `data-theme` (Commons tokens key
           light / dark / high-contrast on it), so live component demos re-theme
