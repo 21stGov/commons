@@ -2,7 +2,7 @@
 
 _Status: documentation plan · Audience: 21st Gov, Commons maintainers, public
 technology leaders, procurement, counsel, security, accessibility, and delivery
-teams · Last reviewed: 2026-07-10_
+teams · Last reviewed: 2026-07-15_
 
 ## Purpose
 
@@ -77,12 +77,12 @@ These should exist before a broad public release.
 | -------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- |
 | MIT `LICENSE`                    | Establishes rights to use, copy, modify, and redistribute                                          | Exists                                            | Repository root; linked from website                            |
 | Third-party notices              | Identifies obligations for copied or bundled upstream code                                         | Exists; maintain continuously                     | Repository root and release artifacts                           |
-| Terms of website use             | Covers the docs site, downloads, public registry, and site conduct                                 | Draft needed                                      | 21st Gov/Commons legal pages; versioned source linked from repo |
-| Privacy notice                   | States exactly what the website and hosted endpoints collect, why, retention, sharing, and choices | Draft needed before analytics or hosted endpoints | Website legal pages; product data sheet in repo                 |
-| Accessibility statement          | States the site’s commitment, known limitations, feedback channel, and response process            | Draft needed for Commons site                     | Website plus versioned Markdown                                 |
+| Terms of website use             | Covers the docs site, downloads, public registry, and site conduct                                 | Published — draft, review needed         | [commonsui.com/terms](https://commonsui.com/terms)                         |
+| Privacy notice                   | States exactly what the website and hosted endpoints collect, why, retention, sharing, and choices | Published — draft, review needed         | [commonsui.com/privacy](https://commonsui.com/privacy)                     |
+| Accessibility statement          | States the site’s commitment, known limitations, feedback channel, and response process            | Published — draft                                 | [commonsui.com/accessibility-statement](https://commonsui.com/accessibility-statement) |
 | Trademark and brand policy       | Explains permitted use of “Commons,” logos, forks, and compatibility claims                        | Draft needed before ecosystem growth              | Repository and website                                          |
-| Disclaimer / scope statement     | Prevents “uses Commons” from being represented as automatic legal or WCAG compliance               | Draft needed                                      | README, docs, ACRs, and terms                                   |
-| Acceptable use policy            | Defines misuse of public registry, MCP, or other hosted services                                   | Needed when interactive hosted services launch    | Website legal pages                                             |
+| Disclaimer / scope statement     | Prevents “uses Commons” from being represented as automatic legal or WCAG compliance               | Published — draft                                 | [commonsui.com/disclaimer](https://commonsui.com/disclaimer)               |
+| Acceptable use policy            | Defines misuse of public registry, MCP, or other hosted services                                   | Published — draft                                 | [commonsui.com/acceptable-use](https://commonsui.com/acceptable-use)       |
 | Copyright and attribution policy | Explains headers, notices, copied-source obligations, and downstream attribution                   | Partial in game plan                              | Repository docs                                                 |
 
 ### Terms that should be reviewed by counsel
@@ -118,10 +118,11 @@ the unfinished policy.
 | Maintainer guide       | Triage, release, security embargo, access control, offboarding                                                             |
 | Public roadmap         | Delivered, committed, exploratory, and explicitly out-of-scope work                                                        |
 
-Publish `/.well-known/security.txt` on Commons-operated domains and point it to
-the vulnerability disclosure policy. RFC 9116 defines the machine-readable
-format and canonical well-known location. A security policy and `security.txt`
-complement one another; neither replaces an actual response process.
+Commons publishes
+[`/.well-known/security.txt`](https://commonsui.com/.well-known/security.txt)
+(RFC 9116), pointing to the vulnerability disclosure policy in `SECURITY.md`. A
+security policy and `security.txt` complement one another; neither replaces an
+actual response process.
 
 ## Tier 3: implementation documentation
 

@@ -25,9 +25,9 @@ The core architecture is deliberately low-dependency:
 
 Commons is not a hosted resident-data system. The packages do not require an
 account, database, telemetry service, or Commons-operated runtime. Optional
-hosted services, including the proposed read-only MCP interface, are separate
-system boundaries and must publish their own data and security documentation
-before launch.
+hosted services — the read-only MCP interface (`mcp.commonsui.com`) and the
+first-party asset CDN (`cdn.commonsui.com`) — are separate system boundaries
+that publish their own data and security documentation.
 
 ## System context
 
@@ -178,13 +178,13 @@ outside the portable package and registry contracts. See
 [Platform support and infrastructure portability](platform-support.md)
 for the compatibility policy and research baseline.
 
-### Proposed MCP boundary
+### MCP boundary
 
-The proposed public MCP server is a separate, read-only interface over generated
-registry artifacts. It should be stateless, accept no government source code or
-resident data, and perform no model inference. Local validation and write tools,
-if later provided, run in the adopter’s environment and require explicit review
-and approval. See [AI-native Commons](ai-and-agents.md).
+The public MCP server (`mcp.commonsui.com`) is a separate, read-only interface
+over generated registry artifacts. It is stateless, accepts no government source
+code or resident data, and performs no model inference. Local validation and
+write tools, if later provided, run in the adopter’s environment and require
+explicit review and approval. See [AI-native Commons](ai-and-agents.md).
 
 ## Trust boundaries
 
