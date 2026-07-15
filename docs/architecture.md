@@ -1,7 +1,7 @@
 # Commons architecture overview
 
 _Status: working architecture · Audience: agency architects, security reviewers,
-implementers, and Commons contributors · Last reviewed: 2026-07-10_
+implementers, and Commons contributors · Last reviewed: 2026-07-15_
 
 ## Executive summary
 
@@ -14,7 +14,9 @@ environment.
 The core architecture is deliberately low-dependency:
 
 - tokens compile to CSS custom properties and JSON;
-- framework-agnostic foundations ship as CSS;
+- framework-agnostic foundations ship as CSS, and the components themselves ship
+  as `.cui-*` classes (`@21stgov/commons-css`) plus a small enhancement runtime
+  (`@21stgov/commons-js`) for use without React;
 - React components build on Base UI primitives;
 - a static registry describes and distributes component source;
 - the Commons CLI previews and installs that source into an adopter’s
@@ -54,13 +56,17 @@ content, integrations, infrastructure, customizations, or release process.
 | ----------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
 | `packages/tokens` | DTCG token sources, theme compilation, resolved JSON, contrast validation                     | None                                                 |
 | `packages/core`   | Framework-agnostic reset, base CSS, and accessibility utilities                               | None                                                 |
+| `packages/css`    | `commons.css` — the `.cui-*` component classes, generated from the React components            | None                                                 |
+| `packages/js`     | Progressive-enhancement runtime that makes `.cui-*` markup interactive without React           | None                                                 |
 | `packages/react`  | React utilities and components built on accessible primitives                                 | None by default                                      |
 | `packages/cli`    | Configuration, registry resolution, installation planning, and—in Phase 1—source installation | Public registry reads                                |
 | `apps/docs`       | Documentation site and registry publication surface                                           | Build-time and public content delivery only to start |
 
 Package boundaries are intentional. A server-rendered municipal site can adopt
-tokens and core CSS without React. A React application can use the component
-package. A team that wants source ownership can use the CLI and registry.
+tokens and core CSS without React — and, with `commons-css` (`.cui-*` component
+classes) and the `commons-js` enhancement runtime, the full component set with
+no framework. A React application can use the component package. A team that
+wants source ownership can use the CLI and registry.
 
 ## Build and release flow
 
@@ -101,11 +107,14 @@ This is the primary Commons model. It reduces runtime lock-in, but it creates a
 shared maintenance responsibility: Commons publishes upgrade guidance and
 diffs; the agency decides when and how to merge them.
 
-### 2. Framework-agnostic foundation
+### 2. Framework-agnostic path
 
-The agency consumes `@21stgov/commons-tokens` and
-`@21stgov/commons-core` in an existing server-rendered, static, or non-React
-application. No Commons JavaScript runtime is required.
+The agency consumes `@21stgov/commons-tokens` and `@21stgov/commons-core` in an
+existing server-rendered, static, or non-React application — for token-only
+restyling, no Commons JavaScript is required. Adding `@21stgov/commons-css`
+brings the full `.cui-*` component classes, and `@21stgov/commons-js` — a small,
+optional progressive-enhancement runtime — makes the interactive components work
+without a framework.
 
 ### 3. React package consumption
 

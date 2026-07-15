@@ -420,7 +420,7 @@ understand or challenge. Start with:
 6. Code-first design source
 7. Cloudflare static-first documentation and registry
 8. No telemetry in runtime packages
-9. Company stewardship under 21st Gov
+9. Community stewardship under the 21st Gov name
 10. Read-only MCP as a generated registry view
 
 Each ADR should include context, decision, alternatives, accessibility impact,

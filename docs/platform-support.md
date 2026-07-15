@@ -112,10 +112,10 @@ installation, and upgrade flow.
 
 ### Packages
 
-`@21stgov/commons-tokens`, `@21stgov/commons-core`, and
-`@21stgov/commons-react` must not call a Commons-operated service at runtime.
-They must not require Cloudflare bindings, environment variables, a database, or
-an account.
+`@21stgov/commons-tokens`, `@21stgov/commons-core`, `@21stgov/commons-css`,
+`@21stgov/commons-js`, and `@21stgov/commons-react` must not call a
+Commons-operated service at runtime. They must not require Cloudflare bindings,
+environment variables, a database, or an account.
 
 Published packages should include conventional ESM/CSS/type exports, explicit
 engine and peer ranges, licenses, checksums/provenance, and an SBOM at the

@@ -38,8 +38,10 @@ Commons is built around a stronger contract:
 - **Owned by the institution.** The Commons CLI copies understandable component
   source into a government’s repository instead of hiding essential interfaces
   behind a proprietary runtime. What you install is what you own.
-- **Modern without being fragile.** React components use Base UI primitives;
-  the CSS and token core remains useful without React.
+- **Modern without being fragile.** The components work two ways from one
+  source: first-class React on Base UI primitives, or framework-agnostic
+  `.cui-*` CSS plus a small runtime for any server-rendered stack — no React,
+  no build step.
 - **Built for public service.** Government identity, forms, long-lived systems,
   translation, plain language, and constrained municipal teams are the use case—not
   an afterthought.
@@ -50,13 +52,15 @@ Commons is built around a stronger contract:
 
 ## The system
 
-| Layer  | Package                   | What it provides                                                   |
-| ------ | ------------------------- | ------------------------------------------------------------------ |
-| Tokens | `@21stgov/commons-tokens` | DTCG token sources compiled to CSS variables and JSON              |
-| Core   | `@21stgov/commons-core`   | Framework-agnostic reset, foundations, and accessibility utilities |
-| React  | `@21stgov/commons-react`  | Accessible components built on Base UI                             |
-| Fonts  | `@21stgov/commons-fonts`  | Self-hosted Atkinson Hyperlegible Next + Mono variable fonts       |
-| CLI    | `@21stgov/commons`        | Own-your-code registry workflow, plus a read-only MCP server       |
+| Layer  | Package                   | What it provides                                                       |
+| ------ | ------------------------- | --------------------------------------------------------------------- |
+| Tokens | `@21stgov/commons-tokens` | DTCG token sources compiled to CSS variables and JSON                 |
+| Core   | `@21stgov/commons-core`   | Framework-agnostic reset, foundations, and accessibility utilities    |
+| CSS    | `@21stgov/commons-css`    | `commons.css` — the `.cui-*` component classes, generated 1:1 from React |
+| JS     | `@21stgov/commons-js`     | A small progressive-enhancement runtime that makes `.cui-*` interactive |
+| React  | `@21stgov/commons-react`  | Accessible components built on Base UI                                |
+| Fonts  | `@21stgov/commons-fonts`  | Self-hosted Atkinson Hyperlegible Next + Mono variable fonts          |
+| CLI    | `@21stgov/commons`        | Own-your-code registry workflow, plus a read-only MCP server          |
 
 The consumer workflow is simple:
 
@@ -81,9 +85,12 @@ Commons ships today:
 - **DTCG tokens** for color, type, spacing, focus, motion, elevation,
   breakpoints, radii, and z-index, with light, dark, and dedicated
   high-contrast themes and automated contrast validation.
-- **A framework-agnostic CSS core** — reset, base layer, and accessibility
-  utilities — usable with zero React (PHP, Drupal, WordPress, .NET, or any
-  server-rendered stack).
+- **A framework-agnostic component path** — `@21stgov/commons-css` ships
+  `commons.css`, the `.cui-*` component classes generated 1:1 from the React
+  components, and `@21stgov/commons-js` is a small progressive-enhancement
+  runtime that wires up their interactivity. With the token + core CSS
+  foundation, components work with zero React (PHP, Drupal, WordPress, .NET, or
+  any server-rendered stack), served from a versioned CDN at `cdn.commonsui.com`.
 - **The CLI** (`init`, `add`, `search`, `inspect`) with a versioned `--json`
   machine interface, plus a read-only **MCP server** (`commons mcp`) so agents
   can search, inspect, and plan installs against the same registry.
@@ -152,9 +159,10 @@ Read more in **[AI-native Commons](docs/ai-and-agents.md)**.
 
 ## Build with us
 
-Commons is company-stewarded by 21st Gov and developed in the open. Government
-teams, accessibility practitioners, designers, developers, educators, and
-residents are invited to help shape it.
+Commons is developed in the open under the 21st Gov name — an independent,
+community-supported project led by Seth Cottle, not a registered company or
+nonprofit. Government teams, accessibility practitioners, designers, developers,
+educators, and residents are invited to help shape it.
 
 Start with [CONTRIBUTING.md](CONTRIBUTING.md), then review the
 [component definition of done](docs/conventions/components.md) before changing public UI.
@@ -166,7 +174,7 @@ accessibility contract, examples, tests, and documentation—not just its pixels
 Commons follows [semantic versioning](https://semver.org). We are **pre-1.0**:
 the API is still stabilizing, every component is published as `experimental`,
 and `0.x` minor releases may include breaking changes — pin an exact version if
-you need stability. This is an early release; think 0.1, not 1.0.
+you need stability. This is an early `0.x` release, not 1.0.
 
 The road to 1.0 runs through the accessibility work that is not finished yet:
 manual screen-reader testing and inclusive user testing, tracked per component
@@ -224,7 +232,7 @@ changes; AI does not independently decide what reaches production.
   in `packages/fonts` are licensed separately under the
   [SIL Open Font License, Version 1.1](packages/fonts/LICENSE.txt),
   regardless of the license used by the design system.
-- **Steward:** [21st Gov](https://21stgov.com)
+- **Maintainer:** Seth Cottle, in the open under the [21st Gov](https://21stgov.com) name
 
 Public institutions outlast frameworks, vendors, and administrations. Commons
 is being built accordingly.
