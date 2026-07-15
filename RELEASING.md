@@ -1,6 +1,6 @@
 # Releasing Commons
 
-How the five publishable packages get versioned and published to npm. If you
+How the seven publishable packages get versioned and published to npm. If you
 only want to *propose* a release, you just need the [Add a changeset](#1-add-a-changeset)
 step — the rest is automated.
 
@@ -10,6 +10,8 @@ The packages:
 | --- | --- |
 | Tokens | `@21stgov/commons-tokens` |
 | Core | `@21stgov/commons-core` |
+| CSS | `@21stgov/commons-css` |
+| JS | `@21stgov/commons-js` |
 | React | `@21stgov/commons-react` |
 | Fonts | `@21stgov/commons-fonts` |
 | CLI | `@21stgov/commons` |
@@ -35,7 +37,7 @@ create the **`@21stgov` organization on npmjs.com** and make the scope public.
 - **[Semantic versioning](https://semver.org).** We are **pre-1.0** — every
   component is `experimental`, and `0.x` **minor** releases may include breaking
   changes; **patch** releases are fixes only.
-- **Lockstep.** All five packages ship the same version, bumped together, so a
+- **Lockstep.** All seven packages ship the same version, bumped together, so a
   consumer never has to reason about cross-package compatibility. We keep them
   in sync by listing every package in the release changeset — **not** via
   Changesets' `fixed` group (with `0.0.x` packages that group forces a jump to
@@ -61,7 +63,7 @@ pnpm changeset
 
 Pick the affected packages, the bump type (`patch` / `minor`), and write a
 one-line summary — it becomes the CHANGELOG entry. **For a coordinated release,
-select all five packages with the same bump type** (lockstep). Commit the
+select all seven packages with the same bump type** (lockstep). Commit the
 generated `.changeset/*.md` file with your change.
 
 > A change that doesn't affect any published package (docs copy, a demo, CI)
@@ -94,8 +96,8 @@ mints a short-lived OIDC token, pnpm exchanges it with npm, and npm verifies it
 against a trusted publisher registered for the `@21stgov` scope. Provenance is
 generated automatically from that same token.
 
-The trusted publisher is already configured on npmjs.com
-(*org `@21stgov` → Settings → Trusted Publishers*) with:
+Every published package trusts the same GitHub repo + workflow (on npmjs.com,
+per package: *Settings → Trusted Publisher*):
 
 | Field | Value |
 | --- | --- |
@@ -109,6 +111,57 @@ The trusted publisher is already configured on npmjs.com
 `id-token: write` (required for OIDC) and runs on **Node 24** with a **pnpm 10.x**
 that supports OIDC — both are hard requirements (Node must be > 22; pnpm 11.x
 has a known OIDC regression, so we stay on 10.x, pinned via `packageManager`).
+
+### First release of a brand-new package
+
+Trusted Publishing can't *create* a package — OIDC verifies against a trusted
+publisher that lives on an **existing** package. So a package's very first
+publish is a manual, authenticated one; CI takes over afterward. Do this
+**before** pushing the release that would otherwise first publish it, or the
+release job errors on the new package (no package to publish into, no publisher
+to verify):
+
+1. `npm login` — as a member of `@21stgov` with publish rights.
+2. Build it: `pnpm --filter <pkg> build`.
+3. Publish by hand: `pnpm --filter <pkg> publish --no-git-checks` (respects
+   `publishConfig.access: public`; add `--otp=…` if prompted). Publishing is
+   independent of git — it ships your local built tree, nothing needs to be pushed.
+4. On npmjs.com, open the new package → *Settings → Trusted Publisher* and
+   confirm it trusts GitHub Actions / `21stGov` / `commons` / `release.yml`. If
+   it isn't already listed, add it.
+5. Then push. `changeset publish` sees that version already on the registry and
+   **skips** the package this once; every later version publishes via OIDC like
+   the rest.
+
+`commons-css` and `commons-js` were bootstrapped this way for 0.3.0. A bootstrap
+version is published without a provenance attestation or a CI-created git tag;
+every CI release after it has both.
+
+## The CDN (cdn.commonsui.com)
+
+The framework-agnostic assets are served from a first-party CDN — a Cloudflare
+R2 bucket (`commons-cdn`) behind `cdn.commonsui.com` — at immutable versioned
+paths: `/v<version>/` holds `commons.css`, `commons.min.css`, `fonts.css`,
+`commons.js`, and `commons.min.js`.
+
+Uploading is the last step of the Release workflow, gated on an actual npm
+publish (`steps.changesets.outputs.published == 'true'`): after publishing, CI
+runs `pnpm build:cdn` and pushes the `v<version>/` assets to R2 with `wrangler`.
+What follows from that:
+
+- The CDN is **populated by CI on release** — a manual `npm publish` (like a
+  new-package bootstrap above) does **not** upload CDN assets.
+- One CI publish is enough to trigger the upload, and the asset set is versioned
+  off the css package version — so even a release where some packages are skipped
+  still uploads the full `v<version>/` set.
+- Until the first release runs through this step, the CDN is **empty** and every
+  `cdn.commonsui.com/v…` URL 404s — the installation docs, the component
+  quick-starts, and the Drupal/WordPress guides all point at it. They go live the
+  moment that release completes; don't announce the docs as ready before then.
+- Paths are immutable — a given `v<version>/` is written once, so re-runs are
+  idempotent.
+- Requires the `CLOUDFLARE_API_TOKEN` Actions secret (Workers R2 Storage scope);
+  the account id is public and lives in the workflow.
 
 ## Manual release (fallback)
 
@@ -127,6 +180,12 @@ git push --follow-tags
 You must be logged in to npm (`npm whoami`) as a member of the `@21stgov` org
 with publish rights.
 
+A fully-manual release skips the CI [CDN upload](#the-cdn-cdncommonsuicom), so
+push the assets yourself too — build them and `wrangler r2 object put` each file
+under `commons-cdn/v<version>/` (see the `Publish CDN assets to R2` step in
+[`release.yml`](.github/workflows/release.yml) for the exact commands), or just
+re-run the Release workflow from the Actions tab once CI is back.
+
 ## Pre-flight checklist
 
 Before a release goes out, the full gate should be green (CI enforces this on
@@ -140,7 +199,7 @@ pnpm lint
 pnpm validate:contrast
 ```
 
-All five packages already declare `"publishConfig": { "access": "public" }` and
+All seven packages already declare `"publishConfig": { "access": "public" }` and
 `"engines": { "node": ">=22" }`; the `consumer-node-minimum` CI job packs real
 tarballs and smoke-tests them on Node 22, so a broken published artifact fails
 CI before it can ship.
