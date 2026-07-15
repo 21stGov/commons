@@ -1,0 +1,27 @@
+# Commons (21st Gov) — Drupal library definition
+# https://commonsui.com/docs/without-react
+#
+# Rename to match your FRONT-END theme or custom module (e.g. mytheme.libraries.yml),
+# place it at the module/theme root, then attach it one of two ways:
+#   • globally, on every page — add to mytheme.info.yml:
+#       libraries:
+#         - mytheme/commons
+#   • per template, in Twig:
+#       {{ attach_library('mytheme/commons') }}
+#
+# Attach it from your front-end theme, not the admin theme — Commons' reset is
+# meant for the public site, not Drupal's admin UI.
+#
+# Pin the version you tested against — CDN paths are immutable. For production,
+# swap commons.css → commons.min.css and commons.js → commons.min.js.
+
+commons:
+  version: '0.3.0'
+  css:
+    theme:
+      https://cdn.commonsui.com/v0.3.0/commons.css: { type: external }
+      # Optional: self-hosted Atkinson Hyperlegible fonts (system fonts work without it)
+      # https://cdn.commonsui.com/v0.3.0/fonts.css: { type: external }
+  js:
+    # Auto-enhances every .cui-* region on load; defer so it runs after parse.
+    https://cdn.commonsui.com/v0.3.0/commons.js: { type: external, attributes: { defer: true } }

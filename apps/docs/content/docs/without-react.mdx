@@ -28,9 +28,9 @@ build step.
 3. **Add interactivity** — load `commons-js`, and the interactive components (dialogs, menus, tabs, accordions, carousels, comboboxes, data tables…) come alive with no custom JavaScript.
 
 The [Installation](/docs/installation) page (switch it to **HTML**) has the exact
-install commands and load order. The rest of this page covers what each depth
-gives you. Everything degrades gracefully — a partial adoption never breaks the
-page.
+install commands and load order, and [Drupal and WordPress](#loading-commons-in-drupal-and-wordpress)
+wiring is covered below. The rest of this page covers what each depth gives you.
+Everything degrades gracefully — a partial adoption never breaks the page.
 
 ## Token-only: restyle your markup
 
@@ -92,6 +92,77 @@ state wired up — that is what `@21stgov/commons-js` does.
 The behaviors follow the same normative accessibility contract published on each
 [component's page](/docs/components) and in the registry JSON, so the keyboard
 and screen-reader experience matches the React components.
+
+## Loading Commons in Drupal and WordPress
+
+Drupal and WordPress both load CSS and JavaScript through their own asset
+systems rather than raw `<link>` / `<script>` tags in a template — so the only
+thing that differs between them is the wiring. The markup is the same `.cui-*`
+HTML, and `commons-js` enhances the page automatically once it loads. Point
+either platform at the CDN files (pin the version you tested against) or at your
+own self-hosted copies.
+
+### Drupal
+
+Define a library in your **front-end** theme (or a custom module) and attach it.
+Add this to `mytheme.libraries.yml`:
+
+```yaml
+commons:
+  version: '0.3.0'
+  css:
+    theme:
+      https://cdn.commonsui.com/v0.3.0/commons.css: { type: external }
+  js:
+    https://cdn.commonsui.com/v0.3.0/commons.js: { type: external, attributes: { defer: true } }
+```
+
+Then attach it globally in `mytheme.info.yml`:
+
+```yaml
+libraries:
+  - mytheme/commons
+```
+
+…or per template in Twig with `{{ attach_library('mytheme/commons') }}`. Attach
+it from the front-end theme, not the admin theme — Commons' reset is meant for
+the public site. Write `.cui-*` markup in your Twig templates; the quickest way
+to get correct markup is the **HTML → Code** tab on any
+[component page](/docs/components).
+
+Download the ready-to-use file: [commons.libraries.yml](/examples/drupal/commons.libraries.yml).
+
+### WordPress
+
+Enqueue the assets on `wp_enqueue_scripts`. The most durable home is a must-use
+plugin — drop this in `wp-content/mu-plugins/commons.php` so it loads on every
+request and survives theme switches:
+
+```php
+add_action('wp_enqueue_scripts', function () {
+    $base = 'https://cdn.commonsui.com/v0.3.0';
+    // null version arg → no ?ver= (the CDN path is already versioned).
+    wp_enqueue_style('commons', "{$base}/commons.css", array(), null);
+    wp_enqueue_script('commons', "{$base}/commons.js", array(), null, array(
+        'strategy'  => 'defer', // WordPress 6.3+; drop it and pass true for older cores
+        'in_footer' => true,
+    ));
+});
+```
+
+The same callback works pasted into your theme's `functions.php`. Put `.cui-*`
+markup in your theme templates, block markup, or shortcodes; `commons-js`
+enhances it on load.
+
+Download the ready-to-use file: [commons.php](/examples/wordpress/commons.php).
+
+### For production
+
+Both examples point at the readable `commons.css` / `commons.js` builds. For
+production, swap in the minified builds — `commons.min.css` and
+`commons.min.js` — at the same versioned path. Optionally add `fonts.css` to
+serve the self-hosted Atkinson Hyperlegible fonts; system fonts are used if you
+skip it.
 
 ## Accessibility utilities
 
