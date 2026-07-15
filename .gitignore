@@ -13,3 +13,6 @@ coverage
 .vite
 # npm pack output
 *.tgz
+
+# CDN build output (uploaded to R2 by the release workflow)
+/dist-cdn/

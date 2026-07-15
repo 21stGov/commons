@@ -7,6 +7,7 @@
  */
 
 import {
+  cdnBase,
   type ComponentDoc,
   githubUrl,
   installCommand,
@@ -174,20 +175,21 @@ export function buildComponentMdx(component: ComponentDoc, htmlSnippet?: string)
   ].join('\n')
 
   const htmlInstall = [
-    'Commons also ships as plain CSS plus a small progressive-enhancement',
-    'runtime, so this component works in any stack — no React or build step.',
-    'Install the two shared packages once for your whole project:',
+    'Commons also works in any stack — no React and no build step. The fastest',
+    'start is the first-party CDN: one stylesheet (design tokens, themes, and the',
+    '`.cui-*` component classes) and the runtime, which auto-enhances any `.cui-*`',
+    'markup it finds (dialogs, menus, and the rest).',
+    '',
+    '```html',
+    `<link rel="stylesheet" href="${cdnBase}/commons.css" />`,
+    `<script src="${cdnBase}/commons.js" defer></script>`,
+    '```',
+    '',
+    'Prefer to self-host or pin via npm? Install the packages instead:',
     '',
     packageManagerTabs((pm) => installCommand(pm, '@21stgov/commons-css @21stgov/commons-js')),
     '',
-    'Load the stylesheet and runtime in your page — the runtime auto-enhances',
-    'any `.cui-*` markup it finds (dialogs, menus, and the rest). Then copy the',
-    "component's HTML from the Examples below.",
-    '',
-    '```html',
-    '<link rel="stylesheet" href="/commons.css" />',
-    '<script src="/commons.js" defer></script>',
-    '```',
+    "Then copy the component's HTML from the Examples below.",
   ].join('\n')
 
   const installation = [

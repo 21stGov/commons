@@ -28,6 +28,14 @@ export const siteUrl = 'https://commonsui.com'
 
 export const githubUrl = 'https://github.com/21stgov/commons'
 
+/** The current (lockstep) package version, e.g. "0.2.0". */
+export const version: string = JSON.parse(
+  readFileSync(join(repoRoot, 'packages', 'css', 'package.json'), 'utf8')
+).version
+
+/** Immutable, versioned first-party CDN base — cdn.commonsui.com/v<version>. */
+export const cdnBase = `https://cdn.commonsui.com/v${version}`
+
 export interface RegistryFile {
   path: string
   type: string

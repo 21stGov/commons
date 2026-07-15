@@ -76,8 +76,19 @@ a versioned machine-readable result envelope.
 
 <Framework only="html">
 
-Install the token, core, component-CSS, and runtime packages (or vendor the
-built files and skip this step):
+**Fastest — the CDN.** One stylesheet (design tokens, themes, and the `.cui-*`
+component classes) and the runtime, which auto-enhances any `.cui-*` markup it
+finds on the page:
+
+```html
+<link rel="stylesheet" href="https://cdn.commonsui.com/v0.2.0/commons.css" />
+<script src="https://cdn.commonsui.com/v0.2.0/commons.js" defer></script>
+```
+
+Versioned paths are immutable — pin the exact version you tested against.
+
+**Self-host or pin via npm.** Install the token, core, component-CSS, and
+runtime packages (or vendor the built files and skip this step):
 
 <Tabs groupId="package-manager" persist items={["npm", "pnpm", "yarn", "bun"]}>
 

@@ -13,11 +13,14 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "validate:contrast": "pnpm --filter @21stgov/commons-tokens validate:contrast",
+    "build:cdn": "tsx scripts/build-cdn.mts",
     "changeset": "changeset"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "esbuild": "^0.28.1",
     "prettier": "^3.9.5",
+    "tsx": "^4.23.0",
     "turbo": "^2.10.4",
     "typescript": "~5.9.0"
   },

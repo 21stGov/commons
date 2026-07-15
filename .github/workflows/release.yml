@@ -62,6 +62,7 @@ jobs:
         run: pnpm build
 
       - name: Create release PR or publish
+        id: changesets
         uses: changesets/action@v1
         with:
           # When changesets exist → open/update the "Version Packages" PR.
@@ -72,3 +73,29 @@ jobs:
           title: "chore: release packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # After a real publish, ship the versioned first-party CDN assets to R2
+      # (cdn.commonsui.com). Paths are immutable — a given v<version>/ is only
+      # written once, so re-runs are idempotent. Needs CLOUDFLARE_API_TOKEN with
+      # the "Workers R2 Storage" scope; the account id is public.
+      - name: Publish CDN assets to R2
+        if: steps.changesets.outputs.published == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: cf4b4714e2d4e9e84c788b01da4cb25b
+        run: |
+          set -euo pipefail
+          pnpm build:cdn
+          VERSION="v$(node -p "require('./packages/css/package.json').version")"
+          put() {
+            pnpm dlx wrangler@4.110.0 r2 object put "commons-cdn/$VERSION/$1" \
+              --file "dist-cdn/$VERSION/$1" \
+              --content-type "$2" \
+              --cache-control "public, max-age=31536000, immutable" \
+              --remote
+          }
+          put commons.css     "text/css; charset=utf-8"
+          put commons.min.css "text/css; charset=utf-8"
+          put commons.js      "text/javascript; charset=utf-8"
+          put commons.min.js  "text/javascript; charset=utf-8"
+          echo "Uploaded commons-cdn/$VERSION/ → cdn.commonsui.com/$VERSION/"
