@@ -10005,7 +10005,7 @@ a:visited {
       transition-property: none;
     }
   }
-  .cui-spinner {
+  .cui-spinner-icon {
     position: relative;
     inset-block-start: -0.0625em;
     width: var(--cui-spacing-4);
@@ -10015,17 +10015,21 @@ a:visited {
       animation: var(--animate-spin);
     }
   }
-  .cui-spinner--sm {
+  .cui-spinner-icon--sm {
     width: var(--cui-spacing-3);
     height: var(--cui-spacing-3);
   }
-  .cui-spinner--md {
+  .cui-spinner-icon--md {
     width: var(--cui-spacing-4);
     height: var(--cui-spacing-4);
   }
-  .cui-spinner--lg {
+  .cui-spinner-icon--lg {
     width: var(--cui-spacing-5);
     height: var(--cui-spacing-5);
+  }
+  .cui-spinner {
+    display: inline-flex;
+    align-items: center;
   }
   .cui-step-marker {
     display: flex;
@@ -11855,10 +11859,11 @@ a:visited {
 <div class="swatch"><div class="cell"><div class="cui-skeleton cui-skeleton--block">skeleton</div></div><code>block</code></div>
 <div class="swatch"><div class="cell"><div class="cui-skeleton cui-skeleton--circle">skeleton</div></div><code>circle</code></div></div></section>
 <section><h2>slider <small>.cui-slider</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-slider">slider</div></div><code>base</code></div></div></section>
-<section><h2>spinner <small>.cui-spinner</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-spinner">spinner</div></div><code>base</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--sm">spinner</div></div><code>sm</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--md">spinner</div></div><code>md</code></div>
-<div class="swatch"><div class="cell"><div class="cui-spinner cui-spinner--lg">spinner</div></div><code>lg</code></div></div></section>
+<section><h2>spinner <small>.cui-spinner</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-spinner-icon">spinner</div></div><code>base</code></div>
+<div class="swatch"><div class="cell"><div class="cui-spinner-icon cui-spinner-icon--sm">spinner</div></div><code>sm</code></div>
+<div class="swatch"><div class="cell"><div class="cui-spinner-icon cui-spinner-icon--md">spinner</div></div><code>md</code></div>
+<div class="swatch"><div class="cell"><div class="cui-spinner-icon cui-spinner-icon--lg">spinner</div></div><code>lg</code></div>
+<div class="swatch"><div class="cell"><div class="cui-spinner">spinner</div></div><code>base</code></div></div></section>
 <section><h2>step-indicator <small>.cui-step-indicator</small></h2><div class="swatches"><div class="swatch"><div class="cell"><div class="cui-step-marker">step-indicator</div></div><code>base</code></div>
 <div class="swatch"><div class="cell"><div class="cui-step-marker cui-step-marker--complete">step-indicator</div></div><code>complete</code></div>
 <div class="swatch"><div class="cell"><div class="cui-step-marker cui-step-marker--current">step-indicator</div></div><code>current</code></div>

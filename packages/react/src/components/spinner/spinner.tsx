@@ -36,11 +36,25 @@ export const spinnerVariants = cva(
   }
 )
 
-function SpinnerIcon({ className }: { className?: string }): React.JSX.Element {
+function SpinnerIcon({
+  size,
+  className,
+}: SpinnerBaseProps): React.JSX.Element {
   // Same visual language as the Button's internal spinner: a faint full ring
   // plus a solid quarter-arc, both stroked with currentColor.
+  //
+  // `data-slot="spinner-icon"` — the animation/size cva lives on the SVG, not
+  // the wrapper. Keeping the cva call inline on the slot it styles lets the
+  // `.cui-*` CSS generator emit it as `.cui-spinner-icon` (so a bare
+  // `.cui-spinner` wrapper stays a plain flex box and only the icon spins).
   return (
-    <svg aria-hidden="true" viewBox="0 0 16 16" fill="none" className={className}>
+    <svg
+      data-slot="spinner-icon"
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      fill="none"
+      className={cn(spinnerVariants({ size }), className)}
+    >
       <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeOpacity="0.25" strokeWidth="3" />
       <path
         d="M14.5 8a6.5 6.5 0 0 0-6.5-6.5"
@@ -98,7 +112,7 @@ export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function 
   // the visually hidden label is wired up with `aria-labelledby` to name the
   // region — while still being the text the live region announces.
   const labelId = React.useId()
-  const icon = <SpinnerIcon className={cn(spinnerVariants({ size }), className)} />
+  const icon = <SpinnerIcon size={size} className={className} />
 
   // Decorative: no status role, icon hidden — a sibling owns the announcement.
   if (decorative) {
