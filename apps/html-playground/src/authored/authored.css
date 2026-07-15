@@ -345,6 +345,14 @@
   flex-direction: row;
   align-items: stretch;
 }
+/* The border belongs to the toggle only; the dropdown variant is a plain
+   flex-col (label + Select) but inherits the merged border, which then reads as
+   a stroke crowding the "Select language" label. Drop it for the dropdown. */
+.cui-language-selector[data-variant='dropdown'] {
+  border-width: 0;
+  border-radius: 0;
+  padding-inline: 0;
+}
 
 /* ---- Hover card -----------------------------------------------------------
    The authored hover card lives inside a <p>, so the trigger/positioner/content

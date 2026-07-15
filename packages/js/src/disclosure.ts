@@ -89,3 +89,24 @@ export function enhanceCollapsible(root: ParentNode): void {
     })
   }
 }
+
+/**
+ * Wire the Gov Banner's "how to verify this site" disclosure: a native button
+ * with `aria-expanded` + `aria-controls` pointing at a region that is toggled
+ * via the `hidden` attribute (matching the React component).
+ */
+export function enhanceGovBanner(root: ParentNode): void {
+  for (const banner of claim(root, '[data-slot="gov-banner"]', 'gov-banner')) {
+    const trigger = banner.querySelector<HTMLElement>('button[aria-controls][aria-expanded]')
+    const region = trigger && document.getElementById(trigger.getAttribute('aria-controls') ?? '')
+    if (!trigger || !region) continue
+    // Sync the region to the button on load: the SSR-rewritten markup can land
+    // with the two out of step (button collapsed, region still visible).
+    region.hidden = trigger.getAttribute('aria-expanded') !== 'true'
+    trigger.addEventListener('click', () => {
+      const open = trigger.getAttribute('aria-expanded') === 'true'
+      trigger.setAttribute('aria-expanded', String(!open))
+      region.hidden = open
+    })
+  }
+}

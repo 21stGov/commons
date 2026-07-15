@@ -17,11 +17,13 @@ import { enhanceDataTable } from './datatable.ts'
 import { enhanceDatePicker } from './datepicker.ts'
 import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
-import { enhanceAccordion, enhanceCollapsible } from './disclosure.ts'
+import { enhanceAccordion, enhanceCollapsible, enhanceGovBanner } from './disclosure.ts'
 import { enhanceCheckboxAll, enhanceIndeterminate } from './form.ts'
 import { enhanceInPageNavigation } from './inpagenav.ts'
 import { enhanceInputMask, enhanceInputMaskReveal } from './inputmask.ts'
 import { enhanceInputOTP } from './inputotp.ts'
+import { enhanceLanguageSelector } from './languageselector.ts'
+import { enhanceProgress } from './progress.ts'
 import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceResizable } from './resizable.ts'
@@ -48,6 +50,7 @@ export const behaviors: Behavior[] = [
   enhanceCheckboxAll,
   enhanceAccordion,
   enhanceCollapsible,
+  enhanceGovBanner,
   enhanceDialog,
   enhancePopover,
   enhanceDropdownMenu,
@@ -77,6 +80,8 @@ export const behaviors: Behavior[] = [
   enhanceInPageNavigation,
   enhanceResizable,
   enhanceDataTable,
+  enhanceProgress,
+  enhanceLanguageSelector,
 ]
 
 /** Progressively enhance all Commons components found under `root` (default: document). */
@@ -100,12 +105,15 @@ export {
   enhanceDateRangePicker,
   enhanceDialog,
   enhanceDropdownMenu,
+  enhanceGovBanner,
   enhanceHoverCard,
   enhanceIndeterminate,
   enhanceInPageNavigation,
   enhanceInputMask,
   enhanceInputMaskReveal,
   enhanceInputOTP,
+  enhanceLanguageSelector,
+  enhanceProgress,
   enhanceMenubar,
   enhanceNavigationMenu,
   enhanceNumberField,

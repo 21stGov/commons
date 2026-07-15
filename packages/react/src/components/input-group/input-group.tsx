@@ -25,6 +25,15 @@ declare const process: { env: { NODE_ENV?: string | undefined } } | undefined
 //     the input, so tabbing into the text field rings the entire control.
 const groupBoxClasses = [
   'flex items-stretch p-0 gap-0',
+  // Strip the inner input's own box from the WRAPPER (a descendant rule the
+  // generator can emit), not inline on the <Input> — an inline reset is
+  // stripped in the framework-agnostic rewrite, leaving the inner `.cui-input`
+  // border + fill drawing over the prefix/suffix addons.
+  '[&_input]:rounded-none [&_input]:border-0 [&_input]:bg-transparent [&_input]:shadow-none',
+  // …including the invalid/disabled states, whose own `.cui-input[aria-invalid]`
+  // border is more specific than the plain descendant reset. The group wrapper
+  // carries the error/disabled treatment instead.
+  '[&_input]:aria-invalid:border-0 [&_input]:aria-invalid:ring-0 [&_input]:disabled:border-0 [&_input]:disabled:bg-transparent',
   // Cancel the inherited focus-within ring, then scope one ring to the input.
   'focus-within:outline-0',
   // Re-add the single ring, scoped to the input. The reset above and this
