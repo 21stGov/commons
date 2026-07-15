@@ -267,8 +267,13 @@ function compileScaffold(scaffold: Set<string>, outDir: string): void {
 @source '${contentPath}';
 `,
   )
-  const tailwindBin = join(here, 'node_modules', '.bin', 'tailwindcss')
-  execFileSync(tailwindBin, ['-i', inputPath, '-o', join(outDir, 'scaffold.css')], { stdio: 'pipe' })
+  // Run the Tailwind CLI's JS entry with the current Node, not the
+  // node_modules/.bin/tailwindcss shim — the extensionless shim isn't directly
+  // spawnable on Windows (execFileSync throws ENOENT). Matches generate.ts.
+  const tailwindCli = join(dirname(require.resolve('@tailwindcss/cli/package.json')), 'dist/index.mjs')
+  execFileSync(process.execPath, [tailwindCli, '-i', inputPath, '-o', join(outDir, 'scaffold.css')], {
+    stdio: 'pipe',
+  })
 }
 
 /**
