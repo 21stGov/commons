@@ -88,7 +88,7 @@ export function ComponentDemo({
             className="docs-component-demo-frame"
             loading="lazy"
             onLoad={syncHeight}
-            style={{ width: '100%', border: 0, height: frameHeight ?? 240 }}
+            style={{ display: 'block', width: '100%', border: 0, height: frameHeight ?? 240 }}
           />
         ) : null}
       </div>
