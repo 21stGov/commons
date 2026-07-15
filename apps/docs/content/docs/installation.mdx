@@ -215,7 +215,9 @@ are missing, so a partial adoption never breaks the page.
 ## Fonts
 
 `@21stgov/commons-fonts` ships self-hosted Atkinson Hyperlegible Next and
-Atkinson Hyperlegible Mono variable fonts — no third-party font CDN. The
-Atkinson Hyperlegible font files are licensed separately under the SIL Open
-Font License, Version 1.1. Skipping the fonts package is safe: every token
-font stack declares system-font fallbacks.
+Atkinson Hyperlegible Mono variable fonts — no third-party font CDN. On the
+framework-agnostic path, the CDN serves the same fonts as a single self-contained
+stylesheet (the `fonts.css` `<link>` shown above); on the React path, import
+`@21stgov/commons-fonts/index.css`. The Atkinson Hyperlegible font files are
+licensed separately under the SIL Open Font License, Version 1.1. Skipping the
+fonts is safe either way: every token font stack declares system-font fallbacks.

@@ -24,6 +24,7 @@ export function CdnLinks(): JSX.Element {
     <pre className="docs-cdn-snippet not-prose" tabIndex={0}>
       <code>
         {`<link rel="stylesheet" href="${base}/commons.css" />\n`}
+        {`<link rel="stylesheet" href="${base}/fonts.css" /> <!-- optional: Atkinson Hyperlegible fonts -->\n`}
         {`<script src="${base}/commons.js" defer></script>`}
       </code>
     </pre>

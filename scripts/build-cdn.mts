@@ -6,9 +6,11 @@
  * Emits `dist-cdn/v<version>/`:
  *   - commons.css / commons.min.css — an all-in-one stylesheet (design tokens +
  *     themes, the accessible core reset, and the `.cui-*` component classes),
- *     so one <link> styles a framework-agnostic page. Fonts are intentionally
- *     excluded (optional; system-font fallbacks work) — they need their woff2
- *     assets served alongside and are a later addition.
+ *     so one <link> styles a framework-agnostic page. Fonts are kept out of this
+ *     bundle (optional; system-font fallbacks work) — link fonts.css to add them.
+ *   - fonts.css — the Atkinson Hyperlegible @font-face rules with the woff2
+ *     files inlined as data URIs, so it is self-contained and needs no
+ *     cross-origin font CORS. Optional; pair it with commons.css.
  *   - commons.js / commons.min.js — the @21stgov/commons-js runtime (IIFE,
  *     auto-enhances `.cui-*` markup on load).
  *
@@ -59,13 +61,28 @@ for (const [file, minify] of [
   })
 }
 
+// --- fonts.css : @font-face rules with the woff2 inlined as data URIs, so the
+// file is self-contained (no separate font files, no cross-origin font CORS).
+await build({
+  stdin: {
+    contents: `@import ${JSON.stringify(join(root, 'packages/fonts/index.css'))};`,
+    resolveDir: root,
+    loader: 'css',
+  },
+  bundle: true,
+  minify: true,
+  outfile: join(outDir, 'fonts.css'),
+  loader: { '.woff2': 'dataurl' },
+  logLevel: 'warning',
+})
+
 // --- commons.js : the runtime IIFE (readable + minified) ---------------------
 const runtime = requireFile(join(root, 'packages/js/dist/index.global.js'))
 copyFileSync(join(root, 'packages/js/dist/index.global.js'), join(outDir, 'commons.js'))
 const minifiedJs = await transform(runtime, { minify: true, loader: 'js' })
 writeFileSync(join(outDir, 'commons.min.js'), minifiedJs.code)
 
-const sizes = ['commons.css', 'commons.min.css', 'commons.js', 'commons.min.js'].map(
+const sizes = ['commons.css', 'commons.min.css', 'fonts.css', 'commons.js', 'commons.min.js'].map(
   (f) => `${f} ${(requireFile(join(outDir, f)).length / 1024).toFixed(1)}kB`
 )
 console.log(`cdn: built dist-cdn/v${version}/ — ${sizes.join(', ')}`)

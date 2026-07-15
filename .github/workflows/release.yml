@@ -96,6 +96,7 @@ jobs:
           }
           put commons.css     "text/css; charset=utf-8"
           put commons.min.css "text/css; charset=utf-8"
+          put fonts.css       "text/css; charset=utf-8"
           put commons.js      "text/javascript; charset=utf-8"
           put commons.min.js  "text/javascript; charset=utf-8"
           echo "Uploaded commons-cdn/$VERSION/ → cdn.commonsui.com/$VERSION/"

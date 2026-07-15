@@ -182,6 +182,7 @@ export function buildComponentMdx(component: ComponentDoc, htmlSnippet?: string)
     '',
     '```html',
     `<link rel="stylesheet" href="${cdnBase}/commons.css" />`,
+    `<link rel="stylesheet" href="${cdnBase}/fonts.css" /> <!-- optional: Atkinson Hyperlegible fonts -->`,
     `<script src="${cdnBase}/commons.js" defer></script>`,
     '```',
     '',
