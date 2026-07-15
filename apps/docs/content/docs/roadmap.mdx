@@ -40,6 +40,16 @@ These will ship and version separately from the npm packages, and only once they
 are tested against real Drupal and WordPress installs — an untested integration
 is not something we want government teams to depend on.
 
+### Cross-registry dependencies
+
+Agencies can already host their own [registry](/docs/registry) of internal
+components and install them with the same `commons add` workflow. Today an
+internal item that reuses a Commons component has to mirror it, because
+dependencies resolve against a single registry. We are considering namespaced,
+cross-registry dependencies — so an internal registry can depend on the public
+Commons registry directly, the way a project mixes packages from more than one
+source. No timeline yet; it needs a deliberate design.
+
 ### More to come
 
 As additional work firms up, we will add it here rather than promise it before
