@@ -230,8 +230,11 @@ permit form) it wants to install with the same `commons add` workflow.
    `search`, `inspect`, `add`, and the MCP server all follow the configured
    registry — see [self-hosted registries](/docs/cli#self-hosted-registries).
 
-Items can list Commons components (or your own) in `registryDependencies`; the
-CLI resolves them recursively against the same registry.
+Items list other items in `registryDependencies`; the CLI resolves them
+recursively against the **same** configured registry. So an internal item that
+reuses a Commons component needs that component present in your registry too —
+mirror the items you depend on. (Dependencies across registries aren't supported
+yet.)
 
 ## Private and internal registries
 
