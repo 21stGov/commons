@@ -294,6 +294,47 @@
   padding-bottom: var(--cui-spacing-205);
 }
 
+/* ---- Step indicator (interactive markers) ---------------------------------
+   The step marker (the numbered/check circle) is styled by fixed inline
+   utilities baked in for its SSR status, so advancing steps (enhanceStepIndicator
+   flips data-status) wouldn't restyle it. Drive the marker off the step's
+   data-status instead, so complete/current/incomplete each get the right fill. */
+.cui-step-indicator-step > span:not([data-slot]) {
+  display: flex;
+  inline-size: 2rem;
+  block-size: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 10;
+}
+.cui-step-indicator-step > span:not([data-slot]) svg {
+  inline-size: 1rem;
+  block-size: 1rem;
+}
+.cui-step-indicator-step[data-status='complete'] > span:not([data-slot]) {
+  border-color: transparent;
+  background: var(--cui-action-primary-bg);
+  color: var(--cui-action-primary-fg, #fff);
+}
+.cui-step-indicator-step[data-status='current'] > span:not([data-slot]) {
+  border: 2px solid var(--cui-action-primary-bg);
+  background: var(--cui-bg-default);
+  color: var(--cui-action-primary-bg);
+}
+.cui-step-indicator-step[data-status='incomplete'] > span:not([data-slot]) {
+  border: 1px solid var(--cui-border-default, #8886);
+  background: var(--cui-bg-default);
+  color: var(--cui-text-muted);
+}
+
 /* ---- Resizable panels (handle) --------------------------------------------
    The track (the visible 1px rule) keeps its cva styling, but the interactive
    handle's hit area + resize cursor are direction-specific inline utilities

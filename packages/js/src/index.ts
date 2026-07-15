@@ -28,6 +28,8 @@ import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 import { enhanceNumberField } from './numberfield.ts'
 import { enhanceResizable } from './resizable.ts'
 import { enhanceScrollArea } from './scrollarea.ts'
+import { enhanceStepIndicator } from './stepindicator.ts'
+import { enhanceSwitch } from './switch.ts'
 import { enhanceSidebar } from './sidebar.ts'
 import { enhanceSlider } from './slider.ts'
 import { enhanceTable } from './table.ts'
@@ -69,6 +71,8 @@ export const behaviors: Behavior[] = [
   enhanceMenubar,
   enhanceNavigationMenu,
   enhanceSlider,
+  enhanceSwitch,
+  enhanceStepIndicator,
   enhanceSidebar,
   enhanceTable,
   enhanceInputMask,
@@ -124,6 +128,8 @@ export {
   enhanceScrollArea,
   enhanceSidebar,
   enhanceSlider,
+  enhanceStepIndicator,
+  enhanceSwitch,
   enhanceTable,
   enhanceTabs,
   enhanceToggle,
