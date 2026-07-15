@@ -1,0 +1,9 @@
+# Commons security policy — https://github.com/21stgov/commons/blob/main/SECURITY.md
+# Please report vulnerabilities privately; do not open a public issue.
+
+Contact: https://github.com/21stgov/commons/security/advisories/new
+Contact: mailto:security@21stgov.com
+Expires: 2027-07-15T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://commonsui.com/.well-known/security.txt
+Policy: https://github.com/21stgov/commons/blob/main/SECURITY.md

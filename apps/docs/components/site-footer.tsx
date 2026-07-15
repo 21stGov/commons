@@ -29,6 +29,16 @@ const socialLinks = [
   },
 ] as const
 
+const policyLinks = [
+  { label: 'Roadmap', href: '/roadmap' },
+  { label: 'Terms of Use', href: '/terms' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Acceptable Use', href: '/acceptable-use' },
+  { label: 'Accessibility Statement', href: '/accessibility-statement' },
+  { label: 'Disclaimer', href: '/disclaimer' },
+  { label: 'Security', href: '/.well-known/security.txt' },
+] as const
+
 export function SiteFooter(): JSX.Element {
   return (
     <footer className="docs-site-footer">
@@ -72,6 +82,16 @@ export function SiteFooter(): JSX.Element {
             </ul>
           </nav>
         </div>
+
+        <nav className="docs-site-footer-links" aria-label="Policies and legal">
+          <ul>
+            {policyLinks.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         <div className="docs-site-footer-legal">
           <div>

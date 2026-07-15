@@ -1000,6 +1000,105 @@ nav[data-orientation='horizontal'] li a:visited,
   outline-offset: 2px;
 }
 
+/* Standalone policy / legal / roadmap pages (footer-linked, no docs sidebar). */
+.docs-legal {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: clamp(2rem, 6vw, 4rem) var(--cui-spacing-4) var(--cui-spacing-10);
+  color: var(--cui-text-default);
+  line-height: 1.7;
+}
+
+.docs-legal-header {
+  margin-block-end: var(--cui-spacing-6);
+  padding-block-end: var(--cui-spacing-4);
+  border-block-end: 1px solid var(--cui-border-default);
+}
+
+.docs-legal h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.docs-legal-lede {
+  margin-block: var(--cui-spacing-3) 0;
+  color: var(--cui-text-muted);
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+.docs-legal-meta {
+  margin-block: var(--cui-spacing-2) 0;
+  color: var(--cui-text-muted);
+  font-size: 0.875rem;
+}
+
+.docs-legal h2 {
+  margin-block: var(--cui-spacing-7) var(--cui-spacing-2);
+  font-size: 1.375rem;
+  line-height: 1.25;
+}
+
+.docs-legal h3 {
+  margin-block: var(--cui-spacing-5) var(--cui-spacing-2);
+  font-size: 1.0625rem;
+}
+
+.docs-legal p,
+.docs-legal ul,
+.docs-legal ol {
+  margin-block: var(--cui-spacing-3);
+}
+
+.docs-legal ul,
+.docs-legal ol {
+  padding-inline-start: var(--cui-spacing-5);
+}
+
+.docs-legal li {
+  margin-block: var(--cui-spacing-1);
+}
+
+.docs-legal a {
+  color: var(--cui-link-default);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.docs-legal a:hover {
+  color: var(--cui-link-hover);
+}
+
+.docs-legal a:focus-visible {
+  outline: 2px solid var(--cui-focus-ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.docs-legal strong {
+  font-weight: var(--cui-font-weight-semibold);
+}
+
+.docs-legal code {
+  padding: 0.1em 0.35em;
+  border-radius: var(--cui-radius-sm);
+  background: var(--cui-bg-subtle);
+  font-size: 0.9em;
+}
+
+.docs-legal hr {
+  margin-block: var(--cui-spacing-6);
+  border: 0;
+  border-block-start: 1px solid var(--cui-border-default);
+}
+
+.docs-legal-note {
+  color: var(--cui-text-muted);
+  font-size: 0.9375rem;
+}
+
 .docs-home {
   inline-size: 100%;
   overflow: clip;
@@ -1461,7 +1560,7 @@ nav[data-orientation='horizontal'] li a:visited,
 
 .docs-site-footer-social ul {
   display: grid;
-  grid-template-columns: repeat(3, minmax(10rem, 12rem));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--cui-spacing-1);
   justify-content: start;
   margin: 0;
@@ -1553,12 +1652,39 @@ nav[data-orientation='horizontal'] li a:visited,
   outline-offset: var(--cui-focus-offset, 0.125rem);
 }
 
+.docs-site-footer-links {
+  margin-block-start: var(--cui-spacing-6);
+  padding-block-start: var(--cui-spacing-3);
+  border-block-start: 1px solid color-mix(in srgb, var(--cui-text-on-emphasis) 40%, transparent);
+}
+
+.docs-site-footer-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cui-spacing-105) var(--cui-spacing-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--cui-font-size-xs);
+}
+
+.docs-site-footer-links a {
+  color: var(--cui-text-on-emphasis);
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.docs-site-footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
 .docs-site-footer-legal {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--cui-spacing-6);
   align-items: end;
-  margin-block-start: var(--cui-spacing-6);
+  margin-block-start: var(--cui-spacing-4);
   padding-block-start: var(--cui-spacing-3);
   border-block-start: 1px solid color-mix(in srgb, var(--cui-text-on-emphasis) 40%, transparent);
   font-size: var(--cui-font-size-2xs);
