@@ -472,14 +472,20 @@ export async function buildCss(): Promise<BuildResult> {
 [hidden] { display: none !important; }
 `
   writeFileSync(join(distDir, '_input.css'), inputCss)
-  const tailwindBin = join(here, 'node_modules', '.bin', 'tailwindcss')
+  // Run the Tailwind CLI's JS entry with the current Node, not the
+  // node_modules/.bin/tailwindcss shim — the extensionless shim isn't directly
+  // spawnable on Windows (execFileSync throws ENOENT), so resolving the real
+  // entry keeps the build cross-platform.
+  const tailwindCli = join(dirname(require.resolve('@tailwindcss/cli/package.json')), 'dist/index.mjs')
   const dropped = new Set<string>()
   for (let attempt = 0; attempt < 200; attempt++) {
     writeFileSync(join(distDir, 'components.src.css'), renderSrc(comps, dropped))
     try {
-      execFileSync(tailwindBin, ['-i', join(distDir, '_input.css'), '-o', join(distDir, 'commons.css')], {
-        stdio: 'pipe',
-      })
+      execFileSync(
+        process.execPath,
+        [tailwindCli, '-i', join(distDir, '_input.css'), '-o', join(distDir, 'commons.css')],
+        { stdio: 'pipe' },
+      )
       break
     } catch (err) {
       const output =
