@@ -280,8 +280,6 @@ description: ${JSON.stringify(component.description)}
 
 <ComponentStatus status="${component.status}" />
 
-<FrameworkToggle />
-
 ## When to use it
 
 ${usageSection(component)}

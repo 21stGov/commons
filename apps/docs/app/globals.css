@@ -208,40 +208,6 @@
   display: none;
 }
 
-.docs-framework-toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--cui-spacing-05);
-  margin-block: var(--cui-spacing-4) var(--cui-spacing-3);
-}
-
-.docs-framework-toggle-label {
-  margin-inline-end: var(--cui-spacing-1);
-  color: var(--cui-text-muted);
-  font-size: var(--cui-font-size-sm, 0.875rem);
-  font-weight: var(--cui-font-weight-semibold);
-}
-
-.docs-framework-toggle button {
-  min-block-size: 2.25rem;
-  padding-inline: var(--cui-spacing-3);
-  border: 1px solid var(--cui-border-default);
-  border-radius: var(--cui-radius-md);
-  background: var(--cui-bg-default);
-  color: var(--cui-text-muted);
-  font-weight: var(--cui-font-weight-semibold);
-}
-
-.docs-framework-toggle button[aria-pressed='true'] {
-  border-color: var(--cui-action-primary-bg);
-  background: var(--cui-action-primary-bg);
-  color: var(--cui-action-primary-text);
-}
-
-.docs-framework-toggle button:focus-visible {
-  outline: 2px solid var(--cui-focus-ring);
-  outline-offset: 2px;
-}
 
 /* --------------------------------------------------------------------------
  * Documentation typography and page rhythm
@@ -795,7 +761,17 @@ button[aria-label='Open Sidebar'] > svg {
   block-size: var(--cui-spacing-205);
 }
 
-.docs-theme-select {
+/* The framework selector shares the theme selector's dropdown styling so the
+ * two read as one set of viewing preferences. */
+.docs-preferences {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cui-spacing-105);
+  align-items: stretch;
+}
+
+.docs-theme-select,
+.docs-framework-select {
   position: relative;
   flex: 0 0 auto;
   inline-size: auto;
@@ -804,7 +780,8 @@ button[aria-label='Open Sidebar'] > svg {
   background: transparent;
 }
 
-.docs-theme-select::after {
+.docs-theme-select::after,
+.docs-framework-select::after {
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: var(--cui-spacing-105);
@@ -817,7 +794,8 @@ button[aria-label='Open Sidebar'] > svg {
   transform: translateY(-75%) rotate(45deg) !important;
 }
 
-.docs-theme-select select {
+.docs-theme-select select,
+.docs-framework-select select {
   inline-size: 9.5rem;
   block-size: 2.75rem;
   min-block-size: 2.75rem;
@@ -832,18 +810,24 @@ button[aria-label='Open Sidebar'] > svg {
   line-height: 2.75rem !important;
 }
 
-.docs-theme-select select:hover {
+.docs-theme-select select:hover,
+.docs-framework-select select:hover {
   color: var(--cui-text-default);
   border-color: var(--cui-border-strong);
 }
 
-.docs-theme-select select:focus-visible {
+.docs-theme-select select:focus-visible,
+.docs-framework-select select:focus-visible {
   outline: 2px solid var(--cui-focus-ring);
   outline-offset: 2px;
 }
 
+/* Strip the border/background fumadocs wraps around the themeSwitch slot so our
+ * paired selectors sit cleanly in the footer / nav. */
 #nd-sidebar div:has(> .docs-theme-select),
-#nd-sidebar-mobile div:has(> .docs-theme-select) {
+#nd-sidebar-mobile div:has(> .docs-theme-select),
+#nd-sidebar div:has(> .docs-preferences),
+#nd-sidebar-mobile div:has(> .docs-preferences) {
   border: 0;
   background: transparent;
 }
@@ -1616,6 +1600,18 @@ nav[data-orientation='horizontal'] li a:visited,
 
   .docs-theme-cycle {
     display: inline-flex;
+  }
+
+  /* On mobile the theme collapses to its cycle icon, so the framework dropdown
+   * sits beside it in a row rather than stacked. */
+  .docs-preferences {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--cui-spacing-1);
+  }
+
+  .docs-framework-select select {
+    inline-size: 6.5rem;
   }
 }
 

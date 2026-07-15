@@ -65,7 +65,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         {/*
           Seed the React ⇄ HTML docs preference before paint so CSS-driven
           content swaps (Installation / Usage) never flash the wrong variant.
-          Defaults to 'react' when nothing is stored. See use-framework.ts.
+          A synchronous inline script in <body> is the reliable no-flash
+          pattern (same as next-themes); React 19 logs a dev-only warning for
+          it that is stripped from the production build. See use-framework.ts.
         */}
         <script
           // eslint-disable-next-line react/no-danger
