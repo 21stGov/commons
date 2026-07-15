@@ -16,6 +16,12 @@ const socialLinks = [
     icon: 'x-twitter',
   },
   {
+    platform: 'Discord',
+    handle: 'Join the community',
+    href: 'https://discord.gg/M6GAVM4Wk7',
+    icon: 'discord',
+  },
+  {
     platform: 'npm',
     handle: '@21stgov',
     href: 'https://www.npmjs.com/org/21stgov',

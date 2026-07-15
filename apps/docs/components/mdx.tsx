@@ -5,6 +5,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx'
 import type { MDXComponents } from 'mdx/types'
 import type { ComponentProps } from 'react'
 
+import { CdnLinks } from '@/components/cdn-links'
 import { ComponentDemo } from '@/components/component-demo'
 import { ComponentStatus } from '@/components/component-status'
 import { Framework } from '@/components/framework'
@@ -20,6 +21,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
     ...defaultMdxComponents,
     Tab,
     Tabs: DocsTabs,
+    CdnLinks,
     ComponentDemo,
     ComponentStatus,
     Framework,

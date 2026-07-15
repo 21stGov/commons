@@ -192,6 +192,31 @@
   min-block-size: 14rem;
 }
 
+/* Version-dynamic CDN snippet in the Installation guide (rendered by a server
+ * component, so it isn't a Shiki fence — style it to read as a code block). */
+.docs-cdn-snippet {
+  overflow-x: auto;
+  margin-block: var(--cui-spacing-4);
+  padding: var(--cui-spacing-3);
+  border: 1px solid var(--cui-border-default);
+  border-radius: var(--cui-radius-md);
+  background: var(--cui-bg-subtle);
+  color: var(--cui-text-default);
+  font-family: var(--cui-font-family-mono, ui-monospace, monospace);
+  font-size: var(--cui-font-size-sm, 0.875rem);
+  line-height: 1.6;
+}
+
+.docs-cdn-snippet code {
+  white-space: pre;
+  font-family: inherit;
+}
+
+.docs-cdn-snippet:focus-visible {
+  outline: 2px solid var(--cui-focus-ring);
+  outline-offset: 2px;
+}
+
 /* --------------------------------------------------------------------------
  * Framework preference (React ⇄ HTML)
  * -------------------------------------------------------------------------- */
@@ -1407,6 +1432,11 @@ nav[data-orientation='horizontal'] li a:visited,
 .docs-site-footer-social-icon--x-twitter {
   -webkit-mask: url('/x-twitter.svg') center / contain no-repeat;
   mask: url('/x-twitter.svg') center / contain no-repeat;
+}
+
+.docs-site-footer-social-icon--discord {
+  -webkit-mask: url('/discord.svg') center / contain no-repeat;
+  mask: url('/discord.svg') center / contain no-repeat;
 }
 
 .docs-site-footer-social-icon--npm {
