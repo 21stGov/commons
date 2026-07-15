@@ -9,7 +9,11 @@
     "registry#build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/src/**"]
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/packages/react/src/**",
+        "$TURBO_ROOT$/apps/html-playground/src/generated/demos/**"
+      ]
     },
     "playground#build": {
       "dependsOn": ["^build"],
@@ -17,7 +21,14 @@
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/src/**"]
     },
     "docs#build": {
-      "dependsOn": ["registry#build", "^build"],
+      "dependsOn": [
+        "registry#build",
+        "@21stgov/commons-tokens#build",
+        "@21stgov/commons-core#build",
+        "@21stgov/commons-css#build",
+        "@21stgov/commons-js#build",
+        "^build"
+      ],
       "outputs": ["out/**", ".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/react/src/**"]
     },
