@@ -89,7 +89,7 @@ The tool surface is small and bounded on purpose:
 | Tool | Input | Returns |
 | ---- | ----- | ------- |
 | `search_components` | `{ query, limit? }` | Matching catalog entries — name, status, description, use-when guidance |
-| `get_component` | `{ name }` | The component's full registry-item v1 JSON: files, dependencies, and the [accessibility contract](/docs/accessibility) |
+| `get_component` | `{ name }` | The component's full registry-item v1 JSON: files, dependencies, the [accessibility contract](/docs/accessibility), and the framework-agnostic `.cui-*` HTML markup (`html`) for the non-React path |
 | `plan_install` | `{ names, cwd? }` | A dry-run install plan: every file with its `write` / `conflict` / `skip` action, npm dependencies, and the exact `installCommand` to run. **Never writes.** |
 | `get_setup` | — | The registry URL, the five CSS imports in order, and tsconfig alias guidance |
 
@@ -102,6 +102,7 @@ with files you have already modified, surfaced before anything is written.
 - "What Commons components exist for collecting a date?"
 - "Plan installing button and field into this project."
 - "Show me the accessibility contract for radio-group before we use it."
+- "Give me the `.cui-*` HTML markup for an alert — I'm not using React."
 - "What setup does this project still need for Commons?"
 
 A good agent workflow is search → inspect → plan → hand you the `add`
@@ -205,3 +206,9 @@ in the repository.
 - **Read-only by design.** There is no tool that writes files. If a model
   claims it installed a component through MCP, it did not — check for the
   CLI command it should have given you instead.
+- **Both paths are covered.** `get_component` returns both the React `files`
+  and the framework-agnostic `.cui-*` `html`, so agents building either way get
+  correct markup. The install-oriented tools (`plan_install`, `get_setup`) target
+  the React own-your-code flow; on the HTML path there is nothing to install —
+  load `commons.css` + `commons.js` ([Without React](/docs/without-react)) and
+  use the `html` markup.

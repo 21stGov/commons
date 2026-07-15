@@ -11,6 +11,7 @@ import { buildRegistry } from "./src/registry-build.ts";
 const packageDir = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(packageDir, "..", "..");
 const reactDir = join(repoRoot, "packages", "react");
+const demosDir = join(repoRoot, "apps", "html-playground", "src", "generated", "demos");
 
 const reactPackage = JSON.parse(readFileSync(join(reactDir, "package.json"), "utf8")) as {
   version: string;
@@ -18,6 +19,7 @@ const reactPackage = JSON.parse(readFileSync(join(reactDir, "package.json"), "ut
 
 const result = buildRegistry({
   reactDir,
+  demosDir,
   outDir: join(packageDir, "dist", "r"),
   version: reactPackage.version,
 });

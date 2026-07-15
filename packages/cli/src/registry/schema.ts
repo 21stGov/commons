@@ -127,6 +127,15 @@ export const registryItemSchema = z.looseObject({
   accessibility: registryItemAccessibilitySchema.optional(),
   integrity: registryItemIntegritySchema.optional(),
   docs: z.string().optional(),
+  /**
+   * Framework-agnostic `.cui-*` HTML markup for the non-React path — the same
+   * rendered demo the docs show for the component (it may include demo layout
+   * scaffolding). Lets an agent building a non-React (Drupal, WordPress, plain
+   * HTML) page get correct `.cui-*` markup straight from the registry, alongside
+   * the React `files`. Absent for items with no rendered demo (e.g. the `theme`
+   * item and library utilities).
+   */
+  html: z.string().optional(),
 });
 
 export type RegistryItem = z.infer<typeof registryItemSchema>;

@@ -75,6 +75,7 @@ Each item is the payload served at `{registry}/{name}.json`. A minimal
 | `compatibility` | object | `react` range, `rtl`, `forcedColors`. |
 | `accessibility` | object | The normative [accessibility contract](/docs/accessibility). |
 | `integrity` | string \| object | sha256 of file content — a per-item string, or a `path` → hash map. |
+| `html` | string | Framework-agnostic `.cui-*` markup for the non-React path — a rendered demo of the component (Commons extension). |
 | `docs`, `license` | string | Free-form docs pointer and SPDX license id. |
 
 Unknown fields never fail validation — the schema validates what the CLI relies

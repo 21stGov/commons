@@ -125,6 +125,7 @@ beforeAll(() => {
   outDir = mkdtempSync(join(tmpdir(), "commons-registry-"));
   result = buildRegistry({
     reactDir,
+    demosDir: join(reactDir, "..", "..", "apps", "html-playground", "src", "generated", "demos"),
     outDir,
     version: "0.0.1",
     generated: "2026-07-11T00:00:00.000Z",
@@ -149,6 +150,16 @@ describe("buildRegistry output", () => {
         true,
       );
     }
+  });
+
+  it("attaches framework-agnostic .cui-* html for components with a demo", () => {
+    const button = readItem("button");
+    expect(typeof button.html).toBe("string");
+    expect(button.html as string).toContain("cui-button");
+  });
+
+  it("omits html for items with no rendered demo (theme)", () => {
+    expect(readItem("theme").html).toBeUndefined();
   });
 });
 

@@ -192,7 +192,8 @@ export function buildMcpServer(options: McpServerOptions): McpServer {
         "Fetch and validate one registry item ({registry}/{name}.json), exactly like " +
         "`commons inspect`. Returns the full registry-item v1 JSON: description, " +
         "status, useWhen/avoidWhen, files (with inline content), npm and registry " +
-        "dependencies, accessibility contract, compatibility, and integrity hashes.",
+        "dependencies, accessibility contract, compatibility, integrity hashes, and — " +
+        "for the non-React path — the framework-agnostic `.cui-*` HTML markup in `html`.",
       inputSchema: {
         name: z
           .string()

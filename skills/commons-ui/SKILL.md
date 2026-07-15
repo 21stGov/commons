@@ -84,8 +84,8 @@ contrast contract; that only works when it follows Tailwind's own theme.
    ```
 
 2. Write `.cui-*` markup. Get correct markup from a component's **HTML → Code**
-   tab on the docs — do not invent class names; only classes that exist in
-   `commons.css` have rules.
+   tab on the docs, or from the MCP `get_component` tool's `html` field — do not
+   invent class names; only classes that exist in `commons.css` have rules.
 
    ```html
    <button type="button" class="cui-button cui-button--primary">Submit</button>

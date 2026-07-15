@@ -147,7 +147,8 @@ export class CommonsMcp extends McpAgent<Env> {
           "Fetch and validate one registry item (commonsui.com/r/{name}.json), exactly like " +
           "`commons inspect`. Returns the full registry-item v1 JSON: description, status, " +
           "useWhen/avoidWhen, files (with inline content), npm and registry dependencies, the " +
-          "accessibility contract, compatibility, and integrity hashes.",
+          "accessibility contract, compatibility, integrity hashes, and — for the non-React " +
+          "path — the framework-agnostic `.cui-*` HTML markup in the `html` field.",
         inputSchema: {
           name: z.string().min(1).max(200).describe("Component name from the registry, e.g. 'button'"),
         },
