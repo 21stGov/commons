@@ -102,13 +102,6 @@ describe('emitVariant', () => {
     expect(rule(rules, '.cui-alert--slim-false')).toBeUndefined()
   })
 
-  it('returns a swatch for base and every modifier', () => {
-    const { swatches } = emitVariant(cap)
-    expect(swatches[0]).toEqual({ classes: 'cui-alert', label: 'base' })
-    expect(swatches.map((s) => s.label)).toEqual(['base', 'info', 'error', 'slim'])
-    expect(swatches.find((s) => s.label === 'info')?.classes).toBe('cui-alert cui-alert--info')
-  })
-
   it('drops group/peer marker classes from emitted rules', () => {
     const { rules } = emitVariant({
       exportName: 'xVariants',

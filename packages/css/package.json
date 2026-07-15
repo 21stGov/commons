@@ -14,7 +14,7 @@
     "access": "public"
   },
   "files": [
-    "dist"
+    "dist/*.css"
   ],
   "exports": {
     ".": "./dist/commons.css",

@@ -12,7 +12,7 @@ export default defineConfig({
   format: ['esm', 'iife'],
   globalName: 'Commons',
   dts: true,
-  sourcemap: true,
+  sourcemap: false,
   clean: true,
   target: 'es2022',
 })

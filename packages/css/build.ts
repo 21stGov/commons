@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 
 /**
- * CLI entry: generate the component CSS + a self-contained verification
- * gallery, then render every React demo into `.cui-*` HTML for the HTML
- * playground (apps/html-playground).
+ * CLI entry: generate the component CSS, then render every React demo into
+ * `.cui-*` HTML for the HTML playground (apps/html-playground) — the
+ * interactive preview of the generated output.
  */
 
 import { dirname, join } from 'node:path'
@@ -11,23 +11,18 @@ import { fileURLToPath } from 'node:url'
 
 import { generateDemos } from './demos.ts'
 import { buildCss } from './generate.ts'
-import { writeGallery } from './gallery.ts'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const playgroundGenerated = join(here, '..', '..', 'apps', 'html-playground', 'src', 'generated')
 
 const result = await buildCss()
-writeGallery(result)
 
 console.log(`captured ${result.captured.length} components; skipped ${result.skipped.length}:`)
 console.log(`  ${result.skipped.join(', ')}`)
 if (result.dropped.length > 0) {
   console.log(`\ndropped ${result.dropped.length} un-@apply-able utilities: ${result.dropped.join(', ')}`)
 }
-console.log(
-  '\nwrote dist/{components.src.css, commons.css, gallery.html, showcase.html}' +
-    ' — open dist/gallery.html directly to eyeball the output',
-)
+console.log('\nwrote dist/{components.src.css, commons.css}')
 
 const { results: demos, internalGap } = await generateDemos(
   result.classNames,

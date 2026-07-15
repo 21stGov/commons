@@ -179,14 +179,6 @@ export function rulesForClasses(selector: string, rawClasses: string[]): RawRule
   return rules
 }
 
-/** A rendered variant of a component, for the verification gallery. */
-export interface Swatch {
-  /** The full class attribute, e.g. "cui-button cui-button--primary". */
-  classes: string
-  /** The variant this shows, e.g. "primary" or "base". */
-  label: string
-}
-
 /**
  * A variant modifier's fingerprint: the `.cui-*--x` class it produces, the cva
  * group it belongs to, and the raw utility classes that identify it. Used to
@@ -203,16 +195,15 @@ export interface VariantSignature {
 }
 
 /**
- * One component export -> its `.cui-*` raw rules, gallery swatches, and
- * signatures. `name` overrides the slot (defaults to the export-name kebab) for
- * cvas whose call styles a differently-named slot (input-otp-cell).
+ * One component export -> its `.cui-*` raw rules and signatures. `name`
+ * overrides the slot (defaults to the export-name kebab) for cvas whose call
+ * styles a differently-named slot (input-otp-cell).
  */
 export function emitVariant(
   cap: CapturedVariant,
   name: string = classBase(cap.exportName),
 ): {
   rules: RawRule[]
-  swatches: Swatch[]
   signatures: VariantSignature[]
 } {
   const sel = `.cui-${name}`
@@ -260,14 +251,10 @@ export function emitVariant(
   const rules = rulesForClasses(sel, baseClasses)
   for (const m of modifiers) rules.push(...rulesForClasses(m.sel, m.classes))
 
-  const swatches: Swatch[] = [{ classes: `cui-${name}`, label: 'base' }]
-  for (const m of modifiers) {
-    swatches.push({ classes: `cui-${name} ${m.sel.slice(1)}`, label: m.label })
-  }
   const signatures: VariantSignature[] = modifiers
     .filter((m) => m.classes.length > 0 && !m.isDefault)
     .map((m) => ({ modifier: m.sel.slice(1), group: m.group, classes: m.classes }))
-  return { rules, swatches, signatures }
+  return { rules, signatures }
 }
 
 /**
@@ -288,15 +275,9 @@ export function aliasClasses(cap: CapturedVariant, props: Record<string, string>
 
 // --- buildCss: capture all components, emit, compile ------------------------
 
-export interface GalleryComponent {
-  name: string
-  swatches: Swatch[]
-}
-
 export interface BuildResult {
   captured: string[]
   skipped: string[]
-  gallery: GalleryComponent[]
   distDir: string
   /** Utility classes @apply couldn't resolve, dropped so the build succeeds. */
   dropped: string[]
@@ -350,7 +331,6 @@ export async function buildCss(): Promise<BuildResult> {
   const comps: Array<{ name: string; rules: RawRule[] }> = []
   const captured: string[] = []
   const skipped: string[] = []
-  const gallery: GalleryComponent[] = []
   const classNames = new Set<string>()
   const signatures: Record<string, VariantSignature[]> = {}
 
@@ -395,7 +375,6 @@ export async function buildCss(): Promise<BuildResult> {
       .sort()
       .map((f) => join(componentsDir, name, f))
     const rules: RawRule[] = []
-    const swatches: Swatch[] = []
     const localSlots = new Set<string>()
 
     // Gather inline slots + cva→slot usage across the component's files first,
@@ -417,7 +396,6 @@ export async function buildCss(): Promise<BuildResult> {
       localSlots.add(slot)
       const emitted = emitVariant(cap, slot)
       rules.push(...emitted.rules)
-      swatches.push(...emitted.swatches)
       if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
     }
 
@@ -444,8 +422,6 @@ export async function buildCss(): Promise<BuildResult> {
       if (slotRules.length > 0) {
         rules.push(...slotRules)
         localSlots.add(slot)
-        // A component's own main slot gets a gallery swatch; sub-parts don't.
-        if (slot === name) swatches.push({ classes: `cui-${slot}`, label: 'base' })
       }
     }
     for (const slot of aliasBase.keys()) localSlots.add(slot)
@@ -455,7 +431,6 @@ export async function buildCss(): Promise<BuildResult> {
       continue
     }
     comps.push({ name, rules })
-    gallery.push({ name, swatches })
     captured.push(name)
     for (const rule of rules) for (const cls of selectorClassNames(rule.selector)) classNames.add(cls)
   }
@@ -522,7 +497,6 @@ export async function buildCss(): Promise<BuildResult> {
   return {
     captured,
     skipped,
-    gallery,
     distDir,
     dropped: [...dropped].sort(),
     classNames: [...classNames].sort(),
