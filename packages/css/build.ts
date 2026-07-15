@@ -24,8 +24,10 @@ console.log(`  ${result.skipped.join(', ')}`)
 if (result.dropped.length > 0) {
   console.log(`\ndropped ${result.dropped.length} un-@apply-able utilities: ${result.dropped.join(', ')}`)
 }
-console.log('\nwrote dist/components.src.css, dist/commons.css, dist/gallery.html')
-console.log('gallery (self-contained, open directly): poc/non-react/gallery.html')
+console.log(
+  '\nwrote dist/{components.src.css, commons.css, gallery.html, showcase.html}' +
+    ' — open dist/gallery.html directly to eyeball the output',
+)
 
 const { results: demos, internalGap } = await generateDemos(
   result.classNames,

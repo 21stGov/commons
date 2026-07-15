@@ -8,7 +8,7 @@
  */
 
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -92,11 +92,6 @@ ${sections}
 `
 
   writeFileSync(join(result.distDir, 'gallery.html'), html)
-  // Tracked, self-contained copy for opening directly (double-click).
-  const pocDir = join(here, '..', '..', 'poc', 'non-react')
-  mkdirSync(pocDir, { recursive: true })
-  writeFileSync(join(pocDir, 'gallery.html'), html)
-
   writeShowcase(result, bundle)
 }
 
@@ -182,5 +177,4 @@ function writeShowcase(result: BuildResult, bundle: string): void {
 </html>
 `
   writeFileSync(join(result.distDir, 'showcase.html'), showcase)
-  writeFileSync(join(here, '..', '..', 'poc', 'non-react', 'showcase.html'), showcase)
 }

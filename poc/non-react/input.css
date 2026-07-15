@@ -1,6 +1,0 @@
-/* Tailwind engine WITHOUT preflight — @21stgov/commons-core provides the reset. */
-@layer theme, base, components, utilities;
-@import 'tailwindcss/theme.css' layer(theme);
-@import 'tailwindcss/utilities.css' layer(utilities);
-@import '/Users/seth/Documents/GitHub/commons/packages/tokens/dist/css/tailwind.css';
-@import '/Users/seth/Documents/GitHub/commons/poc/non-react/components.css';
