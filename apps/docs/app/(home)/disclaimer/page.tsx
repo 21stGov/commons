@@ -26,7 +26,7 @@ export default function DisclaimerPage(): React.JSX.Element {
         <strong>Section 508</strong>, the <strong>Americans with Disabilities Act (ADA)</strong>,
         the <strong>Web Content Accessibility Guidelines (WCAG)</strong>, or applicable
         state and local requirements. Accessibility and legal compliance are properties
-        of the <strong>whole delivered experience</strong> — how a site is assembled,
+        of the <strong>whole delivered experience</strong>{' '}— how a site is assembled,
         configured, extended, filled with content, and operated — not of any single
         library. Statements such as &ldquo;we use Commons, so we are compliant&rdquo; are
         not accurate and should not be represented that way.

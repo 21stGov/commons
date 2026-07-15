@@ -164,7 +164,7 @@ export default function TermsPage(): React.JSX.Element {
       <p>
         Questions about these terms, or reports about the website or hosted services, are
         welcome. For security issues, please email{' '}
-        <a href="mailto:security@21stgov.com">security@21stgov.com</a> or use GitHub&rsquo;s
+        <a href="mailto:security@21stgov.com">security@21stgov.com</a>{' '}or use GitHub&rsquo;s
         private vulnerability reporting on the{' '}
         <a href="https://github.com/21stgov/commons" rel="noopener noreferrer" target="_blank">
           Commons repository

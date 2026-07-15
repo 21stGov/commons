@@ -30,7 +30,7 @@ export function LegalPage({
         {children}
         <footer className="docs-legal-footer">
           <p>
-            <strong>About 21st Gov.</strong> 21st Gov is the name this project is published
+            <strong>About 21st Gov.</strong>{' '}21st Gov is the name this project is published
             under — an independent, community-supported open-source effort led by Seth Cottle. It
             is not currently a registered company or nonprofit. On this page, &ldquo;we&rdquo; and
             &ldquo;us&rdquo; refer to the project&rsquo;s maintainers.

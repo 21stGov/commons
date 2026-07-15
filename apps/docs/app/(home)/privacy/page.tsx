@@ -21,7 +21,7 @@ export default function PrivacyPage(): React.JSX.Element {
     >
       <p>
         Commons is an open-source, accessibility-first design system for U.S. local governments,
-        published and maintained by <strong>21st Gov</strong> (&ldquo;we,&rdquo; &ldquo;us&rdquo;).
+        published and maintained by <strong>21st Gov</strong>{' '}(&ldquo;we,&rdquo; &ldquo;us&rdquo;).
         This notice explains what happens to data when you visit{' '}
         <strong>commonsui.com</strong> or use the endpoints we host.
       </p>
@@ -122,7 +122,7 @@ export default function PrivacyPage(): React.JSX.Element {
           packages, governed separately by npm&rsquo;s own policy.
         </li>
         <li>
-          <strong>GitHub</strong> — source hosting for the project, governed separately by
+          <strong>GitHub</strong>{' '}— source hosting for the project, governed separately by
           GitHub&rsquo;s own policy.
         </li>
       </ul>
