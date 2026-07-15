@@ -108,6 +108,92 @@ CLI writes from the validated payload and never fetches source out-of-band.
 `path` is the source location; only its basename is used when placing the file
 (remapped by `type`), unless an explicit `target` overrides it.
 
+## Integrity and verification
+
+An item may carry an `integrity` field so the CLI can prove it was not tampered
+with in transit or at rest. It takes two forms:
+
+- a single string — the sha256 (hex, optionally `sha256-` prefixed) of every
+  file's `content` concatenated in `files` order; or
+- a `path` → sha256 map, one hash per file.
+
+On `add` (and `add --dry-run`), the CLI recomputes the sha256 of the content it
+is about to write and checks it against `integrity`. Any mismatch — or a hash
+for a file that is missing — **fails the install closed**; nothing is written.
+Items without `integrity` install normally (the field is optional), so it is
+opt-in tamper-evidence you add when you publish.
+
+This matters most for a self-hosted registry you want to be able to audit: pin
+the hashes when you publish an item, and a later silent edit to the served JSON
+can't reach a consumer's project unnoticed.
+
+## Examples
+
+**A theme** (`registry:theme`) — an agency rebrand shipped as token overrides,
+including the `high-contrast` layer:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "name": "county-theme",
+  "type": "registry:theme",
+  "title": "County brand theme",
+  "cssVars": {
+    "theme": { "--cui-radius": "0.25rem" },
+    "light": { "--cui-primary": "oklch(0.45 0.15 250)" },
+    "dark": { "--cui-primary": "oklch(0.72 0.14 250)" },
+    "high-contrast": { "--cui-primary": "oklch(0.30 0.20 250)" }
+  }
+}
+```
+
+**A block** (`registry:block`) — a composite of several files that reuses
+existing items through `registryDependencies`:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "name": "agency-header",
+  "type": "registry:block",
+  "title": "Agency Header",
+  "registryDependencies": ["button", "language-selector"],
+  "files": [
+    { "path": "components/agency-header.tsx", "type": "registry:component", "content": "…" },
+    { "path": "components/county-seal.tsx", "type": "registry:component", "content": "…" }
+  ]
+}
+```
+
+**A library utility** (`registry:lib`) — plain TypeScript other items depend on:
+
+```json
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "name": "format-address",
+  "type": "registry:lib",
+  "files": [
+    { "path": "lib/format-address.ts", "type": "registry:lib", "content": "…" }
+  ]
+}
+```
+
+## Guidelines
+
+A few conventions keep items installable and trustworthy:
+
+- **Inline every file's `content`.** Items are self-contained; the CLI never
+  fetches source out of band.
+- **Set `integrity`** when you publish, so installs are tamper-evident.
+- **Fill the `accessibility` contract** on interactive items — it is the
+  normative promise consumers and agents rely on, and it should reflect what is
+  actually tested, not aspirations.
+- **Use `status` and `version`** so consumers can tell experimental from stable
+  and pin what they installed.
+- **Keep `name` stable** — it is the id used in `registryDependencies` and as
+  the `{name}.json` path; renaming it breaks dependents.
+- **Declare `dependencies` and `registryDependencies` completely** so a single
+  `add` resolves everything.
+
 ## Build your own registry
 
 Useful when an agency has internal components (an agency-specific header, a
@@ -146,6 +232,23 @@ permit form) it wants to install with the same `commons add` workflow.
 
 Items can list Commons components (or your own) in `registryDependencies`; the
 CLI resolves them recursively against the same registry.
+
+## Private and internal registries
+
+The registry is unauthenticated by design: the CLI fetches each JSON file with a
+plain `GET` — no Authorization header, no token. Access control for a private
+registry is therefore a **network** concern, not a CLI one — host it somewhere
+you already gate:
+
+- behind a VPN or on an internal network;
+- on a host that enforces an IP allowlist or mutual TLS;
+- behind an authenticating proxy, or on object storage fronted by signed URLs.
+
+Because a registry is just static JSON over HTTPS, any access-controlled static
+host works. Consumers point at it the usual way — the `registry` field in
+`commons.json`, or `COMMONS_REGISTRY` — and on a network they can already reach,
+no extra credentials are needed. Per-user authentication at the CLI layer is not
+built in today; if you need it, [open an issue](https://github.com/21stgov/commons).
 
 ## Schemas
 
