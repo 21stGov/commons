@@ -2,6 +2,9 @@
 
 Thanks for helping build an accessibility-first design system for U.S. local governments.
 
+By participating in this project, you agree to uphold our
+[Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## Development setup
 
 Requires Node >= 20 and pnpm 10 (`corepack enable` recommended).
