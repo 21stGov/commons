@@ -1,0 +1,54 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "header-navigation-menu",
+  "type": "registry:ui",
+  "title": "Header Navigation Menu",
+  "description": "A NavigationMenu wired into a Header's mobile disclosure — the mega-menu counterpart to HeaderNav. Drop it inside <Header> in place of HeaderNav when top-level destinations need panels (grouped links, nested submenus), composing the same NavigationMenu parts inside it. It reads the Header's disclosure state via useHeaderMenu, so below the md breakpoint the whole menu collapses behind the HeaderMenuButton (aria-controls wired to this nav landmark by id) and shows inline from md up; nav content stays in the DOM the whole time. Outside a Header it renders a plain NavigationMenu.",
+  "status": "experimental",
+  "useWhen": [
+    "A site header whose primary navigation needs mega-menu panels or grouped submenus, not just a flat row of links",
+    "Replacing HeaderNav inside a Header when top-level items open disclosure panels of grouped links",
+    "Multilingual headers with complex navigation (every label is a prop or child, so the header localizes per page)"
+  ],
+  "avoidWhen": [
+    "A header with a handful of flat top-level links (use HeaderNav + HeaderNavLink)",
+    "Navigation outside a page header (use NavigationMenu directly, or in-page / side navigation)",
+    "More than one primary navigation landmark per page"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "cn",
+    "header",
+    "navigation-menu"
+  ],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Inherits NavigationMenu's disclosure-navigation keyboard contract: a panel opens on click, Enter, Space, or the orientation's arrow key (and hover-intent for pointers, never hover-only); Escape closes the open panel and returns focus to its trigger; Tab moves focus out of the bar",
+      "Below md the whole menu collapses behind the Header's menu button (a native button; Enter and Space toggle it), and aria-controls references this nav landmark by id",
+      "Collapsed nav content stays in the DOM via the hidden utility, so it is removed from the tab order while hidden rather than hidden-while-focusable",
+      "The current page carries aria-current=page with non-color indicators (a 2px block-end border and heavier weight), and panel links show hover/current without relying on color alone"
+    ],
+    "keyboardVerified": false,
+    "nameRequired": true,
+    "targetSize": "44px project default",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "A thin composition over Header's useHeaderMenu hook and NavigationMenu: it adds no new interactive surface, so its keyboard and screen-reader behavior is exactly NavigationMenu's (panels) plus Header's (the mobile disclosure), each verified on its own component.",
+      "The framework-agnostic path has no dedicated class: compose .cui-header with .cui-navigation-menu markup and wire the mobile disclosure the same way the Header does."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/header-navigation-menu/header-navigation-menu.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

@@ -170,6 +170,11 @@
     "ok": true
   },
   {
+    "slug": "header-navigation-menu",
+    "title": "Header Navigation Menu",
+    "ok": true
+  },
+  {
     "slug": "hover-card",
     "title": "Hover Card",
     "ok": true

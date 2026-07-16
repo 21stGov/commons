@@ -44,6 +44,7 @@ export const demos: Record<string, DemoLoader> = {
   form: () => import('./form.demo'),
   'gov-banner': () => import('./gov-banner.demo'),
   header: () => import('./header.demo'),
+  'header-navigation-menu': () => import('./header-navigation-menu.demo'),
   'hover-card': () => import('./hover-card.demo'),
   icon: () => import('./icon.demo'),
   'icon-list': () => import('./icon-list.demo'),

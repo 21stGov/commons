@@ -23,11 +23,13 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
 - **Identifier seal.** The agency identifier band takes an optional decorative
   seal/logo at its right edge — a `seal` prop in React, an `identifier-seal`
   slot in the framework-agnostic markup.
-- **`useHeaderMenu()` hook.** Wire a custom navigation region — e.g. a
-  `NavigationMenu` mega-menu — into the `Header`'s mobile disclosure: the hook
-  hands back the nav id the menu button controls and whether the nav is
-  collapsed behind the hamburger below `md`, so a header mega-menu collapses and
-  is `aria-controls`-wired exactly like the built-in `HeaderNav`.
+- **Header mega-menus.** A new **`HeaderNavigationMenu`** drops a full
+  `NavigationMenu` (mega-menu panels, grouped links, submenus) into a `Header`
+  in place of `HeaderNav`: below `md` it collapses behind the menu button and is
+  `aria-controls`-wired exactly like the built-in nav; inline from `md` up. It is
+  built on a new exported **`useHeaderMenu()`** hook (returns the nav id the menu
+  button controls and whether the nav is collapsed), so you can also wire a
+  custom navigation region into the Header's disclosure by hand.
 
 ### Fixed
 

@@ -41,6 +41,9 @@ export default defineConfig({
       "@/components/ui/field": fileURLToPath(
         new URL("./src/components/field/field.tsx", import.meta.url),
       ),
+      "@/components/ui/header": fileURLToPath(
+        new URL("./src/components/header/header.tsx", import.meta.url),
+      ),
       "@/components/ui/icon": fileURLToPath(
         new URL("./src/components/icon/icon.tsx", import.meta.url),
       ),
@@ -55,6 +58,9 @@ export default defineConfig({
       ),
       "@/components/ui/list": fileURLToPath(
         new URL("./src/components/list/list.tsx", import.meta.url),
+      ),
+      "@/components/ui/navigation-menu": fileURLToPath(
+        new URL("./src/components/navigation-menu/navigation-menu.tsx", import.meta.url),
       ),
       "@/components/ui/pagination": fileURLToPath(
         new URL("./src/components/pagination/pagination.tsx", import.meta.url),

@@ -64,6 +64,7 @@ const FRAGMENT_ITEM_NAMES = [
   "form",
   "gov-banner",
   "header",
+  "header-navigation-menu",
   "hover-card",
   "icon",
   "icon-list",
