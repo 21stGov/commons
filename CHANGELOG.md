@@ -9,6 +9,18 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## 0.5.0 — 2026-07-15
+
+### Added
+
+- **`commons add --install`.** When a component pulls npm dependencies — e.g. a
+  Base UI–backed interactive component like `navigation-menu` needs
+  `@base-ui/react` — the CLI still prints the exact install command by default,
+  but `commons add <name> --install` now runs it with your detected package
+  manager (pnpm/yarn/npm/bun), and on an interactive terminal the CLI offers to
+  install for you. `--json` and `--dry-run` never install or prompt, so the
+  machine interface is unchanged.
+
 ## 0.4.0 — 2026-07-15
 
 ### Added

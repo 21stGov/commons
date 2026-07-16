@@ -113,6 +113,7 @@ npx @21stgov/commons add button
 npx @21stgov/commons add button alert gov-banner
 npx @21stgov/commons add button --dry-run
 npx @21stgov/commons add button --overwrite
+npx @21stgov/commons add navigation-menu --install   # also install its npm deps
 ```
 
 What happens, in order:
@@ -142,7 +143,9 @@ What happens, in order:
 6. **Dependencies.** npm dependencies are collected, deduplicated, and
    printed as an install command for your package manager — detected from
    your lockfile (`pnpm-lock.yaml`, `yarn.lock`, `package-lock.json`,
-   `bun.lock`; default pnpm). **The CLI never runs installs itself.**
+   `bun.lock`; default pnpm). By default the CLI only prints it; pass
+   **`--install`** to run it for you, or accept the prompt the CLI offers on
+   an interactive terminal. `--json` and `--dry-run` never install or prompt.
 
 `--dry-run` performs steps 1–4 and reports the complete plan — every file
 with its action, every dependency, the install command — without writing

@@ -280,6 +280,7 @@ export function buildMcpServer(options: McpServerOptions): McpServer {
         names,
         dryRun: true, // never writes
         overwrite: false,
+        install: false, // read-only planner: never touches the package manager
       });
       if (!result.ok) {
         return toolError(result.error);

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 import process from "node:process";
+import { createInterface } from "node:readline/promises";
 import { defineCommand, runCommand, runMain } from "citty";
 import { formatAdd, runAdd } from "./commands/add.js";
 import { formatInit, initNextSteps, runInit } from "./commands/init.js";
@@ -16,6 +17,7 @@ import {
   type CommandName,
   type EnvelopeCommand,
 } from "./output.js";
+import { runInstall, type PackageManager } from "./pm.js";
 import { CLI_VERSION } from "./version.js";
 
 const pkg = { version: CLI_VERSION };
@@ -92,6 +94,21 @@ const init = defineCommand({
   },
 });
 
+/**
+ * Ask (on a TTY) whether to install the npm dependencies now. The prompt goes
+ * to stderr so it never touches the `--json` stdout contract; the default is
+ * "no".
+ */
+async function confirmInstall(dependencies: string[], pm: PackageManager): Promise<boolean> {
+  const rl = createInterface({ input: process.stdin, output: process.stderr });
+  try {
+    const answer = await rl.question(`Install ${dependencies.join(", ")} with ${pm} now? [y/N] `);
+    return /^y(es)?$/i.test(answer.trim());
+  } finally {
+    rl.close();
+  }
+}
+
 const add = defineCommand({
   meta: {
     name: "add",
@@ -115,15 +132,48 @@ const add = defineCommand({
       description: "Replace existing files that differ from the registry version",
       default: false,
     },
+    install: {
+      type: "boolean",
+      description: "Install the components' npm dependencies with your package manager",
+      default: false,
+    },
   },
   async run({ args }) {
+    const cwd = resolveCwd(args.cwd);
     const result = await runAdd({
-      cwd: resolveCwd(args.cwd),
+      cwd,
       names: args._,
       dryRun: args["dry-run"],
       overwrite: args.overwrite,
+      install: args.install,
     });
     emit("add", result, args.json, formatAdd);
+
+    // Interactive convenience: when the user did not pass --install but the add
+    // pulled npm dependencies, offer to install them — only on a real TTY and
+    // never in --json / --dry-run (so scripts and the machine contract are
+    // untouched).
+    if (
+      !args.install &&
+      !args.json &&
+      !args["dry-run"] &&
+      result.ok &&
+      result.data.dependencies.length > 0 &&
+      Boolean(process.stdin.isTTY)
+    ) {
+      const { dependencies, packageManager, installCommand } = result.data;
+      if (await confirmInstall(dependencies, packageManager)) {
+        const ok = runInstall(packageManager, dependencies, cwd);
+        process.stderr.write(
+          ok
+            ? `Installed ${dependencies.join(", ")} with ${packageManager}.\n`
+            : `Install failed. Finish with: ${installCommand}\n`,
+        );
+        if (!ok) {
+          process.exitCode = EXIT.USER;
+        }
+      }
+    }
   },
 });
 

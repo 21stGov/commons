@@ -8,6 +8,16 @@ import { EXIT } from "../src/output.js";
 import { sha256Hex } from "../src/plan.js";
 import { BASE, cleanupProjects, makeProject, stubRegistry } from "./helpers.js";
 
+// Mock only the process-spawning installer; keep detectPackageManager and
+// installCommand real so the rest of runAdd behaves normally.
+const { runInstallMock } = vi.hoisted(() => ({
+  runInstallMock: vi.fn<(pm: string, deps: string[], cwd: string) => boolean>(() => true),
+}));
+vi.mock("../src/pm.js", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("../src/pm.js")>();
+  return { ...actual, runInstall: runInstallMock };
+});
+
 const CN_CONTENT = "// SPDX-License-Identifier: MIT\nexport function cn() {}\n";
 const BUTTON_CONTENT = "// SPDX-License-Identifier: MIT\nexport function Button() {}\n";
 
@@ -28,11 +38,13 @@ const buttonItem = {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+  runInstallMock.mockClear();
+  runInstallMock.mockReturnValue(true);
   cleanupProjects();
 });
 
 function addDefaults(cwd: string, names: string[]) {
-  return { cwd, names, dryRun: false, overwrite: false };
+  return { cwd, names, dryRun: false, overwrite: false, install: false };
 }
 
 describe("runAdd — happy path", () => {
@@ -500,5 +512,54 @@ describe("runAdd — package manager detection", () => {
     if (!result.ok) return;
     expect(result.data.packageManager).toBe("pnpm");
     expect(result.data.installCommand).toBeNull();
+  });
+});
+
+describe("runAdd — --install", () => {
+  it("does not touch the package manager without --install", async () => {
+    stubRegistry({ cn: cnItem, button: buttonItem });
+    const cwd = makeProject();
+
+    const result = await runAdd(addDefaults(cwd, ["button"]));
+
+    expect(result.ok).toBe(true);
+    if (result.ok) expect(result.data.installed).toBe(false);
+    expect(runInstallMock).not.toHaveBeenCalled();
+  });
+
+  it("installs the collected deps and reports installed=true", async () => {
+    stubRegistry({ cn: cnItem, button: buttonItem });
+    const cwd = makeProject();
+    runInstallMock.mockReturnValue(true);
+
+    const result = await runAdd({ ...addDefaults(cwd, ["button"]), install: true });
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.data.installed).toBe(true);
+      expect(result.data.dependencies.length).toBeGreaterThan(0);
+    }
+    expect(runInstallMock).toHaveBeenCalledOnce();
+    expect(runInstallMock).toHaveBeenCalledWith(
+      "pnpm",
+      expect.arrayContaining(["clsx"]),
+      cwd,
+    );
+  });
+
+  it("fails with INSTALL_FAILED but keeps the written files when the install fails", async () => {
+    stubRegistry({ cn: cnItem, button: buttonItem });
+    const cwd = makeProject();
+    runInstallMock.mockReturnValue(false);
+
+    const result = await runAdd({ ...addDefaults(cwd, ["button"]), install: true });
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.error.code).toBe("INSTALL_FAILED");
+      expect(result.exitCode).toBe(EXIT.USER);
+    }
+    // The write is not rolled back — the component file is on disk.
+    expect(existsSync(join(cwd, "src/components/ui/button.tsx"))).toBe(true);
   });
 });

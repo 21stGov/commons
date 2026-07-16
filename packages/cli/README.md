@@ -92,7 +92,8 @@ Stable exit codes:
 6. Writes files by type: `registry:ui` → `paths.ui`, `registry:lib` →
    `paths.lib`, everything else → `paths.components` (basename only).
 7. Prints the dependency install command for your package manager
-   (detected from the lockfile; default pnpm). It never runs installs.
+   (detected from the lockfile; default pnpm). Pass `--install` to run it
+   for you (or accept the prompt the CLI offers on an interactive terminal).
 
 `--dry-run` performs steps 1–5 and reports the full plan without writing.
 

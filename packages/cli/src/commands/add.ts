@@ -22,7 +22,12 @@ import {
   collectDependencies,
   type PlannedFileAction,
 } from "../plan.js";
-import { detectPackageManager, installCommand, type PackageManager } from "../pm.js";
+import {
+  detectPackageManager,
+  installCommand,
+  runInstall,
+  type PackageManager,
+} from "../pm.js";
 import { resolveItems } from "../registry/resolve.js";
 
 export interface AddOptions {
@@ -30,6 +35,8 @@ export interface AddOptions {
   names: string[];
   dryRun: boolean;
   overwrite: boolean;
+  /** Run the package manager to install the npm dependencies after writing. */
+  install: boolean;
 }
 
 export interface AddFileReport {
@@ -45,8 +52,10 @@ export interface AddData {
   files: AddFileReport[];
   dependencies: string[];
   packageManager: PackageManager;
-  /** Command to install npm dependencies — printed, never executed. */
+  /** Command to install npm dependencies; run for you when `--install` is set. */
   installCommand: string | null;
+  /** True when `--install` ran the package manager and it succeeded. */
+  installed: boolean;
   dryRun: boolean;
   /** Number of files actually written (always 0 for a dry run). */
   written: number;
@@ -109,6 +118,7 @@ export async function runAdd(options: AddOptions): Promise<CliResult<AddData>> {
     dependencies,
     packageManager,
     installCommand: installCommand(packageManager, dependencies),
+    installed: false,
     dryRun: options.dryRun,
     written: 0,
   };
@@ -129,6 +139,23 @@ export async function runAdd(options: AddOptions): Promise<CliResult<AddData>> {
   }
 
   data.written = applyPlan(plan);
+
+  // Opt-in dependency install. Files are already on disk; if the package
+  // manager fails, report it (non-zero exit) but point at the exact command
+  // to finish by hand — the write is not rolled back.
+  if (options.install && dependencies.length > 0) {
+    const installed = runInstall(packageManager, dependencies, cwd);
+    if (!installed) {
+      return failure(
+        EXIT.USER,
+        "INSTALL_FAILED",
+        `Wrote ${data.written} file(s), but installing dependencies failed. ` +
+          `Finish with: ${data.installCommand}`,
+      );
+    }
+    data.installed = true;
+  }
+
   return success(data);
 }
 
@@ -151,8 +178,12 @@ export function formatAdd(data: AddData): string {
   if (data.dependencies.length > 0) {
     lines.push("");
     lines.push(`npm dependencies: ${data.dependencies.join(", ")}`);
-    lines.push(`Install them with: ${data.installCommand}`);
-    lines.push("(The Commons CLI never runs installs for you.)");
+    if (data.installed) {
+      lines.push(`Installed with ${data.packageManager}.`);
+    } else {
+      lines.push(`Install them with: ${data.installCommand}`);
+      lines.push("(or re-run with --install to let the CLI do it.)");
+    }
   }
 
   if (!data.dryRun) {
