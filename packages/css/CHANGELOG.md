@@ -1,5 +1,20 @@
 # @21stgov/commons-css
 
+## 0.5.0
+
+### Minor Changes
+
+- f723733: `commons add --install` installs the components' npm dependencies for you.
+
+  When a component pulls npm dependencies (e.g. a Base UI–backed interactive
+  component needs `@base-ui/react`), the CLI still prints the exact install
+  command by default — but now `commons add <name> --install` runs it with your
+  detected package manager (pnpm/yarn/npm/bun), and on an interactive terminal
+  the CLI offers to install them for you. `--json` and `--dry-run` never install
+  or prompt, so the machine interface and script use are unchanged. The package
+  manager's output is routed to stderr so a `--json` stdout stays a single clean
+  envelope.
+
 ## 0.4.0
 
 ### Minor Changes

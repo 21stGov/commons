@@ -1,5 +1,15 @@
 # docs
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies [f723733]
+  - @21stgov/commons-core@1.0.0
+  - @21stgov/commons-react@0.5.0
+  - @21stgov/commons-tokens@0.5.0
+  - @21stgov/commons-fonts@0.5.0
+
 ## 0.0.4
 
 ### Patch Changes
