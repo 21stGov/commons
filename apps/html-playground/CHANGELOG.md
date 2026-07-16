@@ -1,5 +1,16 @@
 # html-playground
 
+## 0.0.5
+
+### Patch Changes
+
+- Updated dependencies
+  - @21stgov/commons-core@1.0.0
+  - @21stgov/commons-css@0.6.0
+  - @21stgov/commons-fonts@0.6.0
+  - @21stgov/commons-js@0.6.0
+  - @21stgov/commons-tokens@0.6.0
+
 ## 0.0.4
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @21stgov/commons-tokens
 
+## 0.6.0
+
+### Minor Changes
+
+- Responsive header navigation, side-by-side Collection media, and a new ThemeImage component.
+
+  - **`HeaderNavigationMenu` is now data-driven and responsive** (breaking, pre-1.0): pass a single `items` array (direct links or grouped panels) instead of composing `NavigationMenu*` parts. From `md` up it renders the floating mega-menu; below `md` it renders an inline accordion of native `<details>` that expands each section in place and pushes the page down — no more floating panel over a phone layout. Every part carries a `data-slot`, so the framework-agnostic path gets the same presentation as generated `.cui-header-navigation-menu-*` classes.
+  - **`ThemeImage`** (new): an image that swaps with the active theme — up to three sources (`light`, `dark`, `highContrast`), exactly one shown, matching the token themes' own selectors (explicit `data-theme` wins, `prefers-color-scheme` / `prefers-contrast` fallback). The CSS ships in `@21stgov/commons-core` (`theme-image.css`), so the same markup works without React.
+  - **`Collection`**: media now sits beside the content at every width — a calendar date or thumbnail is narrow enough for a phone, and stacking it on its own row just made items taller. The media column hugs its content; images get a fixed thumbnail width so photos can't blow out the column.
+  - **`Header`**: the expanded mobile nav no longer sits flush against the menu button (the wrap row gained a row gap).
+  - **CSS generator**: `cui-*` class tokens on React components pass through to the framework-agnostic output verbatim (they're core-owned classes, not utilities), and slots without generated rules keep their original markup classes.
+
 ## 0.5.0
 
 ### Minor Changes

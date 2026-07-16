@@ -9,6 +9,46 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## 0.6.0 — 2026-07-16
+
+### Added
+
+- **`ThemeImage`.** A seal or logo drawn for a light page often disappears on a
+  dark one — and a white mark vanishes in high contrast, which is light-based.
+  `ThemeImage` takes up to three sources (`light`, `dark`, `highContrast`) and
+  shows exactly the one matching the active theme: an explicit `data-theme`
+  wins, with `prefers-color-scheme` / `prefers-contrast` fallbacks for the
+  system setting. Omit a variant to reuse another, so a single `light` works
+  everywhere. The swap is plain CSS in `@21stgov/commons-core`
+  (`.cui-theme-image` rules mirroring the token themes' own selectors), so the
+  identical markup works on the framework-agnostic path.
+
+### Changed
+
+- **`HeaderNavigationMenu` is responsive — and data-driven** (breaking,
+  pre-1.0). It now takes a single `items` array (direct links or grouped
+  panels) instead of composed `NavigationMenu*` parts. From `md` up it renders
+  the floating mega-menu as before; below `md` it renders an inline accordion
+  of native `<details>` — tapping a section expands its links in place and
+  pushes the page down, instead of floating a desktop-style panel over a phone
+  layout. Only one presentation is ever in the accessibility tree, and every
+  part carries a `data-slot`, so the framework-agnostic path gets the same
+  presentation via generated `.cui-header-navigation-menu-*` classes.
+- **`Collection` media sits beside the content at every width.** A calendar
+  date or thumbnail is narrow enough for a phone — stacking it on its own row
+  just made every item taller. The media column hugs its content (a calendar
+  date stays a snug chip) and images get a fixed thumbnail width, so a large
+  photo can't blow the column out.
+
+### Fixed
+
+- **Header divider collision.** With the mobile menu open, the nav's top
+  divider sat flush against the menu button's border; the header's wrap row
+  now has a row gap.
+- **Generated CSS honors core-owned classes.** `cui-*` tokens on React
+  components (like `ThemeImage`'s) pass through to the framework-agnostic
+  output verbatim instead of being treated as unknown Tailwind utilities.
+
 ## 0.5.0 — 2026-07-15
 
 ### Added

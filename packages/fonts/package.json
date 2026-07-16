@@ -1,6 +1,6 @@
 {
   "name": "@21stgov/commons-fonts",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Self-hosted Atkinson Hyperlegible Next + Mono variable fonts for Commons, the accessibility-first design system for U.S. local governments.",
   "type": "module",
   "license": "(MIT AND OFL-1.1)",
