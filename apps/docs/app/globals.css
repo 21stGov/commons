@@ -787,12 +787,14 @@ button[aria-label='Open Sidebar'] > svg {
 }
 
 /* The framework selector shares the theme selector's dropdown styling so the
- * two read as one set of viewing preferences. */
+ * two read as one set of viewing preferences. They sit side by side: the pair
+ * lives in the persistent top navbar (the notebook docs layout keeps the same
+ * navbar as the home pages), where a stacked column would overflow the bar. */
 .docs-preferences {
   display: flex;
-  flex-direction: column;
-  gap: var(--cui-spacing-105);
-  align-items: stretch;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--cui-spacing-1);
 }
 
 .docs-theme-select,
@@ -1863,14 +1865,6 @@ nav[data-orientation='horizontal'] li a:visited,
 
   .docs-theme-cycle {
     display: inline-flex;
-  }
-
-  /* On mobile the theme collapses to its cycle icon, so the framework dropdown
-   * sits beside it in a row rather than stacked. */
-  .docs-preferences {
-    flex-direction: row;
-    align-items: center;
-    gap: var(--cui-spacing-1);
   }
 
   .docs-framework-select select {

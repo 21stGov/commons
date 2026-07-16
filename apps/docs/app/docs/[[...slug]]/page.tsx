@@ -4,7 +4,9 @@ import { createRelativeLink } from 'fumadocs-ui/mdx'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page'
+// Must match the layout family: app/docs/layout.tsx uses the notebook
+// DocsLayout (persistent top navbar), so the page parts come from notebook too.
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page'
 
 import { getMDXComponents } from '@/components/mdx'
 import { StructuredData } from '@/components/structured-data'
