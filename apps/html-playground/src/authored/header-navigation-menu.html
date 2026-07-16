@@ -1,0 +1,128 @@
+<!--
+  Authored canonical Header Navigation Menu markup (no React). One nav, two
+  presentations: from the md breakpoint up, a .cui-navigation-menu mega-menu in
+  the header (triggers follow the Navigation Menu contract — commons.js opens
+  one panel at a time, hover-switches while open, arrows move between triggers,
+  Escape / outside press closes); below md, an inline accordion of native
+  <details> — no JS at all — where each section expands in place and pushes the
+  page down. Resize the window to switch presentations. The Header's mobile
+  menu-button disclosure is the Header component's own contract and is not
+  duplicated here.
+-->
+<div class="flex flex-col gap-5">
+  <section aria-labelledby="hnm-h">
+    <h3 id="hnm-h" class="text-sm font-semibold">Header navigation — mega-menu from md up, accordion below (resize the window)</h3>
+    <header class="cui-header" data-slot="header">
+      <div class="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-2 gap-y-2 px-2 py-1">
+        <a class="cui-header-title" data-slot="header-title" href="#home">City of Springfield</a>
+
+        <!-- Desktop: the floating mega-menu (hidden below md). -->
+        <div class="cui-header-navigation-menu-desktop" data-slot="header-navigation-menu-desktop">
+          <nav class="cui-navigation-menu" data-slot="navigation-menu" aria-label="Primary">
+            <ul class="cui-navigation-menu-list" data-slot="navigation-menu-list">
+              <li class="cui-navigation-menu-item" data-slot="navigation-menu-item">
+                <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#home" aria-current="page">Home</a>
+              </li>
+              <li class="cui-navigation-menu-item" data-slot="navigation-menu-item">
+                <button type="button" class="cui-navigation-menu-trigger" data-slot="navigation-menu-trigger" aria-haspopup="menu" aria-expanded="false">Services<span class="cui-navigation-menu-trigger-icon" data-slot="navigation-menu-trigger-icon"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+                <div class="cui-navigation-menu-positioner" data-slot="navigation-menu-positioner" hidden>
+                  <div class="cui-navigation-menu-popup" data-slot="navigation-menu-popup">
+                    <div class="cui-navigation-menu-content" data-slot="navigation-menu-content">
+                      <!-- Groups sit in a row (this panel only opens from md up;
+                           below md the accordion presentation takes over). -->
+                      <div class="flex flex-wrap gap-6">
+                      <div class="cui-navigation-menu-link-group" data-slot="navigation-menu-link-group">
+                        <div class="cui-navigation-menu-link-group-label" data-slot="navigation-menu-link-group-label">Residents</div>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#permits">Permits &amp; licenses</a>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#pay">Pay a bill</a>
+                      </div>
+                      <div class="cui-navigation-menu-link-group" data-slot="navigation-menu-link-group">
+                        <div class="cui-navigation-menu-link-group-label" data-slot="navigation-menu-link-group-label">Business</div>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#start">Start a business</a>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#bids">Bids &amp; contracts</a>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="cui-navigation-menu-item" data-slot="navigation-menu-item">
+                <button type="button" class="cui-navigation-menu-trigger" data-slot="navigation-menu-trigger" aria-haspopup="menu" aria-expanded="false">Government<span class="cui-navigation-menu-trigger-icon" data-slot="navigation-menu-trigger-icon"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+                <div class="cui-navigation-menu-positioner" data-slot="navigation-menu-positioner" hidden>
+                  <div class="cui-navigation-menu-popup" data-slot="navigation-menu-popup">
+                    <div class="cui-navigation-menu-content" data-slot="navigation-menu-content">
+                      <!-- Groups sit in a row (this panel only opens from md up;
+                           below md the accordion presentation takes over). -->
+                      <div class="flex flex-wrap gap-6">
+                      <div class="cui-navigation-menu-link-group" data-slot="navigation-menu-link-group">
+                        <div class="cui-navigation-menu-link-group-label" data-slot="navigation-menu-link-group-label">City hall</div>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#mayor">Mayor&rsquo;s office</a>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#council">City council</a>
+                        <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#departments">Departments</a>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="cui-navigation-menu-item" data-slot="navigation-menu-item">
+                <a class="cui-navigation-menu-link" data-slot="navigation-menu-link" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Mobile: an inline accordion of native <details> (hidden from md up).
+             Zero JS: Enter/Space toggle and the exclusive `name` grouping are
+             browser-native. Inside a Header disclosure, toggle the `hidden`
+             class on this nav from the menu button, exactly like HeaderNav. -->
+        <nav class="cui-header-navigation-menu-accordion" data-slot="header-navigation-menu-accordion" aria-label="Primary">
+          <ul class="cui-header-navigation-menu-accordion-list" data-slot="header-navigation-menu-accordion-list">
+            <li>
+              <a class="cui-header-navigation-menu-accordion-link" data-slot="header-navigation-menu-accordion-link" href="#home" aria-current="page">Home</a>
+            </li>
+            <li>
+              <details name="hnm-panel" class="group/panel" data-slot="header-navigation-menu-panel">
+                <summary class="cui-header-navigation-menu-panel-summary" data-slot="header-navigation-menu-panel-summary">Services<span class="cui-header-navigation-menu-panel-icon" data-slot="header-navigation-menu-panel-icon"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary>
+                <div class="cui-header-navigation-menu-panel-content" data-slot="header-navigation-menu-panel-content">
+                  <div class="cui-header-navigation-menu-group" data-slot="header-navigation-menu-group">
+                    <p class="cui-header-navigation-menu-group-heading" data-slot="header-navigation-menu-group-heading">Residents</p>
+                    <ul class="cui-header-navigation-menu-group-list" data-slot="header-navigation-menu-group-list">
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#permits">Permits &amp; licenses</a></li>
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#pay">Pay a bill</a></li>
+                    </ul>
+                  </div>
+                  <div class="cui-header-navigation-menu-group" data-slot="header-navigation-menu-group">
+                    <p class="cui-header-navigation-menu-group-heading" data-slot="header-navigation-menu-group-heading">Business</p>
+                    <ul class="cui-header-navigation-menu-group-list" data-slot="header-navigation-menu-group-list">
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#start">Start a business</a></li>
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#bids">Bids &amp; contracts</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </li>
+            <li>
+              <details name="hnm-panel" class="group/panel" data-slot="header-navigation-menu-panel">
+                <summary class="cui-header-navigation-menu-panel-summary" data-slot="header-navigation-menu-panel-summary">Government<span class="cui-header-navigation-menu-panel-icon" data-slot="header-navigation-menu-panel-icon"><svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m4 6 4 4 4-4" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></summary>
+                <div class="cui-header-navigation-menu-panel-content" data-slot="header-navigation-menu-panel-content">
+                  <div class="cui-header-navigation-menu-group" data-slot="header-navigation-menu-group">
+                    <p class="cui-header-navigation-menu-group-heading" data-slot="header-navigation-menu-group-heading">City hall</p>
+                    <ul class="cui-header-navigation-menu-group-list" data-slot="header-navigation-menu-group-list">
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#mayor">Mayor&rsquo;s office</a></li>
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#council">City council</a></li>
+                      <li><a class="cui-header-navigation-menu-group-link" data-slot="header-navigation-menu-group-link" href="#departments">Departments</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </details>
+            </li>
+            <li>
+              <a class="cui-header-navigation-menu-accordion-link" data-slot="header-navigation-menu-accordion-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </section>
+</div>
