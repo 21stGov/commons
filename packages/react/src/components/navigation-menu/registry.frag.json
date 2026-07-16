@@ -52,8 +52,8 @@
     "notes": [
       "The root renders the nav landmark and takes an aria-label (or aria-labelledby); the panel popup is a nav region named by popupLabel so the two landmarks stay distinct.",
       "The current page is marked with aria-current=page plus non-color indicators (a 2px block-end border and heavier weight on bar items, a weight bump on panel links), so it stays distinguishable in Windows High Contrast / forced-colors mode.",
-      "The open trigger adds weight + underline alongside its border tint, so the active item is not signalled by color alone.",
-      "Links reuse the Commons Link visual contract (always underlined — link-ness is never conveyed by color alone); the trailing trigger chevron is decorative and the open/closed state comes from aria-expanded.",
+      "The open trigger tints its block-end border and bumps font weight (no underline), so the active item is a single line and is not signalled by color alone.",
+      "Items read as navigation rather than body links: bar items carry hover and current/open state on the block-end border (no persistent underline that would stack into a second line), and panel links take the subtle nav-link treatment (inherit the panel text color, underline on hover, no visited tint). The trailing trigger chevron is decorative and the open/closed state comes from aria-expanded.",
       "The popup keeps a visible border in every state so forced-colors mode paints a boundary; the panel fade, scale, and size transitions are gated behind motion-safe.",
       "AmbientDirection feeds the DOM dir into Base UI so logical sides and the anchored panel flip under dir=rtl like the native components."
     ]

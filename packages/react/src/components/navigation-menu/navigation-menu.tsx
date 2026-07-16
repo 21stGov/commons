@@ -144,8 +144,9 @@ export const NavigationMenuList = React.forwardRef<HTMLUListElement, NavigationM
 
 // True inside a mega-menu panel, false on the top-level bar. Lets a
 // NavigationMenuLink pick its treatment automatically: bar items read as
-// primary nav (same as the triggers — no persistent underline), while panel
-// items are normal underlined body links.
+// primary nav carried by the block-end border, while panel items read as
+// navigation links (subtle color, underline on hover, no visited tint) rather
+// than body links — both are inside the nav landmark.
 const NavigationMenuPanelContext = React.createContext(false)
 
 export interface NavigationMenuItemProps extends React.ComponentPropsWithoutRef<'li'> {
@@ -188,13 +189,16 @@ export const navigationMenuTriggerVariants = cva(
     'flex min-h-11 w-full select-none items-center gap-1 border-b-2 bg-transparent px-105 text-sm text-foreground md:w-auto',
     // no-underline overrides the global "links are always underlined"
     // accessibility rule: a top-level bar item (whether it renders as a
-    // <button> trigger or an <a>) is primary nav, not a body link, so it reads
-    // consistently across the bar. Underline returns on hover / open below.
-    'no-underline underline-offset-2 transition-colors hover:underline motion-reduce:transition-none',
+    // <button> trigger or an <a>) is primary nav, not a body link. State is
+    // carried by the block-end border ALONE — one line that never stacks with a
+    // text underline. (Hover/open used to also add a text underline, which sat
+    // just under the text, above the box-bottom border, and read as two faint
+    // parallel lines; the border is the single affordance now.)
+    'no-underline transition-colors motion-reduce:transition-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
-    // Open panel: a non-color indicator (weight + underline) alongside the
-    // border tint, so the active trigger is distinguishable in WHCM.
-    'data-[popup-open]:border-border-strong data-[popup-open]:font-medium data-[popup-open]:underline',
+    // Open panel: non-color indicators (border tint + weight), so the active
+    // trigger is distinguishable in forced-colors mode. No underline.
+    'data-[popup-open]:border-border-strong data-[popup-open]:font-medium',
   ],
   {
     variants: {
@@ -202,7 +206,10 @@ export const navigationMenuTriggerVariants = cva(
         // Current page: aria-current="page" plus non-color indicators — a 2px
         // block-end border and heavier weight (matches the Header contract).
         true: 'border-primary font-medium',
-        false: 'border-transparent',
+        // Resting: transparent border; hover tints it (the single hover
+        // affordance, matching the open/current treatment) rather than adding a
+        // text underline that would double up with the border on active items.
+        false: 'border-transparent hover:border-border-strong',
       },
     },
     defaultVariants: {
@@ -254,13 +261,12 @@ export const NavigationMenuTrigger = React.forwardRef<HTMLButtonElement, Navigat
 export interface NavigationMenuLinkProps
   extends Omit<LinkProps, 'ref'> {
   /**
-   * Destination this link points to. A link inside a mega-menu panel reuses
-   * the Commons `Link` visual contract (always underlined — link-ness is
-   * never color alone). A link on the top-level bar instead matches the
-   * triggers beside it (primary-nav treatment: no persistent underline,
-   * underline on hover/focus, current/open shown by weight + border), so the
-   * bar reads as one consistent row rather than mixing underlined links with
-   * un-underlined triggers.
+   * Destination this link points to. Both placements read as navigation, not
+   * body content. A link inside a mega-menu panel takes the subtle nav-link
+   * treatment (inherits the panel text color, underline on hover, no visited
+   * tint). A link on the top-level bar matches the triggers beside it (no
+   * persistent underline, the block-end border carries hover and current/open,
+   * shown by weight + border), so the bar reads as one consistent row.
    */
   href?: string
   /**
@@ -317,7 +323,13 @@ export const NavigationMenuLink = React.forwardRef<HTMLAnchorElement, Navigation
       )
     }
 
-    // Inside a panel: a normal underlined body link.
+    // Inside a panel: a navigation link, not body content. It sits in a
+    // labelled nav landmark (the menu's <nav>), so it follows the Commons
+    // nav-link convention rather than the body-link one — `subtle` inherits the
+    // surrounding text color and drops the visited state (a purple "visited"
+    // tint on primary nav reads as a bug, same call as the footer), and the
+    // persistent underline gives way to an underline on hover only. Every panel
+    // item is a link, so there is no body text to disambiguate from.
     return (
       <BaseNav.Link
         active={current}
@@ -326,12 +338,15 @@ export const NavigationMenuLink = React.forwardRef<HTMLAnchorElement, Navigation
           <Link
             {...props}
             ref={ref}
+            variant="subtle"
             data-slot="navigation-menu-link"
             // aria-current comes from Base UI's `active`; the weight bump is the
             // non-color redundancy so the current link is not signalled by color
-            // alone (WCAG 1.4.1 / forced-colors).
+            // alone (WCAG 1.4.1 / forced-colors). `no-underline hover:underline`
+            // overrides Link's always-underline base (cn → tailwind-merge, last
+            // utility wins).
             className={cn(
-              'flex min-h-11 flex-col justify-center',
+              'flex min-h-11 flex-col justify-center no-underline hover:underline',
               current && 'font-medium',
               className
             )}

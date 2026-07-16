@@ -23,6 +23,11 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
 - **Identifier seal.** The agency identifier band takes an optional decorative
   seal/logo at its right edge — a `seal` prop in React, an `identifier-seal`
   slot in the framework-agnostic markup.
+- **`useHeaderMenu()` hook.** Wire a custom navigation region — e.g. a
+  `NavigationMenu` mega-menu — into the `Header`'s mobile disclosure: the hook
+  hands back the nav id the menu button controls and whether the nav is
+  collapsed behind the hamburger below `md`, so a header mega-menu collapses and
+  is `aria-controls`-wired exactly like the built-in `HeaderNav`.
 
 ### Fixed
 
@@ -39,6 +44,16 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
   banner, header, and footer, instead of a narrower reading measure, so it lines
   up with the rest of the page out of the box.
 - Footer links no longer show a visited state — a footer is navigation.
+- **`NavigationMenu` bar items showed a doubled line.** A current or open
+  top-level item painted a text underline *and* a block-end border — two faint
+  parallel lines. The block-end border is now the single affordance across
+  hover, current, and open (matching `HeaderNavLink`), so there is only ever one
+  line. `HeaderNavLink` got the same treatment (it shared the latent bug).
+- **`NavigationMenu` mega-menu panel links read as body links.** Panel links
+  showed the blue link color, a persistent underline, and a purple visited tint
+  — but they are navigation, not content. They now take the subtle nav-link
+  treatment: inherit the panel text color, underline on hover only, no visited
+  state.
 
 ## 0.3.1 — 2026-07-15
 

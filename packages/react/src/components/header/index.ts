@@ -8,6 +8,8 @@ export {
   HeaderTitle,
   headerNavLinkVariants,
   headerVariants,
+  useHeaderMenu,
+  type HeaderMenu,
   type HeaderMenuButtonProps,
   type HeaderNavLinkProps,
   type HeaderNavProps,

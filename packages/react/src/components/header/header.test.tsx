@@ -11,8 +11,23 @@ import {
   HeaderNav,
   HeaderNavLink,
   HeaderTitle,
+  useHeaderMenu,
 } from '@/components/header'
 import { axeCheck } from '../../../test/setup.js'
+
+/**
+ * A custom nav region wired into the Header disclosure via `useHeaderMenu`
+ * (stands in for a NavigationMenu mega-menu). It takes the Header's nav id so
+ * `aria-controls` resolves, and collapses via the `hidden` class below md.
+ */
+function CustomNav(): React.JSX.Element {
+  const { id, collapsed } = useHeaderMenu()
+  return (
+    <nav id={id} aria-label="Primary" className={collapsed ? 'hidden md:block' : 'md:block'}>
+      <a href="/services">Services</a>
+    </nav>
+  )
+}
 
 function renderHeader(
   props: React.ComponentProps<typeof Header> = {}
@@ -343,6 +358,39 @@ describe('Header standalone subcomponents', () => {
   it('HeaderTitle defaults its href to "/"', () => {
     render(<HeaderTitle title="Springfield" />)
     expect(screen.getByRole('link', { name: 'Springfield' })).toHaveAttribute('href', '/')
+  })
+})
+
+describe('useHeaderMenu (custom nav wired into the Header disclosure)', () => {
+  it('shares the nav id with the menu button and toggles collapse', async () => {
+    const user = userEvent.setup()
+    render(
+      <Header>
+        <HeaderTitle title="City of Springfield" href="/" />
+        <HeaderMenuButton />
+        <CustomNav />
+      </Header>
+    )
+    const button = screen.getByRole('button', { name: 'Menu' })
+    const nav = screen.getByRole('navigation', { name: 'Primary' })
+
+    // The menu button's aria-controls resolves to the custom nav.
+    expect(nav.id).toBeTruthy()
+    expect(button).toHaveAttribute('aria-controls', nav.id)
+
+    // Collapsed while closed; revealed on toggle; hidden again (disclosure).
+    expect(nav).toHaveClass('hidden')
+    await user.click(button)
+    expect(nav).not.toHaveClass('hidden')
+    await user.click(button)
+    expect(nav).toHaveClass('hidden')
+  })
+
+  it('is inert outside a Header (no id, never collapsed)', () => {
+    render(<CustomNav />)
+    const nav = screen.getByRole('navigation', { name: 'Primary' })
+    expect(nav.id).toBe('')
+    expect(nav).not.toHaveClass('hidden')
   })
 })
 

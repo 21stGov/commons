@@ -67,6 +67,54 @@ function composeRefs<T>(...refs: Array<React.Ref<T> | undefined>): React.RefCall
   }
 }
 
+export interface HeaderMenu {
+  /**
+   * Id of the nav landmark the `HeaderMenuButton` controls. Put it on your
+   * custom nav so `aria-controls` resolves. `undefined` outside a `Header`.
+   */
+  id: string | undefined
+  /** Whether the mobile menu disclosure is currently open. */
+  expanded: boolean
+  /**
+   * Whether the nav should be collapsed (hidden below `md`) right now — i.e.
+   * inside a `Header` with the menu closed. Apply the `hidden` utility when
+   * true (pair it with `md:block` so the nav still shows from `md` up). `false`
+   * outside a `Header`, so a standalone nav is never hidden.
+   */
+  collapsed: boolean
+}
+
+/**
+ * Wire a custom navigation region into a `Header`'s mobile disclosure — use it
+ * when composing something other than `HeaderNav` inside a `Header`, e.g. a
+ * `NavigationMenu` mega-menu. Returns the `id` the `HeaderMenuButton` controls
+ * (so its `aria-controls` points at your nav) and whether the nav is currently
+ * collapsed behind the hamburger. Outside a `Header` it is inert
+ * (`id: undefined`, never `collapsed`), so the same nav renders standalone too.
+ *
+ * ```tsx
+ * function PrimaryNav() {
+ *   const { id, collapsed } = useHeaderMenu()
+ *   return (
+ *     <NavigationMenu id={id} aria-label="Primary"
+ *       className={cn(
+ *         'w-full border-t border-border pt-1 pb-1 md:block md:w-auto md:border-t-0 md:pt-0 md:pb-0',
+ *         collapsed && 'hidden',
+ *       )}
+ *     >…</NavigationMenu>
+ *   )
+ * }
+ * ```
+ */
+export function useHeaderMenu(): HeaderMenu {
+  const context = React.useContext(HeaderContext)
+  return {
+    id: context?.navId,
+    expanded: context?.expanded ?? true,
+    collapsed: context ? !context.expanded : false,
+  }
+}
+
 export interface HeaderProps
   extends React.HTMLAttributes<HTMLElement>, VariantProps<typeof headerVariants> {
   /**
@@ -263,15 +311,18 @@ export const headerNavLinkVariants = cva(
    * Links grouped in a labelled nav landmark are identified by structure
    * and convention rather than color, so the resting state may omit the
    * underline PROVIDED the other affordances are explicit — which they are
-   * here: hover restores the underline, focus shows the 2px ring, and the
+   * here: hover tints the block-end border, focus shows the 2px ring, and the
    * current page is marked by aria-current plus two non-color indicators
-   * (2px block-end border + font weight).
+   * (2px block-end border + font weight). The border is the single line
+   * across all states, so it never stacks with a text underline into two
+   * faint parallel lines (as an underline-on-hover previously did on the
+   * current item). Matches NavigationMenu's trigger contract.
    */
   [
     'flex min-h-11 w-full items-center gap-1 border-b-2 px-105 text-sm text-foreground',
-    // no-underline: Commons underlines links by default; nav links opt out
-    // (the border-b-2 + weight carry current-state) and underline on hover only.
-    'no-underline underline-offset-2 transition-colors hover:underline motion-reduce:transition-none',
+    // no-underline: Commons underlines links by default; nav links opt out —
+    // the block-end border alone carries hover and current-state.
+    'no-underline transition-colors motion-reduce:transition-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
     'md:w-auto',
   ],
@@ -282,7 +333,9 @@ export const headerNavLinkVariants = cva(
         // a 2px block-end border (border-bottom == border-block-end in
         // horizontal writing modes) and heavier weight.
         true: 'border-primary font-medium',
-        false: 'border-transparent',
+        // Resting: transparent border; hover tints it — the single hover
+        // affordance, instead of a text underline stacking over the border.
+        false: 'border-transparent hover:border-border-strong',
       },
     },
     defaultVariants: {
