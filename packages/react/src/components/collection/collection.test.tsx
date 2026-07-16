@@ -109,6 +109,21 @@ describe('Collection presentation contract', () => {
     warn.mockRestore()
   })
 
+  it('keeps media beside content at every width, pinned to the top', () => {
+    const { container } = render(<Example />)
+    // jsdom applies no CSS: assert the layout mechanism. The item is a
+    // two-column grid at its BASE (no breakpoint prefix), so a calendar date
+    // or thumbnail sits beside the text on phones instead of stacking; the
+    // media column hugs content (`self-start`, no fixed width) while images
+    // get the fixed thumbnail width so photos can't blow out the column.
+    const item = container.querySelector('[data-slot="collection-item"]')
+    expect(item).toHaveClass('grid-cols-[auto_minmax(0,1fr)]')
+    const media = container.querySelector('[data-slot="collection-media"]')
+    expect(media).toHaveClass('self-start')
+    expect(media?.className).not.toMatch(/(?:^|\s)(?:(?:sm|md|lg|xl):)?w-\d/) // no fixed column width
+    expect(media?.className).toContain('[&_img]:w-24') // images are constrained
+  })
+
   it('forwards root attributes, classes, styles, and refs', () => {
     const ref = React.createRef<HTMLUListElement>()
     render(<Collection ref={ref} aria-label="Notices" className="custom" style={{ paddingInlineStart: '1rem' }} />)

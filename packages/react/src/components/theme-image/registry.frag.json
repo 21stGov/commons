@@ -1,0 +1,47 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "theme-image",
+  "type": "registry:ui",
+  "title": "Theme Image",
+  "description": "An image that swaps with the active Commons theme — a seal or logo drawn for a light page often disappears on a dark one, and a white mark vanishes in high contrast (which is light-based). Give it up to three sources (light, dark, highContrast) and the one matching the theme is shown: an explicit data-theme on the root wins, with a prefers-color-scheme / prefers-contrast fallback for the system setting. Omit a variant to reuse another, so a single light source works everywhere. The swap itself is the .cui-theme-image rules in @21stgov/commons-core (already in every Commons install), mirroring the token themes' own selectors — so the same markup works on the framework-agnostic path.",
+  "status": "experimental",
+  "useWhen": [
+    "A municipal seal, logo, or wordmark that needs a different rendering per theme (color on light, white on dark, black in high contrast)",
+    "Any decorative or informational image whose drawn colors stop working when the theme changes",
+    "Header identity marks next to a HeaderTitle, or partner logos in a footer"
+  ],
+  "avoidWhen": [
+    "Photographs and images that read fine on every background (use a plain <img>)",
+    "Icons that can inherit text color (use an inline SVG with currentColor instead — one asset, zero swapping)",
+    "Content images that differ per theme in meaning, not just rendering (serve the right image, don't theme-swap it)"
+  ],
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "compatibility": { "react": ">=19", "rtl": true, "forcedColors": true },
+  "accessibility": {
+    "standard": "WCAG 2.2 AA",
+    "keyboard": [
+      "Not interactive — no keyboard surface",
+      "Hidden variants are display: none, so they are out of the accessibility tree and the tab order; the alt text is announced exactly once",
+      "Decorative by default (alt=\"\"); pass a real alt when the image carries meaning that isn't in adjacent text"
+    ],
+    "keyboardVerified": true,
+    "nameRequired": false,
+    "targetSize": "not applicable (non-interactive)",
+    "highContrastTested": true,
+    "screenReadersTested": [],
+    "notes": [
+      "All variants share one alt and one set of attributes, so whichever variant the theme shows announces identically.",
+      "The high-contrast theme is light-based: point highContrast at the color or black mark, not the white one, or let it fall back to light.",
+      "The CSS lives in @21stgov/commons-core (theme-image.css), keyed to the same selectors as the token themes — including the prefers-color-scheme and prefers-contrast fallbacks for visitors on the system setting.",
+      "In forced-colors mode the images render as-is (they are content, not CSS paint), and the swap keys off the page's own theme."
+    ]
+  },
+  "files": [
+    {
+      "path": "src/components/theme-image/theme-image.tsx",
+      "type": "registry:ui"
+    }
+  ]
+}

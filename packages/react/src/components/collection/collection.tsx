@@ -69,7 +69,12 @@ export const CollectionItem = React.forwardRef<HTMLLIElement, CollectionItemProp
         ref={ref}
         data-slot="collection-item"
         className={cn(
-          'grid min-w-0 grid-cols-1 gap-105 sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-2',
+          // Media sits beside the content at every width — a calendar date or
+          // thumbnail is narrow enough for a phone, and stacking it on its own
+          // row just made every item taller. The media column is content-sized
+          // and pinned to the top (`self-start` on CollectionMedia), so long
+          // content simply hangs below it.
+          'grid min-w-0 grid-cols-[auto_minmax(0,1fr)] gap-105 sm:gap-2',
           condensed ? 'py-105' : 'py-2',
           'first:pt-0 last:pb-0',
           className
@@ -93,8 +98,11 @@ export const CollectionMedia = React.forwardRef<HTMLDivElement, CollectionMediaP
         ref={ref}
         data-slot="collection-media"
         className={cn(
-          'min-w-0 self-start sm:w-24',
-          '[&_img]:block [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-sm',
+          // The column hugs its content — a calendar date stays a snug chip —
+          // while images get a fixed thumbnail width so a large photo can't
+          // blow the column out at any viewport.
+          'min-w-0 self-start',
+          '[&_img]:block [&_img]:h-auto [&_img]:w-24 [&_img]:max-w-full [&_img]:rounded-sm',
           className
         )}
       />

@@ -375,6 +375,11 @@
     "ok": true
   },
   {
+    "slug": "theme-image",
+    "title": "Theme Image",
+    "ok": true
+  },
+  {
     "slug": "time-picker",
     "title": "Time Picker",
     "ok": true

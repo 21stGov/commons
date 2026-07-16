@@ -1,0 +1,62 @@
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * theme-image.css — theme-aware image swapping for Commons
+ * (@21stgov/commons-core).
+ *
+ * A seal or logo drawn for a light page often disappears on a dark one, and a
+ * white-on-transparent mark vanishes in high contrast (which is light-based).
+ * These rules show exactly ONE of up to three image variants, matching the
+ * active Commons theme.
+ *
+ * Usage — render every variant you have; omit the ones you don't (the React
+ * `ThemeImage` component fills the gaps by reusing another source):
+ *
+ *   <img class="cui-theme-image cui-theme-image--light" src="/seal-color.svg" alt="" />
+ *   <img class="cui-theme-image cui-theme-image--dark"  src="/seal-white.svg" alt="" />
+ *   <img class="cui-theme-image cui-theme-image--high-contrast" src="/seal-black.svg" alt="" />
+ *
+ * The selectors mirror the token themes exactly: an explicit `data-theme` on
+ * the root wins, with a `prefers-color-scheme` / `prefers-contrast` fallback
+ * when no `data-theme` is set (the "system" setting). Hidden variants are
+ * `display: none` — out of the accessibility tree, so alt text is announced
+ * once. `display: revert` restores the element's UA default (inline for a
+ * plain <img>) rather than forcing a value.
+ */
+
+.cui-theme-image {
+  display: none;
+}
+
+/* Light — the default (no data-theme) and the explicit light theme. */
+:root:not([data-theme]) .cui-theme-image--light,
+[data-theme='light'] .cui-theme-image--light {
+  display: revert;
+}
+
+/* Dark. */
+[data-theme='dark'] .cui-theme-image--dark {
+  display: revert;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .cui-theme-image--light {
+    display: none;
+  }
+  :root:not([data-theme]) .cui-theme-image--dark {
+    display: revert;
+  }
+}
+
+/* High contrast — light-based, so its mark is usually the color/dark one. */
+[data-theme='high-contrast'] .cui-theme-image--high-contrast {
+  display: revert;
+}
+@media (prefers-contrast: more) {
+  :root:not([data-theme]) .cui-theme-image--light,
+  :root:not([data-theme]) .cui-theme-image--dark {
+    display: none;
+  }
+  :root:not([data-theme]) .cui-theme-image--high-contrast {
+    display: revert;
+  }
+}

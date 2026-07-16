@@ -85,6 +85,7 @@ export const demos: Record<string, DemoLoader> = {
   table: () => import('./table.demo'),
   switch: () => import('./switch.demo'),
   tabs: () => import('./tabs.demo'),
+  'theme-image': () => import('./theme-image.demo'),
   'time-picker': () => import('./time-picker.demo'),
   toast: () => import('./toast.demo'),
   toggle: () => import('./toggle.demo'),

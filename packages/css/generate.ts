@@ -166,10 +166,13 @@ export interface RawRule {
 
 /**
  * Turn a class list into raw rules: the element's own `@apply` plus one nested
- * rule per arbitrary descendant variant (`[&_svg]`). Marker classes are dropped.
+ * rule per arbitrary descendant variant (`[&_svg]`). Marker classes are
+ * dropped, and so are `cui-*` tokens — those are already framework-agnostic
+ * classes (owned by commons-core, e.g. `cui-theme-image--dark`), not Tailwind
+ * utilities to compile.
  */
 export function rulesForClasses(selector: string, rawClasses: string[]): RawRule[] {
-  const classes = rawClasses.filter((c) => !isMarker(c))
+  const classes = rawClasses.filter((c) => !isMarker(c) && !c.startsWith('cui-'))
   const { self, descendants } = splitUtilities(classes)
   const rules: RawRule[] = []
   if (self.length > 0) rules.push({ selector, utilities: self })

@@ -128,9 +128,12 @@ function cuiClassesFor(
   const base = `cui-${slot}`
   if (manifest.has(base)) add(base)
 
-  // 0. keep peer/group markers so cross-element state selectors keep matching.
+  // 0. keep peer/group markers so cross-element state selectors keep matching,
+  // and keep `cui-*` tokens verbatim — they are already framework-agnostic
+  // classes (owned by commons-core, e.g. `cui-theme-image--dark`), not
+  // utilities the rewrite should replace.
   for (const c of (el.getAttribute('class') ?? '').split(/\s+/)) {
-    if (isMarkerToken(c)) add(c)
+    if (isMarkerToken(c) || c.startsWith('cui-')) add(c)
   }
 
   // 1. data-* attributes (data-variant, data-size, …).
@@ -226,10 +229,22 @@ export function rewrite(html: string, manifest: Set<string>, signatures: Signatu
     const slot = node.getAttribute('data-slot')
     let childInComponent = inComponent
 
-    if (slot != null) {
+    if (slot != null && (manifest.has(`cui-${slot}`) || signatures[slot] != null)) {
       const classes = cuiClassesFor(slot, node, manifest, signatures)
       if (classes.length > 0) node.setAttribute('class', classes.join(' '))
       else node.removeAttribute('class')
+      childInComponent = true
+    } else if (slot != null) {
+      // A slot the generator has no rules for — e.g. a core-owned component
+      // (theme-image ships its CSS in commons-core) or an uncapturable part.
+      // Keep the original classes verbatim so the demo still renders; the
+      // non-cui tokens are an internal coverage gap worth reporting.
+      const cls = node.getAttribute('class')
+      if (cls?.trim()) {
+        for (const c of cls.split(/\s+/)) if (c && !c.startsWith('cui-')) internal.add(c)
+      } else if (cls != null) {
+        node.removeAttribute('class')
+      }
       childInComponent = true
     } else {
       const cls = node.getAttribute('class')

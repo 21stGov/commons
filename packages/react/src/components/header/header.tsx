@@ -197,7 +197,11 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(function Header
       className={cn(headerVariants({ sticky }), className)}
     >
       <HeaderContext.Provider value={contextValue}>
-        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-2 px-2 py-1">
+        {/* `gap-y-2` gives the wrapped mobile nav row breathing room from the
+            title/menu-button row — without it, an expanded nav's block-start
+            divider sits flush against the menu button's border. No effect at
+            `md`+, where nothing wraps. */}
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-2 gap-y-2 px-2 py-1">
           {children}
         </div>
       </HeaderContext.Provider>

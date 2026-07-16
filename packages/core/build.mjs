@@ -15,7 +15,7 @@ const pkgDir = dirname(fileURLToPath(import.meta.url));
 const srcDir = join(pkgDir, 'src');
 const distDir = join(pkgDir, 'dist');
 
-const sourceFiles = ['index.css', 'reset.css', 'base.css', 'a11y.css'];
+const sourceFiles = ['index.css', 'reset.css', 'base.css', 'a11y.css', 'theme-image.css'];
 const header = '/* SPDX-License-Identifier: MIT */\n';
 
 async function main() {

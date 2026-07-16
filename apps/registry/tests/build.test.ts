@@ -105,6 +105,7 @@ const FRAGMENT_ITEM_NAMES = [
   "switch",
   "table",
   "tabs",
+  "theme-image",
   "time-picker",
   "toast",
   "toggle",

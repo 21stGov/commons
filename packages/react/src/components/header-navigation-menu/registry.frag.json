@@ -4,12 +4,12 @@
   "name": "header-navigation-menu",
   "type": "registry:ui",
   "title": "Header Navigation Menu",
-  "description": "A NavigationMenu wired into a Header's mobile disclosure — the mega-menu counterpart to HeaderNav. Drop it inside <Header> in place of HeaderNav when top-level destinations need panels (grouped links, nested submenus), composing the same NavigationMenu parts inside it. It reads the Header's disclosure state via useHeaderMenu, so below the md breakpoint the whole menu collapses behind the HeaderMenuButton (aria-controls wired to this nav landmark by id) and shows inline from md up; nav content stays in the DOM the whole time. Outside a Header it renders a plain NavigationMenu.",
+  "description": "The Header's primary navigation, driven by a single `items` array (direct links or grouped panels) so one source of data renders two presentations: a floating NavigationMenu mega-menu from md up, and an inline accordion (native <details>) below md that expands each section in place and pushes the page down instead of floating over it. The whole nav collapses behind the HeaderMenuButton (aria-controls wired to the accordion by id). Drop it inside <Header> in place of HeaderNav when top-level destinations need grouped panels; outside a Header the accordion never collapses.",
   "status": "experimental",
   "useWhen": [
     "A site header whose primary navigation needs mega-menu panels or grouped submenus, not just a flat row of links",
     "Replacing HeaderNav inside a Header when top-level items open disclosure panels of grouped links",
-    "Multilingual headers with complex navigation (every label is a prop or child, so the header localizes per page)"
+    "Multilingual headers with complex navigation (every label lives in the items array, so the header localizes per page)"
   ],
   "avoidWhen": [
     "A header with a handful of flat top-level links (use HeaderNav + HeaderNavLink)",
@@ -20,6 +20,8 @@
   "registryDependencies": [
     "cn",
     "header",
+    "icon",
+    "link",
     "navigation-menu"
   ],
   "compatibility": {
@@ -30,10 +32,10 @@
   "accessibility": {
     "standard": "WCAG 2.2 AA",
     "keyboard": [
-      "Inherits NavigationMenu's disclosure-navigation keyboard contract: a panel opens on click, Enter, Space, or the orientation's arrow key (and hover-intent for pointers, never hover-only); Escape closes the open panel and returns focus to its trigger; Tab moves focus out of the bar",
-      "Below md the whole menu collapses behind the Header's menu button (a native button; Enter and Space toggle it), and aria-controls references this nav landmark by id",
-      "Collapsed nav content stays in the DOM via the hidden utility, so it is removed from the tab order while hidden rather than hidden-while-focusable",
-      "The current page carries aria-current=page with non-color indicators (a 2px block-end border and heavier weight), and panel links show hover/current without relying on color alone"
+      "From md up: NavigationMenu's disclosure-navigation contract — a panel opens on click, Enter, Space, or the orientation's arrow key (and hover-intent for pointers, never hover-only); Escape closes the open panel and returns focus to its trigger; Tab moves focus out of the bar",
+      "Below md: an inline accordion of native <details>/<summary> — Enter and Space toggle a section (browser-native), and sections share a name so only one is open at a time where the browser supports exclusive accordions",
+      "The whole mobile nav collapses behind the Header's menu button (a native button; Enter and Space toggle it), with aria-controls referencing the accordion landmark by id; collapsed content stays in the DOM (removed from the tab order while hidden, not hidden-while-focusable)",
+      "The current page carries aria-current=page with non-color indicators (a 2px block-end border and heavier weight on desktop, heavier weight in the accordion), never relying on color alone"
     ],
     "keyboardVerified": false,
     "nameRequired": true,
@@ -41,8 +43,9 @@
     "highContrastTested": true,
     "screenReadersTested": [],
     "notes": [
-      "A thin composition over Header's useHeaderMenu hook and NavigationMenu: it adds no new interactive surface, so its keyboard and screen-reader behavior is exactly NavigationMenu's (panels) plus Header's (the mobile disclosure), each verified on its own component.",
-      "The framework-agnostic path has no dedicated class: compose .cui-header with .cui-navigation-menu markup and wire the mobile disclosure the same way the Header does."
+      "One items array renders both a NavigationMenu (md+) and a native <details> accordion (below md); only one is in the accessibility tree per breakpoint (the other is display:none), so a single Primary landmark is announced.",
+      "The mobile accordion's only added interactive surface is the native <details>/<summary>, which carries its own disclosure keyboard and screen-reader semantics; the desktop panels are NavigationMenu's, verified on that component.",
+      "The framework-agnostic path has no dedicated class: compose .cui-header + .cui-navigation-menu for the desktop bar and a <details> accordion for the mobile disclosure, wiring the menu button the same way the Header does."
     ]
   },
   "files": [

@@ -6,72 +6,64 @@ import {
   Header,
   HeaderMenuButton,
   HeaderNavigationMenu,
+  type HeaderNavItem,
   HeaderTitle,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuLinkGroup,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from '@21stgov/commons-react'
 import * as React from 'react'
 
 import { DemoSection, DemoStack } from './demo-section'
 
-// The docs demo area is narrow, so the header renders its mobile state: the
-// mega-menu collapses behind the Menu disclosure. `defaultMenuExpanded` opens
-// it here so the bar is visible — activate a trigger (Services / Government) to
-// open its panel; from `md` up the whole bar is inline and the button hides.
+// One `items` array feeds both presentations. In the narrow docs frame the
+// header renders its mobile state: an inline <details> accordion behind the Menu
+// disclosure (`defaultMenuExpanded` opens it so the bar shows — tap a section to
+// expand its links in place and push the content below down). From `md` up the
+// same items become the floating mega-menu and the Menu button hides.
+const NAV: readonly HeaderNavItem[] = [
+  { label: 'Home', href: '#', current: true },
+  {
+    label: 'Services',
+    groups: [
+      {
+        heading: 'Residents',
+        links: [
+          { label: 'Permits & licenses', href: '#' },
+          { label: 'Trash & recycling', href: '#' },
+          { label: 'Pay a bill', href: '#' },
+        ],
+      },
+      {
+        heading: 'Business',
+        links: [
+          { label: 'Start a business', href: '#' },
+          { label: 'Bids & contracts', href: '#' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Government',
+    groups: [
+      {
+        heading: 'City hall',
+        links: [
+          { label: 'Mayor’s office', href: '#' },
+          { label: 'City council', href: '#' },
+          { label: 'Departments', href: '#' },
+        ],
+      },
+    ],
+  },
+  { label: 'Contact', href: '#' },
+]
+
 export default function HeaderNavigationMenuDemo(): React.JSX.Element {
   return (
     <DemoStack>
-      <DemoSection title="Header mega-menu (activate a trigger to open its panel)">
+      <DemoSection title="Header navigation — mega-menu on desktop, accordion on mobile">
         <Header defaultMenuExpanded>
           <HeaderTitle title="City of Springfield" href="#" />
           <HeaderMenuButton />
-          <HeaderNavigationMenu>
-            <NavigationMenuList className="md:gap-x-1">
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#" current>
-                  Home
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem value="services">
-                <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="flex flex-col gap-2 md:flex-row md:gap-6">
-                    <NavigationMenuLinkGroup label="Residents">
-                      <NavigationMenuLink href="#">Permits &amp; licenses</NavigationMenuLink>
-                      <NavigationMenuLink href="#">Trash &amp; recycling</NavigationMenuLink>
-                      <NavigationMenuLink href="#">Pay a bill</NavigationMenuLink>
-                    </NavigationMenuLinkGroup>
-                    <NavigationMenuLinkGroup label="Business">
-                      <NavigationMenuLink href="#">Start a business</NavigationMenuLink>
-                      <NavigationMenuLink href="#">Bids &amp; contracts</NavigationMenuLink>
-                    </NavigationMenuLinkGroup>
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem value="government">
-                <NavigationMenuTrigger>Government</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <NavigationMenuLinkGroup label="City hall">
-                    <NavigationMenuLink href="#">Mayor&rsquo;s office</NavigationMenuLink>
-                    <NavigationMenuLink href="#">City council</NavigationMenuLink>
-                    <NavigationMenuLink href="#">Departments</NavigationMenuLink>
-                  </NavigationMenuLinkGroup>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink href="#">Contact</NavigationMenuLink>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-            <NavigationMenuViewport />
-          </HeaderNavigationMenu>
+          <HeaderNavigationMenu items={NAV} />
         </Header>
       </DemoSection>
     </DemoStack>
