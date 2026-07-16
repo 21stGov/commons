@@ -110,6 +110,7 @@ const FRAGMENT_ITEM_NAMES = [
   "toggle-group",
   "toolbar",
   "tooltip",
+  "use-sticky-offset",
   "validation",
 ];
 const ALL_ITEM_NAMES = [...FRAGMENT_ITEM_NAMES, "theme"].sort();

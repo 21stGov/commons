@@ -9,6 +9,37 @@ releases may include breaking changes. See
 [RELEASING.md](https://github.com/21stgov/commons/blob/main/RELEASING.md) for the
 versioning policy. The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## 0.4.0 — 2026-07-15
+
+### Added
+
+- **Sticky page regions.** The gov banner, header, and site alert can each be
+  made sticky — `sticky` prop in React, `data-cui-sticky` on the framework-
+  agnostic path. When more than one is sticky they **stack** instead of
+  overlapping: each is pinned below the cumulative height of the sticky regions
+  before it (a sticky header sits under a sticky banner, a sticky emergency
+  alert under both). Coordinated by the new `useStickyOffset` hook and the
+  `enhanceSticky` runtime behavior in `@21stgov/commons-js`.
+- **Identifier seal.** The agency identifier band takes an optional decorative
+  seal/logo at its right edge — a `seal` prop in React, an `identifier-seal`
+  slot in the framework-agnostic markup.
+
+### Fixed
+
+- **Visited-link color leaked across the whole UI.** `a:visited` was declared
+  outside `@layer base` in the core reset, so — unlayered — it beat every
+  component's own text color and painted visited nav items, button-styled links,
+  and identifier links on the dark band the "visited" purple. That is an
+  accessibility problem on buttons (color carrying state) and on colored bands
+  (contrast). It now lives inside the layer, so only content links (the `Link`
+  component and prose) show a visited state.
+- The site title no longer underlines on hover — it is an identity mark, not a
+  body link.
+- A full-bleed `SiteAlert` now aligns its content to the same width as the gov
+  banner, header, and footer, instead of a narrower reading measure, so it lines
+  up with the rest of the page out of the box.
+- Footer links no longer show a visited state — a footer is navigation.
+
 ## 0.3.1 — 2026-07-15
 
 ### Fixed

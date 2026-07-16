@@ -36,6 +36,14 @@ export interface IdentifierProps
    * @default "Agency identifier"
    */
   ariaLabel?: string
+  /**
+   * Optional decorative seal or logo, shown at the right edge of the band
+   * (aligned with the content, hidden on narrow screens where it would crowd
+   * the text). Pass an `<img>` with empty `alt` — the agency name is already
+   * in text, so the seal is decorative. React convenience; the framework-
+   * agnostic path places the same markup in the `identifier-seal` slot.
+   */
+  seal?: React.ReactNode
 }
 
 /**
@@ -45,7 +53,7 @@ export interface IdentifierProps
  * language, a `.gov` domain, or a federal destination.
  */
 export const Identifier = React.forwardRef<HTMLElement, IdentifierProps>(function Identifier(
-  { className, ariaLabel = 'Agency identifier', children, ...props },
+  { className, ariaLabel = 'Agency identifier', seal, children, ...props },
   ref
 ) {
   return (
@@ -56,9 +64,22 @@ export const Identifier = React.forwardRef<HTMLElement, IdentifierProps>(functio
       // Native aria-* passthrough wins (consistent with every other
       // component); the ariaLabel prop is the translated default.
       aria-label={props['aria-label'] ?? ariaLabel}
-      className={cn(identifierVariants(), className)}
+      className={cn(identifierVariants(), seal != null && 'relative', className)}
     >
       {children}
+      {seal != null ? (
+        // Right-aligned decorative seal, centered over the band at the same
+        // max-w-5xl content width as the rows below, so it lines up with them.
+        // Hidden below `sm` where it would crowd the text. pointer-events-none
+        // keeps it from covering the links it overlaps.
+        <div
+          data-slot="identifier-seal"
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-full max-w-5xl -translate-x-1/2 items-center justify-end px-2 sm:flex"
+        >
+          {seal}
+        </div>
+      ) : null}
     </section>
   )
 })

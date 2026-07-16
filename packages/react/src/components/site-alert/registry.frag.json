@@ -18,8 +18,13 @@
     "A blocking decision that needs a response (use a dialog)",
     "Transient notifications that disappear on their own (use a toast)"
   ],
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["cn"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "use-sticky-offset"
+  ],
   "compatibility": {
     "react": ">=19",
     "rtl": true,

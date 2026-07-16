@@ -1,0 +1,27 @@
+{
+  "$schema": "https://commonsui.com/schema/registry-item.v1.json",
+  "schemaVersion": "1",
+  "name": "use-sticky-offset",
+  "type": "registry:lib",
+  "title": "useStickyOffset",
+  "description": "Coordinates a stack of sticky page regions (gov banner, header, site alert) so they stack instead of overlapping — each is pinned below the cumulative height of the sticky regions before it in the document.",
+  "status": "experimental",
+  "useWhen": ["Making the gov banner, header, or site alert sticky, alone or stacked"],
+  "avoidWhen": ["A single always-sticky element with no other sticky regions above it (plain position: sticky is enough)"],
+  "dependencies": [],
+  "registryDependencies": [],
+  "compatibility": {
+    "react": ">=19",
+    "rtl": true,
+    "forcedColors": true
+  },
+  "accessibility": {
+    "standard": "not-applicable"
+  },
+  "files": [
+    {
+      "path": "src/lib/use-sticky-offset.ts",
+      "type": "registry:lib"
+    }
+  ]
+}

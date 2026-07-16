@@ -42,6 +42,14 @@ create the **`@21stgov` organization on npmjs.com** and make the scope public.
   in sync by listing every package in the release changeset — **not** via
   Changesets' `fixed` group (with `0.0.x` packages that group forces a jump to
   `1.0.0` on the first minor, which we don't want pre-1.0).
+- **Minor-bump gotcha — check `commons-core`'s version after `changeset
+  version`.** `commons-core` declares `@21stgov/commons-tokens` as a
+  `peerDependency` (`workspace:^`). On a **minor** bump, tokens crosses the
+  pre-1.0 caret boundary (e.g. `0.4.0` is outside `^0.3.1`), and Changesets
+  **majors** a package whose peer goes out of range — so `commons-core` alone
+  lands on `1.0.0` while the rest are `0.4.0`. Patch releases stay in range, so
+  this only bites on minors. Fix: set `commons-core` back to the lockstep
+  version by hand (its per-package `CHANGELOG.md` header too) before committing.
 - **The road to 1.0** runs through the accessibility work that isn't finished:
   manual screen-reader and inclusive-user testing, tracked per component in the
   `screenReadersTested` field of its registry contract. 1.0 is when the core set

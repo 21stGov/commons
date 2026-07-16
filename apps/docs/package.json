@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "commonsui.com — homepage, documentation, and static registry for Commons.",
   "type": "module",
   "license": "MIT",

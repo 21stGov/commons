@@ -42,6 +42,7 @@ import {
   enhanceTooltip,
 } from './popup.ts'
 import { enhanceCustomSelect } from './select.ts'
+import { enhanceSticky } from './sticky.ts'
 import { enhanceTabs } from './tabs.ts'
 import { enhanceToggle } from './toggle.ts'
 
@@ -74,6 +75,7 @@ export const behaviors: Behavior[] = [
   enhanceSwitch,
   enhanceStepIndicator,
   enhanceSidebar,
+  enhanceSticky,
   enhanceTable,
   enhanceInputMask,
   enhanceInputMaskReveal,
@@ -129,6 +131,7 @@ export {
   enhanceSidebar,
   enhanceSlider,
   enhanceStepIndicator,
+  enhanceSticky,
   enhanceSwitch,
   enhanceTable,
   enhanceTabs,

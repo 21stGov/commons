@@ -9,6 +9,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 
 import { cn } from '@/lib/cn'
+import { useStickyOffset } from '@/lib/use-sticky-offset'
 
 /*
  * Site header. Composes HeaderTitle (home link), HeaderNav / HeaderNavLink
@@ -31,7 +32,18 @@ export const headerVariants = cva(
   // border-bottom, which equals border-block-end in every horizontal
   // writing mode — the logical-properties rule targets the inline axis,
   // which this never touches.)
-  ['border-b border-border bg-background text-foreground']
+  ['border-b border-border bg-background text-foreground'],
+  {
+    variants: {
+      // Sticks the header to the top as the page scrolls. `top` is coordinated
+      // by useStickyOffset (React) / commons-js (HTML) so a sticky header sits
+      // below a sticky gov banner rather than overlapping it; z-30 keeps it
+      // above a sticky site alert during the transition.
+      sticky: {
+        true: 'sticky top-0 z-30',
+      },
+    },
+  }
 )
 
 interface HeaderContextValue {
@@ -82,6 +94,7 @@ export interface HeaderProps
 export const Header = React.forwardRef<HTMLElement, HeaderProps>(function Header(
   {
     className,
+    sticky,
     menuExpanded,
     defaultMenuExpanded = false,
     onMenuExpandedChange,
@@ -91,6 +104,7 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(function Header
   },
   ref
 ) {
+  useStickyOffset(sticky === true)
   const [uncontrolledExpanded, setUncontrolledExpanded] = React.useState(defaultMenuExpanded)
   const expanded = menuExpanded ?? uncontrolledExpanded
   const navId = React.useId()
@@ -130,8 +144,9 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(function Header
       {...props}
       ref={ref}
       data-slot="header"
+      data-cui-sticky={sticky === true ? '' : undefined}
       onKeyDown={handleKeyDown}
-      className={cn(headerVariants(), className)}
+      className={cn(headerVariants({ sticky }), className)}
     >
       <HeaderContext.Provider value={contextValue}>
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-2 px-2 py-1">
@@ -177,9 +192,10 @@ export const HeaderTitle = React.forwardRef<HTMLAnchorElement, HeaderTitleProps>
         data-slot="header-title"
         className={cn(
           'flex min-h-11 items-center gap-105 text-lg font-semibold text-foreground',
-          // no-underline: Commons underlines links by default; this identity
-          // link opts out and restores the underline on hover only.
-          'no-underline underline-offset-2 hover:underline',
+          // no-underline: Commons underlines links by default, but the site
+          // title is an identity/brand mark, not a body link — underlining it
+          // (even on hover) reads as clutter. The focus ring is its affordance.
+          'no-underline hover:no-underline',
           'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
           className
         )}

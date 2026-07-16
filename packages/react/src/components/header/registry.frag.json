@@ -16,8 +16,13 @@
     "In-page or secondary navigation (use in-page navigation or side navigation instead)",
     "More than once per page (one banner landmark per page)"
   ],
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["cn"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "use-sticky-offset"
+  ],
   "compatibility": {
     "react": ">=19",
     "rtl": true,

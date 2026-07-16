@@ -17,12 +17,14 @@ export const footerVariants = cva(
 )
 
 export const footerLinkVariants = cva(
-  // Footer links are body-context links: ALWAYS underlined so link-ness is
-  // never conveyed by color alone (WCAG 1.4.1), full link color treatment,
-  // and a 44px (2.75rem) minimum pointer target (project default).
+  // Footer links are site navigation, not body content: ALWAYS underlined so
+  // link-ness is never conveyed by color alone (WCAG 1.4.1), full link color
+  // treatment, and a 44px (2.75rem) minimum pointer target (project default).
+  // No visited state — a footer is a nav landmark, and a purple "visited"
+  // treatment across a footer of internal links reads as broken, not helpful.
   [
     'inline-flex min-h-11 items-center rounded-sm underline underline-offset-2',
-    'text-link visited:text-link-visited hover:text-link-hover',
+    'text-link hover:text-link-hover',
     'transition-colors motion-reduce:transition-none',
     'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
   ]

@@ -9,12 +9,24 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 
 import { cn } from '@/lib/cn'
+import { useStickyOffset } from '@/lib/use-sticky-offset'
 
 export const govBannerVariants = cva(
   // The banner is a page-level landmark strip. It keeps a bottom border so
   // it has a visible boundary in forced-colors mode, and uses only theme
   // tokens (no raw colors) so light / dark / high-contrast all work.
-  ['border-b border-border bg-muted text-sm text-foreground']
+  ['border-b border-border bg-muted text-sm text-foreground'],
+  {
+    variants: {
+      // Sticks the banner to the top as the page scrolls. As the top-most
+      // region it stays at top:0; z-40 keeps it above a sticky header/alert
+      // during the transition. Offsets are coordinated by useStickyOffset
+      // (React) / commons-js (HTML) when it is stacked with other sticky regions.
+      sticky: {
+        true: 'sticky top-0 z-40',
+      },
+    },
+  }
 )
 
 export interface GovBannerProps
@@ -192,11 +204,13 @@ export const GovBanner = React.forwardRef<HTMLElement, GovBannerProps>(function 
     defaultExpanded = false,
     expanded: expandedProp,
     onExpandedChange,
+    sticky,
     children,
     ...props
   },
   ref
 ) {
+  useStickyOffset(sticky === true)
   const [uncontrolledExpanded, setUncontrolledExpanded] = React.useState(defaultExpanded)
   const expanded = expandedProp ?? uncontrolledExpanded
   const contentId = React.useId()
@@ -227,10 +241,11 @@ export const GovBanner = React.forwardRef<HTMLElement, GovBannerProps>(function 
       {...props}
       ref={ref}
       data-slot="gov-banner"
+      data-cui-sticky={sticky === true ? '' : undefined}
       // Native aria-* passthrough wins (consistent with every other
       // component); the ariaLabel prop is the translated default.
       aria-label={props['aria-label'] ?? ariaLabel}
-      className={cn(govBannerVariants(), className)}
+      className={cn(govBannerVariants({ sticky }), className)}
     >
       <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center gap-x-1 px-2">
         <div className="flex min-w-0 items-center gap-x-1 py-1">

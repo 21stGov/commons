@@ -3,10 +3,13 @@
 // Original work Copyright (c) 2023 shadcn — MIT License
 // Modifications Copyright 2026 21st Gov — MIT License
 
+'use client'
+
 import { cva, type VariantProps } from 'class-variance-authority'
 import * as React from 'react'
 
 import { cn } from '@/lib/cn'
+import { useStickyOffset } from '@/lib/use-sticky-offset'
 
 export const siteAlertVariants = cva(
   // Base: a persistent, page-level/sitewide band (distinct from the inline
@@ -31,6 +34,12 @@ export const siteAlertVariants = cva(
       slim: {
         true: '',
         false: '',
+      },
+      // Sticks the alert to the top as the page scrolls — useful for a critical
+      // emergency notice. z-20 sits below a sticky header/banner; useStickyOffset
+      // (React) / commons-js (HTML) set `top` so it stacks below them.
+      sticky: {
+        true: 'sticky top-0 z-20',
       },
     },
     defaultVariants: {
@@ -155,6 +164,7 @@ export const SiteAlert = React.forwardRef<HTMLElement, SiteAlertProps>(function 
     className,
     variant,
     slim,
+    sticky,
     label = 'Site alert',
     heading,
     headingLevel = 'h2',
@@ -165,6 +175,7 @@ export const SiteAlert = React.forwardRef<HTMLElement, SiteAlertProps>(function 
   },
   ref
 ) {
+  useStickyOffset(sticky === true)
   const resolvedVariant: SiteAlertVariant = variant ?? 'info'
   const HeadingTag = headingLevel
 
@@ -181,12 +192,17 @@ export const SiteAlert = React.forwardRef<HTMLElement, SiteAlertProps>(function 
       aria-label={label}
       data-slot="site-alert"
       data-variant={resolvedVariant}
-      className={cn(siteAlertVariants({ variant, slim }), className)}
+      data-cui-sticky={sticky === true ? '' : undefined}
+      className={cn(siteAlertVariants({ variant, slim, sticky }), className)}
     >
       <div
         data-slot="site-alert-body"
         className={cn(
-          'mx-auto flex w-full max-w-measure-xl items-start',
+          // max-w-5xl (not the narrow reading measure) so the alert's content
+          // lines up with the gov banner, header, and footer, which all center
+          // their content at max-w-5xl — a full-bleed band that aligns with the
+          // rest of the page out of the box.
+          'mx-auto flex w-full max-w-5xl items-start',
           slim ? 'gap-1 p-105' : 'gap-105 p-205'
         )}
       >

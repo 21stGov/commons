@@ -50,8 +50,17 @@ body {
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.15em;
   }
-}
 
-a:visited {
-  color: var(--cui-link-visited, VisitedText);
+  /*
+   * Visited body links get the visited token. MUST stay inside `@layer base`:
+   * unlayered, `a:visited` (specificity 0,1,1) beats every layered component
+   * utility (e.g. `text-primary-foreground`, `text-emphasis-foreground`) and
+   * paints visited nav items, button-styled links, and on-emphasis links the
+   * visited color — an accessibility problem on buttons and colored bands.
+   * Layered, any component color utility overrides it, so only opted-in
+   * content links (Link, prose) show the visited state.
+   */
+  a:visited {
+    color: var(--cui-link-visited, VisitedText);
+  }
 }

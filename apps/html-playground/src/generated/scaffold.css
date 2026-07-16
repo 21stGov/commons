@@ -44,6 +44,9 @@
   .static {
     position: static;
   }
+  .sticky {
+    position: sticky;
+  }
   .inset-x-0 {
     inset-inline: var(--cui-spacing-0);
   }

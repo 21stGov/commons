@@ -16,8 +16,13 @@
     "Announcing emergencies or service disruptions (use a site alert instead)",
     "More than once per page (one banner, above the header, only)"
   ],
-  "dependencies": ["class-variance-authority"],
-  "registryDependencies": ["cn"],
+  "dependencies": [
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "cn",
+    "use-sticky-offset"
+  ],
   "compatibility": {
     "react": ">=19",
     "rtl": true,
