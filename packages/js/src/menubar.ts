@@ -32,11 +32,24 @@ function wireBar(root: ParentNode, slot: string, isMenu: boolean): void {
     const items = (t: HTMLElement): HTMLElement[] =>
       Array.from(contentOf(t)?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? [])
 
+    // Mirror React's Base UI state on the trigger and its chevron so the same
+    // generated CSS fires — the open trigger's border/weight and the chevron's
+    // rotation key off `[data-popup-open]`, not `aria-expanded`.
+    const setOpenState = (t: HTMLElement, open: boolean): void => {
+      const icon = t.querySelector<HTMLElement>(`[data-slot="${slot}-trigger-icon"]`)
+      for (const el of [t, icon]) {
+        if (!el) continue
+        if (open) el.setAttribute('data-popup-open', '')
+        else el.removeAttribute('data-popup-open')
+      }
+    }
+
     let openIndex = -1
     const close = (focusTrigger = false): void => {
       if (openIndex === -1) return
       const t = triggers[openIndex]!
       t.setAttribute('aria-expanded', 'false')
+      setOpenState(t, false)
       const p = positionerOf(t)
       if (p) p.hidden = true
       if (focusTrigger) t.focus()
@@ -51,6 +64,7 @@ function wireBar(root: ParentNode, slot: string, isMenu: boolean): void {
       p.hidden = false
       positionAnchored(t, p, { side: 'bottom', align: 'start' })
       t.setAttribute('aria-expanded', 'true')
+      setOpenState(t, true)
       openIndex = index
     }
 

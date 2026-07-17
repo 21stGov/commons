@@ -383,23 +383,32 @@ export async function buildCss(): Promise<BuildResult> {
     // Gather inline slots + cva→slot usage across the component's files first,
     // so cvas can be emitted under the slot they actually style.
     const inlineAgg = new Map<string, string[]>()
-    const cvaOnSlot = new Map<string, string>()
+    const cvaOnSlot = new Map<string, Set<string>>()
     for (const file of partFiles) {
       const { slots, cvaOnSlot: usage } = extractInlineSlots(file, cvaBases)
       for (const [slot, classes] of slots) {
         inlineAgg.set(slot, [...new Set([...(inlineAgg.get(slot) ?? []), ...classes])])
       }
-      for (const [cva, slot] of usage) if (!cvaOnSlot.has(cva)) cvaOnSlot.set(cva, slot)
+      // A cva may style several slots (navigationMenuTriggerVariants styles both
+      // the trigger and the bar link) — emit it under every slot that calls it.
+      for (const [cva, styled] of usage) {
+        const slots = cvaOnSlot.get(cva) ?? new Set<string>()
+        for (const s of styled) slots.add(s)
+        cvaOnSlot.set(cva, slots)
+      }
     }
 
-    // 1. cva-driven variants (buttons, alerts, …), each under the slot its call
-    // styles (usually its own name; input-otp-cell ← inputOTPVariants).
+    // 1. cva-driven variants (buttons, alerts, …), each under every slot its
+    // calls style (usually just its own name; input-otp-cell ← inputOTPVariants;
+    // navigation-menu-trigger AND navigation-menu-bar-link ← the trigger cva).
     for (const cap of capsByName.get(name) ?? []) {
-      const slot = cvaOnSlot.get(cap.exportName) ?? classBase(cap.exportName)
-      localSlots.add(slot)
-      const emitted = emitVariant(cap, slot)
-      rules.push(...emitted.rules)
-      if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
+      const slots = cvaOnSlot.get(cap.exportName) ?? new Set([classBase(cap.exportName)])
+      for (const slot of slots) {
+        localSlots.add(slot)
+        const emitted = emitVariant(cap, slot)
+        rules.push(...emitted.rules)
+        if (emitted.signatures.length > 0) signatures[slot] = emitted.signatures
+      }
     }
 
     // 2. alias slots — another cva component rendered under a renamed slot

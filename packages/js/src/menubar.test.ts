@@ -2,7 +2,7 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { enhanceMenubar } from './menubar.ts'
+import { enhanceMenubar, enhanceNavigationMenu } from './menubar.ts'
 
 function menubarMarkup(): void {
   document.body.innerHTML = `
@@ -89,5 +89,54 @@ describe('enhanceMenubar', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))
     expect(filePos.hidden).toBe(true)
     expect(document.activeElement).toBe(file)
+  })
+})
+
+describe('enhanceNavigationMenu', () => {
+  beforeEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  function navMenuMarkup(): void {
+    document.body.innerHTML = `
+      <nav data-slot="navigation-menu">
+        <ul data-slot="navigation-menu-list">
+          <li data-slot="navigation-menu-item">
+            <button data-slot="navigation-menu-trigger" aria-haspopup="menu" aria-expanded="false">
+              Services
+              <span data-slot="navigation-menu-trigger-icon"></span>
+            </button>
+            <div data-slot="navigation-menu-positioner" hidden>
+              <div data-slot="navigation-menu-popup">
+                <a data-slot="navigation-menu-link" href="#permits">Permits</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>`
+  }
+
+  // The open trigger's border/weight and the chevron's rotation are keyed off
+  // `[data-popup-open]` in the generated CSS (mirroring React's Base UI state) —
+  // not `aria-expanded` — so the enhancer must set it on the trigger AND its
+  // icon for the HTML path to match the React presentation.
+  it('mirrors the open state as data-popup-open on the trigger and its icon', () => {
+    navMenuMarkup()
+    enhanceNavigationMenu(document)
+    const trigger = document.querySelector<HTMLElement>('[data-slot="navigation-menu-trigger"]')!
+    const icon = document.querySelector<HTMLElement>('[data-slot="navigation-menu-trigger-icon"]')!
+
+    expect(trigger.hasAttribute('data-popup-open')).toBe(false)
+    expect(icon.hasAttribute('data-popup-open')).toBe(false)
+
+    trigger.click()
+    expect(trigger.getAttribute('aria-expanded')).toBe('true')
+    expect(trigger.hasAttribute('data-popup-open')).toBe(true)
+    expect(icon.hasAttribute('data-popup-open')).toBe(true)
+
+    trigger.click()
+    expect(trigger.getAttribute('aria-expanded')).toBe('false')
+    expect(trigger.hasAttribute('data-popup-open')).toBe(false)
+    expect(icon.hasAttribute('data-popup-open')).toBe(false)
   })
 })

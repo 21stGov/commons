@@ -48,6 +48,14 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
 - **Generated CSS honors core-owned classes.** `cui-*` tokens on React
   components (like `ThemeImage`'s) pass through to the framework-agnostic
   output verbatim instead of being treated as unknown Tailwind utilities.
+- **Framework-agnostic navigation-menu parity.** On the HTML path, the open
+  trigger's border and its chevron rotation now fire (the `commons-js`
+  enhancer sets `data-popup-open`, matching React's Base UI state instead of
+  only toggling `aria-expanded`), and a plain top-level bar link now shares the
+  trigger's border-based styling rather than the panel link's underline (its
+  own `navigation-menu-bar-link` slot — a cva that dresses more than one slot
+  now emits `.cui-*` classes under each). The same fix corrects the
+  pagination direction modifier.
 
 ## 0.5.0 — 2026-07-15
 

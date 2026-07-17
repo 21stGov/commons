@@ -311,7 +311,10 @@ export const NavigationMenuLink = React.forwardRef<HTMLAnchorElement, Navigation
             <a
               {...anchorProps}
               ref={ref}
-              data-slot="navigation-menu-link"
+              // Its own slot (not `navigation-menu-link`): a bar link shares
+              // the TRIGGER's visual, while a panel link is a subtle nav link —
+              // one generated `.cui-*` class could not serve both flavors.
+              data-slot="navigation-menu-bar-link"
               // aria-current comes from Base UI's `active`; the trigger
               // variants add the non-color current/open cues (weight + border).
               className={cn(navigationMenuTriggerVariants({ current }), className)}

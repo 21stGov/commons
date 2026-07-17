@@ -160,12 +160,12 @@ export interface InlineSlots {
   /** data-slot → its static class list. */
   slots: Map<string, string[]>
   /**
-   * cva export name → the data-slot its `xVariants()` call actually styles, when
-   * that differs from the export-name kebab (input-otp-cell ← inputOTPVariants).
-   * Lets the generator emit the cva under the real slot instead of colliding
-   * with a same-named root slot (`.cui-input-otp` is the flex-col wrapper).
+   * cva export name → every data-slot its `xVariants()` call styles, when that
+   * differs from the export-name kebab (input-otp-cell ← inputOTPVariants). A
+   * cva can style more than one slot (navigationMenuTriggerVariants dresses both
+   * the trigger and a plain bar link), so the generator emits it under each.
    */
-  cvaOnSlot: Map<string, string>
+  cvaOnSlot: Map<string, Set<string>>
 }
 
 /**
@@ -216,7 +216,7 @@ export function extractInlineSlots(
   const resolvers: Resolvers = { const: resolveConst, cva: cvaBases }
 
   const slots = new Map<string, string[]>()
-  const cvaOnSlot = new Map<string, string>()
+  const cvaOnSlot = new Map<string, Set<string>>()
 
   function visit(node: ts.Node): void {
     const attrs = ts.isJsxElement(node)
@@ -243,7 +243,9 @@ export function extractInlineSlots(
           ) {
             classes = staticClasses(classAttr.initializer.expression, resolvers)
             for (const cva of cvaCallsIn(classAttr.initializer.expression, cvaBases)) {
-              if (!cvaOnSlot.has(cva)) cvaOnSlot.set(cva, slot)
+              const styled = cvaOnSlot.get(cva) ?? new Set<string>()
+              styled.add(slot)
+              cvaOnSlot.set(cva, styled)
             }
           }
         }
