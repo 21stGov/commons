@@ -1,0 +1,85 @@
+---
+title: "Templates"
+description: "Whole, accessible local-government websites in a box — built on Commons, clone-and-configure, and free to deploy as a static site. Start with Commons Town, a small-town government starter."
+---
+
+A Commons **template** is a complete government website, ready to run: clone it,
+change one config file, drop in your seal, and deploy. Every page is built from
+Commons components, so the accessibility guarantees — keyboard support, visible
+focus, WCAG 2.2 AA contrast, 44px targets, and the light / dark / high-contrast
+themes — come for free and stay intact as you customize.
+
+Templates are the fastest way to get a real site online. If you instead want to
+add Commons to an existing app, start with [Installation](/docs/installation)
+(or [Using Commons without React](/docs/without-react) for a server-rendered
+stack).
+
+## Commons Town
+
+A small-town government website. It's the reference template — the one we build
+the whole system against — and a working example of Commons in a real layout.
+
+- **Live demo:** [town.commonsui.com](https://town.commonsui.com) — the Town of
+  Ghent, an *example* site (not a real town; built to show the template off).
+- **Source:** [github.com/21stGov/commons-town](https://github.com/21stGov/commons-town)
+- **Stack:** Next.js, exported to a fully static site (plain HTML, CSS, and JS —
+  no server to run, patch, or pay for).
+
+Out of the box you get the U.S. government banner, a sticky header whose
+navigation is a mega-menu on desktop and an inline accordion on mobile, a hero,
+a services grid, a department directory, an upcoming-meetings list with calendar
+dates, a contact section, a sitewide notice banner, an agency identifier, and an
+accessibility-statement page — all driven from a single `site.config.ts`, with a
+theme switcher in the footer.
+
+### Use it
+
+1. Click **Use this template** on the
+   [GitHub repo](https://github.com/21stGov/commons-town), or scaffold it
+   locally:
+
+   ```sh
+   npx degit 21stGov/commons-town my-town
+   cd my-town
+   npm install
+   npm run dev
+   ```
+
+   Open [localhost:3000](http://localhost:3000) — that's the whole setup.
+
+2. **Make it yours.** Edit [`site.config.ts`](https://github.com/21stGov/commons-town/blob/main/site.config.ts):
+   every name, phone number, nav link, service card, department, upcoming
+   meeting, and the sitewide notice banner lives in that one file. Drop your seal
+   into `public/` and point `logo` at it (one image per theme, or a single one
+   reused everywhere).
+
+3. **Make the accessibility statement true.** The template ships an
+   `app/accessibility/page.tsx` you review and adapt for your town — accessible
+   government sites aren't a nice-to-have; for many residents they're the only
+   way in the door.
+
+4. **Deploy.** `npm run build` writes a static site to `out/` — host it on
+   Netlify, Vercel, GitHub Pages, S3, or your county's own web server.
+
+The template's own README has the full walkthrough, including how to rebrand the
+colors while keeping the contrast contract.
+
+> Because it's built on Commons, the template starts accessible. Keep it that way
+> as you customize: prefer the components and tokens over one-off markup, and run
+> your pages against the [accessibility contracts](/docs/accessibility).
+
+## What's next
+
+Commons Town is the first template, not the last. Commons is pre-1.0 and this is
+a directional list — no firm dates.
+
+- **More entity types.** Templates for the other shapes of local government —
+  county, city, school district, library, courts — reusing the same
+  config-driven approach.
+- **A framework-agnostic starter.** Commons runs
+  [without React](/docs/without-react), so a plain-HTML / server-rendered
+  template (no build step) is a natural companion to the Next.js one.
+
+Have a template you'd like to see, or want to contribute one? Open an issue or a
+discussion on [GitHub](https://github.com/21stGov/commons). See the
+[Roadmap](/docs/roadmap) for where the system as a whole is headed.
