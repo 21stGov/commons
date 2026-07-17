@@ -219,6 +219,19 @@ export function emitVariant(
     isDefault?: boolean
   }> = []
 
+  // A group's default value folds into the base so a bare `.cui-x` renders the
+  // default — but scoped `.cui-x:where(:not(<siblings>))` so choosing any other
+  // value in the same group suppresses it, exactly as cva drops the default's
+  // classes once another value is set. Without this, a sibling that omits a
+  // property the default sets (e.g. an `orientation` where `vertical` sets a
+  // width `horizontal` never resets) would inherit the folded default and
+  // diverge from React. `:where()` adds no specificity, so the scoped rule keeps
+  // the old bare-base weight and is a no-op for the (majority) groups whose
+  // siblings already override every property the default sets.
+  const scopedDefaults: Array<{ selector: string; classes: string[] }> = []
+  const scopeFor = (siblingSelectors: string[]): string =>
+    siblingSelectors.length ? `${sel}:where(:not(${siblingSelectors.join(', ')}))` : sel
+
   for (const [group, values] of Object.entries(cap.variants)) {
     const isBoolean = Object.keys(values).every((k) => k === 'true' || k === 'false')
     const def = cap.defaultVariants[group]
@@ -227,7 +240,9 @@ export function emitVariant(
         if (key === 'true') {
           modifiers.push({ sel: `${sel}--${camelToKebab(group)}`, classes, label: camelToKebab(group), group })
         } else if (String(def) === 'false') {
-          baseClasses.push(...classes) // default off-state folds into the base rule
+          // Default off-state folds into the base, yielding to the on-state.
+          if (classes.length > 0)
+            scopedDefaults.push({ selector: scopeFor([`${sel}--${camelToKebab(group)}`]), classes })
         } else {
           modifiers.push({
             sel: `${sel}--${camelToKebab(group)}-false`,
@@ -238,20 +253,27 @@ export function emitVariant(
         }
       } else {
         // Enum variant (size, tone, …). Emit the `--<value>` modifier for
-        // explicit use; and for the DEFAULT value also fold its classes into
-        // the base rule, so a bare `.cui-x` (what a hand-writing consumer types,
-        // and what the rewrite leaves on a default-variant element) renders the
-        // default instead of nothing. The default is then excluded from the
-        // signatures below — otherwise every element would carry the folded
-        // default's classes and the rewrite would tag them all as the default.
+        // explicit use; and for the DEFAULT value also fold its classes into the
+        // base (scoped against its siblings), so a bare `.cui-x` (what a
+        // hand-writing consumer types, and what the rewrite leaves on a
+        // default-variant element) renders the default instead of nothing. The
+        // default is excluded from the signatures below — otherwise every
+        // element would carry the folded default's classes and the rewrite would
+        // tag them all as the default.
         const isDefault = def !== undefined && String(def) === key
         modifiers.push({ sel: `${sel}--${camelToKebab(key)}`, classes, label: camelToKebab(key), group, isDefault })
-        if (isDefault) baseClasses.push(...classes)
+        if (isDefault && classes.length > 0) {
+          const siblings = Object.keys(values)
+            .filter((k) => k !== key)
+            .map((k) => `${sel}--${camelToKebab(k)}`)
+          scopedDefaults.push({ selector: scopeFor(siblings), classes })
+        }
       }
     }
   }
 
   const rules = rulesForClasses(sel, baseClasses)
+  for (const d of scopedDefaults) rules.push(...rulesForClasses(d.selector, d.classes))
   for (const m of modifiers) rules.push(...rulesForClasses(m.sel, m.classes))
 
   const signatures: VariantSignature[] = modifiers

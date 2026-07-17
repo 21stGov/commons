@@ -90,16 +90,39 @@ describe('emitVariant', () => {
   const rule = (rules: { selector: string; utilities: string[] }[], sel: string) =>
     rules.find((r) => r.selector === sel)
 
-  it('folds BOTH defaults (enum + boolean off-state) into base; emits the non-default modifiers', () => {
+  it('scopes BOTH defaults (enum + boolean off-state) against their siblings; emits the non-default modifiers', () => {
     const { rules } = emitVariant(cap)
-    // The default enum value (variant=info) and the default boolean off-state
-    // (slim=false) both fold into the base, so a bare `.cui-alert` renders the
-    // default variant with no modifier.
-    expect(rule(rules, '.cui-alert')?.utilities).toEqual(['flex', 'border', 'bg-info', 'p-3'])
+    // The bare base carries only the always-on classes. Each default (variant=
+    // info, slim=false) folds into a `:where(:not(<siblings>))` rule, so a bare
+    // `.cui-alert` still renders the default — but choosing another value in the
+    // group suppresses it, mirroring cva, which drops the default's classes the
+    // moment another value is set (so a sibling that omits a property the
+    // default sets doesn't inherit it). `:where()` keeps the base specificity.
+    expect(rule(rules, '.cui-alert')?.utilities).toEqual(['flex', 'border'])
+    expect(rule(rules, '.cui-alert:where(:not(.cui-alert--error))')?.utilities).toEqual(['bg-info'])
+    expect(rule(rules, '.cui-alert:where(:not(.cui-alert--slim))')?.utilities).toEqual(['p-3'])
     expect(rule(rules, '.cui-alert--info')?.utilities).toEqual(['bg-info'])
     expect(rule(rules, '.cui-alert--error')?.utilities).toEqual(['bg-error'])
     expect(rule(rules, '.cui-alert--slim')?.utilities).toEqual(['p-1'])
     expect(rule(rules, '.cui-alert--slim-false')).toBeUndefined()
+  })
+
+  it('does not leak an asymmetric default onto a sibling that omits that property', () => {
+    // The separator/scroll-area bug: the default value sets a dimension the
+    // sibling never resets. Folding the default into the bare base would leak
+    // `w-full` onto `--vertical`; scoping it against `--vertical` prevents that.
+    const { rules } = emitVariant({
+      exportName: 'ruleVariants',
+      base: ['flex'],
+      variants: { orientation: { horizontal: ['w-full'], vertical: ['self-stretch'] } },
+      defaultVariants: { orientation: 'horizontal' },
+    })
+    // Bare base is only the always-on class — no folded width.
+    expect(rule(rules, '.cui-rule')?.utilities).toEqual(['flex'])
+    // The default's width lives on the scoped rule, excluded when --vertical is present.
+    expect(rule(rules, '.cui-rule:where(:not(.cui-rule--vertical))')?.utilities).toEqual(['w-full'])
+    // The vertical sibling carries only its own class — it never inherits w-full.
+    expect(rule(rules, '.cui-rule--vertical')?.utilities).toEqual(['self-stretch'])
   })
 
   it('drops group/peer marker classes from emitted rules', () => {
@@ -124,9 +147,9 @@ describe('emitVariant', () => {
       group: 'slim',
       classes: ['p-1'],
     })
-    // The DEFAULT enum value (variant=info) folds into base, so it is excluded
-    // from signatures — else the rewrite, seeing the folded classes on every
-    // element, would tag them all as the default.
+    // The DEFAULT enum value (variant=info) folds into the scoped default rule,
+    // so it is excluded from signatures — else the rewrite, seeing the folded
+    // classes on every element, would tag them all as the default.
     expect(signatures.some((s) => s.modifier === 'cui-alert--info')).toBe(false)
     // The folded boolean default (slim=false) likewise produces no signature.
     expect(signatures.some((s) => s.modifier === 'cui-alert--slim-false')).toBe(false)

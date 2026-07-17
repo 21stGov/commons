@@ -61,11 +61,17 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
   nav (via the `hidden` attribute, so the nav's own `md:block` / `md:hidden`
   still win at `md`+), flips its glyph, and closes on Escape. Previously the
   button was inert without React.
-- **Vertical `Separator`.** In a horizontal toolbar the framework-agnostic
-  vertical separator stretched across the whole row instead of drawing a thin
-  line — the generator folds a cva's default variant (here `horizontal`, which
-  is `w-full`) into the base class, and the vertical variant now resets the
-  width so it can't inherit it.
+- **Framework-agnostic variant defaults no longer leak onto their siblings.**
+  The generator folds a cva's default value into the base `.cui-*` class so a
+  bare class still renders the default — but it did so unconditionally, so a
+  non-default value that omitted a property the default sets would inherit it.
+  A vertical `Separator` stretched to `width: 100%` across a toolbar row, and a
+  horizontal `ScrollArea` scrollbar/thumb kept the vertical default's width. The
+  fold is now scoped `.cui-x:where(:not(<the other values>))`, reproducing cva:
+  the default applies only until another value in the same group is chosen.
+  `:where()` keeps the base specificity, so it's a no-op for the many components
+  whose values already overlap — and the per-component width resets it forced
+  are gone.
 
 ## 0.5.0 — 2026-07-15
 

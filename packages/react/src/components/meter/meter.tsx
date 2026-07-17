@@ -45,11 +45,12 @@ export interface MeterThreshold {
 // visible, contrast-safe edge against the track instead of a near-invisible
 // tint-on-tint boundary.
 // The tone fill is a cva (not a runtime lookup) so the generator can emit it:
-// each tone becomes a `.cui-meter-indicator--<tone>` modifier the rewrite
-// attaches per active segment. The default fill stays in its OWN variant (NOT
-// folded into the base) — folding it in would leave `bg-primary` on every
-// indicator, so the rewrite's signature match would tag success/warning/error
-// meters as `--default` too.
+// each state tone becomes a `.cui-meter-indicator--<tone>` modifier the rewrite
+// attaches per active segment. `default` is the cva default: the generator
+// folds it into a scoped `:where(:not(--success, --warning, --error))` rule and
+// excludes it from the rewrite's signatures — so a default segment stays bare
+// and picks up `bg-primary` from that scoped rule, while a state tone gets its
+// own modifier and the default fill can't leak onto it.
 export const meterIndicatorVariants = cva(
   ['h-full rounded-sm border forced-colors:border-[CanvasText]', 'transition-[width] motion-reduce:transition-none'],
   {

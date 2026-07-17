@@ -35,15 +35,11 @@ export const separatorVariants = cva(
         // Vertical line: inline-axis padding gives start/end room; the
         // ::before draws a start border and stretches to the box height.
         // `self-stretch` fills the cross axis of a flex row; add height on
-        // the parent otherwise.
+        // the parent otherwise. No width is set — content width is correct, and
+        // the framework-agnostic generator scopes the folded default (horizontal
+        // `w-full`) so it no longer leaks onto this variant.
         vertical: [
-          // `w-auto` resets the inline size back to content width. In React
-          // that's the default (this variant sets no width), but the
-          // framework-agnostic generator folds the DEFAULT variant (horizontal,
-          // which is `w-full`) into the base `.cui-separator` class — so without
-          // an explicit reset here the vertical rule would inherit `width:100%`
-          // and stretch across a toolbar row instead of being a thin line.
-          'w-auto self-stretch px-2',
+          'self-stretch px-2',
           'before:w-0 before:self-stretch before:border-s before:border-border before:content-[""]',
           'forced-colors:before:border-[CanvasText]',
         ],
