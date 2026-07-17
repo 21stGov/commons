@@ -58,6 +58,12 @@ function framePage(name: string, fragment: string): string {
     color: var(--cui-text-default);
     font-family: var(--cui-font-family-sans, system-ui, sans-serif);
     font-size: 1rem;
+    /* Core sets min-block-size 100dvb so a real page's body fills the viewport.
+       In this height-fitted iframe that is circular: the body fills the frame,
+       so its scrollHeight always equals the current frame height and the parent
+       can never shrink it back down (e.g. after a wide layout replaces a tall
+       narrow one). Let the body hug its content instead. */
+    min-block-size: 0;
   }
 </style>
 </head>

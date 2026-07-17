@@ -51,6 +51,7 @@ export function ComponentDemo({
   // the frame to its content instead of a scroll box.
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
   const [htmlSeen, setHtmlSeen] = React.useState(false)
+  const [frameLoaded, setFrameLoaded] = React.useState(false)
   const [frameHeight, setFrameHeight] = React.useState<number>()
   const [theme, setTheme] = React.useState('light')
 
@@ -62,9 +63,45 @@ export function ComponentDemo({
   }, [showFrame])
 
   const syncHeight = React.useCallback(() => {
-    const body = iframeRef.current?.contentDocument?.body
-    if (body) setFrameHeight(body.scrollHeight + 4)
+    const doc = iframeRef.current?.contentDocument
+    const body = doc?.body
+    if (!body) return
+    // Fit the frame to its content. A floating panel (the navigation-menu
+    // mega-menu) is `position: fixed`, so it doesn't count in `scrollHeight` —
+    // extend to the lowest visible element so an open panel isn't clipped.
+    let bottom = body.scrollHeight
+    for (const el of doc.querySelectorAll<HTMLElement>('body *')) {
+      const rect = el.getBoundingClientRect()
+      if (rect.height > 0 && rect.bottom > bottom) bottom = rect.bottom
+    }
+    setFrameHeight(Math.ceil(bottom) + 4)
   }, [])
+
+  // Re-fit when the frame's own content changes — it reflows as the docs column
+  // narrows (the header mega-menu collapses into the accordion), a disclosure
+  // grows or shrinks, or a floating panel opens or closes. ResizeObserver on the
+  // body catches reflow; MutationObserver catches a panel toggling `hidden` /
+  // inline position styles (fixed panels don't change the body's size). The body
+  // hugs its content (the frame resets `min-block-size`), so neither feeds back
+  // from our own height change.
+  React.useEffect(() => {
+    if (!showFrame || !frameLoaded) return
+    const doc = iframeRef.current?.contentDocument
+    const body = doc?.body
+    if (!body) return
+    const observers: Array<{ disconnect(): void }> = []
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(syncHeight)
+      ro.observe(body)
+      observers.push(ro)
+    }
+    if (typeof MutationObserver !== 'undefined') {
+      const mo = new MutationObserver(syncHeight)
+      mo.observe(body, { subtree: true, attributes: true, childList: true, attributeFilter: ['hidden', 'style', 'class'] })
+      observers.push(mo)
+    }
+    return () => observers.forEach((o) => o.disconnect())
+  }, [showFrame, frameLoaded, syncHeight])
 
   if (!Demo) {
     return (
@@ -105,7 +142,10 @@ export function ComponentDemo({
             title={`${name} — framework-agnostic HTML example`}
             className="docs-component-demo-frame"
             loading="lazy"
-            onLoad={syncHeight}
+            onLoad={() => {
+              syncHeight()
+              setFrameLoaded(true)
+            }}
             style={{ display: 'block', width: '100%', border: 0, height: frameHeight ?? 240 }}
           />
         ) : null}
