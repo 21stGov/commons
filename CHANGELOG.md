@@ -56,6 +56,16 @@ versioning policy. The format follows [Keep a Changelog](https://keepachangelog.
   own `navigation-menu-bar-link` slot — a cva that dresses more than one slot
   now emits `.cui-*` classes under each). The same fix corrects the
   pagination direction modifier.
+- **Header mobile menu button on the framework-agnostic path.** `commons-js`
+  now enhances the Header's disclosure — the menu button toggles the primary
+  nav (via the `hidden` attribute, so the nav's own `md:block` / `md:hidden`
+  still win at `md`+), flips its glyph, and closes on Escape. Previously the
+  button was inert without React.
+- **Vertical `Separator`.** In a horizontal toolbar the framework-agnostic
+  vertical separator stretched across the whole row instead of drawing a thin
+  line — the generator folds a cva's default variant (here `horizontal`, which
+  is `w-full`) into the base class, and the vertical variant now resets the
+  width so it can't inherit it.
 
 ## 0.5.0 — 2026-07-15
 

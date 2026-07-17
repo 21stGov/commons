@@ -17,7 +17,12 @@ import { enhanceDataTable } from './datatable.ts'
 import { enhanceDatePicker } from './datepicker.ts'
 import { enhanceDateRangePicker } from './daterangepicker.ts'
 import { enhanceDialog } from './dialog.ts'
-import { enhanceAccordion, enhanceCollapsible, enhanceGovBanner } from './disclosure.ts'
+import {
+  enhanceAccordion,
+  enhanceCollapsible,
+  enhanceGovBanner,
+  enhanceHeader,
+} from './disclosure.ts'
 import { enhanceCheckboxAll, enhanceIndeterminate } from './form.ts'
 import { enhanceInPageNavigation } from './inpagenav.ts'
 import { enhanceInputMask, enhanceInputMaskReveal } from './inputmask.ts'
@@ -55,6 +60,7 @@ export const behaviors: Behavior[] = [
   enhanceAccordion,
   enhanceCollapsible,
   enhanceGovBanner,
+  enhanceHeader,
   enhanceDialog,
   enhancePopover,
   enhanceDropdownMenu,
@@ -114,6 +120,7 @@ export {
   enhanceDialog,
   enhanceDropdownMenu,
   enhanceGovBanner,
+  enhanceHeader,
   enhanceHoverCard,
   enhanceIndeterminate,
   enhanceInPageNavigation,

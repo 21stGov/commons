@@ -16,6 +16,11 @@
       <div class="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-2 gap-y-2 px-2 py-1">
         <a class="cui-header-title" data-slot="header-title" href="#home">City of Springfield</a>
 
+        <!-- Mobile disclosure (hidden from md up). commons.js toggles the
+             accordion's `hidden` class and flips the glyph. Starts open here to
+             match the React demo's `defaultMenuExpanded`. -->
+        <button type="button" class="cui-header-menu-button" data-slot="header-menu-button" aria-controls="hnm-nav" aria-expanded="true"><svg aria-hidden="true" viewBox="0 0 16 16" class="size-2 shrink-0" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="m3.5 3.5 9 9"></path><path d="m12.5 3.5-9 9"></path></svg>Menu</button>
+
         <!-- Desktop: the floating mega-menu (hidden below md). -->
         <div class="cui-header-navigation-menu-desktop" data-slot="header-navigation-menu-desktop">
           <nav class="cui-navigation-menu" data-slot="navigation-menu" aria-label="Primary">
@@ -77,7 +82,7 @@
              Zero JS: Enter/Space toggle and the exclusive `name` grouping are
              browser-native. Inside a Header disclosure, toggle the `hidden`
              class on this nav from the menu button, exactly like HeaderNav. -->
-        <nav class="cui-header-navigation-menu-accordion" data-slot="header-navigation-menu-accordion" aria-label="Primary">
+        <nav id="hnm-nav" class="cui-header-navigation-menu-accordion" data-slot="header-navigation-menu-accordion" aria-label="Primary">
           <ul class="cui-header-navigation-menu-accordion-list" data-slot="header-navigation-menu-accordion-list">
             <li>
               <a class="cui-header-navigation-menu-accordion-link" data-slot="header-navigation-menu-accordion-link" href="#home" aria-current="page">Home</a>

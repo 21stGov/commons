@@ -2,7 +2,12 @@
 
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { enhanceAccordion, enhanceCollapsible, enhanceGovBanner } from './disclosure.ts'
+import {
+  enhanceAccordion,
+  enhanceCollapsible,
+  enhanceGovBanner,
+  enhanceHeader,
+} from './disclosure.ts'
 
 function accordion(single = false): void {
   document.body.innerHTML = `
@@ -110,5 +115,53 @@ describe('enhanceGovBanner', () => {
     trigger.click()
     expect(trigger.getAttribute('aria-expanded')).toBe('true')
     expect(region.hidden).toBe(false)
+  })
+})
+
+describe('enhanceHeader', () => {
+  beforeEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  function headerMarkup(expanded: boolean): void {
+    document.body.innerHTML = `
+      <header data-slot="header">
+        <a data-slot="header-title" href="#">City</a>
+        <button data-slot="header-menu-button" aria-controls="nav" aria-expanded="${expanded}">
+          <svg><path d="hamburger"></path></svg>Menu
+        </button>
+        <nav id="nav" data-slot="header-navigation-menu-accordion"${expanded ? '' : ' hidden'}>links</nav>
+      </header>`
+  }
+
+  it('toggles the nav via the hidden attribute and syncs from the button state', () => {
+    headerMarkup(false)
+    const button = document.querySelector<HTMLElement>('[data-slot="header-menu-button"]')!
+    const nav = document.getElementById('nav')!
+    enhanceHeader(document)
+    // Synced to the button's collapsed initial state.
+    expect(nav.hidden).toBe(true)
+
+    button.click()
+    expect(button.getAttribute('aria-expanded')).toBe('true')
+    expect(nav.hidden).toBe(false)
+    expect(button.querySelector('svg')!.innerHTML).toContain('9 9') // close glyph
+
+    button.click()
+    expect(button.getAttribute('aria-expanded')).toBe('false')
+    expect(nav.hidden).toBe(true)
+  })
+
+  it('Escape closes the menu and returns focus to the button', () => {
+    headerMarkup(true)
+    const button = document.querySelector<HTMLElement>('[data-slot="header-menu-button"]')!
+    const nav = document.getElementById('nav')!
+    enhanceHeader(document)
+    expect(nav.hidden).toBe(false)
+
+    button.focus()
+    button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+    expect(nav.hidden).toBe(true)
+    expect(document.activeElement).toBe(button)
   })
 })
